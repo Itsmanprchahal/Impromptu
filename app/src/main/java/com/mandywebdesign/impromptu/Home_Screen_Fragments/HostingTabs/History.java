@@ -144,8 +144,16 @@ public class History extends Fragment  implements  DiscreteScrollView.OnItemChan
                             categois.add(datum.getCategory());
                             images.add(datum.getFile());
                             event_id.add(datum.getEventId().toString());
-                            ratingstatus.add(datum.getRating().toString());
-                            rating_overall.add(datum.getTotalRating().toString());
+                            if (datum.getRating()!=null)
+                            {
+                                ratingstatus.add(datum.getRating().toString());
+                            }
+
+                            if (datum.getTotalRating()!=null)
+                            {
+                                rating_overall.add(datum.getTotalRating().toString());
+                            }
+
                             if (datum.getPrice().equals("")) {
 
                                 prices.add("Free");

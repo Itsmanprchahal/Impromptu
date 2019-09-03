@@ -350,7 +350,6 @@ public class Normal_user_profile extends Fragment {
                                                 editor =  sharedPreferences.edit();
                                                 editor.putString("profilegender",Gender);
                                                 editor.apply();
-                                                Toast.makeText(getContext(), "141 "+Gender, Toast.LENGTH_SHORT).show();
                                                 manager.beginTransaction().replace(R.id.home_frame_layout,new UserProfileFragment()).addToBackStack(null).commit();
                                             }
 
@@ -427,9 +426,6 @@ public class Normal_user_profile extends Fragment {
 
                     }
                 }
-
-
-
             }
         });
     }

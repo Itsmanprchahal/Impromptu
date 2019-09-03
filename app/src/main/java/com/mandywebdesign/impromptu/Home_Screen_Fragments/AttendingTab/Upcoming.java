@@ -72,6 +72,8 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
     public static ArrayList<String> images = new ArrayList<>();
     public static ArrayList<String> userID = new ArrayList<>();
     public static ArrayList<String> event_id = new ArrayList<>();
+    public static ArrayList<String> book_tickets = new ArrayList<>();
+    public static ArrayList<String> total_book_tickets = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -129,12 +131,16 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
                         images.clear();
                         event_id.clear();
                         userID.clear();
+                        book_tickets.clear();
+                        total_book_tickets.clear();
 
                         for (Normal_past_booked.Datum datum : datumArrayList) {
 
                             name1.add(datum.getBEventHostname());
                             addres.add(datum.getAddressline1());
                             title.add(datum.getTitle());
+                            book_tickets.add(datum.getBook_tickets().toString());
+                            total_book_tickets.add(datum.getTotal_book_tickets().toString());
                             if (datum.getPrice().equals("")) {
 
                                 prices.add("Free");
@@ -243,5 +249,7 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
         Collections.reverse(images);
         Collections.reverse(event_id);
         Collections.reverse(userID);
+        Collections.reverse(book_tickets);
+        Collections.reverse(total_book_tickets);
     }
 }

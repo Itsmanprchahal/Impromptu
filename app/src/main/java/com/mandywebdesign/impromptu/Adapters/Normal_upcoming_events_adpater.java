@@ -92,6 +92,7 @@ public class Normal_upcoming_events_adpater extends RecyclerView.Adapter<Normal_
 
 
         viewHolder.eventAddress.setText(Upcoming.addres.get(i));
+        viewHolder.total_tickettext1.setText(Upcoming.total_book_tickets.get(i));
         viewHolder.category.setText(Upcoming.categois.get(i));
         Glide.with(context).load(Upcoming.images.get(i)).into(viewHolder.eventImage);
 

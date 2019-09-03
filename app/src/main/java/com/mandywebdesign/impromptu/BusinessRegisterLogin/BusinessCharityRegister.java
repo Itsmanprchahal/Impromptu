@@ -26,6 +26,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.RetroLoginPojo;
@@ -247,8 +250,8 @@ public class BusinessCharityRegister extends AppCompatActivity {
         mloginDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String BusinessLoginEmail = mBusinessLoginET.getText().toString();
-                String BusinessPasswordEt = mBusinessPasswordEt.getText().toString();
+                final String BusinessLoginEmail = mBusinessLoginET.getText().toString();
+                final String BusinessPasswordEt = mBusinessPasswordEt.getText().toString();
 
                 if (BusinessLoginEmail.isEmpty() && BusinessPasswordEt.isEmpty()) {
                     mBusinessLoginET.setError("Enter Email");
@@ -262,61 +265,16 @@ public class BusinessCharityRegister extends AppCompatActivity {
                     progressDialog.setCanceledOnTouchOutside(true);
                     progressDialog.show();
 
-
-                    Call<RetroLoginPojo> call = WebAPI.getInstance().getApi().LoginUser(BusinessLoginEmail, BusinessPasswordEt);
-
-                    call.enqueue(new Callback<RetroLoginPojo>() {
+                    FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
                         @Override
-                        public void onResponse(Call<RetroLoginPojo> call, Response<RetroLoginPojo> response) {
+                        public void onSuccess(InstanceIdResult instanceIdResult) {
+                            String token = instanceIdResult.getToken();
+                            Log.e("Devicetoken",token);
 
-                            if (response.body() !=null) {
-                                Log.d("tokenUser", "" + response.body().getData().getToken());
-                                if (response.body().getStatus().equals("200")) {
-                                    progressDialog.dismiss();
-                                    s = response.body().getData().getToken();
-                                    sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
-                                    Log.d("logintoken", "" + s);
-                                    editor = sharedPreferences.edit();
-                                    editor.putString("Usertoken", s);
-                                    editor.putString("userID", response.body().getData().getId().toString());
-                                    editor.putString("id", response.body().getData().getId().toString());
-                                    editor.putString("Username", response.body().getData().getName());
-                                    editor.apply();
-                                    Intent intent = new Intent(BusinessCharityRegister.this, Home_Screen.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(intent);
-
-
-                                } else if (response.body().getStatus().equals("400")) {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(BusinessCharityRegister.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                } else if (response.body().getStatus().equals("401")) {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(BusinessCharityRegister.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-
-                            } else {
-                                progressDialog.dismiss();
-                                Intent intent = new Intent(BusinessCharityRegister.this, NoInternetScreen.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<RetroLoginPojo> call, Throwable t) {
-                            Log.d("body", "" + t);
-                            if (isOnline() == false) {
-                                progressDialog.dismiss();
-                                NoInternet.dialog(BusinessCharityRegister.this);
-                            } else if (isOnline() == true) {
-                                progressDialog.dismiss();
-                                NoInternet.dialog(BusinessCharityRegister.this);
-                            } else {
-                                progressDialog.dismiss();
-                            }
+                            BussinessLogin(BusinessLoginEmail,BusinessPasswordEt);
                         }
                     });
+
                 }
             }
         });
@@ -326,6 +284,63 @@ public class BusinessCharityRegister extends AppCompatActivity {
             public void onClick(View view) {
                 dialog.dismiss();
                 forgotDialog();
+            }
+        });
+    }
+
+    private void BussinessLogin(String mBusinessLoginET, String mBusinessPasswordEt) {
+        Call<RetroLoginPojo> call = WebAPI.getInstance().getApi().LoginUser(mBusinessLoginET, mBusinessPasswordEt);
+
+        call.enqueue(new Callback<RetroLoginPojo>() {
+            @Override
+            public void onResponse(Call<RetroLoginPojo> call, Response<RetroLoginPojo> response) {
+
+                if (response.body() !=null) {
+                    Log.d("tokenUser", "" + response.body().getData().getToken());
+                    if (response.body().getStatus().equals("200")) {
+                        progressDialog.dismiss();
+                        s = response.body().getData().getToken();
+                        sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
+                        Log.d("logintoken", "" + s);
+                        editor = sharedPreferences.edit();
+                        editor.putString("Usertoken", s);
+                        editor.putString("userID", response.body().getData().getId().toString());
+                        editor.putString("id", response.body().getData().getId().toString());
+                        editor.putString("Username", response.body().getData().getName());
+                        editor.apply();
+                        Intent intent = new Intent(BusinessCharityRegister.this, Home_Screen.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+
+
+                    } else if (response.body().getStatus().equals("400")) {
+                        progressDialog.dismiss();
+                        Toast.makeText(BusinessCharityRegister.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    } else if (response.body().getStatus().equals("401")) {
+                        progressDialog.dismiss();
+                        Toast.makeText(BusinessCharityRegister.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    progressDialog.dismiss();
+                    Intent intent = new Intent(BusinessCharityRegister.this, NoInternetScreen.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RetroLoginPojo> call, Throwable t) {
+                Log.d("body", "" + t);
+                if (isOnline() == false) {
+                    progressDialog.dismiss();
+                    NoInternet.dialog(BusinessCharityRegister.this);
+                } else if (isOnline() == true) {
+                    progressDialog.dismiss();
+                    NoInternet.dialog(BusinessCharityRegister.this);
+                } else {
+                    progressDialog.dismiss();
+                }
             }
         });
     }

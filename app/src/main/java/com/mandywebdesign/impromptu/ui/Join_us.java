@@ -171,57 +171,8 @@ public class Join_us extends AppCompatActivity {
                                         Log.d("first_name", fbUsername + " " + fbToken + " " + fbEmail + " " + image_url);
 
                                         //=============================register and login facebook here========================\
+                                        NormalLogin("normal",fbToken,fbEmail,fbUsername,"facebook");
 
-                                        Call<NormalRetrologin> call = WebAPI.getInstance().getApi().normalLogin("normal", fbToken, fbEmail, fbUsername, "facebook");
-                                        call.enqueue(new Callback<NormalRetrologin>() {
-                                            @Override
-                                            public void onResponse(Call<NormalRetrologin> call, Response<NormalRetrologin> response) {
-
-                                                String status = response.body().getStatus().toString();
-
-                                                if (response.body()!=null)
-                                                {
-                                                    Log.d("facebookdata", "" + fbToken + "\n" + fbEmail + "\n" + fbUsername);
-                                                    if (response.body().getStatus().equals("200")) {
-
-                                                        progressDialog.dismiss();
-                                                        social_token = response.body().getData().getToken();
-                                                        Log.d("socail", "" + social_token);
-
-                                                        editor.putString("Social_username", fbUsername);
-                                                        editor.putString("Username",fbUsername);
-                                                        editor.putString("Social_image", imageurl);
-                                                        editor.putString("userID",response.body().getData().getId().toString());
-                                                        editor.putString("Socailtoken", response.body().getData().getToken());
-                                                        editor.putString("SocailuserId", response.body().getData().getId().toString());
-                                                        editor.apply();
-
-                                                        Intent intent = new Intent(Join_us.this, Home_Screen.class);
-                                                        startActivity(intent);
-                                                        finish();
-                                                        Toast.makeText(Join_us.this, "Login Successful", Toast.LENGTH_SHORT).show();
-
-                                                    } else if (response.body().getStatus().equals("401")) {
-                                                         progressDialog.dismiss();
-                                                        Log.d("FACEBOOK", fbUsername + " " + fbToken + " " + fbEmail);
-                                                        LoginManager.getInstance().logOut();
-//                                                    Log.d("facebooktoken",fbToken);
-                                                    }
-                                                }else {
-                                                    progressDialog.dismiss();
-                                                    Intent intent = new Intent(Join_us.this, NoInternetScreen.class);
-                                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                    startActivity(intent);
-                                                }
-
-                                            }
-
-                                            @Override
-                                            public void onFailure(Call<NormalRetrologin> call, Throwable t) {
-                                                progressDialog.dismiss();
-                                                Toast.makeText(Join_us.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -245,6 +196,59 @@ public class Join_us extends AppCompatActivity {
             @Override
             public void onError(FacebookException error) {
 
+            }
+        });
+    }
+
+    private void NormalLogin(String normal, String Token, String Email, String Username, String type) {
+        Call<NormalRetrologin> call = WebAPI.getInstance().getApi().normalLogin("normal", Token, Email, Username, type);
+        call.enqueue(new Callback<NormalRetrologin>() {
+            @Override
+            public void onResponse(Call<NormalRetrologin> call, Response<NormalRetrologin> response) {
+
+                String status = response.body().getStatus().toString();
+
+                if (response.body()!=null)
+                {
+                    Log.d("facebookdata", "" + fbToken + "\n" + fbEmail + "\n" + fbUsername);
+                    if (response.body().getStatus().equals("200")) {
+
+                        progressDialog.dismiss();
+                        social_token = response.body().getData().getToken();
+                        Log.d("socail", "" + social_token);
+
+                        editor.putString("Social_username", fbUsername);
+                        editor.putString("Username",fbUsername);
+                        editor.putString("Social_image", imageurl);
+                        editor.putString("userID",response.body().getData().getId().toString());
+                        editor.putString("Socailtoken", response.body().getData().getToken());
+                        editor.putString("SocailuserId", response.body().getData().getId().toString());
+                        editor.apply();
+
+                        Intent intent = new Intent(Join_us.this, Home_Screen.class);
+                        startActivity(intent);
+                        finish();
+                        Toast.makeText(Join_us.this, "Login Successful", Toast.LENGTH_SHORT).show();
+
+                    } else if (response.body().getStatus().equals("401")) {
+                        progressDialog.dismiss();
+                        Log.d("FACEBOOK", fbUsername + " " + fbToken + " " + fbEmail);
+                        LoginManager.getInstance().logOut();
+//                                                    Log.d("facebooktoken",fbToken);
+                    }
+                }else {
+                    progressDialog.dismiss();
+                    Intent intent = new Intent(Join_us.this, NoInternetScreen.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<NormalRetrologin> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(Join_us.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

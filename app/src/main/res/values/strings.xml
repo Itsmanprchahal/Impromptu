@@ -41,4 +41,5 @@
     <string name="pref_key_transition_time"><![CDATA[<string name=\"pref_key_transition_time\" translatable=\"false\">pref_key_transition_time</string>]]></string>
     <string name="dialog_seekbar_transition_time"><![CDATA[<string name=\"dialog_seekbar_transition_time\">Item transition time in millis</string>]]></string>
     <string name="server_client_id">905451169371-f5bfnn34du4j1p41o3if6m6mjd4gsvlk.apps.googleusercontent.com</string>
+    <string name="default_notification_channel_id">firebase_default_channel</string>
 </resources>

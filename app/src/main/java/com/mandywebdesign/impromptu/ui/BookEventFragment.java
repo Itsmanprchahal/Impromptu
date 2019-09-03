@@ -115,11 +115,9 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
     static String loginUserId;
     static String hostUserID;
     static String remaini_tickets;
-    static String formattedDate;
-    static String getFormattedDate;
     static String timeFrom;
     static String timeTo;
-    static String value, S_token, fav_id, hostname, payvalue;
+    static String value, S_token, fav_id, hostname, payvalue,spinnerposition;
     public static ArrayList<String> image = new ArrayList<>();
     public static String id, cate, host_image, date, decs, postcode, ticktType, ticktprice, timefrom, hostimage, timeto, title, location, location2, city, gender, andendeenumber, numberoftickts, freeEvent, username;
     int CurrentPage = 0;
@@ -152,6 +150,7 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
             @Override
             public void onClick(View v) {
                 getActivity().onBackPressed();
+                spinnerposition = "0";
 
             }
         });
@@ -418,10 +417,9 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
-        if (total_ticket != null)
+        if (spinnerposition !=null)
         {
-            int ticket = Integer.parseInt(total_ticket);
-//            spinner.setSelection(ticket);
+            spinner.setSelection(Integer.parseInt(spinnerposition)-1);
         }
 
 
@@ -556,10 +554,10 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        String text = parent.getItemAtPosition(position).toString();
+         spinnerposition = parent.getItemAtPosition(position).toString();
 
 
-        Float a = Float.valueOf((text));
+        Float a = Float.valueOf((spinnerposition));
         total_ticket = String.valueOf(a);
 
         String tickt = ticketPrice.getText().toString();

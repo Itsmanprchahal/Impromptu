@@ -55,6 +55,39 @@ public class Normal_past_booked {
         @SerializedName("favourite")
         @Expose
         private Integer favourite;
+
+        @SerializedName("book_tickets")
+        @Expose
+        private Integer book_tickets;
+
+        @SerializedName("total_book_tickets")
+        @Expose
+        private Integer total_book_tickets;
+
+        public Integer getTotal_book_tickets() {
+            return total_book_tickets;
+        }
+
+        public void setTotal_book_tickets(Integer total_book_tickets) {
+            this.total_book_tickets = total_book_tickets;
+        }
+
+        public Integer getBook_tickets() {
+            return book_tickets;
+        }
+
+        public void setBook_tickets(Integer book_tickets) {
+            this.book_tickets = book_tickets;
+        }
+
+        public String getbEventHostname() {
+            return bEventHostname;
+        }
+
+        public void setbEventHostname(String bEventHostname) {
+            this.bEventHostname = bEventHostname;
+        }
+
         @SerializedName("description")
         @Expose
         private String description;
