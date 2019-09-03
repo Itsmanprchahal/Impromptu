@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_15sdp"
+    android:background="@drawable/layout_radius_border"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <LinearLayout
+            android:background="@drawable/layout_radius_border"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/thanksforcoming"
+                android:textColor="@color/colortextBlack"
+                android:fontFamily="@font/circularstdbold"
+                android:textSize="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_15sdp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:fontFamily="@font/sfuitextlight"
+                android:text="@string/text"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/sfuitextlight"
+                android:text="+1 points for attending"
+                android:textColor="@color/colorTheme"
+                android:textSize="@dimen/_10sdp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_13sdp"
+                android:text="Rating"
+                android:fontFamily="@font/circularstdbold"
+                android:textColor="@color/colortextBlack"
+                android:textSize="20sp" />
+
+            <RatingBar
+                android:layout_marginTop="@dimen/_6sdp"
+                style="?android:attr/rating"
+                android:id="@+id/rating_bar"
+                android:stepSize="1"
+                android:progressTint="@color/colorTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Feedback"
+                android:fontFamily="@font/circularstdbold"
+                android:textColor="@color/colortextBlack"
+                android:textSize="20sp" />
+
+            <EditText
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_60sdp"
+                android:background="@drawable/custom_edittext"
+                android:gravity="start"
+                android:id="@+id/feedback"
+                android:fontFamily="@font/sfuitextlight"
+                android:hint="Write here.."
+                android:inputType="textMultiLine"
+                android:padding="8dp"
+                android:textSize="16sp" />
+
+            <Button
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/custom_next_bt"
+                android:text="Share"
+                android:fontFamily="@font/circularstdblack"
+                android:id="@+id/dialogratingshare_button"
+                android:textAllCaps="false"
+                android:textColor="@color/colortextwhite"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+</android.support.constraint.ConstraintLayout>

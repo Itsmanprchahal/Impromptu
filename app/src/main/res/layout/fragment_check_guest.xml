@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BusinessRegisterLogin.CheckGuestFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colortextwhite">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/check_guest_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/check_guest_qrcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_qrcode" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/circularstdbold"
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:textAlignment="gravity"
+                    android:text="Guest Check In"
+                    android:textColor="@color/colortextBlack"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+                <ImageButton
+                    android:id="@+id/check_guest_close"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/transperent"
+                    android:src="@drawable/close" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
+
+
+        <EditText
+            android:id="@+id/check_guest_search"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@id/check_guest_toolbar"
+            android:layout_margin="15dp"
+            android:clickable="false"
+            android:focusable="false"
+            android:background="@drawable/custom_edittext"
+            android:drawableLeft="@drawable/search"
+            android:gravity="start"
+            android:inputType="text"
+            android:paddingLeft="15dp" />
+
+
+        <TextView
+            android:id="@+id/check_guest_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#EBE7E7"
+            android:layout_below="@id/check_guest_search"
+            android:hint="0/0 Checked in"
+            android:fontFamily="@font/sfuitextlight"
+            android:textSize="18sp"
+            android:paddingLeft="@dimen/_40sdp"/>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/check_guest_recycler"
+            android:layout_below="@id/check_guest_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colortextBlack"
+            android:layout_marginTop="@dimen/_55sdp"
+            android:textSize="@dimen/_20sdp"
+            android:id="@+id/QRData"/>
+    </RelativeLayout>
+
+</FrameLayout>

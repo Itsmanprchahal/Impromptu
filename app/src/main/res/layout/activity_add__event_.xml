@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Home_Screen_Fragments.AddEvents.Add_Event_Activity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/add_event_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="55dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/add_event_back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/back"
+                android:visibility="gone"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/circularstdbold"
+                android:gravity="center"
+                android:text="Create Event"
+                android:textColor="@color/colortextBlack"
+                android:textSize="@dimen/toolbartext"
+                />
+
+            <ImageView
+                android:id="@+id/add_event_close"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/close" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+    <ProgressBar
+        android:paddingLeft="@dimen/defaultmargin"
+        android:paddingRight="@dimen/defaultmargin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:id="@+id/add_event_progress_bar"
+        android:layout_below="@id/add_event_toolbar"/>
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_below="@id/add_event_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/add_event_next">
+
+
+        <LinearLayout
+            android:paddingLeft="@dimen/defaultmargin"
+            android:paddingRight="@dimen/defaultmargin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_above="@+id/add_event_next">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/circularstdbold"
+                android:text="Your Event"
+                android:textColor="@color/colorTheme"
+                android:textSize="@dimen/_26sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/circularstdbold"
+                android:text="Title"
+                android:textColor="@color/colortextBlack"
+                android:textSize="@dimen/_13sdp"
+                android:layout_marginTop="20dp"/>
+
+            <EditText
+                android:layout_marginTop="10dp"
+                android:id="@+id/your_event_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="50dp"
+                android:inputType="text"
+                android:fontFamily="@font/sfuitextlight"
+                android:background="@drawable/custom_edittext"
+                android:hint="Add Title"
+                android:padding="10dp"/>
+
+            <TextView
+
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/circularstdbold"
+                android:text="Description"
+                android:textColor="@color/colortextBlack"
+                android:textSize="@dimen/_13sdp"/>
+
+            <EditText
+
+                android:layout_marginTop="10dp"
+                android:id="@+id/your_event_description"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:textAlignment="textStart"
+                android:fontFamily="@font/sfuitextlight"
+                android:background="@drawable/custom_edittext"
+                android:hint="Add Description"
+                android:inputType="textMultiLine"
+                android:singleLine="false"
+                android:maxHeight="100dp"
+                android:padding="10dp"
+                android:gravity="start"
+                android:overScrollMode="always"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical"/>
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/circularstdbold"
+                android:text="Category"
+                android:textColor="@color/colortextBlack"
+                android:textSize="@dimen/_13sdp" />
+
+            <Spinner
+                android:layout_marginTop="10dp"
+                android:id="@+id/add_event_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </Spinner>
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/circularstdbold"
+                android:text="Pictures"
+                android:textColor="@color/colortextBlack"
+                android:textSize="@dimen/_13sdp"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/add_event_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:id="@+id/your_event_add_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/circularstdbold"
+                android:text="+Add picture"
+                android:visibility="gone"
+                android:textSize="15sp"
+                android:textColor="@color/colorTheme"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/createvent_addlink"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/circularstdbold"
+                android:text="+Add link (optional)"
+                android:textSize="15sp"
+                android:textColor="@color/colorTheme"
+                android:textStyle="bold"/>
+
+
+            <RelativeLayout
+                android:id="@+id/link_layoutone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_edittext"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:id="@+id/hyperlinkone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:hint="Hyperlink"
+                    android:background="@drawable/custom_edittext"
+                    android:padding="10dp"
+                    android:visibility="gone"
+                    android:textSize="14sp"/>
+
+                <ImageView
+                    android:id="@+id/delete_hyperlinkone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="40dp"
+                    android:visibility="gone"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_delete_black_24dp"
+                    android:layout_toLeftOf="@id/valid_image"></ImageView>
+
+
+                    <ImageView
+                        android:id="@+id/valid_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:visibility="gone"
+                        android:src="@drawable/ic_valid"></ImageView>
+
+                    <ImageView
+                        android:id="@+id/invalid_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:visibility="gone"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/ic_invalid"></ImageView>
+
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/createvent_addlink1"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/circularstdbold"
+                android:visibility="gone"
+                android:text="+Add link (optional)"
+                android:textSize="14sp"
+                android:textColor="@color/colorTheme"
+                android:textStyle="bold"/>
+
+            <RelativeLayout
+                android:id="@+id/link_layouttwo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_edittext"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="10dp">
+
+
+                <EditText
+                    android:id="@+id/hyperlinktwo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="50dp"
+                    android:inputType="text"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:background="@drawable/custom_edittext"
+                    android:hint="Hyperlink"
+                    android:padding="10dp"
+                    android:visibility="gone"
+                    android:textSize="14sp"/>
+
+                <ImageView
+                    android:id="@+id/delete_hyperlinktwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="40dp"
+                    android:visibility="gone"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_delete_black_24dp"
+                    android:layout_toLeftOf="@id/valid_image1"></ImageView>
+
+                <ImageView
+                    android:id="@+id/valid_image1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:visibility="gone"
+                    android:src="@drawable/ic_valid"></ImageView>
+
+                <ImageView
+                    android:id="@+id/invalid_image1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_invalid"></ImageView>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/createvent_addlink2"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:fontFamily="@font/circularstdbold"
+                android:text="+Add link (optional)"
+                android:textSize="14sp"
+                android:textColor="@color/colorTheme"
+                android:textStyle="bold"/>
+
+            <RelativeLayout
+                android:id="@+id/link_layoutthree"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_edittext"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="10dp">
+
+
+                <EditText
+                    android:id="@+id/hyperlinkthree"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="50dp"
+                    android:inputType="text"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:background="@drawable/custom_edittext"
+                    android:hint="Hyperlink"
+                    android:padding="10dp"
+                    android:visibility="gone"
+                    android:textSize="14sp"/>
+
+                <ImageView
+                    android:id="@+id/delete_hyperlinkthree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="40dp"
+                    android:visibility="gone"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_delete_black_24dp"
+                    android:layout_toLeftOf="@id/valid_image2"></ImageView>
+
+                <ImageView
+                    android:id="@+id/valid_image2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:visibility="gone"
+                    android:src="@drawable/ic_valid"></ImageView>
+
+                <ImageView
+                    android:id="@+id/invalid_image2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_invalid"></ImageView>
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/add_event_next"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_margin="@dimen/defaultmargin"
+        android:background="@drawable/custom_next_bt"
+        android:text="Next"
+        android:fontFamily="@font/circularstdblack"
+        android:textAllCaps="false"
+        android:textColor="@color/colortextwhite"
+        android:layout_alignParentBottom="true"
+        android:textSize="20sp" />
+</RelativeLayout>

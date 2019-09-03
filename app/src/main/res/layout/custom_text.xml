@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/spinnerDropDownItemStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fontFamily="@font/sfuitextlight"
+    android:gravity="center_vertical"
+    android:hint="Select category"
+    android:padding="5dp"
+    android:textColor="@color/black"
+    android:singleLine="true"
+    android:textColorHint="@color/black">
+
+</TextView>

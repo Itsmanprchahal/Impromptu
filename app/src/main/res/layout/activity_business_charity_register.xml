@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colortextwhite"
+    tools:context=".BusinessRegisterLogin.BusinessCharityRegister">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/register_logo_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_140sdp"
+        android:padding="10dp"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="@string/alreadySignup"
+            android:fontFamily="@font/sfuitextlight"
+            android:id="@+id/alreadysignup"
+            android:textColor="@color/colortextBlack"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/alreadysignup"
+            android:text="@string/login"
+            android:textColor="@color/colortextBlack"
+            android:textStyle="bold"
+            android:id="@+id/business_login"
+            android:fontFamily="@font/circularstdbold"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logoblack1"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/register_logo_layout">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_17sdp"
+            android:fontFamily="@font/circularstdblack"
+            android:text="Business or Charity name"
+            android:textColor="@color/colortextBlack"
+            android:textSize="@dimen/_13sdp" />
+
+        <EditText
+            android:id="@+id/business_Name_Et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:hint="Name"
+            android:fontFamily="@font/sfuitextlight"
+            android:padding="@dimen/_7sdp"
+            android:background="@drawable/custom_edittext"
+            android:inputType="textPersonName" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:fontFamily="@font/circularstdblack"
+            android:text="Charity Number (if applicable)"
+            android:textColor="@color/colortextBlack"
+            android:textSize="@dimen/_13sdp" />
+
+        <EditText
+            android:id="@+id/business_CharityNumber_Et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_7sdp"
+            android:fontFamily="@font/sfuitextlight"
+            android:background="@drawable/custom_edittext"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:hint="number"
+            android:inputType="phone" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:fontFamily="@font/circularstdblack"
+            android:text="Email"
+            android:textColor="@color/colortextBlack"
+            android:textSize="@dimen/_13sdp" />
+
+        <EditText
+            android:id="@+id/business_Email_Et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:padding="@dimen/_7sdp"
+            android:fontFamily="@font/sfuitextlight"
+            android:background="@drawable/custom_edittext"
+            android:hint="Email@email.com"
+            android:inputType="textEmailAddress" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:fontFamily="@font/circularstdblack"
+            android:text="Password"
+            android:textColor="@color/colortextBlack"
+            android:textSize="@dimen/_13sdp" />
+
+        <EditText
+            android:id="@+id/business_Password_Et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:padding="@dimen/_7sdp"
+            android:fontFamily="@font/sfuitextlight"
+            android:background="@drawable/custom_edittext"
+            android:hint="*********"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:fontFamily="@font/circularstdblack"
+            android:text="Confirm Password"
+            android:textColor="@color/colortextBlack"
+            android:textSize="@dimen/_13sdp" />
+
+        <EditText
+            android:id="@+id/business_Confirm_Password_Et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:hint="*********"
+            android:fontFamily="@font/sfuitextlight"
+            android:padding="@dimen/_7sdp"
+            android:background="@drawable/custom_edittext"
+            android:inputType="textPassword" />
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:background="@drawable/custom_next_bt"
+        android:text="Lets Start"
+        android:textAllCaps="false"
+        android:fontFamily="@font/circularstdblack"
+        android:textColor="@color/colortextwhite"
+        android:textSize="@dimen/normalText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/business_register_letsstartBT"/>
+    </LinearLayout>
+
+    </ScrollView>
+
+
+</android.support.constraint.ConstraintLayout>

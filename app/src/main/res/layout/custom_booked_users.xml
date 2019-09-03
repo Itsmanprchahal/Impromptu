@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    android:layout_height="80dp"
+    android:layout_width="80dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/transperent">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:riv_corner_radius="10dp"
+        android:src="@drawable/screen1"
+        android:background="@drawable/transperent"
+        tools:ignore="MissingConstraints"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="5dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/booked_usr_image"/>
+
+    <TextView
+        android:id="@+id/attendeescount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="2dp"
+        ></TextView>
+</RelativeLayout>
+
+
+

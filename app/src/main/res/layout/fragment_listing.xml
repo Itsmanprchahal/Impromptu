@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colortextwhite"
+    tools:context=".Home_Screen_Fragments.ListingFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="@dimen/_7sdp">
+
+            <android.support.v7.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/mylistingToolbar" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/mediumtext"
+                    android:textStyle="bold"
+                    android:text="My Listing"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/colortextBlack"/>
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.v7.widget.CardView>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_below="@id/my_events_toolbar"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/linearback"
+            android:id="@+id/tabs_layout"
+            android:padding="2.2dp">
+
+            <Button
+                android:id="@+id/myListing_events"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:text="Events"
+                android:textAllCaps="false"
+                android:textColor="@color/colorTheme" />
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorTheme" />
+
+            <Button
+                android:id="@+id/mtListing_adverts"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+
+                android:background="@android:color/transparent"
+                android:text="Adverts"
+                android:textAllCaps="false"
+                android:textColor="@color/colorTheme" />
+
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5sp"
+            android:id="@+id/mylistingFrame">
+
+        </FrameLayout>
+    </LinearLayout>
+
+
+
+
+</FrameLayout>

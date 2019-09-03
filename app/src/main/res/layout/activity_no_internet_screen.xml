@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.NoInternetScreen"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/nointernetImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/nodisconnect"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.3"/>
+
+
+    <TextView
+        android:id="@+id/nointernertext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/normalText"
+        android:layout_marginLeft="@dimen/defaultmargin"
+        android:fontFamily="@font/sfuitextlight"
+        android:layout_marginRight="@dimen/defaultmargin"
+        android:textAlignment="center"
+        android:text="Your internet connection is too low... please try again"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nointernetImage"
+        android:layout_marginTop="@dimen/_10sdp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/defaultmargin"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nointernertext"
+        android:background="@drawable/custom_next_bt"
+        android:paddingLeft="@dimen/_5sdp"
+        android:paddingRight="@dimen/_5sdp"
+        android:text="Refresh"
+        android:fontFamily="@font/circularstdblack"
+        android:drawableRight="@drawable/ic_refresh_black_24dp"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:id="@+id/notinternetretry"/>
+
+</android.support.constraint.ConstraintLayout>

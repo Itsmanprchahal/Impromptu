@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/_280sdp"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_10sdp"
+    android:layout_gravity="center"
+    android:padding="@dimen/_10sdp"
+    android:orientation="vertical"
+    android:background="@drawable/businessdialogbackground">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/close"
+        android:layout_gravity="end"
+        android:id="@+id/close_logindialog"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logoblack1"
+        tools:ignore="MissingConstraints"
+        android:layout_marginTop="@dimen/_10sdp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_17sdp"
+        android:fontFamily="@font/circularstdblack"
+        android:text="Email Address"
+        android:textColor="@color/colortextBlack"
+        android:textSize="@dimen/_13sdp" />
+
+    <EditText
+        android:id="@+id/businesslogin_email_Et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_7sdp"
+        android:fontFamily="@font/sfuitextlight"
+        android:hint="Email@email.com"
+        android:background="@drawable/custom_edittext"
+        android:padding="@dimen/_7sdp"
+        android:inputType="textEmailAddress" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_17sdp"
+        android:fontFamily="@font/circularstdblack"
+        android:text="Password"
+        android:textColor="@color/colortextBlack"
+        android:textSize="@dimen/_13sdp" />
+
+    <EditText
+        android:id="@+id/business_login_password_Et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_7sdp"
+        android:fontFamily="@font/sfuitextlight"
+        android:hint="******"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/custom_edittext"
+        android:padding="@dimen/_7sdp"
+        android:inputType="textPassword" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:background="@drawable/custom_next_bt"
+        android:textColor="@color/colortextwhite"
+        android:text="Login"
+        android:fontFamily="@font/circularstdblack"
+        android:id="@+id/businessdialognextbtt"
+        android:textAllCaps="false"/>
+
+    <TextView
+        android:id="@+id/forgot_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ForgotPassword"
+        android:visibility="gone"
+        android:layout_marginTop="5dp"
+        android:gravity="end"
+        android:layout_marginBottom="@dimen/_30sdp"
+        android:textColor="@color/colortextBlack"
+        android:textStyle="bold"/>
+
+
+</LinearLayout>

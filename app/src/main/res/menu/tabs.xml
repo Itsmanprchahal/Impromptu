@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/hometab"
+        tools:ignore="MenuTitle" />
+
+    <item
+        android:id="@+id/wallettab"
+        android:icon="@drawable/iconwallet"
+        tools:ignore="MenuTitle" />
+
+    <item
+        android:id="@+id/myeventstab"
+        android:icon="@drawable/ticketinactive"
+        tools:ignore="MenuTitle"
+        />
+
+
+    <item
+        android:id="@+id/messagetab"
+        android:icon="@drawable/iconmessage"
+        tools:ignore="MenuTitle" />
+
+    <item
+        android:id="@+id/profiletab"
+        android:icon="@drawable/iconsetting"
+        tools:ignore="MenuTitle" />
+</menu>

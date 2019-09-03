@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:background="@drawable/ticketboxround">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Questions"
+            android:layout_weight="1"
+            android:textColor="@color/colortextBlack"
+            android:textStyle="bold"
+            android:fontFamily="@font/circularstdbold"/>
+
+        <ImageView
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:src="@drawable/close"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:id="@+id/close_questtionDialog"/>
+
+
+    </LinearLayout>
+
+    <Spinner
+        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/user_profile_sppiner"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"></Spinner>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:textColor="@color/colortextBlack"
+        android:id="@+id/question_text"
+        android:fontFamily="@font/circularstdblack"
+        android:visibility="gone"/>
+
+    <TextView
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="Answer"
+        android:textColor="@color/colortextBlack"
+        android:textStyle="bold"
+        android:fontFamily="@font/circularstdbold"/>
+
+    <EditText
+        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/user_profile_answer"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/layout_radius_border"
+        android:padding="10dp"
+        android:fontFamily="@font/sfuitextlight"
+        android:gravity="start"
+        android:hint="Fill here"/>
+
+
+    <Button
+        android:id="@+id/user_profile_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@drawable/custom_next_bt"
+        android:text="Save Answer"
+        android:textAllCaps="false"
+        android:fontFamily="@font/circularstdblack"
+        android:textColor="@color/colortextwhite"
+        android:textSize="15dp"
+        android:textStyle="bold"/>
+
+
+
+</LinearLayout>

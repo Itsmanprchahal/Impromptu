@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colortextwhite"
+    tools:context=".Home_Screen_Fragments.Home">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/noevents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:fontFamily="@font/circularstdblack"
+            android:text="No Events"
+            android:textColor="#000"
+            android:textSize="40dp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/home_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/filter"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/filter" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:src="@drawable/logoblack" />
+
+                <CheckBox
+                    android:id="@+id/home_shuffle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:padding="@dimen/_12sdp"
+                    android:button="@drawable/custom_shufflecheckbox" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
+
+
+        <!--<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+            <!--android:id="@+id/swipe_refresh_layout1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_marginTop="55dp"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/home_related">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <com.yarolegovich.discretescrollview.DiscreteScrollView
+                        android:id="@+id/home_feed_recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </com.yarolegovich.discretescrollview.DiscreteScrollView>
+
+
+                    <TextView
+                        android:id="@+id/see_related"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/home_related"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@color/colorTrans"
+                        android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp"
+                        android:fontFamily="@font/sfuitextlight"
+                        android:gravity="center"
+                        android:text="See related events"
+                        android:textColor="@color/colorTheme"
+                        android:textSize="@dimen/normalText"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+            </ScrollView>
+
+        <!--</android.support.v4.widget.SwipeRefreshLayout>-->
+        <TextView
+            android:id="@+id/home_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/home_toolbar"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:fontFamily="@font/circularstdbold"
+            android:text="Your events feed"
+            android:textColor="@color/colorTheme"
+            android:textSize="@dimen/_14sdp"
+            tools:ignore="MissingConstraints" />
+
+
+        <TextView
+            android:id="@+id/home_related"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/home_text"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorTrans"
+            android:drawableRight="@drawable/ic_keyboard_arrow_up_black_24dp"
+            android:text="Move to top"
+            android:textColor="@color/colorTheme"
+            android:textSize="@dimen/normalText"
+            android:visibility="gone" />
+
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/home_related"
+            android:gravity="center">
+
+            <com.yarolegovich.discretescrollview.DiscreteScrollView
+                android:id="@+id/home_frag_related_items"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/colortextwhite"
+                android:visibility="gone"></com.yarolegovich.discretescrollview.DiscreteScrollView>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</FrameLayout>
+

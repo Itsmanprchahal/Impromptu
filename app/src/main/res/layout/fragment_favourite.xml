@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MyEventsFragments.Favourite">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_below="@id/my_events_toolbar"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/linearback"
+        android:id="@+id/tabs_layout"
+        android:padding="2.2dp">
+
+        <Button
+            android:id="@+id/myEvent_events_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="Events"
+            android:fontFamily="@font/circularstdblack"
+            android:textAllCaps="false"
+            android:textColor="@color/colorTheme" />
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorTheme" />
+
+        <Button
+            android:id="@+id/myEvent_hosting_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            android:fontFamily="@font/circularstdblack"
+            android:background="@android:color/transparent"
+            android:text="Hosts"
+            android:textColor="@color/colorTheme" />
+
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/myEvent_favourite_framelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tabs_layout"
+        ></FrameLayout>
+    </LinearLayout>
+
+
+</FrameLayout>

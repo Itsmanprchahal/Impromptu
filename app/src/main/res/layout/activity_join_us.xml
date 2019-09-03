@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colortextwhite"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/defaultmargin"
+    android:paddingRight="@dimen/defaultmargin"
+    android:layout_width="match_parent"
+    tools:context=".ui.Join_us"
+    android:backgroundTint="@color/colortextwhite"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.15"
+        android:id="@+id/logo"
+        android:src="@drawable/logoblack1"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Join Us"
+        android:textColor="@color/colortextBlack"
+        android:textSize="@dimen/_25sdp"
+        android:fontFamily="@font/circularstdblack"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.35"
+        android:id="@+id/joinus_text"
+        tools:ignore="MissingConstraints" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/join_us_facebook"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:background="@drawable/custom_fb_bt"
+        android:drawableLeft="@drawable/ic_facebookogo"
+        android:id="@+id/join_us_facebookbt"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_width="match_parent"
+        android:onClick="onClick"
+        android:paddingLeft="10dp"
+        android:text="Continue with Facebook"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:fontFamily="@font/circularstdbold"
+        android:textColor="@color/colortextwhite"
+        android:textSize="@dimen/normalText"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.55">
+
+    </Button>
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/join_us_goolesignIn"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        tools:ignore="MissingConstraints">
+
+    </com.google.android.gms.common.SignInButton>
+
+    <Button
+        android:background="@drawable/custom_google_bt"
+        android:drawableLeft="@drawable/ic_googlelogo"
+        android:id="@+id/join_us_google"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_width="match_parent"
+        android:onClick="onClick"
+        android:paddingLeft="10dp"
+        android:text="Continue with Google"
+        android:fontFamily="@font/circularstdbold"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/colortextwhite"
+        android:textSize="@dimen/normalText"
+        app:layout_constraintTop_toBottomOf="@id/join_us_facebookbt"
+        android:layout_marginTop="@dimen/_20sdp"/>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/alreadyhaveaccount"
+        android:textSize="@dimen/_10sdp"
+        android:textColor="@color/colorTheme"
+        android:gravity="center"
+        android:onClick="onClick"
+        android:textAllCaps="false"
+        android:fontFamily="@font/circularstdblack"
+        android:background="@color/colorTrans"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.98"
+        android:id="@+id/registerHere"/>
+
+
+
+</android.support.constraint.ConstraintLayout>

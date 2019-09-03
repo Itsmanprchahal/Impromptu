@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/_280sdp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/ticketboxround"
+    android:padding="@dimen/_10sdp">
+
+
+    <EditText
+        android:id="@+id/enter_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/defaultmargin"
+        android:textSize="12dp"
+        android:fontFamily="@font/sfuitextlight"
+        android:singleLine="true"
+        android:background="@drawable/custom_edittextwhite"
+        android:hint="Enter Page Url"
+        android:textColor="@color/colortextBlack"
+        android:padding="10dp"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_next_bt"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/enter_url"
+        android:layout_marginTop="@dimen/defaultmargin"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:fontFamily="@font/circularstdblack"
+        android:text="Done"
+        android:textAllCaps="false"
+        android:textColor="@color/colortextwhite"
+        android:id="@+id/done_pop_up_bt"/>
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_small"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/businessdialogbackground">
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/close"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/defaultmargin"
+        android:id="@+id/close_confirmdialog"/>
+
+    <TextView
+        android:id="@+id/confirmdialogtext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/sfuitextlight"
+        android:layout_below="@id/close_confirmdialog"
+        android:text="We will sent you confirmation mail on your accout. Please Confirm"
+        android:textAlignment="center"
+        android:textColor="@color/colortextBlack"
+        android:textSize="@dimen/_13sdp" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:layout_below="@id/confirmdialogtext"
+        android:background="@drawable/custom_next_bt"
+        android:textColor="@color/colortextwhite"
+        android:text="Ok"
+        android:fontFamily="@font/circularstdblack"
+        android:id="@+id/businessconfirmdialogbtt"
+        android:textAllCaps="false"/>
+
+</RelativeLayout>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/_280sdp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/_15sdp"
+    android:layout_gravity="center"
+    android:background="@drawable/ticketboxround">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Check Internet Connection"
+        android:textColor="@color/colortextBlack"
+        android:textSize="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:fontFamily="@font/circularstdbold"
+        tools:ignore="MissingConstraints"
+        android:id="@+id/nonettext"
+        android:gravity="center_horizontal"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/nonettext"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@drawable/custom_next_bt"
+        android:text="Done"
+        android:fontFamily="@font/circularstdblack"
+        android:textColor="@color/colortextwhite"
+        android:textAllCaps="false"
+        android:id="@+id/done_bt_on_no_net_dilog"/>
+
+</android.support.constraint.ConstraintLayout>

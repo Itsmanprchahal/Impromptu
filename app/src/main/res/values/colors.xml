@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#CFD0F5</color>
+    <color name="colorPrimaryDark">#797EE5</color>
+    <color name="colorAccent">#000000</color>
+    <color name="colortextwhite">#FFFFFF</color>
+    <color name="colortextBlack">#000000</color>
+    <color name="colorTheme">#797EE5</color>
+    <color name="colorThemeight">#CFD0F5</color>
+    <color name="colorTrans">#0000</color>
+    <color name="colorgrey">#E6E2E2</color>
+    <color name="colordialog">#008577</color>
+    <color name="colorLightBlack">#646161</color>
+
+    <string-array name="movie_serial_bg">
+        <item>#24c6d5</item>
+        <item>#57dd86</item>
+        <item>#ad7dcf</item>
+        <item>#ff484d</item>
+        <item>#fcba59</item>
+        <item>#24c6d5</item>
+    </string-array>
+
+
+</resources>

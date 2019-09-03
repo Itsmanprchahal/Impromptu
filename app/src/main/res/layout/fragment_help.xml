@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colortextwhite"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SettingFragmentsOptions.Help">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="13dp">
+
+
+            <android.support.v7.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="MissingConstraints">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/toolbartext"
+                        android:fontFamily="@font/circularstdbold"
+                        android:textColor="@color/colortextBlack"
+                        android:text="Help"
+                        android:gravity="center_horizontal"/>
+
+                    <ImageView
+                        android:id="@+id/back_on_help"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/transperent"
+                        android:src="@drawable/ic_arrow_back_black_24dp" />
+
+                </android.support.constraint.ConstraintLayout>
+
+            </android.support.v7.widget.Toolbar>
+
+
+        </android.support.v7.widget.CardView>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/colortextBlack"
+            android:textSize="@dimen/_13sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/sfuitextlight"
+            android:id="@+id/help_text"
+            android:layout_marginLeft="@dimen/defaultmargin"
+            android:layout_marginRight="@dimen/defaultmargin"/>
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/_220sdp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_6sdp"
+    android:layout_gravity="center_horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_290sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/_10sdp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/cardview"
+        app:layout_constraintRight_toRightOf="parent"
+        app:cardCornerRadius="16dp">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/event_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/event"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp"></ImageView>
+
+            <TextView
+                android:id="@+id/total_tickettext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tickets:"
+                android:textColor="@color/white"
+                android:shadowColor="#A90A0A0A"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="3"
+                app:layout_constraintRight_toLeftOf="@id/total_tickettext1"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="2dp"
+                tools:ignore="MissingConstraints"></TextView>
+
+            <TextView
+                android:id="@+id/total_tickettext1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/white"
+                android:shadowColor="#A90A0A0A"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="3"
+                android:layout_marginRight="5dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="2dp"
+                tools:ignore="MissingConstraints"></TextView>
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="10dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/QR_image"
+                android:layout_marginTop="10dp"/>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+               android:background="#4F000000"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/event_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="@font/circularstdblack"
+                    android:textColor="@color/colortextwhite"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:textSize="@dimen/_22sdp"
+                    android:shadowColor="#A90A0A0A"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="3"
+                    tools:ignore="MissingConstraints" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/colortextwhite"
+                    android:layout_marginTop="5dp"
+                    android:shadowColor="#A90A0A0A"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="3"
+                    android:id="@+id/eventview"></View>
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:fontFamily="@font/sfuitextlight"
+                        app:layout_constraintRight_toLeftOf="@id/event_price"
+                        android:layout_marginRight="@dimen/_50sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:textColor="@color/colortextwhite"
+                        android:id="@+id/custom_text1"
+                        android:textSize="@dimen/_12sdp"
+                        android:shadowColor="#A90A0A0A"
+                        android:shadowDx="2"
+                        android:shadowDy="2"
+                        android:shadowRadius="3"
+                        tools:ignore="MissingConstraints" />
+
+                    <TextView
+                        android:id="@+id/event_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text=""
+                        android:gravity="end"
+                        android:textSize="@dimen/_12sdp"
+                        android:shadowColor="#A90A0A0A"
+                        android:shadowDx="2"
+                        android:shadowDy="2"
+                        android:shadowRadius="3"
+                        android:fontFamily="@font/sfuitextlight"
+                        android:textColor="@color/colortextwhite"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginRight="@dimen/_20sdp"
+                        android:layout_marginTop="5dp"/>
+
+                </android.support.constraint.ConstraintLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/sfuitextlight"
+                        android:textColor="@color/colorgrey"
+                        android:textSize="@dimen/_12sdp"
+                        android:shadowColor="#A90A0A0A"
+                        android:shadowDx="2"
+                        android:shadowDy="2"
+                        android:shadowRadius="3"
+                        tools:ignore="MissingConstraints" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/custom_category_name"
+                        android:layout_marginRight="@dimen/_20sdp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="end"
+                        android:visibility="visible"
+                        android:text=""
+                        android:shadowColor="#A90A0A0A"
+                        android:shadowDx="2"
+                        android:shadowDy="2"
+                        android:shadowRadius="3"
+                        android:fontFamily="@font/sfuitextlight"
+                        android:textColor="@color/colorgrey"
+                        android:textSize="@dimen/_12sdp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorTrans"
+        android:layout_marginTop="10dp"
+        android:textSize="@dimen/normalText"
+        android:layout_below="@id/cardview"
+        android:layout_centerHorizontal="true"
+        android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp"
+        android:textColor="@color/colorTheme"
+        android:visibility="gone"
+        android:text="See related events"
+        android:id="@+id/related_events_text"/>
+
+</RelativeLayout>

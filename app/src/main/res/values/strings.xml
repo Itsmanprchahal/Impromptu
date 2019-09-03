@@ -1,0 +1,44 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">impromptu</string>
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="slideone">seize "\n"the"\n"moment</string>
+    <string name="skdetwo">broaden"\n"your"\n"horizons</string>
+    <string name="slidethree">promote"\n"your"\n"events</string>
+
+    <string name="slideonetext">choose from thousands of free events"\n"created by people like you</string>
+    <string name="slidetwotext">do something new today, make"\n"friends in the process</string>
+    <string name="slidethreetext">earn money and build a reputation by"\n"hosting events in your area</string>
+
+    <string name="eventname">GYMBOX Lelcester Sq</string>
+    <string name="eventDate">Tomorrow at 7PM</string>
+    <string name="alreadyhaveaccount">business or charity?  <u>"<b>"register here"</b>"</u></string>
+    <string name="donthaveaccount">Don\'t have an Account? <u>"<b>" SignUp"</b>"</u></string>
+
+    <string name="perviewDescrition">Two friends from Central Saint Martins are attending this event having heard great things about last year’s show.  Includes a runway segment, a sample sale and the opportunity to interact with up and coming designers. Check out the link for further info.  Will probably grab some coffee and cake afterwards. Happy for a handful of likeminded others to join us….</string>
+    <string name="perviewLocation">Kensington"\n"Town Hall Kensington W8 7NX"\n"London</string>
+    <string name="text">Your opinion helps people make"\n"better decisions about which events to join."\n"Share your feedback with us!</string>
+    <string name="thanksforcoming">thanks"\n"for"\n"coming!</string>
+
+    <string name="businesstext1">Engage"\n"Your"\n"Community</string>
+    <string name="businesstext2">First"\n"Month"\n"Free</string>
+    <string name="bussDesc1">Whether you are an established business or an upstart looking to find its feet, our unique platform is a powerful tool for promoting your events to people nearby.</string>
+    <string name="bussDesc2">Listing your event is simple, quick and you save a fortune in the process (£3.99 per event and 5% of any ticket cover). We are entirely free for registered charities!</string>
+
+    <string name="alreadySignup">Already signed up?</string>
+    <string name="ForgotPassword"><u>Forgot Password</u></string>
+    <string name="login"><u>Login here</u></string>
+    <string name="seemessages"><u>see messages for this event</u></string>
+
+    <string name="facebook_app_id">837238269949836</string>
+    <string name="fb_login_protocol_scheme">fb837238269949836</string>
+    <string name="googleclientId">AIzaSyC4saBshrgnDdwiHE-gaLeh4vagQnzOXlc</string>
+    <!--<string name="googleclientId">AIzaSyAmYry1bhZSOxVdIb3HmWz3QjqRda8yvrA</string>-->
+    <string name="userProfileQuestion">+ Answer up to three of these questions "\n" (Showcase your personality in the process)</string>
+    <string name="userProfileStatus">Write a bit about yourself to share with other users</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="pref_key_transition_time"><![CDATA[<string name=\"pref_key_transition_time\" translatable=\"false\">pref_key_transition_time</string>]]></string>
+    <string name="dialog_seekbar_transition_time"><![CDATA[<string name=\"dialog_seekbar_transition_time\">Item transition time in millis</string>]]></string>
+    <string name="server_client_id">905451169371-f5bfnn34du4j1p41o3if6m6mjd4gsvlk.apps.googleusercontent.com</string>
+</resources>

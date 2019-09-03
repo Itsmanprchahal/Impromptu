@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".messages.Messages">
+
+
+    <RelativeLayout
+        android:layout_margin="@dimen/defaultmargin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <AutoCompleteTextView
+            android:id="@+id/message_search"
+            android:hint="Search"
+            android:paddingLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sfuitextlight"
+            android:drawableLeft="@drawable/search"
+            android:padding="10dp"
+            android:background="@drawable/custom_edittext"
+            android:gravity="start"
+            android:textSize="18sp"
+            android:inputType="text"
+            />
+
+        <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/swipe_refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_marginTop="55dp"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/message_recycler"
+                android:layout_below="@id/message_search"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </android.support.v7.widget.RecyclerView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="No Messages"
+            android:textSize="@dimen/_25sdp"
+            android:visibility="gone"
+            android:id="@+id/nomessages"
+            android:layout_gravity="center_horizontal"/>
+    </RelativeLayout>
+
+
+</FrameLayout>

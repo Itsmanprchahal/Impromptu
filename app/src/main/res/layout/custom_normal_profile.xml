@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_10sdp">
+
+    <TextView
+        android:id="@+id/recycler_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/recyler_question_close"
+        android:text="What Your Hobbies?"
+        android:textSize="15sp"
+        android:fontFamily="@font/circularstdblack"
+        android:layout_marginRight="60dp"
+        android:textColor="@color/colortextBlack"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:background="@drawable/close"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:id="@+id/normal_user_close"/>
+
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:background="@drawable/edit"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="40dp"
+        android:id="@+id/normla_user_edit"/>
+
+    <TextView
+        android:id="@+id/recycler_answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recycler_question"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/sfuitextlight"
+        android:layout_marginTop="3dp"
+        android:textColor="@color/colortextBlack"
+        android:gravity="start" />
+</RelativeLayout>

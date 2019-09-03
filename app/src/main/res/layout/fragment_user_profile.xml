@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SettingFragmentsOptions.UserProfileFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="2dp"
+                android:id="@+id/user_card">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/user_profile_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/back"
+                        android:id="@+id/back_user_profile"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/profile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toLeftOf="@id/user_profile_edit_toolbar"
+                            android:fontFamily="@font/circularstdbold"
+                            android:gravity="center"
+                            android:text="Profile"
+                            android:textColor="@color/colortextBlack"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:id="@+id/user_profile_edit_toolbar"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="20dp"
+                            android:src="@drawable/edit" />
+
+                    </RelativeLayout>
+                </android.support.v7.widget.Toolbar>
+
+            </android.support.v7.widget.CardView>
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/user_card"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp">
+
+
+                <RelativeLayout
+                    android:id="@+id/user_profile_relative_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_toLeftOf="@id/user_profile_userimage">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:id="@+id/usernamelayout">
+
+                        <TextView
+                            android:id="@+id/user_profile_username"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:layout_toLeftOf="@id/user_profile_age"
+                            android:fontFamily="@font/circularstdbold"
+                            android:text="Name"
+                            android:textColor="@color/colortextBlack"
+                            android:textSize="@dimen/_14sdp"
+                            android:textStyle="bold" />
+
+
+                        <TextView
+                            android:id="@+id/user_profile_age"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/circularstdbold"
+                            android:text="(Age)"
+                            android:gravity="bottom"
+                            android:textColor="@color/colortextBlack"
+                            android:textSize="@dimen/_8sdp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/usernamelayout"
+                        android:hint="Gender"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/sfuitextlight"
+                        android:id="@+id/normal_user_gender"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:id="@+id/pointslayout"
+                        android:layout_below="@id/normal_user_gender"
+                        android:layout_marginTop="@dimen/_5sdp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Total Posints:"
+                            android:textSize="12sp"
+                            android:textColor="@color/colortextBlack"></TextView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:layout_marginLeft="2dp"
+                            android:textSize="12sp"
+                            android:id="@+id/totalpoints"></TextView>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/user_profile_staus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/pointslayout"
+                        android:layout_alignParentStart="true"
+                        android:textColor="@color/colortextBlack"
+                        android:layout_marginStart="0dp"
+                        android:maxLines="4"
+                        android:scrollbars="vertical"
+                        android:fontFamily="@font/sfuitextlight"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="@string/userProfileStatus"
+                        android:textSize="12sp" />
+
+
+                </RelativeLayout>
+
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/user_profile_userimage"
+                    app:riv_corner_radius="10dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_alignParentRight="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/screen1" />
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/user_profile_question_recycle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/user_profile_userimage"
+                    android:layout_marginTop="@dimen/_10sdp"></android.support.v7.widget.RecyclerView>
+
+
+
+                <TextView
+                    android:id="@+id/user_profile_Event"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/user_profile_question_recycle"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/circularstdbold"
+                    android:text="Events Hosted"
+                    android:textColor="@color/colortextBlack"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/user_profile_question_recycle"
+                    android:layout_marginTop="10dp"
+                    android:textSize="15dp"
+                    android:textColor="@color/colortextBlack"
+                    android:textStyle="bold"
+                    android:id="@+id/normal_user_total_live_events"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/user_profile_events_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/user_profile_Event"></android.support.v7.widget.RecyclerView>
+
+
+                <TextView
+                    android:id="@+id/user_profile_Event_attend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/user_profile_events_recycler"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/circularstdbold"
+                    android:text="Events Attended"
+                    android:textColor="@color/colortextBlack"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/user_profile_events_recycler"
+                    android:layout_marginTop="10dp"
+                    android:textSize="15dp"
+                    android:textColor="@color/colortextBlack"
+                    android:textStyle="bold"
+                    android:id="@+id/normal_user_total_past_events"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/user_profile_eventAttend_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/user_profile_Event_attend"></android.support.v7.widget.RecyclerView>
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+</FrameLayout>

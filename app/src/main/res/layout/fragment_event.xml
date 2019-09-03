@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Home_Screen_Fragments.Events">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="2dp"
+            android:id="@+id/event_card">
+
+            <android.support.v7.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:id="@+id/my_events_toolbar">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/myEvent_tittle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="My Events"
+                        android:gravity="center"
+                        android:fontFamily="@font/circularstdbold"
+                        android:textColor="@color/colortextBlack"
+                        android:textSize="@dimen/toolbartext"
+                        android:textStyle="bold" />
+
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.Toolbar>
+        </android.support.v7.widget.CardView>
+
+
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_below="@id/event_card"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/linearback"
+            android:id="@+id/tabs_layout"
+            android:padding="2.2dp">
+
+            <Button
+                android:id="@+id/myEvent_attending_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/circularstdblack"
+                android:background="@android:color/transparent"
+                android:text="Attending"
+                android:textAllCaps="false"
+                android:textColor="@color/colorTheme" />
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorTheme" />
+
+            <Button
+                android:id="@+id/myEvent_hosting_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:text="Hosting"
+                android:textAllCaps="false"
+                android:fontFamily="@font/circularstdblack"
+                android:textColor="@color/colorTheme" />
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorTheme" />
+
+            <Button
+                android:id="@+id/myEvent_favorite_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/circularstdblack"
+                android:background="@android:color/transparent"
+                android:text="Favourites"
+                android:textAllCaps="false"
+                android:textColor="@color/colorTheme" />
+
+        </LinearLayout>
+
+
+        <FrameLayout
+            android:id="@+id/myEvent_framelayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tabs_layout">
+
+        </FrameLayout>
+
+    </RelativeLayout>
+
+
+
+</FrameLayout>

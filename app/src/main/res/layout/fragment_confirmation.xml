@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.ConfirmationFragment">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/confirm_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:layout_toLeftOf="@id/confirm_close"
+                android:textStyle="bold"
+                android:fontFamily="@font/circularstdbold"
+                android:textColor="@color/colortextBlack"
+                android:text="Confirmation"/>
+
+            <ImageView
+                android:layout_alignParentRight="true"
+                android:id="@+id/confirm_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/close"
+                android:layout_marginRight="15dp"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/_25sdp"
+        android:layout_below="@id/confirm_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/_30sdp"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:gravity="center">
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_300sdp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:id="@+id/cardview"
+            app:layout_constraintRight_toRightOf="parent"
+            app:cardCornerRadius="16dp">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/confirm_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/event"
+                    android:scaleType="centerCrop"></ImageView>
+
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="5dp"
+                    android:background="#00FFFFFF"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_margin="@dimen/_10sdp"
+                    tools:ignore="MissingConstraints">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:id="@+id/confirm_qrCode"
+                        android:text="14dp"
+                        android:scaleType="fitXY"
+                        android:fontFamily="@font/circularstdbold"
+                        android:textColor="@color/colorTheme"
+                        android:padding="4dp"/>
+                </android.support.v7.widget.CardView>
+
+                <TextView
+                    android:id="@+id/confirm_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="Olympic WeightLifting"
+                    android:textColor="@color/colortextwhite"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:fontFamily="@font/sfuitextlight"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintVertical_bias="0.75"
+                    android:textSize="@dimen/_25sdp"
+                    tools:ignore="MissingConstraints" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/colortextwhite"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/eventview"
+                    app:layout_constraintTop_toBottomOf="@id/confirm_name"></View>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/eventview"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:fontFamily="@font/sfuitextlight"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:textColor="@color/colortextwhite"
+                    android:text="@string/eventname"
+                    android:id="@+id/confirm_address"
+                    android:textSize="@dimen/_12sdp"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/confirm_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$10"
+                    android:textSize="@dimen/_12sdp"
+                    android:textColor="@color/colortextwhite"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    app:layout_constraintTop_toBottomOf="@id/eventview"/>
+
+
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+
+
+    <Button
+        android:layout_margin="@dimen/defaultmargin"
+        android:id="@+id/confirm_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:textAllCaps="false"
+        android:background="@drawable/custom_next_bt"
+        android:fontFamily="@font/circularstdblack"
+        android:text="Go to My Events"
+        android:textColor="@color/colortextwhite" />
+
+
+
+</RelativeLayout>

@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colortextwhite"
+    tools:context=".Home_Screen_Fragments.AddEvents.PerviewEventActivity">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/perview_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/back"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/back_eventpublish"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/circularstdbold"
+                android:text="Create Event"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:gravity="center_horizontal"
+                android:textColor="@color/colortextBlack"
+                android:textSize="@dimen/normalText"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints" />
+
+            <ImageView
+                android:id="@+id/event_close_puublis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/close"
+                tools:ignore="MissingConstraints" />
+
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.Toolbar>
+
+
+    <ProgressBar
+        android:id="@+id/perview_progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/perview_toolbar"
+        android:layout_marginLeft="@dimen/defaultmargin"
+        android:layout_marginRight="@dimen/defaultmargin" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/perview_save_draft"
+        android:layout_below="@id/perview_progress_bar"
+        android:scrollbarStyle="outsideInset">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/circularstdbold"
+                android:text="Preview your event"
+                android:textColor="@color/colorTheme"
+                android:layout_marginLeft="@dimen/defaultmargin"
+                android:textSize="@dimen/_26sdp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_270sdp"
+                android:layout_below="@id/perview_progress_bar"
+                android:layout_marginTop="@dimen/defaultmargin"
+                android:layout_marginLeft="@dimen/defaultmargin"
+                android:layout_marginRight="@dimen/defaultmargin"
+                android:background="@color/colortextwhite">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/perview_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </android.support.v4.view.ViewPager>
+
+
+                <LinearLayout
+                    android:id="@+id/perview_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:gravity="start"
+                    android:orientation="horizontal">
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/perview_tittle_layout"
+                    android:layout_alignParentBottom="true"
+                    android:background="#45D3D3D3"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/perview_tittle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:fontFamily="@font/circularstdbold"
+                        android:text="Olympic WeightLifting"
+                        android:textColor="@color/colortextwhite"
+                        android:textSize="26sp"
+                        android:shadowColor="#A90A0A0A"
+                        android:shadowDx="2"
+                        android:shadowDy="2"
+                        android:shadowRadius="3"
+                        tools:ignore="MissingConstraints" />
+
+                    <View
+                        android:id="@+id/eventview"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/colortextwhite"></View>
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/perview_location"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            android:fontFamily="@font/sfuitextlight"
+                            app:layout_constraintRight_toLeftOf="@id/event_price"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_marginRight="@dimen/_50sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:text="@string/eventname"
+                            android:shadowColor="#A90A0A0A"
+                            android:shadowDx="2"
+                            android:shadowDy="2"
+                            android:shadowRadius="3"
+                            android:textColor="@color/colortextwhite"
+                            android:textSize="@dimen/_12sdp"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:id="@+id/event_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_15sdp"
+                            android:fontFamily="@font/sfuitextlight"
+                            android:gravity="end"
+                            android:shadowColor="#A90A0A0A"
+                            android:shadowDx="2"
+                            android:shadowDy="2"
+                            android:shadowRadius="3"
+                            android:text="$10"
+                            android:textColor="@color/colortextwhite"
+                            android:textSize="@dimen/_12sdp"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </android.support.constraint.ConstraintLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/perview_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:text="@string/eventDate"
+                            android:fontFamily="@font/sfuitextlight"
+                            android:textColor="@color/colortextwhite"
+                            android:textSize="@dimen/_12sdp"
+                            android:shadowColor="#A90A0A0A"
+                            android:shadowDx="2"
+                            android:shadowDy="2"
+                            android:shadowRadius="3"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:id="@+id/perview_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:text=""
+                            android:shadowColor="#A90A0A0A"
+                            android:shadowDx="2"
+                            android:shadowDy="2"
+                            android:shadowRadius="3"
+                            android:fontFamily="@font/sfuitextlight"
+                            android:textColor="@color/colortextwhite"
+                            android:textSize="@dimen/_12sdp"
+                            tools:ignore="MissingConstraints"></TextView>
+
+
+                        <TextView
+                            android:id="@+id/perview_categry"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:text="category"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:textSize="@dimen/_12sdp"
+                            android:shadowColor="#A90A0A0A"
+                            android:shadowDx="2"
+                            android:shadowDy="2"
+                            android:shadowRadius="3"
+                            android:fontFamily="@font/sfuitextlight"
+                            android:textColor="@color/colortextwhite"
+                            android:visibility="visible" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/cardcorners"
+                android:layout_marginLeft="@dimen/defaultmargin"
+                android:layout_marginRight="@dimen/defaultmargin"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/linear1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="@dimen/defaultmargin"
+                    android:paddingRight="@dimen/defaultmargin"
+                    android:paddingTop="@dimen/defaultmargin"
+                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/circularstdbold"
+                        android:text="Description"
+                        android:textColor="@color/colortextBlack"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
+
+                    <com.borjabravo.readmoretextview.ReadMoreTextView
+                        android:id="@+id/perview_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:trimExpandedText="Read more"
+                        app:trimCollapsedText="Read less"
+                        app:trimMode="trimModeLength"
+                        app:trimLength="150"
+                        android:fontFamily="@font/sfuitextlight"
+                        app:colorClickableText="@color/colorTheme" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorTheme"
+                        android:text="Read more"
+                        android:fontFamily="@font/sfuitextlight"
+                        android:id="@+id/readmore"
+                        android:visibility="gone"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/defaultmargin"
+                        android:visibility="gone"
+                        android:fontFamily="@font/sfuitextlight"
+                        android:text="Read more:" />
+
+                    <TextView
+                        android:id="@+id/perview_link1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/circularstdblack"
+                        android:text=""
+                        android:visibility="gone"
+                        android:textColor="@color/colorTheme"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/perview_link2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/circularstdblack"
+                        android:text=""
+                        android:visibility="gone"
+                        android:textColor="@color/colorTheme"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/perview_link3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/circularstdblack"
+                        android:text=""
+                        android:visibility="gone"
+                        android:textColor="@color/colorTheme"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/defaultmargin"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/circularstdbold"
+                            android:text="Attendees"
+                            android:textColor="@color/colortextBlack"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/perview_attendess_people"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/defaultmargin"
+                            android:fontFamily="@font/sfuitextlight"
+                            android:text="4 people are going" />
+
+                        <TextView
+                            android:id="@+id/perview_seeAll"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:fontFamily="@font/sfuitextlight"
+                            android:text="+ See All"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/perview_recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone">
+
+                    </android.support.v7.widget.RecyclerView>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="10dp"
+                        android:layerType="software"
+                        android:src="@drawable/dashed" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:id="@+id/perview_user_picture"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/screen1"
+                            app:riv_corner_radius="10dp" />
+
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/circularstdbold"
+                                android:text="The Organiser"
+                                android:textColor="@color/colortextBlack"
+                                android:textSize="@dimen/_13sdp" />
+
+                            <TextView
+                                android:id="@+id/perview_organiser_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/sfuitextlight"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/perview_message"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginTop="10dp"
+                                android:visibility="visible"
+                                android:layout_marginRight="10dp"
+                                android:src="@drawable/message" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layerType="software"
+                        android:src="@drawable/dashed">
+
+                    </ImageView>
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/invitefriendslayout"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/defaultmargin"
+                            android:gravity="center"
+                            android:fontFamily="@font/sfuitextlight"
+                            android:padding="@dimen/editPadding"
+                            android:text="Invite Friends"
+                            android:textColor="@color/colorTheme"
+                            android:textSize="15sp"
+                            android:id="@+id/male_female_invite"
+                            android:textStyle="bold"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:id="@+id/value_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/defaultmargin"
+                            android:fontFamily="@font/circularstdbold"
+                            android:padding="@dimen/editPadding"
+                            app:layout_constraintLeft_toRightOf="@id/male_female_invite"
+                            android:text=""
+                            android:textColor="@color/colorTheme"
+                            android:textSize="15sp"
+                            tools:ignore="MissingConstraints" />
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            app:layout_constraintRight_toRightOf="parent"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginRight="10dp"
+                            android:src="@drawable/userlogo"
+                            tools:ignore="MissingConstraints" />
+
+                    </android.support.constraint.ConstraintLayout>
+
+                </LinearLayout>
+
+
+                <Button
+                    android:id="@+id/perview_publish"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:background="@drawable/custom_next_bt"
+                    android:text="Publish"
+                    android:fontFamily="@font/circularstdbold"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colortextwhite"
+                    android:textSize="20sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"></View>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+    <TextView
+        android:id="@+id/perview_save_draft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:padding="@dimen/editPadding"
+        android:fontFamily="@font/sfuitextlight"
+        android:text="Save Draft"
+        android:textColor="@color/colorTheme"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+</RelativeLayout>

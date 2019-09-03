@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="slidetext">60sp</dimen>
+    <dimen name="titleSize">30sp</dimen>
+    <dimen name="toolbartext">18sp</dimen>
+    <dimen name="normalText">18sp</dimen>
+    <dimen name="smalltext">14sp</dimen>
+    <dimen name="mediumtext">20sp</dimen>
+    <dimen name="dots_height">30dp</dimen>
+    <dimen name="dots_margin_bottom">30dp</dimen>
+    <dimen name="defaultmargin">16dp</dimen>
+    <dimen name="extramargin">17dp</dimen>
+    <dimen name="minormargin">2dp</dimen>
+    <dimen name="tittle">15sp</dimen>
+    <dimen name="editPadding">10dp</dimen>
+    <dimen name="standard_55">60dp</dimen>
+    <dimen name="standard_105">105dp</dimen>
+
+</resources>

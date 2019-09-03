@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/mainActivity_layout"
+    android:fitsSystemWindows="true"
+    android:background="#B9B6B6"
+    tools:context=".ui.MainActivity">
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/main_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v4.view.ViewPager>
+
+
+    <LinearLayout
+        android:id="@+id/layoutDots"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_40sdp"
+        android:gravity="center"
+        android:orientation="horizontal">
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:background="@color/colorTrans"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:text="Skip"
+        android:fontFamily="@font/sfuitextlight"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:gravity="center"
+        android:drawablePadding="-30dp"
+        android:textColor="@color/colortextwhite"
+        android:textSize="15sp"
+        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+        android:id="@+id/mainActivity_skip"/>
+
+</RelativeLayout>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#C3FFFFFF"
+    android:padding="10dp">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/custom_guest_image"
+        android:layout_width="@dimen/_70sdp"
+        android:layout_height="@dimen/_70sdp"
+        app:riv_corner_radius="8dp"
+        android:src="@drawable/profile"
+        android:scaleType="centerCrop"/>
+
+    <TextView
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/custom_guest_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/custom_guest_image"
+        android:text="Event Name"
+        android:textStyle="bold"
+        android:fontFamily="@font/circularstdbold"
+        android:textSize="18sp"
+        android:textColor="#B7000000"/>
+
+    <TextView
+        android:id="@+id/custom_guest_ticket"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Type of ticket"
+        android:fontFamily="@font/sfuitextlight"
+        android:textSize="18sp"
+        android:layout_below="@id/custom_guest_name"
+        android:layout_toRightOf="@id/custom_guest_image"/>
+
+
+    <ImageView
+        android:id="@+id/custom_guest_check"
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_checked"
+        android:layout_alignParentRight="true"
+        android:foregroundGravity="center_horizontal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="0"
+        android:textColor="@color/colortextBlack"
+        android:textStyle="bold"
+        android:textSize="@dimen/_15sdp"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical"
+        android:layout_marginTop="35dp"
+        android:layout_marginRight="10dp"
+        android:visibility="gone"
+        android:id="@+id/count"
+        android:foregroundGravity="center_horizontal"/>
+
+    <View
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#C9C5C5"
+        android:layout_below="@id/custom_guest_image"/>
+
+
+
+
+
+
+
+
+
+
+</RelativeLayout>

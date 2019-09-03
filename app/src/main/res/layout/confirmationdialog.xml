@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/_280sdp"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_15sdp"
+    android:layout_gravity="center"
+    android:background="@drawable/ticketboxround"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Are you sure to delete?"
+            android:textColor="@color/colortextBlack"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:fontFamily="@font/circularstdbold"
+            android:textSize="@dimen/_12sdp"
+            android:id="@+id/deletedialogtext"
+            tools:ignore="MissingConstraints" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="@dimen/_15sdp"
+                tools:ignore="MissingConstraints">
+
+                <Button
+                    android:id="@+id/yesdialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Yes"
+                    android:fontFamily="@font/circularstdblack"
+                    android:textAllCaps="false"
+                    android:background="@drawable/custom_next_bt"
+                    android:textColor="@color/colortextwhite"
+                    android:layout_marginLeft="@dimen/margin_small"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    app:layout_constraintTop_toBottomOf="@id/layoutone"/>
+
+                <Button
+                    android:id="@+id/nodialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/circularstdblack"
+                    android:text="No"
+                    android:textAllCaps="false"
+                    android:layout_marginRight="@dimen/margin_small"
+                    android:background="@drawable/custom_next_bt"
+                    android:textColor="@color/colortextwhite"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    app:layout_constraintTop_toBottomOf="@id/layoutone"/>
+
+            </LinearLayout>
+
+
+
+
+    </android.support.constraint.ConstraintLayout>

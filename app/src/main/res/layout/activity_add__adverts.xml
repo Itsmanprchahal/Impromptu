@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.Add_Adverts">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/advertToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="55dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/circularstdbold"
+                android:gravity="center"
+                android:text="Create Advert"
+                android:textColor="@color/colortextBlack"
+                android:textSize="@dimen/toolbartext"
+                />
+
+            <ImageView
+                android:id="@+id/closeAdvert"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/close" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+    <ProgressBar
+        android:paddingLeft="@dimen/defaultmargin"
+        android:paddingRight="@dimen/defaultmargin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:id="@+id/advertProgressBar"
+        android:layout_below="@id/advertToolbar"/>
+
+
+    <ScrollView
+        android:layout_below="@id/advertProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/addPerview">
+
+
+        <LinearLayout
+            android:paddingLeft="@dimen/defaultmargin"
+            android:paddingRight="@dimen/defaultmargin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_above="@+id/add_event_next">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/circularstdbold"
+                android:text="Your Advert"
+                android:textColor="@color/colorTheme"
+                android:textSize="@dimen/_20sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/circularstdbold"
+                android:text="Title"
+                android:textColor="@color/colortextBlack"
+                android:textSize="@dimen/_13sdp"
+                android:layout_marginTop="20dp"/>
+
+            <EditText
+                android:layout_marginTop="10dp"
+                android:id="@+id/advertTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="50dp"
+                android:inputType="text"
+                android:background="@drawable/custom_edittext"
+                android:hint="Add Title"
+                android:padding="10dp"
+                android:textSize="14sp"/>
+
+            <TextView
+
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/circularstdbold"
+                android:text="Description"
+                android:textColor="@color/colortextBlack"
+                android:textSize="@dimen/_13sdp"/>
+
+            <EditText
+
+                android:layout_marginTop="10dp"
+                android:id="@+id/advertDesc"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:textAlignment="textStart"
+                android:background="@drawable/custom_edittext"
+                android:hint="Add Description"
+                android:inputType="textMultiLine"
+                android:singleLine="false"
+                android:maxHeight="100dp"
+                android:padding="10dp"
+                android:gravity="start"
+                android:overScrollMode="always"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical"/>
+
+            <TextView
+
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/circularstdbold"
+                android:text="Category"
+                android:textColor="@color/colortextBlack"
+                android:textSize="@dimen/_13sdp" />
+
+            <Spinner
+                android:layout_marginTop="10dp"
+                android:id="@+id/addvertCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </Spinner>
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/circularstdbold"
+                android:text="Pictures"
+                android:textColor="@color/colortextBlack"
+                android:textSize="@dimen/_13sdp"/>
+
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:id="@+id/advertAddpicture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/circularstdbold"
+                android:text="+Add picture"
+                android:textSize="@dimen/_12sdp"
+                android:textColor="@color/colorTheme"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Duration "
+                    android:textStyle="bold"
+                    android:textColor="@color/colortextBlack"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_marginTop="15dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="(£ 1.99 perweek)"
+                    android:textColor="@color/colortextBlack"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:id="@+id/duration"/>
+
+            </LinearLayout>
+
+
+            <Spinner
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/priceSpinner"></Spinner>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/addPerview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_margin="@dimen/defaultmargin"
+        android:background="@drawable/custom_next_bt"
+        android:text="Perview"
+        android:textAllCaps="false"
+        android:textColor="@color/colortextwhite"
+        android:layout_alignParentBottom="true"
+        android:textSize="20dp" />
+
+</RelativeLayout>

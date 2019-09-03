@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colortextwhite"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Home_Screen_Fragments.Setting">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="2dp"
+        android:id="@+id/setting_card">
+
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Settings"
+                android:textSize="@dimen/toolbartext"
+                android:textColor="@color/colortextBlack"
+                android:fontFamily="@font/circularstdbold"
+                android:gravity="center_horizontal"
+                android:id="@+id/setting_toolbar"/>
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.v7.widget.CardView>
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="55dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/defaultmargin"
+        android:layout_marginRight="@dimen/defaultmargin"
+        android:layout_marginBottom="@dimen/defaultmargin"
+        >
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Profile"
+            android:drawableLeft="@drawable/ic_user"
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            android:fontFamily="@font/sfuitextlight"
+            android:padding="@dimen/_8sdp"
+            android:drawablePadding="15dp"
+            android:textColor="@color/colortextBlack"
+            android:id="@+id/setting_profile_option"/>
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:visibility="gone"
+            android:background="@color/colorgrey"
+            android:id="@+id/view1"></View>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Account Verified"
+            android:drawableLeft="@drawable/ic_verifiaction"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/sfuitextlight"
+            android:padding="@dimen/_8sdp"
+            android:drawableRight="@drawable/ic_correct"
+            android:drawablePadding="15dp"
+            android:textColor="@color/colortextBlack"
+            android:id="@+id/setting_verification_option"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/colorgrey"></View>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Change Password"
+            android:drawableLeft="@drawable/ic_password"
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            android:fontFamily="@font/sfuitextlight"
+            android:padding="@dimen/_8sdp"
+            android:drawablePadding="15dp"
+            android:textColor="@color/colortextBlack"
+            android:id="@+id/setting_changepassword_option"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:visibility="gone"
+            android:id="@+id/passwordview"
+            android:background="@color/colorgrey"></View>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Help"
+            android:drawableLeft="@drawable/ic_enqury"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/sfuitextlight"
+            android:padding="@dimen/_8sdp"
+            android:drawablePadding="15dp"
+            android:textColor="@color/colortextBlack"
+            android:id="@+id/setting_help_option"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/colorgrey">
+
+        </View>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Payment Details"
+            android:drawableLeft="@drawable/ic_payment"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/sfuitextlight"
+            android:padding="@dimen/_8sdp"
+            android:drawablePadding="15dp"
+            android:textColor="@color/colortextBlack"
+            android:id="@+id/setting_paymentdetails_option"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/colorgrey">
+
+        </View>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Invite User"
+            android:drawableLeft="@drawable/ic_envelope"
+            android:gravity="center_vertical"
+            android:padding="@dimen/_8sdp"
+            android:drawablePadding="15dp"
+            android:fontFamily="@font/sfuitextlight"
+            android:textColor="@color/colortextBlack"
+            android:id="@+id/setting_inviteuser_option"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/colorgrey">
+
+        </View>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Terms and Conditions"
+            android:drawableLeft="@drawable/ic_tandc"
+            android:gravity="center_vertical"
+            android:padding="@dimen/_8sdp"
+            android:drawablePadding="15dp"
+            android:fontFamily="@font/sfuitextlight"
+            android:textColor="@color/colortextBlack"
+            android:id="@+id/setting_termsandconditions_option"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/colorgrey">
+
+        </View>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Privacy Policy"
+            android:drawableLeft="@drawable/ic_privacy"
+            android:gravity="center_vertical"
+            android:padding="@dimen/_8sdp"
+            android:drawablePadding="15dp"
+            android:fontFamily="@font/sfuitextlight"
+            android:textColor="@color/colortextBlack"
+            android:id="@+id/setting_privancyStatement_option"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/colorgrey">
+
+        </View>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Frequently asked questions"
+            android:drawableLeft="@drawable/ic_faq"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/sfuitextlight"
+            android:padding="@dimen/_8sdp"
+            android:drawablePadding="15dp"
+            android:textColor="@color/colortextBlack"
+            android:id="@+id/setting_FAQ_option"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/colorgrey">
+
+        </View>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:drawableLeft="@drawable/ic_logout"
+            android:gravity="center_vertical"
+            android:padding="@dimen/_8sdp"
+            android:fontFamily="@font/sfuitextlight"
+            android:drawablePadding="15dp"
+            android:textColor="@color/colortextBlack"
+            android:id="@+id/setting_logout_option"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/colorgrey">
+
+        </View>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Contact Us"
+            android:drawableLeft="@drawable/ic_contact"
+            android:gravity="center_vertical"
+            android:padding="@dimen/_8sdp"
+            android:fontFamily="@font/sfuitextlight"
+            android:drawablePadding="15dp"
+            android:textColor="@color/colortextBlack"
+            android:id="@+id/setting_contactUs_option"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/colorgrey">
+
+        </View>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete Account"
+            android:drawableLeft="@drawable/ic_delete"
+            android:gravity="center_vertical"
+            android:padding="@dimen/_8sdp"
+            android:drawablePadding="15dp"
+            android:fontFamily="@font/sfuitextlight"
+            android:textColor="@color/colortextBlack"
+            android:id="@+id/setting_deleteAccount_option"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/colorgrey">
+
+        </View>
+
+
+    </LinearLayout>
+    </ScrollView>
+
+
+</FrameLayout>

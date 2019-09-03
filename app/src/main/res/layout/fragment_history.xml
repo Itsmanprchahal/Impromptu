@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Home_Screen_Fragments.HostingTabs.History">
+
+    <com.yarolegovich.discretescrollview.DiscreteScrollView
+        android:id="@+id/business_history__recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+    </com.yarolegovich.discretescrollview.DiscreteScrollView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_35sdp"
+        android:textColor="@color/colortextBlack"
+        android:text="No Events"
+        android:layout_gravity="center"
+        android:fontFamily="@font/circularstdbold"
+        android:gravity="center"
+        android:id="@+id/noevents_history"
+        android:visibility="gone"/>
+</FrameLayout>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/register_conststraint"
+    tools:context=".BusinessRegisterLogin.RegisterSlideActivity">
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:text= "Back"
+        android:textAllCaps="false"
+        android:gravity="center"
+        android:fontFamily="@font/sfuitextlight"
+        android:drawablePadding="-30dp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:drawableLeft="@drawable/ic_keyboard_arrow_left_black_24dp"
+        android:textColor="@color/colortextwhite"
+        android:id="@+id/back_bussiness_bt"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="#00000000"
+        android:fontFamily="@font/sfuitextlight"
+        android:textAllCaps="false"
+        android:text="Skip"
+        android:gravity="center"
+        android:drawablePadding="-20dp"
+        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+        android:textColor="@color/colortextwhite"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:visibility="visible"
+        android:id="@+id/Register_bussiness_bt"
+        tools:ignore="MissingConstraints" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/register_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v4.view.ViewPager>
+
+    <LinearLayout
+        android:id="@+id/registerlayoutDots"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

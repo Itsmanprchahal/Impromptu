@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "905451169371",
+    "firebase_url": "https://impromptu-1550653581034.firebaseio.com",
+    "project_id": "impromptu-1550653581034",
+    "storage_bucket": "impromptu-1550653581034.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905451169371:android:eed5124fcfb59886",
+        "android_client_info": {
+          "package_name": "com.mandywebdesign.impromptu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "905451169371-86d0ulfc51bu6u3pul4tq54ckg29ucre.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mandywebdesign.impromptu",
+            "certificate_hash": "c78ddb4ec1f72d73c718d2a8c0429aa4bcd8d1e7"
+          }
+        },
+        {
+          "client_id": "905451169371-smvtngr5k72ck5btffg34hogp46i8rup.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGCVJcWTzRgvydh3lz0_OQRyHvcl3-j2Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "905451169371-smvtngr5k72ck5btffg34hogp46i8rup.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "905451169371-ul5vml5lhfojkm017p2qlnv272nj965r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mandyweb.impromptu"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
