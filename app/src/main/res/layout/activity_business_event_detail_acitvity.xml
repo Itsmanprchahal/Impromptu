@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colortextwhite"
-    tools:context=".BusinessRegisterLogin.BusinessEvent_detailsFragment">
+    tools:context=".BusinessRegisterLogin.BusinessEventDetailAcitvity">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:id="@+id/event_details_text">
+        android:id="@+id/event_details_text"
+        tools:ignore="MissingConstraints">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -25,35 +26,45 @@
                 android:layout_height="wrap_content"
                 tools:ignore="MissingConstraints">
 
-                <android.support.constraint.ConstraintLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:id="@+id/editevent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_marginRight="@dimen/defaultmargin"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:src="@drawable/export"
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/back"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/transperent"
+                        android:id="@+id/backon_b_eventdetail"></ImageButton>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Event Details"
+                        android:layout_centerInParent="true"
+                        android:textSize="@dimen/mediumtext"
+                        android:textColor="@color/colortextBlack"
+                        android:fontFamily="@font/circularstdbold"
                         tools:ignore="MissingConstraints" />
 
-                </android.support.constraint.ConstraintLayout>
+                    <ImageView
+                        android:id="@+id/editevent"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/export"
+                        android:background="@drawable/transperent"
+                        tools:ignore="MissingConstraints" />
+
+                </RelativeLayout>
 
             </android.support.v7.widget.Toolbar>
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Event Details"
-                android:layout_gravity="center"
-                android:textSize="@dimen/mediumtext"
-                android:textColor="@color/colortextBlack"
-                android:fontFamily="@font/circularstdbold"
-                tools:ignore="MissingConstraints" />
+
         </android.support.v7.widget.CardView>
 
 
@@ -451,157 +462,157 @@
                                 android:orientation="vertical"
                                 android:id="@+id/pricelayout">
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:weightSum="5"
-                                android:orientation="horizontal">
-
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical">
-                                    <TextView
-                                        android:id="@+id/BusinessEvent_detailsFragment_book_price"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:text="£6"
-                                        android:fontFamily="@font/sfuitextlight"
-                                        android:textSize="18sp" />
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:weightSum="5"
+                                    android:orientation="horizontal">
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:layout_marginTop="10dp"
-                                        android:fontFamily="@font/sfuitextlight"
-                                        android:text="Event Price"
-                                        android:textSize="12sp" />
-
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical"
-                                    android:layout_weight="1">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="0.6"
-                                        android:text="X"
-                                        android:layout_gravity="center"
-                                        android:textAlignment="center"
-                                        android:fontFamily="@font/sfuitextlight"
-                                        android:textSize="18sp" />
-                                </LinearLayout>
-
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical"
-                                    android:layout_weight="1">
-
-                                    <TextView
-                                        android:id="@+id/BusinessEvent_detailsFragment_book_ticket_number"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1.4"
-                                        android:fontFamily="@font/sfuitextlight"
-                                        android:text="0"
-                                        android:layout_gravity="center"
-                                        android:textAlignment="center"
-                                        android:textSize="18sp" />
-
-                                    <TextView
+                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:text="Attendees"
-                                        android:layout_marginTop="10dp"
-                                        android:textAlignment="center"
-                                        android:fontFamily="@font/sfuitextlight"
-                                        android:textSize="12sp" />
+                                        android:orientation="vertical">
+                                        <TextView
+                                            android:id="@+id/BusinessEvent_detailsFragment_book_price"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="£6"
+                                            android:fontFamily="@font/sfuitextlight"
+                                            android:textSize="18sp" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:layout_marginTop="10dp"
+                                            android:fontFamily="@font/sfuitextlight"
+                                            android:text="Event Price"
+                                            android:textSize="12sp" />
+
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_weight="1">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="0.6"
+                                            android:text="X"
+                                            android:layout_gravity="center"
+                                            android:textAlignment="center"
+                                            android:fontFamily="@font/sfuitextlight"
+                                            android:textSize="18sp" />
+                                    </LinearLayout>
+
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_weight="1">
+
+                                        <TextView
+                                            android:id="@+id/BusinessEvent_detailsFragment_book_ticket_number"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1.4"
+                                            android:fontFamily="@font/sfuitextlight"
+                                            android:text="0"
+                                            android:layout_gravity="center"
+                                            android:textAlignment="center"
+                                            android:textSize="18sp" />
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="Attendees"
+                                            android:layout_marginTop="10dp"
+                                            android:textAlignment="center"
+                                            android:fontFamily="@font/sfuitextlight"
+                                            android:textSize="12sp" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="="
+                                            android:layout_gravity="center"
+                                            android:textAlignment="center"
+                                            android:fontFamily="@font/sfuitextlight"
+                                            android:textSize="18sp" />
+                                    </LinearLayout>
+
+
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_weight="1">
+                                        <TextView
+                                            android:id="@+id/BusinessEvent_detailsFragment_book_total_price"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="£0"
+                                            android:textAlignment="textEnd"
+                                            android:layout_gravity="end"
+                                            android:fontFamily="@font/sfuitextlight"
+                                            android:gravity="center"
+                                            android:textColor="@color/colorTheme"
+                                            android:textSize="18sp"
+                                            tools:ignore="RtlCompat" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="Total"
+                                            android:layout_gravity="right"
+                                            android:layout_marginTop="10dp"
+                                            android:textAlignment="textEnd"
+                                            android:fontFamily="@font/sfuitextlight"
+                                            android:gravity="center"
+                                            android:textSize="12sp"
+                                            tools:ignore="RtlCompat" />
+
+                                    </LinearLayout>
+
+
                                 </LinearLayout>
 
-                               <LinearLayout
-                                   android:layout_width="match_parent"
-                                   android:layout_height="wrap_content"
-                                   android:layout_weight="1"
-                                   android:orientation="vertical">
 
-                                   <TextView
-                                       android:layout_width="wrap_content"
-                                       android:layout_height="wrap_content"
-                                       android:layout_weight="1"
-                                       android:text="="
-                                       android:layout_gravity="center"
-                                       android:textAlignment="center"
-                                       android:fontFamily="@font/sfuitextlight"
-                                       android:textSize="18sp" />
-                               </LinearLayout>
+                                <Button
 
-
-
-                                <LinearLayout
+                                    android:id="@+id/BusinessEvent_detailsFragment_book_event_book_bt"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical"
-                                    android:layout_weight="1">
-                                    <TextView
-                                        android:id="@+id/BusinessEvent_detailsFragment_book_total_price"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:text="£0"
-                                        android:textAlignment="textEnd"
-                                        android:layout_gravity="end"
-                                        android:fontFamily="@font/sfuitextlight"
-                                        android:gravity="center"
-                                        android:textColor="@color/colorTheme"
-                                        android:textSize="18sp"
-                                        tools:ignore="RtlCompat" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:text="Total"
-                                        android:layout_gravity="right"
-                                        android:layout_marginTop="10dp"
-                                        android:textAlignment="textEnd"
-                                        android:fontFamily="@font/sfuitextlight"
-                                        android:gravity="center"
-                                        android:textSize="12sp"
-                                        tools:ignore="RtlCompat" />
-
-                                </LinearLayout>
-
-
+                                    android:layout_height="@dimen/_40sdp"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_marginTop="@dimen/defaultmargin"
+                                    android:background="@drawable/custom_next_bt"
+                                    android:fontFamily="@font/circularstdbold"
+                                    android:text="Check In Guests"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/colortextwhite"
+                                    android:textSize="20sp" />
                             </LinearLayout>
-
-
-                            <Button
-
-                                android:id="@+id/BusinessEvent_detailsFragment_book_event_book_bt"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_40sdp"
-                                android:layout_alignParentBottom="true"
-                                android:layout_marginTop="@dimen/defaultmargin"
-                                android:background="@drawable/custom_next_bt"
-                                android:fontFamily="@font/circularstdbold"
-                                android:text="Check In Guests"
-                                android:textAllCaps="false"
-                                android:textColor="@color/colortextwhite"
-                                android:textSize="20sp" />
-                        </LinearLayout>
                         </LinearLayout>
 
 
@@ -619,7 +630,7 @@
                             android:id="@+id/publish_on_eventsdetails"
                             android:background="@drawable/custom_next_bt"/>
 
-                        </LinearLayout>
+                    </LinearLayout>
 
 
 
@@ -631,6 +642,5 @@
         </LinearLayout>
 
     </ScrollView>
-
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.mandywebdesign.impromptu.ui;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -66,7 +67,7 @@ public class Join_us extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     GoogleSignInClient googleSignInClient;
     SignInButton signInButton;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     GoogleApiClient googleApiClient;
     public static String social_token;
     public static String fbUsername, fbToken, fbEmail, imageurl;
@@ -82,12 +83,12 @@ public class Join_us extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
 
 //        locationPermission();
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Please wait...");
+        progressDialog = ProgressBarClass.showProgressDialog(this);
+        progressDialog.dismiss();
         Drawable drawable = new ProgressBar(this).getIndeterminateDrawable().mutate();
         drawable.setColorFilter(ContextCompat.getColor(this, R.color.colorTheme),
                 PorterDuff.Mode.SRC_IN);
-        progressDialog.setIndeterminateDrawable(drawable);
+
 
         final GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 

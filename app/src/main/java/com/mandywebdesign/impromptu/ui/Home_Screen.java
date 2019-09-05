@@ -42,7 +42,7 @@ import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessUserProfile;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.Home;
 import com.mandywebdesign.impromptu.Retrofit.NormalGetProfile;
-import com.mandywebdesign.impromptu.SettingFragmentsOptions.Normal_user_profile;
+import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalPublishProfile;
 import com.mandywebdesign.impromptu.messages.Messages;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.Setting;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.Events;
@@ -64,13 +64,13 @@ public class Home_Screen extends AppCompatActivity {
     public static BottomNavigationView bottomNavigationView;
     SharedPreferences profileupdatedPref1, sharedPreferences, sharedPreferences1;
     SharedPreferences.Editor editor;
-    String userToken,refresh;
+    String userToken, refresh;
     Intent intent;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     String accept = "application/json";
     public static String BprofileStatus, data;
-    public static int countt = 0,newCount = 0;
-    String refreshvalue,checkgender,socailtoken;
+    public static int countt = 0, newCount = 0;
+    String refreshvalue, checkgender, socailtoken, itemPos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,20 +78,18 @@ public class Home_Screen extends AppCompatActivity {
         setContentView(R.layout.activity_home__screen);
 
         newCount = 0;
-        progressDialog = new ProgressDialog(this);
+        progressDialog = ProgressBarClass.showProgressDialog(this);
+        progressDialog.dismiss();
         Drawable drawable = new ProgressBar(this).getIndeterminateDrawable().mutate();
         drawable.setColorFilter(ContextCompat.getColor(this, R.color.colorTheme),
                 PorterDuff.Mode.SRC_IN);
-        progressDialog.setIndeterminateDrawable(drawable);
 
-        progressDialog.setMessage("Please wait");
-        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
         sharedPreferences1 = getSharedPreferences("BusinessProfile1", Context.MODE_PRIVATE);
         sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         userToken = "Bearer " + sharedPreferences.getString("Usertoken", "");
-        socailtoken = "Bearer "+sharedPreferences.getString("Socailtoken","");
+        socailtoken = "Bearer " + sharedPreferences.getString("Socailtoken", "");
 
         profileupdatedPref1 = getSharedPreferences("profileupdated", Context.MODE_PRIVATE);
         refreshvalue = sharedPreferences.getString("tab1", "");
@@ -107,7 +105,7 @@ public class Home_Screen extends AppCompatActivity {
 
         init();
         listeners();
-//
+
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
         final View iconView = menuView.getChildAt(2).findViewById(android.support.design.R.id.icon);
         final ViewGroup.LayoutParams layoutParams = iconView.getLayoutParams();
@@ -116,22 +114,22 @@ public class Home_Screen extends AppCompatActivity {
         layoutParams.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32, displayMetrics);
         iconView.setLayoutParams(layoutParams);
 
-       setHomeScreen();
+        setHomeScreen();
     }
+
 
     private void getProfile(String socailtoken) {
 
-        Call<NormalGetProfile> call = WebAPI.getInstance().getApi().normalGetPRofile(socailtoken,"application/json");
+        Call<NormalGetProfile> call = WebAPI.getInstance().getApi().normalGetPRofile(socailtoken, "application/json");
         call.enqueue(new Callback<NormalGetProfile>() {
             @Override
             public void onResponse(Call<NormalGetProfile> call, Response<NormalGetProfile> response) {
-                if (response.body()!=null)
-                {
-                    if(response.body().getData().get(0).getGender() == null){
+                if (response.body() != null) {
+                    if (response.body().getData().get(0).getGender() == null) {
                         Toast.makeText(Home_Screen.this, "Please update your profile.", Toast.LENGTH_SHORT).show();
                     } else {
-                        editor =  sharedPreferences.edit();
-                        editor.putString("profilegender",""+response.body().getData().get(0).getGender());
+                        editor = sharedPreferences.edit();
+                        editor.putString("profilegender", "" + response.body().getData().get(0).getGender());
                         editor.apply();
                     }
 
@@ -145,30 +143,36 @@ public class Home_Screen extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 
     private void setHomeScreen() {
 
         if (!loggedOut || account != null) {
-
             getProfile(socailtoken);
-            FragmentTransaction transaction = manager.beginTransaction();
-            transaction.replace(R.id.home_frame_layout, new Home());
-            transaction.commit();
+
+            Intent intent1 = getIntent();
+            String value = intent1.getStringExtra("bookevent");
+            if (value == null)
+            {
+
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.replace(R.id.home_frame_layout, new Home());
+                transaction.commit();
+            }else {
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.replace(R.id.home_frame_layout, new Events());
+                transaction.commit();
+            }
+
 
             Menu menu = bottomNavigationView.getMenu();
             menu.findItem(R.id.hometab).setIcon(R.drawable.iconhome);
+
             progressDialog.dismiss();
 
 
         } else {
 
             Call<RetroGetProfile> call = WebAPI.getInstance().getApi().getProfile(userToken, accept);
-
-
             call.enqueue(new Callback<RetroGetProfile>() {
                 @Override
                 public void onResponse(Call<RetroGetProfile> call, Response<RetroGetProfile> response) {
@@ -267,11 +271,10 @@ public class Home_Screen extends AppCompatActivity {
                             return true;
 
                         case R.id.myeventstab:
-                            checkgender = sharedPreferences.getString("profilegender","");
-                            if (checkgender.equals(""))
-                            {
+                            checkgender = sharedPreferences.getString("profilegender", "");
+                            if (checkgender.equals("")) {
                                 dialog();
-                            }else {
+                            } else {
                                 Intent intent = new Intent(Home_Screen.this, Add_Event_Activity.class);
                                 startActivity(intent);
                             }
@@ -286,7 +289,6 @@ public class Home_Screen extends AppCompatActivity {
                             FragmentTransaction transaction2 = manager.beginTransaction();
                             transaction2.replace(R.id.home_frame_layout, new Messages());
                             transaction2.commit();
-
 
 
                             return true;
@@ -321,7 +323,7 @@ public class Home_Screen extends AppCompatActivity {
                             transaction0.replace(R.id.home_frame_layout, new BusinessUserProfile());
                             transaction0.commit();
 
-                       return true;
+                            return true;
 
                         case R.id.wallettab:
 
@@ -384,7 +386,7 @@ public class Home_Screen extends AppCompatActivity {
         dialog.setCanceledOnTouchOutside(true);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        Button okay,cancel;
+        Button okay, cancel;
         okay = dialog.findViewById(R.id.checkokaydialog);
         cancel = dialog.findViewById(R.id.checkcanceldialog);
 
@@ -393,15 +395,10 @@ public class Home_Screen extends AppCompatActivity {
             public void onClick(View view) {
 
                 dialog.dismiss();
-                Bundle bundle = new Bundle();
-                bundle.putString("normal_edit", "0");
-                bundle.putString("backongendercheck","0");
-                Normal_user_profile user_profile = new Normal_user_profile();
-                user_profile.setArguments(bundle);
-
-                FragmentTransaction transaction2 = manager.beginTransaction();
-                transaction2.replace(R.id.home_frame_layout, user_profile);
-                transaction2.commit();
+                Intent intent = new Intent(Home_Screen.this, NormalPublishProfile.class);
+                intent.putExtra("normal_edit", "0");
+                intent.putExtra("backongendercheck", "0");
+                startActivity(intent);
             }
         });
 

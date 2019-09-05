@@ -1,6 +1,7 @@
 package com.mandywebdesign.impromptu.Home_Screen_Fragments.HostingTabs;
 
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -57,7 +58,7 @@ public class History extends Fragment  implements  DiscreteScrollView.OnItemChan
     String user,BToken,S_Token,itemPosition,formattedDate,getFormattedDate,timeFrom;
     DiscreteScrollView recyclerView;
     InfiniteScrollAdapter infiniteAdapter;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     public  static ArrayList<String> name1=new ArrayList<>();
     public static ArrayList<String> title = new ArrayList<>();
     public static ArrayList<String> prices = new ArrayList<>();
@@ -80,7 +81,8 @@ public class History extends Fragment  implements  DiscreteScrollView.OnItemChan
         Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
         noEvnets = view.findViewById(R.id.noevents_history);
 
-        progressDialog = ProgressBarClass.showProgressDialog(getContext(),"Please wait while we fetch your events");
+        progressDialog = ProgressBarClass.showProgressDialog(getContext());
+        progressDialog.dismiss();
 
         sharedPreferences1 = getActivity().getSharedPreferences("BusinessProfile1", Context.MODE_PRIVATE);
         profileupdatedPref = getContext().getSharedPreferences("profileupdated", Context.MODE_PRIVATE);
@@ -117,7 +119,7 @@ public class History extends Fragment  implements  DiscreteScrollView.OnItemChan
     }
 
     private void histortEvnts(String bToken) {
-
+        progressDialog.show();
         Call<RetroHistoryEvents> call = WebAPI.getInstance().getApi().history("Bearer "+bToken,"application/json");
         call.enqueue(new Callback<RetroHistoryEvents>() {
             @Override
@@ -227,8 +229,6 @@ public class History extends Fragment  implements  DiscreteScrollView.OnItemChan
                         editor2.clear();
                         editor2.commit();
 
-                        progressDialog.setMessage("login in another device");
-                        progressDialog.setCanceledOnTouchOutside(false);
                         progressDialog.show();
 
                         Intent intent = new Intent(getActivity(), Join_us.class);

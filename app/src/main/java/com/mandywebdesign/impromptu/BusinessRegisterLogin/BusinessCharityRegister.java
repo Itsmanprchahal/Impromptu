@@ -36,6 +36,7 @@ import com.mandywebdesign.impromptu.Retrofit.RetroRegisterPojo;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.NoInternet;
 import com.mandywebdesign.impromptu.ui.NoInternetScreen;
+import com.mandywebdesign.impromptu.ui.ProgressBarClass;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -54,7 +55,7 @@ public class BusinessCharityRegister extends AppCompatActivity {
     Dialog dialog, confirmdialog;
     ImageView closeLOginDialog, closeconfirmdialog;
     public static String s;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     Dialog popup, resetpopup;
@@ -66,11 +67,8 @@ public class BusinessCharityRegister extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business_charity_register);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        progressDialog = new ProgressDialog(this);
-        Drawable drawable = new ProgressBar(this).getIndeterminateDrawable().mutate();
-        drawable.setColorFilter(ContextCompat.getColor(this, R.color.colorTheme),
-                PorterDuff.Mode.SRC_IN);
-        progressDialog.setIndeterminateDrawable(drawable);
+        progressDialog = ProgressBarClass.showProgressDialog(this);
+        progressDialog.dismiss();
 
         sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
 
@@ -137,7 +135,6 @@ public class BusinessCharityRegister extends AppCompatActivity {
                 }else if (!Patterns.EMAIL_ADDRESS.matcher(mEmail.getText().toString()).matches()) {
                     mEmail.setError("Enter Valid email address");
                 } else {
-                    progressDialog.setMessage("Please wait until we register your account");
                     progressDialog.setCanceledOnTouchOutside(false);
                     progressDialog.show();
                     Call<RetroRegisterPojo> call = WebAPI.getInstance().getApi().RegisterUser(BusinessName, Email, Password, CharityNumber, "business");
@@ -261,7 +258,6 @@ public class BusinessCharityRegister extends AppCompatActivity {
                 } else if (BusinessPasswordEt.isEmpty()) {
                     mBusinessPasswordEt.setError("Enter Password");
                 } else {
-                    progressDialog.setMessage("Please wait until we login your account");
                     progressDialog.setCanceledOnTouchOutside(true);
                     progressDialog.show();
 

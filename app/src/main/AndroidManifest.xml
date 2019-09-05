@@ -8,19 +8,14 @@
         android:normalScreens="true"
         android:smallScreens="true"
         android:xlargeScreens="true" />
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality.
-    -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
     <uses-feature android:name="android.hardware.location.gps" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- the following two permissions are required if you want to take photo in selector -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -32,6 +27,7 @@
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
     <application
@@ -47,43 +43,39 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:ignore="HardcodedDebugMode">
-        <activity android:name=".SettingFragmentsOptions.FAQs" android:screenOrientation="portrait"/>
-        <activity android:name=".SettingFragmentsOptions.Contact_Us" android:screenOrientation="portrait"/>
-        <activity android:name=".TestingActivity" />
-        <activity android:name=".ui.NoInternetScreen" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.PayActivity"></activity>
+        <activity android:name=".messages.ChatBoxActivity" />
+        <activity android:name=".BusinessRegisterLogin.SeeAll_activity" />
+        <activity android:name=".BusinessRegisterLogin.QrScanActivity" />
+        <activity android:name=".ui.ConfirmationActivity" />
+        <activity android:name=".ui.BookEventActivity" />
+        <activity android:name=".BusinessRegisterLogin.CheckGuestActivity" />
+        <activity android:name=".BusinessRegisterLogin.BusinessEventDetailAcitvity" />
+        <activity android:name=".SettingFragmentsOptions.NormalGetProfile" />
+        <activity android:name=".SettingFragmentsOptions.NormalPublishProfile" />
+        <activity
+            android:name=".SettingFragmentsOptions.FAQs"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SettingFragmentsOptions.Contact_Us"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.NoInternetScreen"
+            android:screenOrientation="portrait" />
         <activity android:name=".ui.PerviewAdverts" />
         <activity android:name=".ui.Add_Adverts" />
-
-        <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="${applicationId}.com.vansuita.pickimage.provider"
-            android:exported="false"
-            android:grantUriPermissions="true"
-            tools:replace="android:authorities">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/picker_provider_paths" />
-        </provider>
-
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="d8234e6b517958c46f3aa852b9d439ed3e223f06" />
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/googleclientId" /> <!-- android:value="AIzaSyDfWrKBvwH6YE8X_bAsI__ykfdMQ8mX5MA"/> -->
-        <!-- android:value="AIzaSyAmYry1bhZSOxVdIb3HmWz3QjqRda8yvrA" /> -->
         <activity android:name=".BusinessRegisterLogin.RegisterSlideActivity" />
         <activity
             android:name=".BusinessRegisterLogin.BusinessCharityRegister"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Home_Screen_Fragments.AddEvents.PerviewEventActivity"
             android:launchMode="singleTask"
             android:parentActivityName=".Home_Screen_Fragments.AddEvents.EventDetailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing" />
+            android:windowSoftInputMode="adjustNothing" /> <!-- android:value="AIzaSyDfWrKBvwH6YE8X_bAsI__ykfdMQ8mX5MA"/> -->
+        <!-- android:value="AIzaSyAmYry1bhZSOxVdIb3HmWz3QjqRda8yvrA" /> -->
         <activity
             android:name=".Home_Screen_Fragments.AddEvents.EventDetailsActivity"
             android:launchMode="singleTask"
@@ -109,19 +101,16 @@
             android:name=".ui.Home_Screen"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
-
         <activity
             android:name=".ui.Join_us"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
@@ -130,14 +119,17 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data   android:scheme="http" />
-                <data   android:scheme="https" />
+                <action android:name="android.intent.action.VIEW" />
+                <data android:scheme="http" />
+                <data android:scheme="https" />
                 <data android:host="impromptusocial.com" />
             </intent-filter>
         </activity>
@@ -145,27 +137,49 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="d8234e6b517958c46f3aa852b9d439ed3e223f06" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/googleclientId" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/logo" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" /> <!-- [START fcm_default_icon] -->
+        <!--
+ Set custom default icon. This is used when no icon is set for incoming notification messages.
+             See README(https://goo.gl/l4GJaQ) for more.
+        -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+        <!--
+ Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.com.vansuita.pickimage.provider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/picker_provider_paths" />
+        </provider> <!-- [END fcm_default_icon] -->
+        <!-- [START fcm_default_channel] -->
         <service android:name=".FirebaseNotification.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <!-- [START fcm_default_icon] -->
-        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
-             See README(https://goo.gl/l4GJaQ) for more. -->
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/logo" />
-        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message. See README(https://goo.gl/6BKBk7) for more. -->
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorAccent" />
-        <!-- [END fcm_default_icon] -->
-        <!-- [START fcm_default_channel] -->
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/default_notification_channel_id" />
     </application>
+
 
 </manifest>

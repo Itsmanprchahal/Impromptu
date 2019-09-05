@@ -1,5 +1,6 @@
 package com.mandywebdesign.impromptu.SettingFragmentsOptions;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -28,7 +29,7 @@ public class Contact_Us extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     EditText contactus_emialet,contactus_messageet;
     Button contactus_submitbt;
-    ProgressDialog dialog;
+    Dialog dialog;
     ImageButton contactus_back;
 
     @Override
@@ -37,8 +38,9 @@ public class Contact_Us extends AppCompatActivity {
         setContentView(R.layout.activity_contact__us);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        dialog = ProgressBarClass.showProgressDialog(this,"Please wait...");
+        dialog = ProgressBarClass.showProgressDialog(this);
         dialog.dismiss();
+
         sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         BToken = sharedPreferences.getString("Usertoken", "");
         S_Token = sharedPreferences.getString("Socailtoken", "");
@@ -81,6 +83,7 @@ public class Contact_Us extends AppCompatActivity {
     }
 
     private void sendmesg(String s_token,String messg) {
+        dialog.show();
         Call<SendContactUSmesg> contactUSmesgCall = WebAPI.getInstance().getApi().sendcontactmesg(s_token,messg);
         contactUSmesgCall.enqueue(new Callback<SendContactUSmesg>() {
             @Override

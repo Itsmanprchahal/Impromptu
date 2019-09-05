@@ -11,9 +11,7 @@ import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.mandywebdesign.impromptu.ui.BookEventFragment;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.AddEvents.PerviewEventActivity;
-import com.mandywebdesign.impromptu.Models.AddImagePojo;
 import com.mandywebdesign.impromptu.R;
 
 import java.util.List;
@@ -24,7 +22,6 @@ public class PerviewImageAdpater extends PagerAdapter {
     List<String> addImagePojos;
     LayoutInflater inflater;
     Context context;
-    BookEventFragment bookEventFragment;
 
     public PerviewImageAdpater(PerviewEventActivity perviewEventActivity, List<String> addImagePojos) {
         this.context = perviewEventActivity;

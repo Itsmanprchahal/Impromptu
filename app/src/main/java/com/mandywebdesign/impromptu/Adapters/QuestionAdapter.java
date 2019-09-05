@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +18,7 @@ import android.widget.TextView;
 
 import com.mandywebdesign.impromptu.Models.PojoQuestion;
 import com.mandywebdesign.impromptu.R;
-import com.mandywebdesign.impromptu.SettingFragmentsOptions.Normal_user_profile;
-import com.mandywebdesign.impromptu.SettingFragmentsOptions.UserProfileFragment;
+import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalPublishProfile;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -113,10 +111,10 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                         String answer = editText.getText().toString();
                         viewHolder.answerText.setText(answer);
                         viewHolder.questionText.setText(ques);
-                        Normal_user_profile.QUES.remove(i);
-                        Normal_user_profile.ANSWER.remove(i);
-                        Normal_user_profile.QUES.add(i,ques);
-                        Normal_user_profile.ANSWER.add(i,answer);
+                        NormalPublishProfile.QUES.remove(i);
+                        NormalPublishProfile.ANSWER.remove(i);
+                        NormalPublishProfile.QUES.add(i,ques);
+                        NormalPublishProfile.ANSWER.add(i,answer);
 
 
                         dialog.dismiss();
@@ -134,13 +132,13 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         });
 
         if (viewHolder.getAdapterPosition() == 0 && viewHolder.getAdapterPosition() <= 1) {
-            Normal_user_profile.addQUES.setText("+ Add another question and answer");
+            NormalPublishProfile.addQUES.setText("+ Add another question and answer");
            // viewHolder.answerText.setBackgroundResource(R.drawable.custom_edittext);
-            Normal_user_profile.addQUES.setVisibility(View.VISIBLE);
+            NormalPublishProfile.addQUES.setVisibility(View.VISIBLE);
         }
 
         if (viewHolder.getAdapterPosition() == 2) {
-            Normal_user_profile.addQUES.setVisibility(View.GONE);
+            NormalPublishProfile.addQUES.setVisibility(View.GONE);
         }
 
     }

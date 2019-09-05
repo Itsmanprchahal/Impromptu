@@ -1,5 +1,6 @@
 package com.mandywebdesign.impromptu.SettingFragmentsOptions;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -33,7 +34,7 @@ public class TermsAndConditions extends Fragment {
     View view;
     SharedPreferences sharedPreferences;
     String user, social_token;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     ImageView back;
     FragmentManager manager;
 
@@ -47,7 +48,8 @@ public class TermsAndConditions extends Fragment {
         user =  sharedPreferences.getString("Usertoken", "");
         social_token = sharedPreferences.getString("Socailtoken", "");
 
-        progressDialog = ProgressBarClass.showProgressDialog(getContext(),"please wait...");
+        progressDialog = ProgressBarClass.showProgressDialog(getContext());
+        progressDialog.dismiss();
 
         init();
         listeners();
@@ -65,7 +67,7 @@ public class TermsAndConditions extends Fragment {
 
 
     private void B_tandC(String user) {
-
+        progressDialog.show();
         Call<RetroTerms> call = WebAPI.getInstance().getApi().terms("Bearer "+user, "application/json");
         call.enqueue(new Callback<RetroTerms>() {
             @Override

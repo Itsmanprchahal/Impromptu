@@ -1,6 +1,7 @@
 package com.mandywebdesign.impromptu.Home_Screen_Fragments.HostingTabs;
 
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -57,7 +58,7 @@ public class Live extends Fragment implements DiscreteScrollView.OnItemChangedLi
     View view;
     TextView noEvnets;
     public static String user, BToken, S_Token, itemPosition, formattedDate, getFormattedDate, timeFrom;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     Business_LiveEventAdapter adapter;
     private InfiniteScrollAdapter infiniteAdapter;
     public static ArrayList<String> name1 = new ArrayList<>();
@@ -78,7 +79,8 @@ public class Live extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
         fragmentManager = getFragmentManager();
 
-        progressDialog = ProgressBarClass.showProgressDialog(getContext(), "please wait while we fetch your events");
+        progressDialog = ProgressBarClass.showProgressDialog(getContext());
+        progressDialog.dismiss();
 
         sharedPreferences = getContext().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         sharedPreferences1 = getActivity().getSharedPreferences("BusinessProfile1", Context.MODE_PRIVATE);
@@ -113,8 +115,6 @@ public class Live extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                 .build());
 
-        progressDialog.setMessage("please wait while we fetch your events");
-        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
         return view;
@@ -230,8 +230,6 @@ public class Live extends Fragment implements DiscreteScrollView.OnItemChangedLi
                         editor2.clear();
                         editor2.commit();
 
-                        progressDialog.setMessage("login in another device");
-                        progressDialog.setCanceledOnTouchOutside(false);
                         progressDialog.show();
 
                         Intent intent = new Intent(getActivity(), Join_us.class);

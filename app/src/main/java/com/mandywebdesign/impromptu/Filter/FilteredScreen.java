@@ -1,5 +1,6 @@
 package com.mandywebdesign.impromptu.Filter;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -48,7 +49,7 @@ public class FilteredScreen extends Fragment implements DiscreteScrollView.OnIte
     public DiscreteScrollView recyclerView;
     TextView noEvnets;
     FragmentManager manager;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     SharedPreferences sharedPreferences;
     String social_token, timeFrom, formattedDate, getFormattedDate;
     View view;
@@ -89,7 +90,7 @@ public class FilteredScreen extends Fragment implements DiscreteScrollView.OnIte
 
         init();
 
-        progressDialog = ProgressBarClass.showProgressDialog(getContext(), "please wait...");
+        progressDialog = ProgressBarClass.showProgressDialog(getContext());
         progressDialog.show();
 
 

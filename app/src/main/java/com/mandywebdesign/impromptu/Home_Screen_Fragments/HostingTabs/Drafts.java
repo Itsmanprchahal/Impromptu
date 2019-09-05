@@ -1,6 +1,7 @@
 package com.mandywebdesign.impromptu.Home_Screen_Fragments.HostingTabs;
 
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -58,7 +59,7 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
     View view;
     Business_DraftsEventAdapter adapter;
     String user, BToken, S_Token, itemPosition,formattedDate,getFormattedDate,timeFrom;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     public static ArrayList<String> name1 = new ArrayList<>();
     public static ArrayList<String> title = new ArrayList<>();
     public static ArrayList<String> prices = new ArrayList<>();
@@ -75,7 +76,8 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_drafts, container, false);
         fragmentManager = getFragmentManager();
-        progressDialog = ProgressBarClass.showProgressDialog(getContext(), "Please wait while we fetch your events");
+        progressDialog = ProgressBarClass.showProgressDialog(getContext());
+        progressDialog.dismiss();
 
         sharedPreferences = getContext().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         itemPositionPref = getContext().getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);sharedPreferences1 = getActivity().getSharedPreferences("BusinessProfile1", Context.MODE_PRIVATE);
@@ -113,7 +115,7 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
 
 
     private void Drafts(String bToken) {
-
+            progressDialog.show();
         Call<RetroDraftsEvents> call = WebAPI.getInstance().getApi().drafts("Bearer " + bToken,"application/json");
         call.enqueue(new Callback<RetroDraftsEvents>() {
             @Override
@@ -203,8 +205,6 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
                         editor2.clear();
                         editor2.commit();
 
-                        progressDialog.setMessage("login in another device");
-                        progressDialog.setCanceledOnTouchOutside(false);
                         progressDialog.show();
 
                         Intent intent = new Intent(getActivity(), Join_us.class);

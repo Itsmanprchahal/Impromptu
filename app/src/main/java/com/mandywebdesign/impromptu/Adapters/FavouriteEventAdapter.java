@@ -1,8 +1,8 @@
 package com.mandywebdesign.impromptu.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,12 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEvent_detailsFragment;
-import com.mandywebdesign.impromptu.Home_Screen_Fragments.AttendingTab.Upcoming;
-import com.mandywebdesign.impromptu.Home_Screen_Fragments.HostingTabs.Live;
+import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEventDetailAcitvity;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.favouriteTab.EventsFrag;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Utils.Constants;
@@ -56,16 +53,6 @@ public class FavouriteEventAdapter extends RecyclerView.Adapter<FavouriteEventAd
 
         viewHolder.eventName.setText(EventsFrag.title_fav.get(i));
         viewHolder.date.setText(EventsFrag.time_fav.get(i));
-        //rajeshwari server date formate
-        /*String date = EventsFrag.time_fav.get(i);
-        *//*to change server date formate*//*
-        String s1 = date;
-        String[] str = s1.split("/");
-        String str1 = str[0];
-        String str2 = str[1];
-        String str3 = str[2];
-        viewHolder.date.setText(str2 +"/"+str1+"/"+str3 );*/
-        // till here
         viewHolder.eventAddress.setText(EventsFrag.addres_fav.get(i));
 
         if (EventsFrag.prices_fav.get(i).equals("0"))
@@ -97,19 +84,27 @@ public class FavouriteEventAdapter extends RecyclerView.Adapter<FavouriteEventAd
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Bundle bundle = new Bundle();
                 String value = EventsFrag.event_id_fav.get(i);
-                bundle.putString("event_id", value);
-                bundle.putString("eventType","fav");
-                bundle.putString("other_events","other_events");
+                Intent intent = new Intent(context, BusinessEventDetailAcitvity.class);
+                intent.putExtra("event_id",value);
+                intent.putExtra("eventType","fav");
+                intent.putExtra("other_events","other_events");
                 editor.putString(Constants.itemPosition, String.valueOf(i));
                 editor.commit();
+                context.startActivity(intent);
 
-                BusinessEvent_detailsFragment businessEvent_detailsFragment = new BusinessEvent_detailsFragment();
-                businessEvent_detailsFragment.setArguments(bundle);
-
-                manager.beginTransaction().replace(R.id.home_frame_layout, businessEvent_detailsFragment).addToBackStack(null).commit();
+//                Bundle bundle = new Bundle();
+//                String value = EventsFrag.event_id_fav.get(i);
+//                bundle.putString("event_id", value);
+//                bundle.putString("eventType","fav");
+//                bundle.putString("other_events","other_events");
+//                editor.putString(Constants.itemPosition, String.valueOf(i));
+//                editor.commit();
+//
+//                BusinessEvent_detailsFragment businessEvent_detailsFragment = new BusinessEvent_detailsFragment();
+//                businessEvent_detailsFragment.setArguments(bundle);
+//
+//                manager.beginTransaction().replace(R.id.home_frame_layout, businessEvent_detailsFragment).addToBackStack(null).commit();
             }
         });
     }

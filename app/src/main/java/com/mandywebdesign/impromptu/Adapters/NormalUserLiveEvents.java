@@ -10,9 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessUserProfile;
 import com.mandywebdesign.impromptu.R;
-import com.mandywebdesign.impromptu.SettingFragmentsOptions.UserProfileFragment;
+import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalGetProfile;
 
 public class NormalUserLiveEvents extends RecyclerView.Adapter<NormalUserLiveEvents.ViewHolder> {
 
@@ -33,15 +32,15 @@ public class NormalUserLiveEvents extends RecyclerView.Adapter<NormalUserLiveEve
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.category.setText(UserProfileFragment.eventTitle.get(i));
-        Glide.with(context).load(UserProfileFragment.images.get(i)).into(viewHolder.imageView);
+        viewHolder.category.setText(NormalGetProfile.eventTitle.get(i));
+        Glide.with(context).load(NormalGetProfile.images.get(i)).into(viewHolder.imageView);
 
     }
 
 
     @Override
     public int getItemCount() {
-        return UserProfileFragment.eventTitle.size();
+        return NormalGetProfile.eventTitle.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

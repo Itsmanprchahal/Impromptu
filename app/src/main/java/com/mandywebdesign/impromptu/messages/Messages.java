@@ -1,6 +1,7 @@
 package com.mandywebdesign.impromptu.messages;
 
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -56,7 +57,7 @@ public class Messages extends Fragment {
     Toolbar toolbar;
     SharedPreferences sharedPreferences, sharedPreferences1, profileupdatedPref;
     FragmentManager manager;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     TextView nomessages;
     public static String BToken, S_Token;
     public static ArrayList<String> eventTitle = new ArrayList<>();
@@ -79,7 +80,7 @@ public class Messages extends Fragment {
         sharedPreferences1 = getActivity().getSharedPreferences("BusinessProfile1", Context.MODE_PRIVATE);
         profileupdatedPref = getContext().getSharedPreferences("profileupdated", Context.MODE_PRIVATE);
 
-        progressDialog = ProgressBarClass.showProgressDialog(getContext(), "please wait...");
+        progressDialog = ProgressBarClass.showProgressDialog(getContext());
         progressDialog.dismiss();
 
         manager = getFragmentManager();
@@ -107,7 +108,6 @@ public class Messages extends Fragment {
     }
 
     private void init() {
-        Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
         recyclerView = view.findViewById(R.id.message_recycler);
         nomessages = view.findViewById(R.id.nomessages);
         toolbar = view.findViewById(R.id.toolbar);
@@ -117,7 +117,7 @@ public class Messages extends Fragment {
 
 
     private void getAllChats(final String token) {
-
+        progressDialog.show();
         Call<RetroAllChats> call = WebAPI.getInstance().getApi().allChats(token, "application/json");
         call.enqueue(new Callback<RetroAllChats>() {
             @Override
@@ -158,8 +158,6 @@ public class Messages extends Fragment {
                         editor2.clear();
                         editor2.commit();
 
-                        progressDialog.setMessage("login in another device");
-                        progressDialog.setCanceledOnTouchOutside(false);
                         progressDialog.show();
 
                         Intent intent = new Intent(getActivity(), Join_us.class);

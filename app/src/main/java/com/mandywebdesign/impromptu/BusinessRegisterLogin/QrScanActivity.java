@@ -1,10 +1,9 @@
 package com.mandywebdesign.impromptu.BusinessRegisterLogin;
 
-
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -13,22 +12,19 @@ import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
-import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -43,6 +39,7 @@ import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.GusetCheckIns;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.NoInternetScreen;
+import com.mandywebdesign.impromptu.ui.ProgressBarClass;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -51,54 +48,46 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class QrScanFragment extends Fragment {
+public class QrScanActivity extends AppCompatActivity {
 
     SurfaceView surfaceView;
     CameraSource source;
     BarcodeDetector barcodeDetector;
     TextView textView;
     ImageView back;
-    View view;
-    FragmentManager manager;
     SharedPreferences sharedPreferences;
     String BToken, S_Token, id;
-    ProgressDialog progressDialog;
-
-    public QrScanFragment() {
-        // Required empty public constructor
-    }
-
+    Dialog progressDialog;
+    Intent intent ;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_qr_scan, container, false);
-        manager = getFragmentManager();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_qr_scan);
 
-        progressDialog = new ProgressDialog(getActivity());
-        Drawable drawable = new ProgressBar(getContext()).getIndeterminateDrawable().mutate();
-        drawable.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorTheme),
+        progressDialog = ProgressBarClass.showProgressDialog(this);
+        progressDialog.dismiss();
+        Drawable drawable = new ProgressBar(QrScanActivity.this).getIndeterminateDrawable().mutate();
+        drawable.setColorFilter(ContextCompat.getColor(QrScanActivity.this, R.color.colorTheme),
                 PorterDuff.Mode.SRC_IN);
-        progressDialog.setIndeterminateDrawable(drawable);
 
-        sharedPreferences = getActivity().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         BToken = sharedPreferences.getString("Usertoken", "");
         S_Token = sharedPreferences.getString("Socailtoken", "");
 
-        Bundle bundle = getArguments();
-        id = bundle.getString("value");
+        intent = getIntent();
+        if (intent!=null)
+        {
+            id = intent.getStringExtra("value");
+        }
 
         init();
 
-        barcodeDetector = new BarcodeDetector.Builder(getContext())
+        barcodeDetector = new BarcodeDetector.Builder(QrScanActivity.this)
                 .setBarcodeFormats(Barcode.QR_CODE).build();
 
 
-        source = new CameraSource.Builder(getContext(), barcodeDetector)
+        source = new CameraSource.Builder(QrScanActivity.this, barcodeDetector)
                 .setRequestedPreviewSize(640, 480).build();
 
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
@@ -106,17 +95,17 @@ public class QrScanFragment extends Fragment {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
 
-                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(QrScanActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
 
-                    if (ContextCompat.checkSelfPermission(getContext(),
+                    if (ContextCompat.checkSelfPermission(QrScanActivity.this,
                             Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
 
                         if (ActivityCompat.shouldShowRequestPermissionRationale((Activity)
-                                getContext(), Manifest.permission.CAMERA)) {
+                                QrScanActivity.this, Manifest.permission.CAMERA)) {
 
 
                         } else {
-                            ActivityCompat.requestPermissions((Activity) getContext(),
+                            ActivityCompat.requestPermissions((Activity) QrScanActivity.this,
                                     new String[]{Manifest.permission.CAMERA},
                                     110);
                         }
@@ -187,13 +176,13 @@ public class QrScanFragment extends Fragment {
                                     //QR event ID
                                     guestCheckIn(BToken, event_id, "1", booked_user_id);
                                 } else {
-                                    Toast.makeText(getContext(), "Not Valid QR Code", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(QrScanActivity.this, "Not Valid QR Code", Toast.LENGTH_SHORT).show();
                                 }
                             } else if (!S_Token.equals("")) {
                                 if (id.equals(event_id)) {
                                     guestCheckIn(S_Token, event_id, "1", booked_user_id);
                                 } else {
-                                    Toast.makeText(getContext(), "Not Valid QR Code", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(QrScanActivity.this, "Not Valid QR Code", Toast.LENGTH_SHORT).show();
                                 }
 
                             }
@@ -210,14 +199,14 @@ public class QrScanFragment extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.home_frame_layout, new CheckGuestFragment());
-                transaction.commit();
+//                onBackPressed();
+                Intent intent = new Intent(QrScanActivity.this,CheckGuestActivity.class);
+                intent.putExtra("value",id);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+                finish();
             }
         });
-
-        return view;
-
     }
 
     private void guestCheckIn(String s_token, String event_id, String s, String booked_user_id) {
@@ -235,11 +224,11 @@ public class QrScanFragment extends Fragment {
                     progressDialog.dismiss();
 
                     if (response.body().getStatus().equals("200")) {
-                        Toast.makeText(getContext(), "Checked In ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(QrScanActivity.this, "Checked In ", Toast.LENGTH_SHORT).show();
 
                         Vibrator v = null;
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-                            v = (Vibrator) Objects.requireNonNull(getActivity()).getSystemService(Context.VIBRATOR_SERVICE);
+                            v = (Vibrator) Objects.requireNonNull(QrScanActivity.this).getSystemService(Context.VIBRATOR_SERVICE);
                         }
                         // Vibrate for 500 milliseconds
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -251,7 +240,7 @@ public class QrScanFragment extends Fragment {
                     }
 
                 } else {
-                    Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                    Intent intent = new Intent(QrScanActivity.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
@@ -261,17 +250,15 @@ public class QrScanFragment extends Fragment {
             @Override
             public void onFailure(Call<GusetCheckIns> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(getContext(), "141 " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(QrScanActivity.this, "141 " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void init() {
         Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
-        surfaceView = view.findViewById(R.id.cameraPerview);
-        textView = (TextView) view.findViewById(R.id.qr_text);
-        back = (ImageView) view.findViewById(R.id.back_on_QR);
+        surfaceView = findViewById(R.id.cameraPerview);
+        textView = (TextView) findViewById(R.id.qr_text);
+        back = (ImageView) findViewById(R.id.back_on_QR);
     }
-
-
 }

@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEvent_detailsFragment;
 import com.mandywebdesign.impromptu.R;
 
 import java.util.ArrayList;

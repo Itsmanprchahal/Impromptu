@@ -18,20 +18,19 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -53,10 +52,10 @@ import com.mandywebdesign.impromptu.Home_Screen_Fragments.Home;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.Models.PojoQuestion;
 import com.mandywebdesign.impromptu.R;
-import com.mandywebdesign.impromptu.Retrofit.NormalGetProfile;
-import com.mandywebdesign.impromptu.Retrofit.NormalPublishProfile;
+import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.NoInternet;
 import com.mandywebdesign.impromptu.ui.NoInternetScreen;
+import com.mandywebdesign.impromptu.ui.ProgressBarClass;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -77,19 +76,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.app.Activity.RESULT_OK;
-
-
-public class Normal_user_profile extends Fragment {
+public class NormalPublishProfile extends AppCompatActivity {
 
     public static int RESULT_LOAD_IMAGE = 1001;
     public static int REQUEST_CAMERA = 1002;
     public static int MY_PERMISSIONS_REQUEST_CAMERA = 1255;
-    public  EditText username, about, age;
+    public EditText username, about, age;
     public static TextView addQUES;
-    TextView normal_user_gender;
     public static Spinner spinner;
     String getGender;
+    ImageView backonnormalpublish;
     RoundedImageView userImage;
     RadioButton male,female;
     RadioGroup radioGroup;
@@ -110,8 +106,8 @@ public class Normal_user_profile extends Fragment {
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     public static MultipartBody.Part part;
-    ProgressDialog progressDialog;
-    public static   ArrayList<String> QUES = new ArrayList<>();
+    Dialog progressDialog;
+    public static ArrayList<String> QUES = new ArrayList<>();
     public static   ArrayList<String> QUES_Update = new ArrayList<>();
     public static ArrayList<String> ANSWER = new ArrayList<>();
     public static ArrayList<String> ANSWER_Update = new ArrayList<>();
@@ -126,53 +122,33 @@ public class Normal_user_profile extends Fragment {
             "The best gig you have been to?", "Your favourite nightspot in your city?",
             "The best art gallery near you?", "Best market in your city?", "Best road trip taken from your home?"};
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_normal_user_profile, container, false);
-        manager = getFragmentManager();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_normal_publish_profile);
 
-        progressDialog = new ProgressDialog(getContext());
-        Drawable drawable = new ProgressBar(getContext()).getIndeterminateDrawable().mutate();
-        drawable.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorTheme),
+        progressDialog = ProgressBarClass.showProgressDialog(this);
+
+        Drawable drawable = new ProgressBar(this).getIndeterminateDrawable().mutate();
+        drawable.setColorFilter(ContextCompat.getColor(NormalPublishProfile.this, R.color.colorTheme),
                 PorterDuff.Mode.SRC_IN);
-        progressDialog.setIndeterminateDrawable(drawable);
+
         progressDialog.show();
 
-        preferences = getActivity().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
+        preferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         userToken = preferences.getString("Socailtoken", "");
         user_id = preferences.getString("SocailuserId", "");
 
-        Toolbar toolbar = view.findViewById(R.id.normal_user_profile_toolbar);
-        toolbar.setNavigationIcon(R.drawable.back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.getString("backongendercheck", "");
-                if (bundle!=null)
-                {
-                    FragmentTransaction transaction2 = manager.beginTransaction();
-                    transaction2.replace(R.id.home_frame_layout, new Home());
-                    transaction2.commit();
-                }else {
-                    getActivity().onBackPressed();
-                }
-            }
-        });
-
-        Bundle bundle = getArguments();
-        if (bundle!=null)
+        Intent intent = getIntent();
+        if (intent !=null)
         {
-            profileStstus = bundle.getString("normal_edit");
+            profileStstus = intent.getStringExtra("normal_edit");
         }
 
         init();
         listeners();
 
-        sharedPreferences = getActivity().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         Socai_user = sharedPreferences.getString("Social_username", "");
         userimage = sharedPreferences.getString("Social_image", "");
         addQUES.setText(R.string.userProfileQuestion);
@@ -185,10 +161,10 @@ public class Normal_user_profile extends Fragment {
 
         if (profileStstus.equals("1"))
         {
-            Call<NormalGetProfile> call = WebAPI.getInstance().getApi().normalGetPRofile("Bearer " + userToken, "application/json");
-            call.enqueue(new Callback<NormalGetProfile>() {
+            Call<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> call = WebAPI.getInstance().getApi().normalGetPRofile("Bearer " + userToken, "application/json");
+            call.enqueue(new Callback<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile>() {
                 @Override
-                public void onResponse(Call<NormalGetProfile> call, Response<NormalGetProfile> response) {
+                public void onResponse(Call<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> call, Response<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> response) {
 
                     if (response.body()!=null)
                     {
@@ -213,17 +189,17 @@ public class Normal_user_profile extends Fragment {
                             }
 
                             username.setText(getUsername);
-                            Glide.with(getContext()).load(response.body().getData().get(0).getImage()).into(userImage);
-                            new getImagefromURL(userImage).execute(UserProfileFragment.getNormalUserImage);
+                            Glide.with(NormalPublishProfile.this).load(response.body().getData().get(0).getImage()).into(userImage);
+                            new getImagefromURL(userImage).execute(NormalGetProfile.getNormalUserImage);
                             age.setText(getUserAge);
                             about.setText(getUserStatus);
-                            NormalGetProfile normalGetProfile = response.body();
-                            List<NormalGetProfile.Question> datum = normalGetProfile.getData().get(0).getQuestion();
+                            com.mandywebdesign.impromptu.Retrofit.NormalGetProfile normalGetProfile = response.body();
+                            List<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile.Question> datum = normalGetProfile.getData().get(0).getQuestion();
 
                             QUES.clear();
                             ANSWER.clear();
                             QA_id.clear();
-                            for (NormalGetProfile.Question question : datum) {
+                            for (com.mandywebdesign.impromptu.Retrofit.NormalGetProfile.Question question : datum) {
 
                                 QUES.add(question.getQuestion());
                                 ANSWER.add(question.getAnswer());
@@ -243,40 +219,38 @@ public class Normal_user_profile extends Fragment {
                                 }
                             }
 
-                            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                            LinearLayoutManager layoutManager = new LinearLayoutManager(NormalPublishProfile.this, LinearLayoutManager.VERTICAL, false);
                             questionRecycler.setLayoutManager(layoutManager);
 
-                            Normal_user_profile_QA_adapter adapter = new Normal_user_profile_QA_adapter(getContext(),QUES,ANSWER,arryString,userToken);
+                            Normal_user_profile_QA_adapter adapter = new Normal_user_profile_QA_adapter(NormalPublishProfile.this,QUES,ANSWER,arryString,userToken);
                             questionRecycler.setAdapter(adapter);
 
                         }
                     }else {
-                        Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                        Intent intent = new Intent(NormalPublishProfile.this, NoInternetScreen.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }
 
                 }
                 @Override
-                public void onFailure(Call<NormalGetProfile> call, Throwable t) {
-                    if (NoInternet.isOnline(getContext())==false)
+                public void onFailure(Call<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> call, Throwable t) {
+                    if (NoInternet.isOnline(NormalPublishProfile.this)==false)
                     {
                         progressDialog.dismiss();
 
-                        NoInternet.dialog(getContext());
+                        NoInternet.dialog(NormalPublishProfile.this);
                     }
                 }
             });
         }else {
             username.setText(Socai_user);
-            Glide.with(getContext()).load(userimage).into(userImage);
+            Glide.with(NormalPublishProfile.this).load(userimage).into(userImage);
             new getImagefromURL(userImage).execute(userimage);
             progressDialog.dismiss();
         }
 
-        return view;
     }
-
     private void listeners() {
         userImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -302,6 +276,29 @@ public class Normal_user_profile extends Fragment {
             }
         });
 
+
+
+
+        backonnormalpublish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent  = getIntent();
+                if (intent!=null)
+                {
+                    Intent intent1 = new Intent(NormalPublishProfile.this, Home_Screen.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intent1);
+                    finish();
+                }else {
+                    Intent intent1 = new Intent(NormalPublishProfile.this,NormalGetProfile.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intent1);
+                    finish();
+                }
+            }
+        });
+
+
         publish_profle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -313,116 +310,116 @@ public class Normal_user_profile extends Fragment {
                 {
                     if (Gender==(null))
                     {
-                        Toast.makeText(getContext(), "Select Gender", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(NormalPublishProfile.this, "Select Gender", Toast.LENGTH_SHORT).show();
                     }else if (part==null)
                     {
-                        Toast.makeText(getContext(), "Add Image", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(NormalPublishProfile.this, "Add Image", Toast.LENGTH_SHORT).show();
                     }else if (TextUtils.isEmpty(about.getText().toString()))
                     {
-                        Toast.makeText(getContext(), "Add Description", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(NormalPublishProfile.this, "Add Description", Toast.LENGTH_SHORT).show();
                     }else if (TextUtils.isEmpty(username.getText().toString()))
                     {
                         username.setError("Enter Username");
                     }
                     else
                     {
-                            if (profileStstus.equalsIgnoreCase("0"))
-                            {
-                                userName_ = username.getText().toString();
-                                age_ = age.getText().toString();
-                                about_ = about.getText().toString();
+                        if (profileStstus.equalsIgnoreCase("0"))
+                        {
+                            userName_ = username.getText().toString();
+                            age_ = age.getText().toString();
+                            about_ = about.getText().toString();
 
-                                progressDialog.setMessage("Please wait until we publish your profile");
-                                progressDialog.setCanceledOnTouchOutside(false);
-                                progressDialog.show();
+                            progressDialog.show();
 
 
-                                Call<NormalPublishProfile> call = WebAPI.getInstance().getApi().normalPublishProfile("Bearer " + userToken, user_id,Gender, userName_, age_, about_, QUES, ANSWER, empty_QA_id, part);
-                                call.enqueue(new Callback<NormalPublishProfile>() {
-                                    @Override
-                                    public void onResponse(Call<NormalPublishProfile> call, Response<NormalPublishProfile> response) {
-                                        progressDialog.dismiss();
-                                        if (response.body()!=null)
+                            Call<com.mandywebdesign.impromptu.Retrofit.NormalPublishProfile> call = WebAPI.getInstance().getApi().normalPublishProfile("Bearer " + userToken, user_id,Gender, userName_, age_, about_, QUES, ANSWER, empty_QA_id, part);
+                            call.enqueue(new Callback<com.mandywebdesign.impromptu.Retrofit.NormalPublishProfile>() {
+                                @Override
+                                public void onResponse(Call<com.mandywebdesign.impromptu.Retrofit.NormalPublishProfile> call, Response<com.mandywebdesign.impromptu.Retrofit.NormalPublishProfile> response) {
+                                    progressDialog.dismiss();
+                                    if (response.body()!=null)
+                                    {
+                                        if (response.body().getStatus().equals("200"))
                                         {
-                                            if (response.body().getStatus().equals("200"))
-                                            {
-                                                Toast.makeText(getContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
-                                                editor =  sharedPreferences.edit();
-                                                editor.putString("profilegender",Gender);
-                                                editor.apply();
-                                                manager.beginTransaction().replace(R.id.home_frame_layout,new UserProfileFragment()).addToBackStack(null).commit();
-                                            }
-
-                                        }else {
-                                            Intent intent = new Intent(getContext(), NoInternetScreen.class);
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            Toast.makeText(NormalPublishProfile.this, "Profile Updated", Toast.LENGTH_SHORT).show();
+                                            editor =  sharedPreferences.edit();
+                                            editor.putString("profilegender",Gender);
+                                            editor.apply();
+                                            Intent intent = new Intent(NormalPublishProfile.this,NormalGetProfile.class);
                                             startActivity(intent);
+                                            finish();
                                         }
 
+                                    }else {
+                                        Intent intent = new Intent(NormalPublishProfile.this, NoInternetScreen.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
                                     }
 
-                                    @Override
-                                    public void onFailure(Call<NormalPublishProfile> call, Throwable t) {
-                                        if (NoInternet.isOnline(getContext())==false)
-                                        {
-                                            progressDialog.dismiss();
+                                }
 
-                                            NoInternet.dialog(getContext());
-                                        }
-                                    }
-                                });
-
-                                Log.d("147258369", "" + QuesAnswer);
-                            }else if (profileStstus.equalsIgnoreCase("1"))
-                            {
-                                userName_ = username.getText().toString();
-                                age_ = age.getText().toString();
-                                about_ = about.getText().toString();
-
-                                progressDialog.setMessage("Please wait until we publish your profile");
-                                progressDialog.setCanceledOnTouchOutside(false);
-                                progressDialog.show();
-
-
-                                Call<NormalPublishProfile> call = WebAPI.getInstance().getApi().normalPublishProfile("Bearer " + userToken, user_id,Gender, userName_, age_, about_, QUES, ANSWER, QA_id, part);
-                                call.enqueue(new Callback<NormalPublishProfile>() {
-                                    @Override
-                                    public void onResponse(Call<NormalPublishProfile> call, Response<NormalPublishProfile> response) {
-                                        if (response.body()!=null)
-                                        {progressDialog.dismiss();
-                                            if (response.body().getStatus().equals("200"))
-                                            {
-                                                editor =  sharedPreferences.edit();
-                                                editor.putString("profilegender",Gender);
-                                                editor.apply();
-                                                Toast.makeText(getContext(), "Profile Updated ", Toast.LENGTH_SHORT).show();
-                                                manager.beginTransaction().replace(R.id.home_frame_layout,new UserProfileFragment()).addToBackStack(null).commit();
-                                            }
-
-
-                                        }else {
-                                            Intent intent = new Intent(getContext(), NoInternetScreen.class);
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                            startActivity(intent);
-                                        }
-
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<NormalPublishProfile> call, Throwable t) {
-                                        if (NoInternet.isOnline(getContext())==false)
-                                        {
-                                            progressDialog.dismiss();
-
-                                            NoInternet.dialog(getContext());
-                                        }
+                                @Override
+                                public void onFailure(Call<com.mandywebdesign.impromptu.Retrofit.NormalPublishProfile> call, Throwable t) {
+                                    if (NoInternet.isOnline(NormalPublishProfile.this)==false)
+                                    {
                                         progressDialog.dismiss();
-                                        Toast.makeText(getContext(), ""+t, Toast.LENGTH_SHORT).show();
-                                    }
-                                });
 
-                                Log.d("147258369", "" + QuesAnswer);
-                            }
+                                        NoInternet.dialog(NormalPublishProfile.this);
+                                    }
+                                }
+                            });
+
+                            Log.d("147258369", "" + QuesAnswer);
+                        }else if (profileStstus.equalsIgnoreCase("1"))
+                        {
+                            userName_ = username.getText().toString();
+                            age_ = age.getText().toString();
+                            about_ = about.getText().toString();
+
+                            progressDialog.show();
+
+
+                            Call<com.mandywebdesign.impromptu.Retrofit.NormalPublishProfile> call = WebAPI.getInstance().getApi().normalPublishProfile("Bearer " + userToken, user_id,Gender, userName_, age_, about_, QUES, ANSWER, QA_id, part);
+                            call.enqueue(new Callback<com.mandywebdesign.impromptu.Retrofit.NormalPublishProfile>() {
+                                @Override
+                                public void onResponse(Call<com.mandywebdesign.impromptu.Retrofit.NormalPublishProfile> call, Response<com.mandywebdesign.impromptu.Retrofit.NormalPublishProfile> response) {
+                                    if (response.body()!=null)
+                                    {progressDialog.dismiss();
+                                        if (response.body().getStatus().equals("200"))
+                                        {
+                                            editor =  sharedPreferences.edit();
+                                            editor.putString("profilegender",Gender);
+                                            editor.apply();
+                                            Toast.makeText(NormalPublishProfile.this, "Profile Updated ", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(NormalPublishProfile.this,NormalGetProfile.class);
+                                             startActivity(intent);
+                                             finish();
+                                        }
+
+
+                                    }else {
+                                        Intent intent = new Intent(NormalPublishProfile.this, NoInternetScreen.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                    }
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<com.mandywebdesign.impromptu.Retrofit.NormalPublishProfile> call, Throwable t) {
+                                    if (NoInternet.isOnline(NormalPublishProfile.this)==false)
+                                    {
+                                        progressDialog.dismiss();
+
+                                        NoInternet.dialog(NormalPublishProfile.this);
+                                    }
+                                    progressDialog.dismiss();
+                                    Toast.makeText(NormalPublishProfile.this, ""+t, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                            Log.d("147258369", "" + QuesAnswer);
+                        }
 
                     }
                 }
@@ -432,21 +429,22 @@ public class Normal_user_profile extends Fragment {
 
     private void init() {
 
-        addQUES = (TextView) view.findViewById(R.id.normal_user_profile_question);
-        about = (EditText) view.findViewById(R.id.normal_user_about);
-        questionRecycler = (RecyclerView) view.findViewById(R.id.normal_user_profile_question_recycle);
-        username = (EditText) view.findViewById(R.id.normal_user_profile_username);
-        userImage = (RoundedImageView) view.findViewById(R.id.normal_user_profile_userimage);
-        age = (EditText) view.findViewById(R.id.normal_user_profile_age);
-        publish_profle = (Button) view.findViewById(R.id.normal_published_bt);
-        radioGroup = (RadioGroup)view.findViewById(R.id.gendergroup);
-        male = (RadioButton)view.findViewById(R.id.normal_user_male);
-        female = (RadioButton)view.findViewById(R.id.normal_user_female);
+        addQUES = (TextView) findViewById(R.id.normal_user_profile_question);
+        about = (EditText) findViewById(R.id.normal_user_about);
+        questionRecycler = (RecyclerView) findViewById(R.id.normal_user_profile_question_recycle);
+        username = (EditText) findViewById(R.id.normal_user_profile_username);
+        userImage = (RoundedImageView) findViewById(R.id.normal_user_profile_userimage);
+        age = (EditText) findViewById(R.id.normal_user_profile_age);
+        publish_profle = (Button) findViewById(R.id.normal_published_bt);
+        radioGroup = (RadioGroup)findViewById(R.id.gendergroup);
+        male = (RadioButton)findViewById(R.id.normal_user_male);
+        female = (RadioButton)findViewById(R.id.normal_user_female);
+        backonnormalpublish = findViewById(R.id.backonnormalpublish);
     }
 
     public void dialog() {
 
-        final Dialog dialog = new Dialog(getActivity());
+        final Dialog dialog = new Dialog(NormalPublishProfile.this);
 
         dialog.setContentView(R.layout.queston_dilog_question);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -460,7 +458,7 @@ public class Normal_user_profile extends Fragment {
         ImageView close =  dialog.findViewById(R.id.close_questtionDialog);
 
         final List<String> stringList = new ArrayList<String>(Arrays.asList(arryString));
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(NormalPublishProfile.this,
                 android.R.layout.simple_spinner_item, stringList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -485,7 +483,7 @@ public class Normal_user_profile extends Fragment {
                     QUES.add(Question);
                     ANSWER.add(answer);
                     Log.d("123456789", "mnmnm " + QUES.toString() + "\n" + ANSWER.toString());
-                    final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+                    final LinearLayoutManager layoutManager = new LinearLayoutManager(NormalPublishProfile.this);
                     layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                     questionRecycler.setLayoutManager(layoutManager);
                     questionRecycler.setNestedScrollingEnabled(false);
@@ -500,7 +498,7 @@ public class Normal_user_profile extends Fragment {
 
                     // Log.d("update","141 "+Question+"   "+answer);
 
-                    questionAdapter = new QuestionAdapter(getActivity(), pojoQuestions,arryString);
+                    questionAdapter = new QuestionAdapter(NormalPublishProfile.this, pojoQuestions,arryString);
                     questionRecycler.setAdapter(questionAdapter);
                     questionAdapter.notifyDataSetChanged();
 
@@ -537,8 +535,8 @@ public class Normal_user_profile extends Fragment {
 
             try {
 
-                CropImage.activity(uri).setGuidelines(CropImageView.Guidelines.ON).start(getContext(), this);
-                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+                CropImage.activity(uri).setGuidelines(CropImageView.Guidelines.ON).start(this);
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 userImage.setImageBitmap(bitmap);
                 part = sendImageFileToserver(bitmap);
 
@@ -553,7 +551,7 @@ public class Normal_user_profile extends Fragment {
             Uri imageURI = result.getUri();
             Log.d("uri", imageURI.toString());
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageURI);
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageURI);
                 userImage.setImageBitmap(bitmap);
                 part = sendImageFileToserver(bitmap);
             } catch (IOException e) {
@@ -562,7 +560,7 @@ public class Normal_user_profile extends Fragment {
         }
 
         if (requestCode == REQUEST_CAMERA && resultCode == RESULT_OK) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, requestCode);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, requestCode);
 
             Bundle bundle = data.getExtras();
             bitmap = (Bitmap) bundle.get("data");
@@ -615,7 +613,7 @@ public class Normal_user_profile extends Fragment {
 
     public MultipartBody.Part sendImageFileToserver(Bitmap bitMap) throws IOException {
 
-        File filesDir = getContext().getFilesDir();
+        File filesDir = getFilesDir();
         File file = new File(filesDir, "avatar" + ".png");
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -650,7 +648,7 @@ public class Normal_user_profile extends Fragment {
     private void showdialog() {
 
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(NormalPublishProfile.this);
         builder.setTitle("Select Images");
         builder.setCancelable(false);
 
@@ -659,14 +657,14 @@ public class Normal_user_profile extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 if ("Camera".equals(dialogOptions[which])) {
 
-                    if (ContextCompat.checkSelfPermission(getContext(),
+                    if (ContextCompat.checkSelfPermission(NormalPublishProfile.this,
                             Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
 
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.CAMERA)) {
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(NormalPublishProfile.this, Manifest.permission.CAMERA)) {
 
-                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA);
+                            ActivityCompat.requestPermissions(NormalPublishProfile.this, new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA);
                         } else {
-                            ActivityCompat.requestPermissions(getActivity(),
+                            ActivityCompat.requestPermissions(NormalPublishProfile.this,
                                     new String[]{Manifest.permission.CAMERA},
                                     MY_PERMISSIONS_REQUEST_CAMERA);
                         }

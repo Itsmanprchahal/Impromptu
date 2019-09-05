@@ -1,25 +1,23 @@
 package com.mandywebdesign.impromptu.BusinessRegisterLogin;
 
-
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mandywebdesign.impromptu.Adapters.See_Add_adpater;
@@ -28,6 +26,7 @@ import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.Booked_User;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.NoInternetScreen;
+import com.mandywebdesign.impromptu.ui.ProgressBarClass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,61 +35,47 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class See_all extends Fragment {
+public class SeeAll_activity extends AppCompatActivity {
 
+    ImageView backonseeall;
     RecyclerView recyclerView;
-    View view;
     FragmentManager manager;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     SharedPreferences sharedPreferences;
     public static ArrayList<String> userImage = new ArrayList<>();
     public static ArrayList<String> totalticketbuy = new ArrayList<>();
     public static ArrayList<String> userName = new ArrayList<>();
-
-    static String BToken,S_Token;
+    String BToken,S_Token;
+    Intent intent;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_see_all, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_see_all_activity);
 
-        sharedPreferences = getActivity().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
+
+        sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         BToken = sharedPreferences.getString("Usertoken", "");
         S_Token = sharedPreferences.getString("Socailtoken", "");
-        manager = getFragmentManager();
 
-        progressDialog = new ProgressDialog(getActivity());
-        Drawable drawable = new ProgressBar(getContext()).getIndeterminateDrawable().mutate();
-        drawable.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorTheme),
+        progressDialog = ProgressBarClass.showProgressDialog(this);
+        progressDialog.dismiss();
+        Drawable drawable = new ProgressBar(SeeAll_activity.this).getIndeterminateDrawable().mutate();
+        drawable.setColorFilter(ContextCompat.getColor(SeeAll_activity.this, R.color.colorTheme),
                 PorterDuff.Mode.SRC_IN);
-        progressDialog.setIndeterminateDrawable(drawable);
 
-        progressDialog.setMessage("Please wait ");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
-        Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
-        recyclerView = view.findViewById(R.id.see_all_recycler_view);
+        backonseeall = findViewById(R.id.backonseeall);
+        recyclerView = findViewById(R.id.see_all_recycler_view);
 
-        Bundle bundle = getArguments();
-        String value = bundle.getString("value");
+        intent = getIntent();
+
+        String value = intent.getStringExtra("value");
 
 
-        Toolbar toolbar = view.findViewById(R.id.see_all_toolvbar);
-        toolbar.setNavigationIcon(R.drawable.back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-
-            }
-        });
-
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(SeeAll_activity.this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setNestedScrollingEnabled(false);
@@ -104,7 +89,12 @@ public class See_all extends Fragment {
             getUsers(BToken,value);
         }
 
-        return view;
+        backonseeall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private void getUsers(String s_token, String value) {
@@ -133,14 +123,14 @@ public class See_all extends Fragment {
 
                         }
 
-                        See_Add_adpater add_adpater = new See_Add_adpater(getContext(),manager,userImage,userName,totalticketbuy);
+                        See_Add_adpater add_adpater = new See_Add_adpater(SeeAll_activity.this,manager,userImage,userName,totalticketbuy);
                         recyclerView.setAdapter(add_adpater);
 
                     }else {
                         progressDialog.dismiss();
                     }
                 }else {
-                    Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                    Intent intent = new Intent(SeeAll_activity.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
@@ -150,7 +140,7 @@ public class See_all extends Fragment {
             @Override
             public void onFailure(Call<Booked_User> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SeeAll_activity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -1,9 +1,10 @@
 package com.mandywebdesign.impromptu.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentManager;
@@ -15,7 +16,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -23,7 +23,7 @@ import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.Retrofit.NormalRetroFav;
 import com.mandywebdesign.impromptu.Retrofit.NormalRetrodeleteFav;
 import com.mandywebdesign.impromptu.Utils.Constants;
-import com.mandywebdesign.impromptu.ui.BookEventFragment;
+import com.mandywebdesign.impromptu.ui.BookEventActivity;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.Home;
 import com.mandywebdesign.impromptu.R;
 
@@ -99,25 +99,21 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Vi
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
                 String value = Home.event_id.get(i);
                 value1 = Home.fav_id.get(i);
                 String hostname = Home.event_host_username.get(i);
-                // String hostimage = Home.host_image.get(i);
-                bundle.putString("event_id", value);
-                bundle.putString("fav_id",value1);
-                bundle.putString("hostname",hostname);
-
-
+                Intent intent = new Intent(context, BookEventActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra("event_id",value);
+                intent.putExtra("fav_id",value1);
+                intent.putExtra("hostname",hostname);
                 editor.putString(Constants.itemPosition, String.valueOf(i));
                 editor.putString(Constants.eventType,"");
                 editor.commit();
+                context.startActivity(intent);
+                ((Activity)context).finish();
 
-                BookEventFragment bookEventFragment = new BookEventFragment();
-                bookEventFragment.setArguments(bundle);
-
-                fragmentManager.beginTransaction().replace(R.id.home_frame_layout, bookEventFragment).addToBackStack(null).commit();
-            }
+        }
         });
 
         if (Home.fav_id.get(i).equals("1")) {

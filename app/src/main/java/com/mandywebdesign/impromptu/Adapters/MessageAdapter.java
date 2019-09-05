@@ -2,13 +2,12 @@ package com.mandywebdesign.impromptu.Adapters;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,18 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.mandywebdesign.impromptu.Retrofit.RetroAllChats;
-import com.mandywebdesign.impromptu.messages.ChatBox;
 import com.mandywebdesign.impromptu.R;
+import com.mandywebdesign.impromptu.messages.ChatBoxActivity;
 import com.mandywebdesign.impromptu.messages.Messages;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
 
@@ -86,29 +81,37 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 pos = viewHolder.getAdapterPosition();
-                Bundle bundle = new Bundle();
-                bundle.putString("event_title", Messages.eventTitle.get(pos));
-                bundle.putString("event_image", Messages.eventImage.get(pos));
-                bundle.putString("eventID", Messages.eventID.get(pos));
-                bundle.putString("event_host_user", Messages.hostUserID.get(pos));
+                Intent intent = new Intent(context, ChatBoxActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra("event_title",Messages.eventTitle.get(pos));
+                intent.putExtra("event_image",Messages.eventImage.get(pos));
+                intent.putExtra("eventID",Messages.eventID.get(pos));
+                intent.putExtra("event_host_user",Messages.hostUserID.get(pos));
+
+
+//                Bundle bundle = new Bundle();
+//                bundle.putString("event_title", Messages.eventTitle.get(pos));
+//                bundle.putString("event_image", Messages.eventImage.get(pos));
+//                bundle.putString("eventID", Messages.eventID.get(pos));
+//                bundle.putString("event_host_user", Messages.hostUserID.get(pos));
 
                 if (Messages.MesgCount.get(i).equals("0"))
                 {
-                    bundle.putString("seen_status","0");
+                    intent.putExtra("seen_status","0");
                 }else {
-                    bundle.putString("seen_status","1");
+                    intent.putExtra("seen_status","1");
                 }
 
-                ChatBox chatBox = new ChatBox();
-                chatBox.setArguments(bundle);
+//                ChatBox chatBox = new ChatBox();
+//                chatBox.setArguments(bundle);
+//
+//                FragmentTransaction transaction = manager.beginTransaction();
+//                transaction.replace(R.id.home_frame_layout, chatBox);
+//                transaction.addToBackStack(null);
+//                transaction.commit();
+                context.startActivity(intent);
 
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.home_frame_layout, chatBox);
-                transaction.addToBackStack(null);
-                transaction.commit();
             }
         });
     }

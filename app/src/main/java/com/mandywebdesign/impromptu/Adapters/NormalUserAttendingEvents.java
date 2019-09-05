@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mandywebdesign.impromptu.R;
-import com.mandywebdesign.impromptu.SettingFragmentsOptions.UserProfileFragment;
+import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalGetProfile;
 
 public class NormalUserAttendingEvents extends RecyclerView.Adapter<NormalUserAttendingEvents.VeiewHolder> {
 
@@ -32,13 +32,13 @@ public class NormalUserAttendingEvents extends RecyclerView.Adapter<NormalUserAt
 
     @Override
     public void onBindViewHolder(@NonNull NormalUserAttendingEvents.VeiewHolder veiewHolder, int i) {
-        veiewHolder.category.setText(UserProfileFragment.attentingTietle.get(i));
-        Glide.with(context).load(UserProfileFragment.attendingimage.get(i)).into(veiewHolder.imageView);
+        veiewHolder.category.setText(NormalGetProfile.attentingTietle.get(i));
+        Glide.with(context).load(NormalGetProfile.attendingimage.get(i)).into(veiewHolder.imageView);
     }
 
     @Override
     public int getItemCount() {
-        return UserProfileFragment.attentingTietle.size();
+        return NormalGetProfile.attentingTietle.size();
     }
 
     public class VeiewHolder extends RecyclerView.ViewHolder {

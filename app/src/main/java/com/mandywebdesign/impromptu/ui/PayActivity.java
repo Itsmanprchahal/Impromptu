@@ -1,6 +1,5 @@
 package com.mandywebdesign.impromptu.ui;
 
-
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -11,19 +10,17 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -51,10 +48,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class PayFragment extends Fragment {
+public class PayActivity extends AppCompatActivity {
 
     View view;
     Button pay;
@@ -66,43 +60,42 @@ public class PayFragment extends Fragment {
     EditText CardNumber, CardName, Card_ExpiryDate, Card_CSV;
     FragmentManager fragmentManager;
     DatePickerDialog.OnDateSetListener dateSetListener;
-    Bundle bundle;
     Calendar calendar;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     String userToken;
     String tokenPay, eventId, tot;
     static String total_tickets, ticketprice, totalprice, paid, eventID;
+    Intent intent;
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_pay);
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_pay, container, false);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        fragmentManager = getActivity().getSupportFragmentManager();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        fragmentManager = getSupportFragmentManager();
 
-        preferences = getActivity().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
+        preferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         userToken = preferences.getString("Socailtoken", "");
         editor = preferences.edit();
 
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Please wait");
-        Drawable drawable = new ProgressBar(getContext()).getIndeterminateDrawable().mutate();
-        drawable.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorTheme),
+        progressDialog = ProgressBarClass.showProgressDialog(this);
+        progressDialog.dismiss();
+        Drawable drawable = new ProgressBar(PayActivity.this).getIndeterminateDrawable().mutate();
+        drawable.setColorFilter(ContextCompat.getColor(PayActivity.this, R.color.colorTheme),
                 PorterDuff.Mode.SRC_IN);
-        progressDialog.setIndeterminateDrawable(drawable);
 
-        bundle = getArguments();
 
-        Toolbar toolbar = view.findViewById(R.id.pay_toolbar);
+        intent = getIntent();
+
+        Toolbar toolbar = findViewById(R.id.pay_toolbar);
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().onBackPressed();
+                onBackPressed();
 
             }
         });
@@ -113,18 +106,16 @@ public class PayFragment extends Fragment {
         init();
         listeners();
 
-        totalprice = bundle.getString("total_price");
+        totalprice = intent.getStringExtra("total_price");
 
-        total_price.setText("£ " + bundle.getString("total_price"));
-        ticketprice = bundle.getString("ticket_Price");
-        total_tickets = bundle.getString("total_tickets");
+        total_price.setText("£ " + intent.getStringExtra("total_price"));
+        ticketprice = intent.getStringExtra("ticket_Price");
+        total_tickets = intent.getStringExtra("total_tickets");
 
 
         ticket_price.setText("£ " + ticketprice);
         tickt_num.setText(total_tickets);
 
-
-        return view;
     }
 
     private void listeners() {
@@ -150,7 +141,7 @@ public class PayFragment extends Fragment {
         Card_ExpiryDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), R.style.DialogTheme, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                DatePickerDialog datePickerDialog = new DatePickerDialog(PayActivity.this, R.style.DialogTheme, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                 datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 datePickerDialog.show();
             }
@@ -172,10 +163,7 @@ public class PayFragment extends Fragment {
             public void onClick(View v) {
 //                fragmentManager.beginTransaction().replace(R.id.home_frame_layout, new BookEventFragment()).commit();
 
-                FragmentTransaction transaction2 = fragmentManager.beginTransaction();
-                transaction2.replace(R.id.home_frame_layout, new BookEventFragment());
-                transaction2.commit();
-                getActivity().onBackPressed();
+               finish();
 
             }
         });
@@ -208,7 +196,7 @@ public class PayFragment extends Fragment {
                     progressDialog.show();
                     String exp_month = E_Date.substring(0, 2).toString();
                     String exp_year = E_Date.substring(3, 5).toString();
-                    eventId = bundle.getString("event_id");
+                    eventId = intent.getStringExtra("event_id");
 
                     onClickSomething(cardnuber, exp_month, exp_year, csv);
                 }
@@ -227,7 +215,7 @@ public class PayFragment extends Fragment {
         card.validateNumber();
         card.validateCVC();
 
-        Stripe stripe = new Stripe(getActivity(), "pk_test_NUze3lWY5JhW6P0xmCebM00s000LALfIfF");
+        Stripe stripe = new Stripe(PayActivity.this, "pk_test_NUze3lWY5JhW6P0xmCebM00s000LALfIfF");
         stripe.createToken(card, new TokenCallback() {
             @Override
             public void onError(@NonNull Exception error) {
@@ -249,7 +237,7 @@ public class PayFragment extends Fragment {
     }
 
 
-    public void SetData(final String userToken, String eventID, String totalprice, String tokenPay, String total_tickets) {
+    public void SetData(final String userToken, final String eventID, String totalprice, String tokenPay, String total_tickets) {
 
         Call<NormalPayment> call = WebAPI.getInstance().getApi().normalPayment("Bearer " + userToken, eventID, totalprice, tokenPay, total_tickets);
         call.enqueue(new Callback<NormalPayment>() {
@@ -259,23 +247,30 @@ public class PayFragment extends Fragment {
                 progressDialog.dismiss();
                 if (response.body()!=null) {
 //                    dialog();
-
-                    Bundle bundle1 = new Bundle();
-                    bundle1.putString("eventID", eventId);
-                    //  bundle1.putString("userId",userId);
-                    bundle1.putString("paid", "Paid");
-                    editor.putString("eventImage", BookEventFragment.image.get(0));
+                    Intent intent = new Intent(PayActivity.this,ConfirmationActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    intent.putExtra("eventID",eventID);
+                    intent.putExtra("paid","Paid");
+                    editor.putString("eventImage", BookEventActivity.image.get(0));
                     editor.apply();
+                    startActivity(intent);
 
-                    ConfirmationFragment confirmationFragment = new ConfirmationFragment();
-                    confirmationFragment.setArguments(bundle1);
-
-                    FragmentTransaction transaction2 = fragmentManager.beginTransaction();
-                    transaction2.replace(R.id.home_frame_layout, confirmationFragment);
-                    transaction2.addToBackStack(null);
-                    transaction2.commit();
+//                    Bundle bundle1 = new Bundle();
+//                    bundle1.putString("eventID", eventId);
+//                    //  bundle1.putString("userId",userId);
+//                    bundle1.putString("paid", "Paid");
+//                    editor.putString("eventImage", BookEventActivity.image.get(0));
+//                    editor.apply();
+//
+//                    ConfirmationFragment confirmationFragment = new ConfirmationFragment();
+//                    confirmationFragment.setArguments(bundle1);
+//
+//                    FragmentTransaction transaction2 = fragmentManager.beginTransaction();
+//                    transaction2.replace(R.id.home_frame_layout, confirmationFragment);
+//                    transaction2.addToBackStack(null);
+//                    transaction2.commit();
                 } else {
-                    Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                    Intent intent = new Intent(PayActivity.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
@@ -284,7 +279,7 @@ public class PayFragment extends Fragment {
             @Override
             public void onFailure(Call<NormalPayment> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(getContext(), "Book Error=> " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(PayActivity.this, "Book Error=> " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -292,19 +287,19 @@ public class PayFragment extends Fragment {
 
     private void init() {
         Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
-        pay = (Button) view.findViewById(R.id.pay_button);
-        CardNumber = (EditText) view.findViewById(R.id.pay_card_number);
-        CardName = (EditText) view.findViewById(R.id.pay_card_name);
-        Card_ExpiryDate = (EditText) view.findViewById(R.id.pay_expiry_date);
-        Card_CSV = (EditText) view.findViewById(R.id.pay_csv);
-        total_price = (TextView) view.findViewById(R.id.pay_total_price);
-        close = (ImageView) view.findViewById(R.id.pay_close);
-        ticket_price = (TextView) view.findViewById(R.id.pay_ticket_price);
-        tickt_num = (TextView) view.findViewById(R.id.pay_ticket_type);
+        pay = (Button) findViewById(R.id.pay_button);
+        CardNumber = (EditText) findViewById(R.id.pay_card_number);
+        CardName = (EditText) findViewById(R.id.pay_card_name);
+        Card_ExpiryDate = (EditText) findViewById(R.id.pay_expiry_date);
+        Card_CSV = (EditText) findViewById(R.id.pay_csv);
+        total_price = (TextView) findViewById(R.id.pay_total_price);
+        close = (ImageView) findViewById(R.id.pay_close);
+        ticket_price = (TextView) findViewById(R.id.pay_ticket_price);
+        tickt_num = (TextView) findViewById(R.id.pay_ticket_type);
     }
 
     public void dialog() {
-        final Dialog dialog = new Dialog(getContext());
+        final Dialog dialog = new Dialog(PayActivity.this);
         dialog.setContentView(R.layout.custom_rating_box);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(false);
@@ -321,7 +316,7 @@ public class PayFragment extends Fragment {
                 String rating = String.valueOf(ratingBar.getRating());
                 String feedbck = feedback.getText().toString();
                 if (rating.equals("") | feedbck.equals("")) {
-                    Toast.makeText(getContext(), "Add Rating  and reviews", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PayActivity.this, "Add Rating  and reviews", Toast.LENGTH_SHORT).show();
                 } else {
                     progressDialog.show();
                     Call<Rating> call = WebAPI.getInstance().getApi().rating("Bearer " + userToken, eventId, rating, feedbck);
@@ -334,24 +329,18 @@ public class PayFragment extends Fragment {
                                 progressDialog.dismiss();
 //                                Toast.makeText(getContext(), "Rating => " + response.body().getData().getRating(), Toast.LENGTH_SHORT).show();
 
-                                Bundle bundle1 = new Bundle();
-                                bundle1.putString("eventID", eventId);
-                                //  bundle1.putString("userId",userId);
-                                bundle1.putString("paid", "Paid");
-                                editor.putString("eventImage", BookEventFragment.image.get(0));
+                                Intent intent = new Intent(PayActivity.this,ConfirmationActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                intent.putExtra("eventID",eventId);
+                                intent.putExtra("paid","Paid");
+                                editor.putString("eventImage", BookEventActivity.image.get(0));
                                 editor.apply();
 
-                                ConfirmationFragment confirmationFragment = new ConfirmationFragment();
-                                confirmationFragment.setArguments(bundle1);
 
-                                FragmentTransaction transaction2 = fragmentManager.beginTransaction();
-                                transaction2.replace(R.id.home_frame_layout, confirmationFragment);
-                                transaction2.addToBackStack(null);
-                                transaction2.commit();
 
                             }else {
                                 dialog.dismiss();
-                                Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                                Intent intent = new Intent(PayActivity.this, NoInternetScreen.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
                             }
@@ -360,7 +349,7 @@ public class PayFragment extends Fragment {
                         @Override
                         public void onFailure(Call<Rating> call, Throwable t) {
                             dialog.dismiss();
-                            Toast.makeText(getContext(), ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PayActivity.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

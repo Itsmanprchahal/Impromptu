@@ -20,7 +20,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -51,9 +50,10 @@ import com.mandywebdesign.impromptu.Retrofit.RetroLogout;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.Contact_Us;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.FAQs;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.Help;
+import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalGetProfile;
+import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalPublishProfile;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.Privacy;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.TermsAndConditions;
-import com.mandywebdesign.impromptu.SettingFragmentsOptions.UserProfileFragment;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.Join_us;
 import com.mandywebdesign.impromptu.R;
@@ -78,7 +78,7 @@ public class Setting extends Fragment {
     String user, token, socialtoken;
     ProgressDialog progressDialog;
     AlertDialog.Builder builder;
-    Dialog popup, changepasswordpopup;
+    Dialog  changepasswordpopup;
     EditText oldepassword, newpassword, confirmpass;
     Button changepasswordbt;
     ImageView imageView_close;
@@ -135,10 +135,13 @@ public class Setting extends Fragment {
             profile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    FragmentTransaction transaction = manager.beginTransaction();
-                    transaction.replace(R.id.home_frame_layout, new UserProfileFragment());
-                    transaction.commit();
+//                    FragmentTransaction transaction = manager.beginTransaction();
+//                    transaction.replace(R.id.home_frame_layout, new UserProfileFragment());
+//                    transaction.commit();
 
+                    Intent intent = new Intent(getContext(), NormalGetProfile.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intent);
                 }
             });
 

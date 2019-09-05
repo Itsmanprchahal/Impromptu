@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BusinessRegisterLogin.QrScanActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/qr_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/back"
+            android:id="@+id/back_on_QR"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Scan QR Code"
+            android:fontFamily="@font/circularstdbold"
+            android:textColor="@color/colortextBlack"
+            android:textSize="15dp"
+            android:layout_marginRight="50dp"
+            android:gravity="center_horizontal"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <SurfaceView
+        android:layout_below="@id/qr_toolbar"
+        android:id="@+id/cameraPerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/qr_text"/>
+
+    <TextView
+        android:id="@+id/qr_text"
+        android:fontFamily="@font/circularstdblack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        />
+
+
+</RelativeLayout>

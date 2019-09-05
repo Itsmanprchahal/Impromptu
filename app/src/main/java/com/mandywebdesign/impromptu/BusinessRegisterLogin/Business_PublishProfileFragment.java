@@ -39,6 +39,7 @@ import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.RetroUploadProfilePojo;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.NoInternetScreen;
+import com.mandywebdesign.impromptu.ui.ProgressBarClass;
 
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class Business_PublishProfileFragment extends Fragment {
     SharedPreferences preferences, preferences1, preferences2, profileUpdatedPref;
     SharedPreferences.Editor editor;
     Button publishprofile_bt;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,12 +73,8 @@ public class Business_PublishProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_business__publish_profile, container, false);
         manager = this.getFragmentManager();
-        progressDialog = new ProgressDialog(getContext());
-        Drawable drawable = new ProgressBar(getContext()).getIndeterminateDrawable().mutate();
-        drawable.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorTheme),
-                PorterDuff.Mode.SRC_IN);
-        progressDialog.setIndeterminateDrawable(drawable);
-
+        progressDialog = ProgressBarClass.showProgressDialog(getContext());
+        progressDialog.dismiss();
 
         init();
         listeners();
@@ -239,7 +236,6 @@ public class Business_PublishProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 System.gc();
-                progressDialog.setMessage("Please wait until we publish your profile");
                 progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.show();
 

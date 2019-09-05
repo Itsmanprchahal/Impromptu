@@ -1,6 +1,7 @@
 package com.mandywebdesign.impromptu.Home_Screen_Fragments.AttendingTab;
 
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -61,7 +62,7 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
     private InfiniteScrollAdapter infiniteAdapter;
 
     public static String user, S_Token, itemPosition, formattedDate, getFormattedDate, timeFrom;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
 
     public static ArrayList<String> name1 = new ArrayList<>();
     public static ArrayList<String> title = new ArrayList<>();
@@ -83,7 +84,8 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
 
         fragmentManager = getFragmentManager();
 
-        progressDialog = ProgressBarClass.showProgressDialog(getContext(), "please wait while we fetch your events");
+        progressDialog = ProgressBarClass.showProgressDialog(getContext());
+        progressDialog.dismiss();
 
         sharedPreferences = getContext().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         itemPositionPref = getContext().getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);
@@ -109,7 +111,7 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
     }
 
     private void upcoming_events(String s_token) {
-
+        progressDialog.show();
         Call<Normal_past_booked> call = WebAPI.getInstance().getApi().upcoming_booked("Bearer " + s_token, "application/json");
         call.enqueue(new Callback<Normal_past_booked>() {
             @Override
@@ -194,7 +196,10 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
 
                             adapter = new Normal_upcoming_events_adpater(getContext(), fragmentManager);
                             recyclerView.setAdapter(adapter);
-                            recyclerView.getLayoutManager().scrollToPosition(Integer.parseInt(itemPosition));
+                            if (itemPosition!=null)
+                            {
+                                recyclerView.getLayoutManager().scrollToPosition(Integer.parseInt(itemPosition));
+                            }
 
                             SharedPreferences.Editor editor = itemPositionPref.edit();
                             editor.clear();

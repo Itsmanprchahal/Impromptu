@@ -6,15 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEvent_detailsFragment;
 import com.mandywebdesign.impromptu.R;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -42,7 +39,15 @@ public class Booked_users extends RecyclerView.Adapter<Booked_users.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull Booked_users.ViewHolder viewHolder, int i) {
         Glide.with(context).load(usersImage.get(i)).into(viewHolder.userImage);
-        viewHolder.attendeescount.setText("+"+usersImage.size());
+        int count = usersImage.size();
+        int count1 = count-1;
+        if (count1==0)
+        {
+            viewHolder.attendeescount.setVisibility(View.GONE);
+        }else {
+            viewHolder.attendeescount.setText("+"+count1);
+        }
+
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -86,10 +87,10 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
     InfiniteScrollAdapter infiniteAdapter;
     View view;
     TextView noevents;
-    String adapterPositn, lat, lng;
+    String adapterPositn, lat, lng,itemPos;
     public static String social_token, category, itemPosition, releatedposition, getCategory, formattedDate, getFormattedDate, timeFrom;
     CheckBox shuffle;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     SharedPreferences sharedPreferences, itemPositionPref;
     FragmentManager fragmentManager;
     public static ArrayList<String> Title = new ArrayList<>();
@@ -131,17 +132,17 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
         locationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
 
         fragmentManager = getActivity().getSupportFragmentManager();
-        progressDialog = ProgressBarClass.showProgressDialog(getContext(), "Please wait...");
+        progressDialog = ProgressBarClass.showProgressDialog(getContext());
         progressDialog.dismiss();
 
         itemPositionPref = getContext().getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);
+
 
         itemPosition = itemPositionPref.getString(Constants.itemPosition, "0");
         releatedposition = itemPositionPref.getString(Constants.eventType, String.valueOf(0));
         getCategory = itemPositionPref.getString(Constants.Category, "");
         recyclerView = view.findViewById(R.id.home_feed_recyclerview);
         relatedEventsRecyclerView = view.findViewById(R.id.home_frag_related_items);
-//        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout1);
 
 
         init();
@@ -166,7 +167,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
     @Override
     public void onResume() {
         super.onResume();
-        statusCheck();
+//        statusCheck();
 //        if (Home_Screen.newCount == 1) {
 //            Home_Screen.newCount = 0;
 //            statusCheck();
@@ -316,11 +317,13 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
         infiniteAdapter = InfiniteScrollAdapter.wrap(new HomeEventsAdapter(getContext(), fragmentManager, social_token));
         recyclerView.setAdapter(infiniteAdapter);
         recyclerView.setItemTransitionTimeMillis(DiscreteScrollViewOptions.getTransitionTime());
+
         recyclerView.setItemTransformer(new ScaleTransformer.Builder()
                 .setMinScale(0.8f)
 
                 .build());
         recyclerView.setAdapter(adapter);
+        recyclerView.scrollToPosition(Integer.parseInt(itemPosition));
         adapter.notifyDataSetChanged();
 
         clearPref();

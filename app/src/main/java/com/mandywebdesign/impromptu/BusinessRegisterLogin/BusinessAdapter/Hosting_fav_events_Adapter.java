@@ -1,8 +1,8 @@
 package com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessAdapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,12 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.mandywebdesign.impromptu.Adapters.CardAdapterHelper;
-import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEvent_detailsFragment;
-import com.mandywebdesign.impromptu.Home_Screen_Fragments.HostingTabs.Live;
+import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEventDetailAcitvity;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.favouriteTab.Hosts;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Utils.Constants;
@@ -88,19 +86,29 @@ public class Hosting_fav_events_Adapter extends RecyclerView.Adapter<Hosting_fav
             @Override
             public void onClick(View v) {
 
-                Bundle bundle = new Bundle();
                 String value = Hosts.event_id_fav.get(i);
-                bundle.putString("event_id", value);
-                bundle.putString("eventType","fav");
-                bundle.putString("other_events","");
+                Intent intent = new Intent(context, BusinessEventDetailAcitvity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra("event_id",value);
+                intent.putExtra("eventType","fav");
+                intent.putExtra("other_events","");
                 editor.putString(Constants.itemPosition, String.valueOf(i));
                 editor.commit();
+                context.startActivity(intent);
+
+//                Bundle bundle = new Bundle();
+//                String value = Hosts.event_id_fav.get(i);
+//                bundle.putString("event_id", value);
+//                bundle.putString("eventType","fav");
+//                bundle.putString("other_events","");
+//                editor.putString(Constants.itemPosition, String.valueOf(i));
+//                editor.commit();
 
 
-                BusinessEvent_detailsFragment businessEvent_detailsFragment = new BusinessEvent_detailsFragment();
-                businessEvent_detailsFragment.setArguments(bundle);
-//
-                manager.beginTransaction().replace(R.id.home_frame_layout, businessEvent_detailsFragment).addToBackStack(null).commit();
+//                BusinessEvent_detailsFragment businessEvent_detailsFragment = new BusinessEvent_detailsFragment();
+//                businessEvent_detailsFragment.setArguments(bundle);
+
+//                manager.beginTransaction().replace(R.id.home_frame_layout, businessEvent_detailsFragment).addToBackStack(null).commit();
             }
         });
     }

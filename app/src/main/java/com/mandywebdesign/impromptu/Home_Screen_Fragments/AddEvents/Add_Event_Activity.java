@@ -1,6 +1,7 @@
 package com.mandywebdesign.impromptu.Home_Screen_Fragments.AddEvents;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -97,7 +98,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
     SharedPreferences sharedPreferences;
     String userToken, BToken, S_Token;
     String categ;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     public static ArrayList<MultipartBody.Part> part = new ArrayList<>();
     static int count = 0;
     public static Bitmap bitmap;
@@ -116,7 +117,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
         TimeZone tz = TimeZone.getDefault();
         Log.d("timezone",tz.getDisplayName()+"  "+tz.getID());
 
-        progressDialog = ProgressBarClass.showProgressDialog(Add_Event_Activity.this, "Please wait...");
+        progressDialog = ProgressBarClass.showProgressDialog(this);
         progressDialog.dismiss();
         sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         userToken = "Bearer " + sharedPreferences.getString("Usertoken", "");

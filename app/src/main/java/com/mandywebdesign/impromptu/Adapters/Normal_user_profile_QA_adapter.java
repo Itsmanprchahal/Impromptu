@@ -22,7 +22,7 @@ import android.widget.Toast;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.RetroDeleteQUEs;
-import com.mandywebdesign.impromptu.SettingFragmentsOptions.Normal_user_profile;
+import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalPublishProfile;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -76,7 +76,7 @@ public class Normal_user_profile_QA_adapter extends RecyclerView.Adapter<Normal_
 
         viewHolder.ques.setText(ques1.get(i));
         viewHolder.answer.setText(ansewer1.get(i));
-        QuesID = Normal_user_profile.QA_id.get(i).toString();
+        QuesID = NormalPublishProfile.QA_id.get(i).toString();
 
         viewHolder.edit_Q.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,10 +122,10 @@ public class Normal_user_profile_QA_adapter extends RecyclerView.Adapter<Normal_
                         }else {
                             viewHolder.answer.setText(answer);
                             viewHolder.ques.setText(ques_);
-                            Normal_user_profile.ANSWER.remove(i);
-                            Normal_user_profile.QUES.remove(i);
-                            Normal_user_profile.ANSWER.add(i,answer);
-                            Normal_user_profile.QUES.add(i,ques_);
+                            NormalPublishProfile.ANSWER.remove(i);
+                            NormalPublishProfile.QUES.remove(i);
+                            NormalPublishProfile.ANSWER.add(i,answer);
+                            NormalPublishProfile.QUES.add(i,ques_);
                             notifyDataSetChanged();
                             dialog.dismiss();
 

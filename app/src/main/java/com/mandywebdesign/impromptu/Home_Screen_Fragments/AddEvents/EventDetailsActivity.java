@@ -68,7 +68,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     TextView addTicket;
     CheckBox freeevent_checkbox;
     Button okayDialog;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     ImageView close;
     String value_checkout, value_checkIn;
     String prceET, ticketET, tickettype, myFormat, to_date;
@@ -90,7 +90,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        progressDialog = ProgressBarClass.showProgressDialog(EventDetailsActivity.this, "Please wait...");
+        progressDialog = ProgressBarClass.showProgressDialog(this);
         progressDialog.dismiss();
 
         sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
@@ -386,6 +386,10 @@ public class EventDetailsActivity extends AppCompatActivity {
                 calendar.set(Calendar.YEAR, year1);
                 calendar.set(Calendar.MONTH, month1);
                 calendar.set(Calendar.DAY_OF_MONTH, date1);
+
+                calendar.set(Calendar.YEAR,year);
+                calendar.set(Calendar.MONTH,month);
+                calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
                 myFormat = "MM/dd/yyyy";
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myFormat, Locale.US);
 

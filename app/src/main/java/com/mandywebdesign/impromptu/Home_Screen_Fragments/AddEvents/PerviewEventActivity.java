@@ -1,15 +1,10 @@
 package com.mandywebdesign.impromptu.Home_Screen_Fragments.AddEvents;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.ContentResolver;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.PorterDuff;
-import android.net.Uri;
-import android.provider.ContactsContract;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerAdapter;
@@ -40,7 +35,6 @@ import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.RetroAddEvent;
 import com.mandywebdesign.impromptu.Retrofit.RetroUsernameiMage;
 import com.mandywebdesign.impromptu.Retrofit.UpdateDraft;
-import com.mandywebdesign.impromptu.TestingActivity;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.Join_us;
 import com.mandywebdesign.impromptu.ui.NoInternetScreen;
@@ -77,7 +71,7 @@ public class PerviewEventActivity extends AppCompatActivity {
     Button perview_publish;
     RoundedImageView host_image;
     SharedPreferences preferences, sharedPreferences1, profileupdatedPref;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     String publish = "publish";
     String draft = "draft";
     String B_token = "", S_Token = "";
@@ -98,7 +92,7 @@ public class PerviewEventActivity extends AppCompatActivity {
         profileupdatedPref = getSharedPreferences("profileupdated", Context.MODE_PRIVATE);
         preferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
 
-        progressDialog = ProgressBarClass.showProgressDialog(PerviewEventActivity.this, "please wait while we fetch your events");
+        progressDialog = ProgressBarClass.showProgressDialog(this);
         progressDialog.dismiss();
         Intent intent = getIntent();
         title = intent.getStringExtra("eventTitle");
@@ -487,8 +481,6 @@ public class PerviewEventActivity extends AppCompatActivity {
                         editor2.clear();
                         editor2.commit();
 
-                        progressDialog.setMessage("login in another device");
-                        progressDialog.setCanceledOnTouchOutside(false);
                         progressDialog.show();
 
                         Intent intent = new Intent(PerviewEventActivity.this, Join_us.class);
@@ -515,8 +507,6 @@ public class PerviewEventActivity extends AppCompatActivity {
 
     public void NormalEvent(String token) {
         System.gc();
-        progressDialog.setMessage("Please wait until we create your event");
-        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
 
@@ -554,8 +544,6 @@ public class PerviewEventActivity extends AppCompatActivity {
                         editor2.clear();
                         editor2.commit();
 
-                        progressDialog.setMessage("login in another device");
-                        progressDialog.setCanceledOnTouchOutside(false);
                         progressDialog.show();
 
                         Intent intent = new Intent(PerviewEventActivity.this, Join_us.class);
@@ -583,8 +571,6 @@ public class PerviewEventActivity extends AppCompatActivity {
 
     public void BusinessDraft(String token) {
         System.gc();
-        progressDialog.setMessage("Please wait until we save your event");
-        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
         Log.d("draftresponse", "" + Add_Event_Activity.part.get(0));
@@ -619,8 +605,6 @@ public class PerviewEventActivity extends AppCompatActivity {
                         editor2.clear();
                         editor2.commit();
 
-                        progressDialog.setMessage("login in another device");
-                        progressDialog.setCanceledOnTouchOutside(false);
                         progressDialog.show();
 
                         Intent intent = new Intent(PerviewEventActivity.this, Join_us.class);
@@ -648,8 +632,6 @@ public class PerviewEventActivity extends AppCompatActivity {
 
     public void NormalDraft(String token) {
         System.gc();
-        progressDialog.setMessage("Please wait until we create your event");
-        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
         Log.d("profileresponse", "" + Add_Event_Activity.part.get(0));
@@ -684,8 +666,6 @@ public class PerviewEventActivity extends AppCompatActivity {
                         editor2.clear();
                         editor2.commit();
 
-                        progressDialog.setMessage("login in another device");
-                        progressDialog.setCanceledOnTouchOutside(false);
                         progressDialog.show();
 
                         Intent intent = new Intent(PerviewEventActivity.this, Join_us.class);

@@ -4,6 +4,7 @@ package com.mandywebdesign.impromptu.Filter;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -103,7 +104,7 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
     static String value;
     String lng = "0.1278";
     LatLng latLng;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     String city = "";
     String social_token;
     Button today, tomorrow, setlocation, filter_bt_filter;
@@ -128,7 +129,7 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
 
         manager = getFragmentManager();
 
-        progressDialog = ProgressBarClass.showProgressDialog(getContext(), "please wait...");
+        progressDialog = ProgressBarClass.showProgressDialog(getContext());
         progressDialog.dismiss();
 
         init();
@@ -304,8 +305,6 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
         if (v == filter_bt_filter) {
 
             if (male.isChecked() || female.isChecked() || all.isChecked()) {
-                progressDialog.setMessage("Please wait");
-                progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.show();
                 final String loc = city;
                 lat = latt;

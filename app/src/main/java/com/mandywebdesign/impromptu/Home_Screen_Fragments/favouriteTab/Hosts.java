@@ -1,6 +1,7 @@
 package com.mandywebdesign.impromptu.Home_Screen_Fragments.favouriteTab;
 
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -58,7 +59,7 @@ public class Hosts extends Fragment implements DiscreteScrollView.OnItemChangedL
     TextView noEvnets;
     SharedPreferences sharedPreferences, itemPositionPref;
     String S_Token, itemPosition, formattedDate, getFormattedDate, timeFrom;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     public static ArrayList<String> name1_fav = new ArrayList<>();
     public static ArrayList<String> title_fav = new ArrayList<>();
     public static ArrayList<String> prices_fav = new ArrayList<>();
@@ -74,7 +75,8 @@ public class Hosts extends Fragment implements DiscreteScrollView.OnItemChangedL
         view = inflater.inflate(R.layout.fragment_hosts, container, false);
         fragmentManager = getFragmentManager();
 
-        progressDialog = ProgressBarClass.showProgressDialog(getContext(), "please wait while we fetch your events");
+        progressDialog = ProgressBarClass.showProgressDialog(getContext());
+        progressDialog.dismiss();
         sharedPreferences = getContext().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         itemPositionPref = getContext().getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);
         S_Token = sharedPreferences.getString("Socailtoken", "");
@@ -108,7 +110,7 @@ public class Hosts extends Fragment implements DiscreteScrollView.OnItemChangedL
     }
 
     private void GetFavEvents(final String s_token) {
-
+        progressDialog.show();
         Call<NormalretroHosting_fav_evnts> call = WebAPI.getInstance().getApi().getHostFav("Bearer " + s_token, "application/json");
         call.enqueue(new Callback<NormalretroHosting_fav_evnts>() {
             @Override

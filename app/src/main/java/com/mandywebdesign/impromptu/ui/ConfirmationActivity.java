@@ -1,6 +1,6 @@
 package com.mandywebdesign.impromptu.ui;
 
-
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -8,15 +8,13 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -28,8 +26,8 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.Events;
+import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.RetroGetEventData;
 import com.mandywebdesign.impromptu.Utils.Util;
@@ -40,13 +38,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class ConfirmationFragment extends Fragment {
+public class ConfirmationActivity extends AppCompatActivity {
 
-
-    View view;
     ImageView QRIMAge, confirm_image, confirm_close;
     Button gotomyEvents;
     Bundle bundle;
@@ -54,39 +47,34 @@ public class ConfirmationFragment extends Fragment {
     SharedPreferences preferences;
     String userToken, eventId, eventImage;
     FragmentManager fragmentManager;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     public static String id, image, date, postcode, ticktprice, timefrom, timeto, title, location, city, gender, username;
-
+    Intent intent;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_confirmation, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_confirmation);
+        intent = getIntent();
 
-        fragmentManager = getFragmentManager();
-        bundle = getArguments();
-        eventId = bundle.getString("eventID");
-        preferences = getActivity().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
+        if (intent!=null) {
+            eventId = intent.getStringExtra("eventID");
+        }
+
+
+        preferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         userToken = preferences.getString("Socailtoken", "");
-
-
-        progressDialog = new ProgressDialog(getContext());
-        Drawable drawable = new ProgressBar(getContext()).getIndeterminateDrawable().mutate();
-        drawable.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorTheme),
+        progressDialog = ProgressBarClass.showProgressDialog(this);
+        progressDialog.dismiss();
+        Drawable drawable = new ProgressBar(ConfirmationActivity.this).getIndeterminateDrawable().mutate();
+        drawable.setColorFilter(ContextCompat.getColor(ConfirmationActivity.this, R.color.colorTheme),
                 PorterDuff.Mode.SRC_IN);
-        progressDialog.setIndeterminateDrawable(drawable);
-
         init();
         listerners();
         getEventData(eventId);
-
-        return view;
     }
 
     private void getEventData(String eventId) {
-        progressDialog.setMessage("Please wait...");
-        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
         Call<RetroGetEventData> call = WebAPI.getInstance().getApi().getEvents("Bearer " + userToken, "application/json", eventId);
@@ -118,13 +106,13 @@ public class ConfirmationFragment extends Fragment {
 
                             eventImage = preferences.getString("eventImage", "");
                             Log.d("eventImage", "" + eventImage);
-                            Glide.with(getActivity()).load(eventImage).into(confirm_image);
+                            Glide.with(ConfirmationActivity.this).load(eventImage).into(confirm_image);
 
 
                             //MAke QR code here.....................................
 
-                            String paid = bundle.getString("paid");
-                            String userId = bundle.getString("userId");
+                            String paid = intent.getStringExtra("paid");
+                            String userId = intent.getStringExtra("userId");
 
                             MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
                             try {
@@ -139,10 +127,10 @@ public class ConfirmationFragment extends Fragment {
 
                         }
                     } else if (response.body().getStatus().equals("400")) {
-                        Toast.makeText(getContext(), "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ConfirmationActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }else {
-                    Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                    Intent intent = new Intent(ConfirmationActivity.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
@@ -151,7 +139,7 @@ public class ConfirmationFragment extends Fragment {
 
             @Override
             public void onFailure(Call<RetroGetEventData> call, Throwable t) {
-                Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ConfirmationActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
             }
         });
@@ -162,31 +150,35 @@ public class ConfirmationFragment extends Fragment {
         gotomyEvents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction transaction2 = fragmentManager.beginTransaction();
-                transaction2.replace(R.id.home_frame_layout, new Events());
-                transaction2.addToBackStack(null);
-                transaction2.commit();
+
+                Intent intent = new Intent(ConfirmationActivity.this,Home_Screen.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("bookevent","eventBooked");
+                startActivity(intent);
+                finish();
+
             }
         });
 
         confirm_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction transaction2 = fragmentManager.beginTransaction();
-                transaction2.replace(R.id.home_frame_layout, new Events());
-                transaction2.addToBackStack(null);
-                transaction2.commit();
+                Intent intent = new Intent(ConfirmationActivity.this,Home_Screen.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("bookevent","eventBooked");
+                startActivity(intent);
+                finish();
             }
         });
     }
 
     private void init() {
-        QRIMAge = (ImageView) view.findViewById(R.id.confirm_qrCode);
-        gotomyEvents = (Button) view.findViewById(R.id.confirm_button);
-        confirm_image = (ImageView) view.findViewById(R.id.confirm_image);
-        eventTitle = (TextView) view.findViewById(R.id.confirm_name);
-        eventAddress = (TextView) view.findViewById(R.id.confirm_address);
-        eventPrice = (TextView) view.findViewById(R.id.confirm_price);
-        confirm_close = (ImageView) view.findViewById(R.id.confirm_close);
+        QRIMAge = (ImageView) findViewById(R.id.confirm_qrCode);
+        gotomyEvents = (Button) findViewById(R.id.confirm_button);
+        confirm_image = (ImageView) findViewById(R.id.confirm_image);
+        eventTitle = (TextView) findViewById(R.id.confirm_name);
+        eventAddress = (TextView) findViewById(R.id.confirm_address);
+        eventPrice = (TextView) findViewById(R.id.confirm_price);
+        confirm_close = (ImageView) findViewById(R.id.confirm_close);
     }
 }

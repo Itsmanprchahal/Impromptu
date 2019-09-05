@@ -1,28 +1,24 @@
 package com.mandywebdesign.impromptu.SettingFragmentsOptions;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
@@ -30,15 +26,14 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.mandywebdesign.impromptu.Adapters.NormalUSerSetQues_answer;
 import com.mandywebdesign.impromptu.Adapters.NormalUserAttendingEvents;
 import com.mandywebdesign.impromptu.Adapters.NormalUserLiveEvents;
-import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.Setting;
+import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
-import com.mandywebdesign.impromptu.Retrofit.NormalGetProfile;
 import com.mandywebdesign.impromptu.Retrofit.Normal_past_booked;
 import com.mandywebdesign.impromptu.Retrofit.RetroLiveEvents;
-import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.NoInternet;
 import com.mandywebdesign.impromptu.ui.NoInternetScreen;
+import com.mandywebdesign.impromptu.ui.ProgressBarClass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,9 +42,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
-public class UserProfileFragment extends Fragment {
-
+public class NormalGetProfile extends AppCompatActivity {
 
     public static TextView user_profile_age, username, status;
     RoundedImageView userImage;
@@ -58,12 +51,11 @@ public class UserProfileFragment extends Fragment {
     RecyclerView questionRecycler, hostRecycler,eventsAttendingRecycler;
     Toolbar toolbar;
     TextView totalpoints;
-    View view;
     ImageView back;
     TextView normal_user_gender;
     String userToken;
     ImageView editprofile;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     FragmentManager manager;
     TextView totlaEvents,pastEvents;
     public static String s_username, s_image,getS_username="",getProfileStatus="",getNormalUserImage,getUserImage,getgender;
@@ -77,29 +69,22 @@ public class UserProfileFragment extends Fragment {
     static String prfileAge;
 
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_user_profile, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_normal_get_profile);
 
-        manager = getFragmentManager();
-        sharedPreferences = getActivity().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         userToken = sharedPreferences.getString("Socailtoken", "");
         s_username = sharedPreferences.getString("Social_username", "");
         s_image = sharedPreferences.getString("Social_image", "");
 
 
-
-        progressDialog = new ProgressDialog(getContext());
-        Drawable drawable = new ProgressBar(getContext()).getIndeterminateDrawable().mutate();
-        drawable.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorTheme),
+        progressDialog = ProgressBarClass.showProgressDialog(this);
+        Drawable drawable = new ProgressBar(this).getIndeterminateDrawable().mutate();
+        drawable.setColorFilter(ContextCompat.getColor(this, R.color.colorTheme),
                 PorterDuff.Mode.SRC_IN);
-        progressDialog.setIndeterminateDrawable(drawable);
 
-        progressDialog.setMessage("Please wait...");
-        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
         init();
         listeners();
@@ -109,8 +94,6 @@ public class UserProfileFragment extends Fragment {
         getLiveEvents(userToken);
         getattendingEvents(userToken);
 
-
-        return view;
     }
 
     private void getLiveEvents(String userToken) {
@@ -133,17 +116,17 @@ public class UserProfileFragment extends Fragment {
                             images.add(datum.getFile());
                             totlaEvents.setText("( " + String.valueOf(images.size()) + " )");
 
-                            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+                            LinearLayoutManager layoutManager = new LinearLayoutManager(NormalGetProfile.this, LinearLayoutManager.HORIZONTAL, false);
                             hostRecycler.setLayoutManager(layoutManager);
 
-                            NormalUserLiveEvents adapter = new NormalUserLiveEvents(getContext());
+                            NormalUserLiveEvents adapter = new NormalUserLiveEvents(NormalGetProfile.this);
                             hostRecycler.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         }
 
                     }
                 }else {
-                    Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                    Intent intent = new Intent(NormalGetProfile.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
@@ -186,11 +169,11 @@ public class UserProfileFragment extends Fragment {
                             pastEvents.setText("( "+attentingTietle.size()+" )");
 
 
-                            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+                            LinearLayoutManager layoutManager = new LinearLayoutManager(NormalGetProfile.this, LinearLayoutManager.HORIZONTAL, false);
                             eventsAttendingRecycler.setLayoutManager(layoutManager);
 
 
-                            NormalUserAttendingEvents adapter = new NormalUserAttendingEvents(getContext());
+                            NormalUserAttendingEvents adapter = new NormalUserAttendingEvents(NormalGetProfile.this);
                             eventsAttendingRecycler.setAdapter(adapter);
                         }
                     } else if (response.body().getStatus().equals("400")) {
@@ -198,7 +181,7 @@ public class UserProfileFragment extends Fragment {
                     }
                     progressDialog.dismiss();
                 }else {
-                    Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                    Intent intent = new Intent(NormalGetProfile.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
@@ -208,11 +191,11 @@ public class UserProfileFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Normal_past_booked> call, Throwable t) {
-                if (NoInternet.isOnline(getContext())==false)
+                if (NoInternet.isOnline(NormalGetProfile.this)==false)
                 {
                     progressDialog.dismiss();
 
-                    NoInternet.dialog(getContext());
+                    NoInternet.dialog(NormalGetProfile.this);
                 }
             }
         });
@@ -220,10 +203,10 @@ public class UserProfileFragment extends Fragment {
     }
 
     private void getProfile(String userToken) {
-        Call<NormalGetProfile> call = WebAPI.getInstance().getApi().normalGetPRofile("Bearer " + userToken, "application/json");
-        call.enqueue(new Callback<NormalGetProfile>() {
+        Call<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> call = WebAPI.getInstance().getApi().normalGetPRofile("Bearer " + userToken, "application/json");
+        call.enqueue(new Callback<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile>() {
             @Override
-            public void onResponse(Call<NormalGetProfile> call, Response<NormalGetProfile> response) {
+            public void onResponse(Call<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> call, Response<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> response) {
 
                 if (response.body()!=null)
                 {
@@ -251,35 +234,35 @@ public class UserProfileFragment extends Fragment {
                                 totalpoints.setText(response.body().getData().get(0).getRating_points());
                             }
 
-                            Glide.with(getContext()).load(response.body().getData().get(0).getImage().toString()).into(userImage);
-                            NormalGetProfile normalGetProfile = response.body();
-                            List<NormalGetProfile.Question> datum = normalGetProfile.getData().get(0).getQuestion();
+                            Glide.with(NormalGetProfile.this).load(response.body().getData().get(0).getImage().toString()).into(userImage);
+                            com.mandywebdesign.impromptu.Retrofit.NormalGetProfile normalGetProfile = response.body();
+                            List<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile.Question> datum = normalGetProfile.getData().get(0).getQuestion();
 
                             Questions.clear();
                             Answer.clear();
                             QA_id.clear();
 
-                            for (NormalGetProfile.Question question : datum) {
+                            for (com.mandywebdesign.impromptu.Retrofit.NormalGetProfile.Question question : datum) {
                                 Questions.add(question.getQuestion());
                                 Answer.add(question.getAnswer());
                                 QA_id.add(question.getQuestionId().toString());
 
-                                LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                                LinearLayoutManager layoutManager = new LinearLayoutManager(NormalGetProfile.this, LinearLayoutManager.VERTICAL, false);
                                 questionRecycler.setLayoutManager(layoutManager);
 
 
-                                NormalUSerSetQues_answer adapter = new NormalUSerSetQues_answer(getContext(), Questions, Answer);
+                                NormalUSerSetQues_answer adapter = new NormalUSerSetQues_answer(NormalGetProfile.this, Questions, Answer);
                                 questionRecycler.setAdapter(adapter);
                             }
                             Log.d("ques", "" + Questions + "\n" + Answer);
                         } else {
                             username.setText(s_username);
-                            Glide.with(getContext()).load(s_image).into(userImage);
+                            Glide.with(NormalGetProfile.this).load(s_image).into(userImage);
                         }
                     }
 
                 }else {
-                    Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                    Intent intent = new Intent(NormalGetProfile.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
@@ -288,12 +271,12 @@ public class UserProfileFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<NormalGetProfile> call, Throwable t) {
-                if (NoInternet.isOnline(getContext())==false)
+            public void onFailure(Call<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> call, Throwable t) {
+                if (NoInternet.isOnline(NormalGetProfile.this)==false)
                 {
                     progressDialog.dismiss();
 
-                    NoInternet.dialog(getContext());
+                    NoInternet.dialog(NormalGetProfile.this);
                 }
             }
         });
@@ -305,19 +288,15 @@ public class UserProfileFragment extends Fragment {
             public void onClick(View v) {
 
                 if (prfileAge !=null) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("normal_edit", "1");
-                    Normal_user_profile user_profile = new Normal_user_profile();
-                    user_profile.setArguments(bundle);
+                    Intent intent = new Intent(NormalGetProfile.this,NormalPublishProfile.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    intent.putExtra("normal_edit","1");
+                    startActivity(intent);
 
-                    manager.beginTransaction().replace(R.id.home_frame_layout, user_profile).addToBackStack(null).commit();
                 } else {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("normal_edit", "0");
-                    Normal_user_profile user_profile = new Normal_user_profile();
-                    user_profile.setArguments(bundle);
-
-                    manager.beginTransaction().replace(R.id.home_frame_layout, user_profile).addToBackStack(null).commit();
+                    Intent intent = new Intent(NormalGetProfile.this,NormalPublishProfile.class);
+                    intent.putExtra("normal_edit","0");
+                    startActivity(intent);
                 }
 
             }
@@ -326,28 +305,25 @@ public class UserProfileFragment extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.home_frame_layout, new Setting());
-                transaction.commit();
+                onBackPressed();
             }
         });
     }
 
     private void init() {
-        questionRecycler = (RecyclerView) view.findViewById(R.id.user_profile_question_recycle);
-        username = (TextView) view.findViewById(R.id.user_profile_username);
-        userImage = (RoundedImageView) view.findViewById(R.id.user_profile_userimage);
-        editprofile = (ImageView) view.findViewById(R.id.user_profile_edit_toolbar);
-        user_profile_age = (TextView) view.findViewById(R.id.user_profile_age);
-        status = (TextView) view.findViewById(R.id.user_profile_staus);
-        back =(ImageView)view.findViewById(R.id.back_user_profile);
-        hostRecycler = (RecyclerView) view.findViewById(R.id.user_profile_events_recycler);
-        totlaEvents = (TextView) view.findViewById(R.id.normal_user_total_live_events);
-        eventsAttendingRecycler=(RecyclerView)view.findViewById(R.id.user_profile_eventAttend_recycler);
-        pastEvents =view.findViewById(R.id.normal_user_total_past_events);
-        normal_user_gender = view.findViewById(R.id.normal_user_gender);
-        totalpoints = view.findViewById(R.id.totalpoints);
+        questionRecycler = (RecyclerView) findViewById(R.id.user_profile_question_recycle);
+        username = (TextView) findViewById(R.id.user_profile_username);
+        userImage = (RoundedImageView) findViewById(R.id.user_profile_userimage);
+        editprofile = (ImageView) findViewById(R.id.user_profile_edit_toolbar);
+        user_profile_age = (TextView) findViewById(R.id.user_profile_age);
+        status = (TextView) findViewById(R.id.user_profile_staus);
+        back =(ImageView)findViewById(R.id.back_user_profile);
+        hostRecycler = (RecyclerView) findViewById(R.id.user_profile_events_recycler);
+        totlaEvents = (TextView) findViewById(R.id.normal_user_total_live_events);
+        eventsAttendingRecycler=(RecyclerView)findViewById(R.id.user_profile_eventAttend_recycler);
+        pastEvents =findViewById(R.id.normal_user_total_past_events);
+        normal_user_gender = findViewById(R.id.normal_user_gender);
+        totalpoints = findViewById(R.id.totalpoints);
 
     }
 }

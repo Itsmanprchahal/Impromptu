@@ -1,23 +1,20 @@
 package com.mandywebdesign.impromptu.messages;
 
-
+import android.app.Dialog;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,7 +27,6 @@ import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.RetroChat;
 import com.mandywebdesign.impromptu.Retrofit.RetroGetMessages;
-import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.NoInternet;
 import com.mandywebdesign.impromptu.ui.NoInternetScreen;
 import com.mandywebdesign.impromptu.ui.ProgressBarClass;
@@ -41,10 +37,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class ChatBox extends Fragment {
+public class ChatBoxActivity extends AppCompatActivity {
 
     SwipeRefreshLayout pullToRefresh;
     NotificationManager notificationManager;
@@ -57,39 +50,38 @@ public class ChatBox extends Fragment {
     EditText typemess;
     ImageView sendmessg;
     String seen_status;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     RecyclerView recyclerView;
     String eventID, titl, image, BToken, S_Token, userId, hostUserID;
     SharedPreferences sharedPreferences;
     ArrayList<RetroGetMessages.Datum> arrayList = new ArrayList<>();
+    Intent intent;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_chat_box, container, false);
-        manager = getActivity().getSupportFragmentManager();
-        notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_chat_box);
 
-        progressDialog = ProgressBarClass.showProgressDialog(getContext(), "please wait...");
-        progressDialog.dismiss();
+        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        sharedPreferences = getContext().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
+        progressDialog = ProgressBarClass.showProgressDialog(this);
+
+        sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         BToken = sharedPreferences.getString("Usertoken", "");
         S_Token = sharedPreferences.getString("Socailtoken", "");
         userId = sharedPreferences.getString("userID", "");
-        Bundle bundle = getArguments();
+        intent = getIntent();
 
 
         init();
         listerners();
 
-        if (bundle != null) {
-            titl = bundle.getString("event_title");
-            image = bundle.getString("event_image");
-            eventID = bundle.getString("eventID");
-            hostUserID = bundle.getString("event_host_user");
-            seen_status = bundle.getString("seen_status");
+        if (intent != null) {
+            titl = intent.getStringExtra("event_title");
+            image = intent.getStringExtra("event_image");
+            eventID = intent.getStringExtra("eventID");
+            hostUserID = intent.getStringExtra("event_host_user");
+            seen_status = intent.getStringExtra("seen_status");
 
 
 
@@ -121,18 +113,14 @@ public class ChatBox extends Fragment {
             }
         });
 
-        return view;
     }
-
     private void listerners() {
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.home_frame_layout, new Messages());
-                transaction.addToBackStack(null);
-                transaction.commit();
+               onBackPressed();
+               finish();
             }
         });
 
@@ -165,7 +153,7 @@ public class ChatBox extends Fragment {
                 {
 
                 }else {
-                    Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                    Intent intent = new Intent(ChatBoxActivity.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
@@ -173,11 +161,11 @@ public class ChatBox extends Fragment {
 
             @Override
             public void onFailure(Call<RetroChat> call, Throwable t) {
-                if (NoInternet.isOnline(getContext()) == false) {
+                if (NoInternet.isOnline(ChatBoxActivity.this) == false) {
 
-                    NoInternet.dialog(getContext());
+                    NoInternet.dialog(ChatBoxActivity.this);
                 }else {
-                    Toast.makeText(getContext(), ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChatBoxActivity.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -185,15 +173,14 @@ public class ChatBox extends Fragment {
 
     private void init() {
 
-        Home_Screen.bottomNavigationView.setVisibility(View.GONE);
-        back = view.findViewById(R.id.chat_back);
-        event_image = view.findViewById(R.id.chat_iamge);
-        title = view.findViewById(R.id.chat_title);
+        back = findViewById(R.id.chat_back);
+        event_image = findViewById(R.id.chat_iamge);
+        title = findViewById(R.id.chat_title);
         // add_smuiley = view.findViewById(R.id.add_smiley);
-        typemess = view.findViewById(R.id.type_messeage);
-        sendmessg = view.findViewById(R.id.send_mesg);
-        recyclerView = view.findViewById(R.id.chats_recycler);
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.pullToRefresh);
+        typemess = findViewById(R.id.type_messeage);
+        sendmessg = findViewById(R.id.send_mesg);
+        recyclerView = findViewById(R.id.chats_recycler);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.pullToRefresh);
     }
 
     public void getChat(String token, String eventID, String seenStatus) {
@@ -217,7 +204,7 @@ public class ChatBox extends Fragment {
                         //Toast.makeText(getContext(), ""+response.body().getStatus(), Toast.LENGTH_SHORT).show();
                     }
                 }else {
-                    Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                    Intent intent = new Intent(ChatBoxActivity.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
@@ -226,24 +213,25 @@ public class ChatBox extends Fragment {
 
             @Override
             public void onFailure(Call<RetroGetMessages> call, Throwable t) {
-                if (NoInternet.isOnline(getContext()) == false) {
-                    NoInternet.dialog(getContext());
+                if (NoInternet.isOnline(ChatBoxActivity.this) == false) {
+                    NoInternet.dialog(ChatBoxActivity.this);
                 }else {
-                    Toast.makeText(getContext(), ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChatBoxActivity.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
     private void setAdapter(ArrayList<RetroGetMessages.Datum> arrayList) {
-        LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
+        LinearLayoutManager linearLayout = new LinearLayoutManager(ChatBoxActivity.this);
 //        linearLayout.setOrientation(LinearLayout.VERTICAL);
 //        linearLayout.setReverseLayout(true);
         linearLayout.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayout);
         recyclerView.scrollToPosition(arrayList.size() - 1);
-        ChatBox_Adapter adapter = new ChatBox_Adapter(getContext(), userId, arrayList);
+        ChatBox_Adapter adapter = new ChatBox_Adapter(ChatBoxActivity.this, userId, arrayList);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
+
 }

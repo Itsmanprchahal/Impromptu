@@ -32,43 +32,6 @@
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp"></ImageView>
 
-            <LinearLayout
-                android:id="@+id/ticketlayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="#4F000000"
-                android:padding="5dp"
-                android:layout_marginRight="5dp"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="5dp">
-
-                <TextView
-                    android:id="@+id/total_tickettext"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tickets:"
-                    android:textColor="@color/white"
-                    android:shadowColor="#A90A0A0A"
-                    android:shadowDx="2"
-                    android:shadowDy="2"
-                    android:shadowRadius="3"
-                    tools:ignore="MissingConstraints"></TextView>
-
-                <TextView
-                    android:id="@+id/total_tickettext1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textColor="@color/white"
-                    android:shadowColor="#A90A0A0A"
-                    android:shadowDx="2"
-                    android:shadowDy="2"
-                    android:shadowRadius="3"
-                    android:layout_marginRight="5dp"
-                    tools:ignore="MissingConstraints"></TextView>
-            </LinearLayout>
 
 
             <com.makeramen.roundedimageview.RoundedImageView
@@ -76,9 +39,24 @@
                 android:layout_height="100dp"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginRight="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/ticketlayout"
+                app:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/QR_image"
                 android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/total_tickettext1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/QR_image"
+                app:layout_constraintRight_toRightOf="parent"
+                android:text="0"
+                android:textColor="@color/white"
+                android:shadowColor="#A90A0A0A"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="3"
+                android:layout_marginRight="10dp"
+                tools:ignore="MissingConstraints"></TextView>
 
 
 

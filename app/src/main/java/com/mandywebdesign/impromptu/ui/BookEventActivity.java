@@ -1,6 +1,5 @@
 package com.mandywebdesign.impromptu.ui;
 
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -8,28 +7,28 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -50,44 +49,43 @@ import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mandywebdesign.impromptu.Adapters.B_EventDetailImageAdapter;
 import com.mandywebdesign.impromptu.Adapters.Booked_users;
-import com.mandywebdesign.impromptu.Home_Screen_Fragments.AddEvents.Add_Event_Activity;
+import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEventDetailAcitvity;
+import com.mandywebdesign.impromptu.BusinessRegisterLogin.SeeAll_activity;
+import com.mandywebdesign.impromptu.Screenshot;
+import com.mandywebdesign.impromptu.Utils.Constants;
+import com.mandywebdesign.impromptu.messages.ChatBoxActivity;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
-import com.mandywebdesign.impromptu.BusinessRegisterLogin.See_all;
-import com.mandywebdesign.impromptu.Retrofit.BookFreeEvents;
-import com.mandywebdesign.impromptu.Retrofit.Rating;
-import com.mandywebdesign.impromptu.Retrofit.RemainingTickets;
-import com.mandywebdesign.impromptu.SettingFragmentsOptions.Normal_user_profile;
-import com.mandywebdesign.impromptu.Utils.Util;
-import com.mandywebdesign.impromptu.messages.ChatBox;
 import com.mandywebdesign.impromptu.R;
+import com.mandywebdesign.impromptu.Retrofit.BookFreeEvents;
 import com.mandywebdesign.impromptu.Retrofit.Booked_User;
 import com.mandywebdesign.impromptu.Retrofit.EventMessageClick;
 import com.mandywebdesign.impromptu.Retrofit.NormalRetroFav;
 import com.mandywebdesign.impromptu.Retrofit.NormalRetrodeleteFav;
+import com.mandywebdesign.impromptu.Retrofit.Rating;
+import com.mandywebdesign.impromptu.Retrofit.RemainingTickets;
 import com.mandywebdesign.impromptu.Retrofit.RetroGetEventData;
+import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalPublishProfile;
+import com.mandywebdesign.impromptu.Utils.Util;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import me.relex.circleindicator.CircleIndicator;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
-public class BookEventFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class BookEventActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private LinearLayout dotsLayout;
+    ImageView sharevent,screenshot;
     private TextView[] dots;
-    ImageView book_message;
+    ImageView book_message,backonbookevent;
     LinearLayout organiser_layout;
     RelativeLayout messagelayout, invite_layouit;
     FragmentManager fragmentManager;
@@ -98,15 +96,15 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
     ReadMoreTextView descri;
     RoundedImageView host_pic;
     PagerAdapter pagerAdapter;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     TextView ticketPrice, book_location, book_date, totalPrice, event_title, eventprice;
     Spinner spinner;
     Button dialogButoon;
     public static CheckBox addtoFavCheck_box;
     View view;
     String checkgender,booklink1,booklink2,booklink3;
-    SharedPreferences.Editor editor;
-    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor,editorItemPos;
+    SharedPreferences sharedPreferences,itemPositionPref;
     Bundle bundle;
     ArrayList<String> userImage = new ArrayList<>();
     static String tot;
@@ -117,62 +115,58 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
     static String remaini_tickets;
     static String timeFrom;
     static String timeTo;
+    String itemPos;
     static String value, S_token, fav_id, hostname, payvalue,spinnerposition;
     public static ArrayList<String> image = new ArrayList<>();
     public static String id, cate, host_image, date, decs, postcode, ticktType, ticktprice, timefrom, hostimage, timeto, title, location, location2, city, gender, andendeenumber, numberoftickts, freeEvent, username;
     int CurrentPage = 0;
     AlertDialog.Builder builder;
+    Intent intent;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_book_event, container, false);
-        builder = new AlertDialog.Builder(getContext());
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_book_event);
+        builder = new AlertDialog.Builder(BookEventActivity.this);
         builder.setMessage("Coming soon...");
 
-        fragmentManager = getActivity().getSupportFragmentManager();
-        sharedPreferences = getContext().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
+        fragmentManager = getSupportFragmentManager();
+        sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
+        itemPositionPref = getSharedPreferences("ItemPosition",Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        editorItemPos = itemPositionPref.edit();
         S_token = sharedPreferences.getString("Socailtoken", "");
         loginUserId = sharedPreferences.getString("userID", "");
         checkgender = sharedPreferences.getString("profilegender", "");
+        itemPos = itemPositionPref.getString("itemPosition","");
 
-        progressDialog = new ProgressDialog(getActivity());
-        Drawable drawable = new ProgressBar(getContext()).getIndeterminateDrawable().mutate();
-        drawable.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorTheme),
+        progressDialog = ProgressBarClass.showProgressDialog(this);
+        progressDialog.dismiss();
+        Drawable drawable = new ProgressBar(BookEventActivity.this).getIndeterminateDrawable().mutate();
+        drawable.setColorFilter(ContextCompat.getColor(BookEventActivity.this, R.color.colorTheme),
                 PorterDuff.Mode.SRC_IN);
-        progressDialog.setIndeterminateDrawable(drawable);
 
-        Toolbar toolbar = view.findViewById(R.id.boobk_event_toolbar);
-        toolbar.setNavigationIcon(R.drawable.back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-                spinnerposition = "0";
 
-            }
-        });
+
 
 
         init();
         listeners();
 
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(BookEventActivity.this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         users.setLayoutManager(layoutManager);
         users.setNestedScrollingEnabled(false);
 
-
-        bundle = getArguments();
-        if (bundle != null) {
-            value = bundle.getString("event_id");
-            payvalue = bundle.getString("back_pay");
+        intent = getIntent();
+        if (intent!=null)
+        {
+            value = intent.getStringExtra("event_id");
+            payvalue = intent.getStringExtra("back_pay");
 
             //  fav_id = bundle.getString("fav_id");
-            hostname = bundle.getString("hostname");
-            hostimage = bundle.getString("hostImage");
+            hostname = intent.getStringExtra("hostname");
+            hostimage = intent.getStringExtra("hostImage");
             if (hostname!=null)
             {
                 String[] name = hostname.split(" ");
@@ -201,11 +195,10 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
 
             book_message.setVisibility(View.VISIBLE);
         }
+
         getRaminingEvents(S_token, value);
 
-        return view;
     }
-
     //check remainig tickets
     private void getRaminingEvents(String s_token, String id) {
 
@@ -218,7 +211,7 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
                     remaini_tickets = String.valueOf(response.body().getData());
                     remainingTicketTV.setText("Tickets Remaining " + remaini_tickets);
                 } else {
-                    Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                    Intent intent = new Intent(BookEventActivity.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
@@ -227,48 +220,73 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
 
             @Override
             public void onFailure(Call<RemainingTickets> call, Throwable t) {
-                Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BookEventActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void init() {
-
-        book_time = view.findViewById(R.id.book_time);
-        book_categry = view.findViewById(R.id.book_categry);
-        eventprice = view.findViewById(R.id.event_price);
-        dotsLayout = view.findViewById(R.id.book_indicator);
-        viewPager = (ViewPager) view.findViewById(R.id.book_viewpager);
-        addtoFavCheck_box = (CheckBox) view.findViewById(R.id.book_event_favourite);
-        mBookEvent = (Button) view.findViewById(R.id.book_event_book_bt);
-        descri = view.findViewById(R.id.book_description);
-        book_location = view.findViewById(R.id.book_location);
-        book_date = view.findViewById(R.id.book_date);
-        event_title = view.findViewById(R.id.book_tittle);
-        host_pic = view.findViewById(R.id.book_user_picture);
-        organiserName = view.findViewById(R.id.book_organiser_name);
-        peoplegoing = view.findViewById(R.id.book_attendess_people);
-        users = view.findViewById(R.id.book_recyclerView);
-        seeAll = view.findViewById(R.id.book_seeAll);
-        book_message = view.findViewById(R.id.book_message);
-        organiser_layout = view.findViewById(R.id.organiser_layout);
-        messagelayout = view.findViewById(R.id.messagelayout);
-        invite_layouit = view.findViewById(R.id.invite_layouit);
-        remainingTicketTV = view.findViewById(R.id.remainingTicketTV);
-        invitefriends = view.findViewById(R.id.invitefriends);
-        link1 = view.findViewById(R.id.book_link1);
-        link2 = view.findViewById(R.id.book_link2);
-        link3 = view.findViewById(R.id.book_link3);
+        screenshot = findViewById(R.id.screenshot);
+        backonbookevent = findViewById(R.id.backonbookevent);
+        book_time = findViewById(R.id.book_time);
+        book_categry = findViewById(R.id.book_categry);
+        eventprice = findViewById(R.id.event_price);
+        dotsLayout = findViewById(R.id.book_indicator);
+        viewPager = (ViewPager) findViewById(R.id.book_viewpager);
+        addtoFavCheck_box = (CheckBox) findViewById(R.id.book_event_favourite);
+        mBookEvent = (Button) findViewById(R.id.book_event_book_bt);
+        descri = findViewById(R.id.book_description);
+        book_location = findViewById(R.id.book_location);
+        book_date = findViewById(R.id.book_date);
+        event_title = findViewById(R.id.book_tittle);
+        host_pic = findViewById(R.id.book_user_picture);
+        organiserName = findViewById(R.id.book_organiser_name);
+        peoplegoing = findViewById(R.id.book_attendess_people);
+        users = findViewById(R.id.book_recyclerView);
+        seeAll = findViewById(R.id.book_seeAll);
+        book_message = findViewById(R.id.book_message);
+        organiser_layout = findViewById(R.id.organiser_layout);
+        messagelayout = findViewById(R.id.messagelayout);
+        invite_layouit = findViewById(R.id.invite_layouit);
+        remainingTicketTV = findViewById(R.id.remainingTicketTV);
+        invitefriends = findViewById(R.id.invitefriends);
+        link1 = findViewById(R.id.book_link1);
+        link2 = findViewById(R.id.book_link2);
+        link3 = findViewById(R.id.book_link3);
+        sharevent = findViewById(R.id.sharevent);
     }
 
     private void listeners() {
 
+        sharevent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bitmap b = Screenshot.takescreenshotOfRootView(screenshot);
+                   getScreenShot(view);
+            }
+        });
+
+        backonbookevent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BookEventActivity.this,Home_Screen.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                editorItemPos.putString(Constants.itemPosition,itemPos);
+                editorItemPos.apply();
+                startActivity(intent);
+                finish();
+                spinnerposition = "0";
+            }
+        });
+
         invite_layouit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Creating dialog box
-                AlertDialog alert = builder.create();
-                alert.show();
+                String message = "https://play.google.com/store";
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("text/plain");
+                share.putExtra(Intent.EXTRA_TEXT, message);
+                startActivity(Intent.createChooser(share, "Testing Impromptu"));
             }
         });
 
@@ -293,15 +311,10 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
         seeAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("value", id);
-
-                See_all see_all = new See_all();
-                see_all.setArguments(bundle);
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.home_frame_layout, see_all);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                Intent intent = new Intent(BookEventActivity.this, SeeAll_activity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra("value",id);
+                startActivity(intent);
             }
         });
 
@@ -309,14 +322,13 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
             @Override
             public void onClick(View v) {
 
-                Bundle bundle = new Bundle();
-                bundle.putString("event_title", title);
-                bundle.putString("event_image", host_image);
-                bundle.putString("eventID", value);
-                bundle.putString("event_host_user", hostUserID);
+                final Intent intent = new Intent(BookEventActivity.this, ChatBoxActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra("event_title",title);
+                intent.putExtra("event_image",host_image);
+                intent.putExtra("eventID",value);
+                intent.putExtra("event_host_user",hostUserID);
 
-                final ChatBox chatBox = new ChatBox();
-                chatBox.setArguments(bundle);
 
                 Call<EventMessageClick> call = WebAPI.getInstance().getApi().eventMEsgClick("Bearer " + S_token, id);
                 call.enqueue(new Callback<EventMessageClick>() {
@@ -325,14 +337,11 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
                         if (response.body()!=null) {
                             if (response.body().getStatus().equals("200"))
                             {
-                                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                                transaction.replace(R.id.home_frame_layout, chatBox);
-                                transaction.addToBackStack(null);
-                                transaction.commit();
+                                startActivity(intent);
                             }
 
                         } else {
-                            Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                            Intent intent = new Intent(BookEventActivity.this, NoInternetScreen.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                         }
@@ -341,7 +350,7 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
 
                     @Override
                     public void onFailure(Call<EventMessageClick> call, Throwable t) {
-                        Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BookEventActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -398,10 +407,26 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
         });
     }
 
+    private void openScreenshot(File imageFile) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        Uri uri = Uri.fromFile(imageFile);
+        intent.setDataAndType(uri, "image/*");
+        startActivity(intent);
+    }
+
+    public static Bitmap getScreenShot(View view) {
+        View screenView = view.getRootView();
+        screenView.setDrawingCacheEnabled(true);
+        Bitmap bitmap = Bitmap.createBitmap(screenView.getDrawingCache());
+        screenView.setDrawingCacheEnabled(false);
+        return bitmap;
+    }
+
     public void dialog() {
         String ticketNum[] = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
 
-        final Dialog dialog = new Dialog(getContext());
+        final Dialog dialog = new Dialog(BookEventActivity.this);
         dialog.setContentView(R.layout.custom_dialog_book_ticket);
         dialog.setCanceledOnTouchOutside(true);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -412,7 +437,7 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
         dialogtickttype.setText(ticktType);
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(BookEventActivity.this,
                 android.R.layout.simple_spinner_item, ticketNum);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -433,7 +458,7 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
 
                     Float RemainingTIckets = Float.valueOf((remaini_tickets));
                     if (TotalTIcket > RemainingTIckets) {
-                        Toast.makeText(getContext(), "Not Available", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BookEventActivity.this, "Not Available", Toast.LENGTH_SHORT).show();
                     } else {
                         progressDialog.show();
                         Call<BookFreeEvents> call = WebAPI.getInstance().getApi().freebookevent("Bearer " + S_token, value, total_ticket);
@@ -443,26 +468,18 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
 
                                 if (response.body()!=null) {
                                     progressDialog.dismiss();
-//                                    ratingDialog();
                                     dialog.dismiss();
 
-                                    Bundle bundle1 = new Bundle();
-                                    bundle1.putString("eventID", value);
-                                    //  bundle1.putString("userId",userId);
-                                    bundle1.putString("paid", "Paid");
-                                    editor.putString("eventImage", BookEventFragment.image.get(0));
+                                    Intent intent = new Intent(BookEventActivity.this,ConfirmationActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                    intent.putExtra("eventID",value);
+                                    intent.putExtra("paid",value);
+                                    editor.putString("eventImage", BookEventActivity.image.get(0));
                                     editor.apply();
-
-                                    ConfirmationFragment confirmationFragment = new ConfirmationFragment();
-                                    confirmationFragment.setArguments(bundle1);
-
-                                    FragmentTransaction transaction2 = fragmentManager.beginTransaction();
-                                    transaction2.replace(R.id.home_frame_layout, confirmationFragment);
-                                    transaction2.addToBackStack(null);
-                                    transaction2.commit();
+                                    startActivity(intent);
 
                                 } else {
-                                    Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                                    Intent intent = new Intent(BookEventActivity.this, NoInternetScreen.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(intent);
                                 }
@@ -471,7 +488,7 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
                             @Override
                             public void onFailure(Call<BookFreeEvents> call, Throwable t) {
                                 progressDialog.dismiss();
-                                Toast.makeText(getContext(), "Book Error=> " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(BookEventActivity.this, "Book Error=> " + t.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -483,24 +500,17 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
                 @Override
                 public void onClick(View v) {
 
-                    Bundle bundle = new Bundle();
-                    bundle.putString("total_price", tot);
-                    bundle.putString("event_id", value);
-                    bundle.putString("total_tickets", total_ticket);
-                    bundle.putString("ticket_Price", ticktprice);
-                    PayFragment payFragment = new PayFragment();
-                    payFragment.setArguments(bundle);
 
-                    FragmentTransaction transaction2 = fragmentManager.beginTransaction();
-                    transaction2.replace(R.id.home_frame_layout, payFragment);
-                    transaction2.addToBackStack(null);
-                    transaction2.commit();
-
-
+                    Intent intent = new Intent(BookEventActivity.this,PayActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    intent.putExtra("total_price",tot);
+                    intent.putExtra("event_id",value);
+                    intent.putExtra("total_tickets",total_ticket);
+                    intent.putExtra("ticket_Price",ticktprice);
+                    startActivity(intent);
                     dialog.dismiss();
                 }
             });
-
         }
 
         dialog.show();
@@ -517,7 +527,7 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
     }
 
     private void dialogUpdate() {
-        final Dialog dialog = new Dialog(getContext());
+        final Dialog dialog = new Dialog(BookEventActivity.this);
         dialog.setContentView(R.layout.updateprofilepopoup);
         dialog.setCanceledOnTouchOutside(true);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -530,14 +540,10 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-                Bundle bundle = new Bundle();
-                bundle.putString("normal_edit", "0");
-                Normal_user_profile user_profile = new Normal_user_profile();
-                user_profile.setArguments(bundle);
-
-                FragmentTransaction transaction2 = fragmentManager.beginTransaction();
-                transaction2.replace(R.id.home_frame_layout, user_profile);
-                transaction2.commit();
+                Intent intent = new Intent(BookEventActivity.this, NormalPublishProfile.class);
+                intent.putExtra("normal_edit","0");
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -554,7 +560,7 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-         spinnerposition = parent.getItemAtPosition(position).toString();
+        spinnerposition = parent.getItemAtPosition(position).toString();
 
 
         Float a = Float.valueOf((spinnerposition));
@@ -604,10 +610,10 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
                         users.setVisibility(View.GONE);
                     }
 
-                    Booked_users adapter = new Booked_users(getContext(), userImage);
+                    Booked_users adapter = new Booked_users(BookEventActivity.this, userImage);
                     users.setAdapter(adapter);
                 } else {
-                    Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                    Intent intent = new Intent(BookEventActivity.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
@@ -615,14 +621,12 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
 
             @Override
             public void onFailure(Call<Booked_User> call, Throwable t) {
-                Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BookEventActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     public void getEventData(final String value) {
-        progressDialog.setMessage("Please wait until we fetch your events");
-        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
         Call<RetroGetEventData> call = WebAPI.getInstance().getApi().getEvents("Bearer " + S_token, "application/json", value);
@@ -703,7 +707,7 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
                             }
 
                             fav_id = datum.getFavourite().toString();
-                            Glide.with(getContext()).load(host_image).into(host_pic);
+                            Glide.with(BookEventActivity.this).load(host_image).into(host_pic);
 
                             Collections.reverse(image);
                             //get Time to in AM PM
@@ -712,39 +716,39 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
                             String time_to = Util.convertTimeStampToTime(Long.parseLong(datum.getEventEndDt())).replaceFirst("a.m.","am").replaceFirst("p.m.","pm").replaceFirst("AM","am").replaceFirst("PM","pm");
                             String end_date = Util.convertTimeStampDate(Long.parseLong(datum.getEventEndDt()));
 
-                                if (time_t.startsWith("0") && time_to.startsWith("0")) {
-                                    timeFrom = time_t.substring(1);
+                            if (time_t.startsWith("0") && time_to.startsWith("0")) {
+                                timeFrom = time_t.substring(1);
+                                timeTo = time_to.substring(1);
+                                book_time.setText(timeFrom + " - " + timeTo);
+                                book_date.setText(str2 + "/" + str1 + "/" + str3 +" - "+ end_date);
+                            } else if (time_t.startsWith("0")) {
+                                timeFrom = time_t.substring(1);
+                                if (time_to.startsWith("0")) {
                                     timeTo = time_to.substring(1);
                                     book_time.setText(timeFrom + " - " + timeTo);
                                     book_date.setText(str2 + "/" + str1 + "/" + str3 +" - "+ end_date);
-                                } else if (time_t.startsWith("0")) {
-                                    timeFrom = time_t.substring(1);
-                                    if (time_to.startsWith("0")) {
-                                        timeTo = time_to.substring(1);
-                                        book_time.setText(timeFrom + " - " + timeTo);
-                                        book_date.setText(str2 + "/" + str1 + "/" + str3 +" - "+ end_date);
-                                    } else {
-                                        timeTo = time_to.substring(0);
-                                        book_time.setText(timeFrom + " - " + timeTo);
-                                        book_date.setText(str2 + "/" + str1 + "/" + str3 +" - "+ end_date);
-                                    }
-                                } else if (time_to.startsWith("0")) {
-                                    timeTo = time_to.substring(1);
-                                    if (time_t.startsWith("0")) {
-                                        timeFrom = time_t.substring(1);
-                                        book_time.setText(timeFrom + " - " + timeTo);
-                                        book_date.setText(str2 + "/" + str1 + "/" + str3 +" - "+ end_date);
-                                    } else {
-                                        timeFrom = time_t.substring(0);
-                                        book_time.setText(timeFrom + " - " + timeTo);
-                                        book_date.setText(str2 + "/" + str1 + "/" + str3 +" - "+ end_date);
-                                    }
-                                } else if (!time_t.startsWith("0") && !time_to.startsWith("0")) {
-                                    timeFrom = time_t.substring(0);
+                                } else {
                                     timeTo = time_to.substring(0);
                                     book_time.setText(timeFrom + " - " + timeTo);
                                     book_date.setText(str2 + "/" + str1 + "/" + str3 +" - "+ end_date);
                                 }
+                            } else if (time_to.startsWith("0")) {
+                                timeTo = time_to.substring(1);
+                                if (time_t.startsWith("0")) {
+                                    timeFrom = time_t.substring(1);
+                                    book_time.setText(timeFrom + " - " + timeTo);
+                                    book_date.setText(str2 + "/" + str1 + "/" + str3 +" - "+ end_date);
+                                } else {
+                                    timeFrom = time_t.substring(0);
+                                    book_time.setText(timeFrom + " - " + timeTo);
+                                    book_date.setText(str2 + "/" + str1 + "/" + str3 +" - "+ end_date);
+                                }
+                            } else if (!time_t.startsWith("0") && !time_to.startsWith("0")) {
+                                timeFrom = time_t.substring(0);
+                                timeTo = time_to.substring(0);
+                                book_time.setText(timeFrom + " - " + timeTo);
+                                book_date.setText(str2 + "/" + str1 + "/" + str3 +" - "+ end_date);
+                            }
 
 
 
@@ -757,7 +761,7 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
                                 addtoFavCheck_box.setChecked(false);
                             }
                             viewPager.setOffscreenPageLimit(1);
-                            pagerAdapter = new B_EventDetailImageAdapter(getContext(), image);
+                            pagerAdapter = new B_EventDetailImageAdapter(BookEventActivity.this, image);
                             viewPager.setAdapter(pagerAdapter);
                             Log.d("image", "" + image);
 
@@ -814,11 +818,11 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
                             Log.d("Check_User", "" + loginUserId + "  " + hostUserID);
                         }
                     } else if (response.body().getStatus().equals("400")) {
-                        Toast.makeText(getContext(), "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BookEventActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                     progressDialog.dismiss();
                 } else {
-                    Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                    Intent intent = new Intent(BookEventActivity.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
@@ -828,7 +832,7 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
             @Override
             public void onFailure(Call<RetroGetEventData> call, Throwable t) {
                 Log.d("events1", "" + t.getMessage() + " " + value);
-                Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BookEventActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
             }
         });
@@ -884,49 +888,6 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
     }
 
 
-    public void ratingDialog() {
-        final Dialog dialog = new Dialog(getContext());
-        dialog.setContentView(R.layout.custom_rating_box);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.setCancelable(false);
-
-        final RatingBar ratingBar = dialog.findViewById(R.id.rating_bar);
-        final EditText feedback = dialog.findViewById(R.id.feedback);
-        Button dialogratingshare_button = dialog.findViewById(R.id.dialogratingshare_button);
-        dialog.show();
-
-        dialogratingshare_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String rating = String.valueOf(ratingBar.getRating());
-                String feedbck = feedback.getText().toString();
-                if (rating.equals("") | feedbck.equals("")) {
-                    Toast.makeText(getContext(), "Add Rating  and reviews", Toast.LENGTH_SHORT).show();
-                } else {
-                    progressDialog.show();
-                    Call<Rating> call = WebAPI.getInstance().getApi().rating("Bearer " + S_token, value, rating, feedbck);
-                    call.enqueue(new Callback<Rating>() {
-                        @Override
-                        public void onResponse(Call<Rating> call, Response<Rating> response) {
-                            if (response.body()!=null) {
-                                dialog.dismiss();
-                                progressDialog.dismiss();
-                                // Toast.makeText(getContext(), "Rating => " + response.body().getData().getRating(), Toast.LENGTH_SHORT).show();
-
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<Rating> call, Throwable t) {
-                            progressDialog.dismiss();
-                        }
-                    });
-                }
-            }
-        });
-    }
-
     //add dots at bottom
     private void addBottomDots(int currentPage) {
 
@@ -934,7 +895,7 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
         dotsLayout.removeAllViews();
         for (int i = 0; i < dots.length; i++) {
 
-            dots[i] = new TextView(getContext());
+            dots[i] = new TextView(BookEventActivity.this);
             dots[i].setText(Html.fromHtml("&#8226;"));
             dots[i].setTextSize(50);
             dots[i].setTextColor(getResources().getColor(R.color.colortextwhite));
@@ -947,5 +908,5 @@ public class BookEventFragment extends Fragment implements AdapterView.OnItemSel
         }
 
     }
-}
 
+}

@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.BookEventFragment">
-
+    tools:context=".ui.BookEventActivity">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,40 +17,47 @@
             android:layout_height="wrap_content"
             tools:ignore="MissingConstraints">
 
-            <android.support.constraint.ConstraintLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:ignore="MissingConstraints">
 
-
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/defaultmargin"
-                    android:src="@drawable/export"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
+                    android:src="@drawable/back"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/backonbookevent"></ImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/circularstdbold"
+                    android:text="Event Details"
+                    android:textColor="@color/colortextBlack"
+                    android:textSize="@dimen/normalText"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
                     tools:ignore="MissingConstraints" />
 
-            </android.support.constraint.ConstraintLayout>
+                <ImageView
+                    android:id="@+id/sharevent"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/defaultmargin"
+                    android:src="@drawable/export"
+                    android:layout_alignParentEnd="true"
+                    tools:ignore="MissingConstraints" />
+
+            </RelativeLayout>
 
 
         </android.support.v7.widget.Toolbar>
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/circularstdbold"
-            android:text="Event Details"
-            android:textColor="@color/colortextBlack"
-            android:textSize="@dimen/normalText"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:ignore="MissingConstraints" />
+
     </android.support.constraint.ConstraintLayout>
 
 
@@ -65,6 +71,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="1sp"
+                android:layout_height="1sp"
+                android:id="@+id/screenshot"></ImageView>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -463,7 +474,6 @@
                             android:layout_height="match_parent"
                             android:layout_marginTop="@dimen/defaultmargin"
                             android:gravity="center"
-                            android:padding="@dimen/editPadding"
                             android:id="@+id/invitefriends"
                             android:fontFamily="@font/sfuitextlight"
                             android:text="Invite Friends (Female only)"
@@ -501,5 +511,6 @@
         </LinearLayout>
 
     </ScrollView>
+
 
 </RelativeLayout>

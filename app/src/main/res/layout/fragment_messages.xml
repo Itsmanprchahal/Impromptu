@@ -47,6 +47,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="No Messages"
+            android:fontFamily="@font/circularstdblack"
             android:textSize="@dimen/_25sdp"
             android:visibility="gone"
             android:id="@+id/nomessages"

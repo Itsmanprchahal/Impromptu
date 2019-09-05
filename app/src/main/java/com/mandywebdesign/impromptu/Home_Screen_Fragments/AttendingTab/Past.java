@@ -1,6 +1,7 @@
 package com.mandywebdesign.impromptu.Home_Screen_Fragments.AttendingTab;
 
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -57,7 +58,7 @@ public class Past extends Fragment implements DiscreteScrollView.OnItemChangedLi
     TextView noEvnets;
     private InfiniteScrollAdapter infiniteAdapter;
     public static String user, S_Token, itemPosition, formattedDate, getFormattedDate, timeFrom;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     Normal_pastbooked adapter;
     public static ArrayList<String> name1 = new ArrayList<>();
     public static ArrayList<String> title = new ArrayList<>();
@@ -76,7 +77,8 @@ public class Past extends Fragment implements DiscreteScrollView.OnItemChangedLi
         view = inflater.inflate(R.layout.fragment_past, container, false);
         fragmentManager = getFragmentManager();
 
-        progressDialog = ProgressBarClass.showProgressDialog(getContext(), "please wait while we fetch your events");
+        progressDialog = ProgressBarClass.showProgressDialog(getContext());
+        progressDialog.dismiss();
 
         sharedPreferences = getContext().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         itemPositionPref = getContext().getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);
@@ -103,7 +105,7 @@ public class Past extends Fragment implements DiscreteScrollView.OnItemChangedLi
     }
 
     private void past_EVnets(final String bToken) {
-
+    progressDialog.show();
         Call<Normal_past_booked> call = WebAPI.getInstance().getApi().past_booked("Bearer " + bToken, "application/json");
         call.enqueue(new Callback<Normal_past_booked>() {
             @Override

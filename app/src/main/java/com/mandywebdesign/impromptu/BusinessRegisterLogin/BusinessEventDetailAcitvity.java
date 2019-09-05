@@ -1,6 +1,6 @@
 package com.mandywebdesign.impromptu.BusinessRegisterLogin;
 
-
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -8,28 +8,23 @@ import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -44,12 +39,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mandywebdesign.impromptu.Adapters.B_EventDetailImageAdapter;
 import com.mandywebdesign.impromptu.Adapters.Booked_users;
+import com.mandywebdesign.impromptu.messages.ChatBoxActivity;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.AddEvents.Add_Event_Activity;
-import com.mandywebdesign.impromptu.Home_Screen_Fragments.Events;
-import com.mandywebdesign.impromptu.Home_Screen_Fragments.Home;
-import com.mandywebdesign.impromptu.Home_Screen_Fragments.HostingTabs.Drafts;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
-import com.mandywebdesign.impromptu.MyEventsFragments.Hosting;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.Booked_User;
 import com.mandywebdesign.impromptu.Retrofit.EventMessageClick;
@@ -60,32 +52,24 @@ import com.mandywebdesign.impromptu.Retrofit.RetroGetEventData;
 import com.mandywebdesign.impromptu.Retrofit.RetroPostDraft;
 import com.mandywebdesign.impromptu.Retrofit.TotalTickets;
 import com.mandywebdesign.impromptu.Utils.Util;
-import com.mandywebdesign.impromptu.messages.ChatBox;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.Join_us;
 import com.mandywebdesign.impromptu.ui.NoInternet;
 import com.mandywebdesign.impromptu.ui.NoInternetScreen;
+import com.mandywebdesign.impromptu.ui.ProgressBarClass;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
-import me.relex.circleindicator.CircleIndicator;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class BusinessEvent_detailsFragment extends Fragment {
+public class BusinessEventDetailAcitvity extends AppCompatActivity {
 
     private LinearLayout dotsLayout;
     private TextView[] dots;
+    ImageButton backon_b_eventdetail;
     View view;
     RecyclerView users;
     TextView category, event_price, datetime, loc, BusinessEvent_detailsFragment_book_time, ticketPrice, numberofTickets, totalPrice, freetext, event_title, see_all,
@@ -102,7 +86,7 @@ public class BusinessEvent_detailsFragment extends Fragment {
     RoundedImageView bannerImage;
     Bundle bundle;
     public static String value, event_type, otherEvnts, formattedDate, getFormattedDate;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     ViewPager viewPager;
     ImageView editevent;
     PagerAdapter pagerAdapter;
@@ -115,92 +99,44 @@ public class BusinessEvent_detailsFragment extends Fragment {
     CheckBox eventdetail_favbt;
     TextView seemessagesforthisevent;
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_business_event_details, container, false);
-        manager = getActivity().getSupportFragmentManager();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_business_event_detail_acitvity);
 
-        account = GoogleSignIn.getLastSignedInAccount(getContext());
+        account = GoogleSignIn.getLastSignedInAccount(this);
         loggedOut = AccessToken.getCurrentAccessToken() == null;
-        sharedPreferences = getActivity().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         user = "Bearer " + sharedPreferences.getString("Usertoken", "");
         BToken = sharedPreferences.getString("Usertoken", "");
         S_Token = sharedPreferences.getString("Socailtoken", "");
-        sharedPreferences1 = getActivity().getSharedPreferences("BusinessProfile1", Context.MODE_PRIVATE);
-        profileupdatedPref = getContext().getSharedPreferences("profileupdated", Context.MODE_PRIVATE);
+        sharedPreferences1 = getSharedPreferences("BusinessProfile1", Context.MODE_PRIVATE);
+        profileupdatedPref = getSharedPreferences("profileupdated", Context.MODE_PRIVATE);
 
 
-        progressDialog = new ProgressDialog(getActivity());
-        Drawable drawable = new ProgressBar(getContext()).getIndeterminateDrawable().mutate();
-        drawable.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorTheme),
+        progressDialog = ProgressBarClass.showProgressDialog(this);
+        Drawable drawable = new ProgressBar(this).getIndeterminateDrawable().mutate();
+        drawable.setColorFilter(ContextCompat.getColor(this, R.color.colorTheme),
                 PorterDuff.Mode.SRC_IN);
-        progressDialog.setIndeterminateDrawable(drawable);
-
-        progressDialog.setMessage("Please wait until we fetch your events");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
         init();
         listerners();
 
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         users.setLayoutManager(layoutManager);
         users.setNestedScrollingEnabled(false);
 
-        Toolbar toolbar = view.findViewById(R.id.BusinessEvent_detailsFragment_book_toolbar);
-        toolbar.setNavigationIcon(R.drawable.back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                getActivity().onBackPressed();
+        Intent intent = getIntent();
 
 
-                if (!BToken.equals("")) {
-                    Bundle bundle1 = new Bundle();
-                    bundle1.putString("eventType", event_type);
+        if (intent != null) {
 
-                    Hosting attending = new Hosting();
-                    attending.setArguments(bundle1);
-
-
-                    FragmentTransaction transaction = manager.beginTransaction();
-                    transaction.replace(R.id.home_frame_layout, attending);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                    Home_Screen.countt = 0;
-                } else if (!S_Token.equalsIgnoreCase("")) {
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString("eventType", event_type);
-                    bundle.putString("other_events", otherEvnts);
-
-                    Events events = new Events();
-                    events.setArguments(bundle);
-
-
-                    FragmentTransaction transaction = manager.beginTransaction();
-                    transaction.replace(R.id.home_frame_layout, events);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                    Home_Screen.countt = 0;
-
-
-                }
-            }
-        });
-
-        bundle = getArguments();
-
-
-        if (bundle != null) {
-
-            value = bundle.getString("event_id");
-            event_type = bundle.getString("eventType");
-            otherEvnts = bundle.getString("other_events");
+            value = intent.getStringExtra("event_id");
+            event_type = intent.getStringExtra("eventType");
+            otherEvnts = intent.getStringExtra("other_events");
 
             if (event_type.equals("draft")) {
 
@@ -273,21 +209,39 @@ public class BusinessEvent_detailsFragment extends Fragment {
                     getUsers(S_Token, value);
                     linearLayout.setVisibility(View.GONE);
                 }
+            }else if (event_type.equals("CheckGuest"))
+            {
+                if (!BToken.equalsIgnoreCase("")) {
+                    getEventdata(BToken, value);
+                    getUsers(BToken, value);
+                } else if (!S_Token.equalsIgnoreCase("")) {
+                    getEventdata(S_Token, value);
+                    getUsers(S_Token, value);
+                    addFav(value);
+                }
             }
 
             editevent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(getActivity(), Add_Event_Activity.class);
-                    intent.putExtra("editevent", "edit");
-                    intent.putExtra("value", value);
+                    if (event_type.equals("draft"))
+                    {
+                        Intent intent = new Intent(BusinessEventDetailAcitvity.this, Add_Event_Activity.class);
+                        intent.putExtra("editevent", "edit");
+                        intent.putExtra("value", value);
 //                        editor.putString("editimages",image.);
-                    startActivity(intent);
+                        startActivity(intent);
+                    }else {
+                        String message = "Testing";
+                        Intent share = new Intent(Intent.ACTION_SEND);
+                        share.setType("text/plain");
+                        share.putExtra(Intent.EXTRA_TEXT, message);
+                        startActivity(Intent.createChooser(share, "Testing Impromptu"));
+                    }
+
                 }
             });
         }
-
-        return view;
     }
 
     private void postDraft(String s_token) {
@@ -298,10 +252,10 @@ public class BusinessEvent_detailsFragment extends Fragment {
             public void onResponse(Call<RetroPostDraft> call, Response<RetroPostDraft> response) {
 
                 if (response.body() != null) {
-                    Intent intent = new Intent(getContext(), Home_Screen.class);
+                    Intent intent = new Intent(BusinessEventDetailAcitvity.this, Home_Screen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    getContext().startActivity(intent);
-                    Toast.makeText(getContext(), "Published", Toast.LENGTH_SHORT).show();
+                    startActivity(intent);
+                    Toast.makeText(BusinessEventDetailAcitvity.this, "Published", Toast.LENGTH_SHORT).show();
                 } else {
 
                 }
@@ -358,7 +312,7 @@ public class BusinessEvent_detailsFragment extends Fragment {
                     }
                 } else {
                     progressDialog.dismiss();
-                    Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                    Intent intent = new Intent(BusinessEventDetailAcitvity.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
@@ -402,11 +356,11 @@ public class BusinessEvent_detailsFragment extends Fragment {
                     }
 
 
-                    Booked_users adapter = new Booked_users(getContext(), userImage);
+                    Booked_users adapter = new Booked_users(BusinessEventDetailAcitvity.this, userImage);
                     users.setAdapter(adapter);
                 } else {
                     progressDialog.dismiss();
-                    Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                    Intent intent = new Intent(BusinessEventDetailAcitvity.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
@@ -415,7 +369,7 @@ public class BusinessEvent_detailsFragment extends Fragment {
             @Override
             public void onFailure(Call<Booked_User> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BusinessEventDetailAcitvity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -509,7 +463,7 @@ public class BusinessEvent_detailsFragment extends Fragment {
 
 
                             String imageurl = image.get(0).toString();
-                            Glide.with(getContext()).load(imageurl).into(bannerImage);
+                            Glide.with(BusinessEventDetailAcitvity.this).load(imageurl).into(bannerImage);
 //                        Picasso.get().load(imageurl).resize(110,110).into(bannerImage);
 
                             //Check Event Fav Status
@@ -519,7 +473,7 @@ public class BusinessEvent_detailsFragment extends Fragment {
                                 eventdetail_favbt.setChecked(false);
                             }
                             viewPager.setOffscreenPageLimit(1);
-                            pagerAdapter = new B_EventDetailImageAdapter(getContext(), image);
+                            pagerAdapter = new B_EventDetailImageAdapter(BusinessEventDetailAcitvity.this, image);
                             viewPager.setAdapter(pagerAdapter);
                             Log.d("image", "" + image);
 
@@ -602,23 +556,22 @@ public class BusinessEvent_detailsFragment extends Fragment {
                         SharedPreferences.Editor editor1 = sharedPreferences1.edit();
                         editor1.clear();
                         editor1.commit();
-                        Toast.makeText(getContext(), "Business Logout", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BusinessEventDetailAcitvity.this, "Business Logout", Toast.LENGTH_SHORT).show();
 
                         SharedPreferences.Editor editor2 = profileupdatedPref.edit();
                         editor2.clear();
                         editor2.commit();
 
-                        progressDialog.setMessage("login in another device");
                         progressDialog.setCanceledOnTouchOutside(false);
                         progressDialog.show();
 
-                        Intent intent = new Intent(getActivity(), Join_us.class);
-                        getActivity().startActivity(intent);
-                        getActivity().finish();
+                        Intent intent = new Intent(BusinessEventDetailAcitvity.this, Join_us.class);
+                        startActivity(intent);
+                        finish();
                     }
                 } else {
                     progressDialog.dismiss();
-                    Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                    Intent intent = new Intent(BusinessEventDetailAcitvity.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
@@ -629,9 +582,9 @@ public class BusinessEvent_detailsFragment extends Fragment {
             @Override
             public void onFailure(Call<RetroGetEventData> call, Throwable t) {
                 Log.d("events1", "" + t.getMessage() + " " + value);
-                if (NoInternet.isOnline(getContext()) == false) {
+                if (NoInternet.isOnline(BusinessEventDetailAcitvity.this) == false) {
                     progressDialog.dismiss();
-                    NoInternet.dialog(getContext());
+                    NoInternet.dialog(BusinessEventDetailAcitvity.this);
                 }
                 progressDialog.dismiss();
             }
@@ -641,21 +594,58 @@ public class BusinessEvent_detailsFragment extends Fragment {
 
     private void listerners() {
 
+        backon_b_eventdetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BusinessEventDetailAcitvity.this,Home_Screen.class);
+                intent.putExtra("eventType",event_type);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+                finish();
+//                if (!BToken.equals("")) {
+//
+//                    Bundle bundle1 = new Bundle();
+//                    bundle1.putString("eventType", event_type);
+//
+//                    Hosting attending = new Hosting();
+//                    attending.setArguments(bundle1);
+//
+//
+//                    FragmentTransaction transaction = manager.beginTransaction();
+//                    transaction.replace(R.id.home_frame_layout, attending);
+//                    transaction.addToBackStack(null);
+//                    transaction.commit();
+//                    Home_Screen.countt = 0;
+//                } else if (!S_Token.equalsIgnoreCase("")) {
+//
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("eventType", event_type);
+//                    bundle.putString("other_events", otherEvnts);
+//
+//                    Events events = new Events();
+//                    events.setArguments(bundle);
+//
+//
+//                    FragmentTransaction transaction = manager.beginTransaction();
+//                    transaction.replace(R.id.home_frame_layout, events);
+//                    transaction.addToBackStack(null);
+//                    transaction.commit();
+//                    Home_Screen.countt = 0;
+//
+//
+//                }
+            }
+        });
+
         checkInGuest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Bundle bundle = new Bundle();
-                bundle.putString("value", value);
-                bundle.putString("eventType", event_type);
-
-                CheckGuestFragment checkGuestFragment = new CheckGuestFragment();
-                checkGuestFragment.setArguments(bundle);
-
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.home_frame_layout, checkGuestFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                Intent intent = new Intent(BusinessEventDetailAcitvity.this,CheckGuestActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra("value",value);
+                intent.putExtra("eventType",event_type);
+                startActivity(intent);
             }
         });
 
@@ -663,15 +653,11 @@ public class BusinessEvent_detailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Bundle bundle = new Bundle();
-                bundle.putString("value", id);
+                Intent intent = new Intent(BusinessEventDetailAcitvity.this,SeeAll_activity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra("value",id);
+                startActivity(intent);
 
-                See_all see_all = new See_all();
-                see_all.setArguments(bundle);
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.home_frame_layout, see_all);
-                transaction.addToBackStack(null);
-                transaction.commit();
             }
         });
 
@@ -736,14 +722,12 @@ public class BusinessEvent_detailsFragment extends Fragment {
 
     private void OpenEventChat(String s, String id) {
 
-        Bundle bundle = new Bundle();
-        bundle.putString("event_title", title);
-        bundle.putString("event_image", hostImage);
-        bundle.putString("eventID", value);
-        bundle.putString("event_host_user", hostUserID);
+        final Intent intent = new Intent(BusinessEventDetailAcitvity.this, ChatBoxActivity.class);
+        intent.putExtra("event_title",title);
+        intent.putExtra("event_image",hostImage);
+        intent.putExtra("eventID",value);
+        intent.putExtra("event_host_user",hostUserID);
 
-        final ChatBox chatBox = new ChatBox();
-        chatBox.setArguments(bundle);
 
         Call<EventMessageClick> call = WebAPI.getInstance().getApi().eventMEsgClick("Bearer " + s, id);
         call.enqueue(new Callback<EventMessageClick>() {
@@ -751,14 +735,12 @@ public class BusinessEvent_detailsFragment extends Fragment {
             public void onResponse(Call<EventMessageClick> call, Response<EventMessageClick> response) {
                 if (response.body() != null) {
                     if (response.body().getStatus().equals("200")) {
-                        FragmentTransaction transaction = manager.beginTransaction();
-                        transaction.replace(R.id.home_frame_layout, chatBox);
-                        transaction.addToBackStack(null);
-                        transaction.commit();
+
+                        startActivity(intent);
                     }
 
                 } else {
-                    Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                    Intent intent = new Intent(BusinessEventDetailAcitvity.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
@@ -767,7 +749,7 @@ public class BusinessEvent_detailsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<EventMessageClick> call, Throwable t) {
-                Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BusinessEventDetailAcitvity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -775,33 +757,34 @@ public class BusinessEvent_detailsFragment extends Fragment {
     private void init() {
 
         Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
-        event_price = view.findViewById(R.id.event_price);
-        editevent = view.findViewById(R.id.editevent);
-        eventdetail_favbt = view.findViewById(R.id.eventdetail_favbt);
-        dotsLayout = (LinearLayout) view.findViewById(R.id.BusinessEvent_detailsFragment_book_indicator);
-        checkInGuest = (Button) view.findViewById(R.id.BusinessEvent_detailsFragment_book_event_book_bt);
-        category = (TextView) view.findViewById(R.id.BusinessEvent_detailsFragment_book_categry);
-        descri = (ReadMoreTextView) view.findViewById(R.id.BusinessEvent_detailsFragment_book_description);
-        datetime = (TextView) view.findViewById(R.id.BusinessEvent_detailsFragment_book_date);
-        loc = (TextView) view.findViewById(R.id.BusinessEvent_detailsFragment_book_location);
-        viewPager = (ViewPager) view.findViewById(R.id.BusinessEvent_detailsFragment_book_viewpager);
-        BusinessEvent_detailsFragment_book_time = view.findViewById(R.id.BusinessEvent_detailsFragment_book_time);
-        publish = (Button) view.findViewById(R.id.publish_on_eventsdetails);
-        linearLayout = (LinearLayout) view.findViewById(R.id.bulletin_layout);
-        peoplecoming = (TextView) view.findViewById(R.id.BusinessEvent_detailsFragment_book_attendess_people);
-        users = (RecyclerView) view.findViewById(R.id.BusinessEvent_detailsFragment_book_recyclerView);
-        ticketPrice = (TextView) view.findViewById(R.id.BusinessEvent_detailsFragment_book_price);
-        numberofTickets = (TextView) view.findViewById(R.id.BusinessEvent_detailsFragment_book_ticket_number);
-        totalPrice = (TextView) view.findViewById(R.id.BusinessEvent_detailsFragment_book_total_price);
-        priceLayput = (LinearLayout) view.findViewById(R.id.pricelayout);
-        event_title = (TextView) view.findViewById(R.id.BusinessEvent_detailsFragment_book_tittle);
-        freetext = (TextView) view.findViewById(R.id.freeText);
-        see_all = (TextView) view.findViewById(R.id.BusinessEvent_detailsFragment_book_seeAll);
-        bannerImage = (RoundedImageView) view.findViewById(R.id.BusinessEvent_detailsFragment_book_bulletin);
-        BusinessEvent_detailsFragment_book_link1 = (TextView) view.findViewById(R.id.BusinessEvent_detailsFragment_book_link1);
-        BusinessEvent_detailsFragment_book_link2 = (TextView) view.findViewById(R.id.BusinessEvent_detailsFragment_book_link2);
-        BusinessEvent_detailsFragment_book_link3 = (TextView) view.findViewById(R.id.BusinessEvent_detailsFragment_book_link3);
-        seemessagesforthisevent = view.findViewById(R.id.seemessagesforthisevent);
+        event_price = findViewById(R.id.event_price);
+        editevent = findViewById(R.id.editevent);
+        eventdetail_favbt = findViewById(R.id.eventdetail_favbt);
+        dotsLayout = (LinearLayout) findViewById(R.id.BusinessEvent_detailsFragment_book_indicator);
+        checkInGuest = (Button) findViewById(R.id.BusinessEvent_detailsFragment_book_event_book_bt);
+        category = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_categry);
+        descri = (ReadMoreTextView) findViewById(R.id.BusinessEvent_detailsFragment_book_description);
+        datetime = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_date);
+        loc = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_location);
+        viewPager = (ViewPager) findViewById(R.id.BusinessEvent_detailsFragment_book_viewpager);
+        BusinessEvent_detailsFragment_book_time = findViewById(R.id.BusinessEvent_detailsFragment_book_time);
+        publish = (Button) findViewById(R.id.publish_on_eventsdetails);
+        linearLayout = (LinearLayout) findViewById(R.id.bulletin_layout);
+        peoplecoming = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_attendess_people);
+        users = (RecyclerView) findViewById(R.id.BusinessEvent_detailsFragment_book_recyclerView);
+        ticketPrice = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_price);
+        numberofTickets = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_ticket_number);
+        totalPrice = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_total_price);
+        priceLayput = (LinearLayout) findViewById(R.id.pricelayout);
+        event_title = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_tittle);
+        freetext = (TextView) findViewById(R.id.freeText);
+        see_all = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_seeAll);
+        bannerImage = (RoundedImageView) findViewById(R.id.BusinessEvent_detailsFragment_book_bulletin);
+        BusinessEvent_detailsFragment_book_link1 = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_link1);
+        BusinessEvent_detailsFragment_book_link2 = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_link2);
+        BusinessEvent_detailsFragment_book_link3 = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_link3);
+        seemessagesforthisevent = findViewById(R.id.seemessagesforthisevent);
+        backon_b_eventdetail = findViewById(R.id.backon_b_eventdetail);
     }
 
     //add dots at bottom
@@ -811,7 +794,7 @@ public class BusinessEvent_detailsFragment extends Fragment {
         dotsLayout.removeAllViews();
         for (int i = 0; i < dots.length; i++) {
 
-            dots[i] = new TextView(getContext());
+            dots[i] = new TextView(BusinessEventDetailAcitvity.this);
             dots[i].setText(Html.fromHtml("&#8226;"));
             dots[i].setTextSize(50);
             dots[i].setTextColor(getResources().getColor(R.color.colortextwhite));
@@ -840,7 +823,7 @@ public class BusinessEvent_detailsFragment extends Fragment {
                                 if (response.body() != null) {
 
                                 }
-                                Toast.makeText(getContext(), "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(BusinessEventDetailAcitvity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
@@ -858,7 +841,7 @@ public class BusinessEvent_detailsFragment extends Fragment {
                             if (response.body() != null) {
 
                             }
-                            Toast.makeText(getContext(), "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BusinessEventDetailAcitvity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         }
 
                         @Override

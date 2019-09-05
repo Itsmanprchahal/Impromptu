@@ -48,6 +48,7 @@ import com.mandywebdesign.impromptu.Retrofit.RetroLiveEvents;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.Join_us;
 import com.mandywebdesign.impromptu.ui.NoInternetScreen;
+import com.mandywebdesign.impromptu.ui.ProgressBarClass;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -76,7 +77,7 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
     public static String user, userName, address1, address2, desc, webURL, facebookURL, instaGramURL, TwitteURL, avatar, postcode, city, charity_number;
     FragmentManager manager;
     public static String accept = "application/json";
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     String usertoken, token;
     public static ArrayList<String> profileliveevents = new ArrayList<>();
     public static ArrayList<String> profilePastEvents = new ArrayList<>();
@@ -92,13 +93,12 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
 
 
 
-        progressDialog = new ProgressDialog(getActivity());
+        progressDialog = ProgressBarClass.showProgressDialog(getContext());
+        progressDialog.dismiss();
         Drawable drawable = new ProgressBar(getContext()).getIndeterminateDrawable().mutate();
         drawable.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorTheme),
                 PorterDuff.Mode.SRC_IN);
-        progressDialog.setIndeterminateDrawable(drawable);
 
-        progressDialog.setMessage("Please wait until we fetch your profile data");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
@@ -212,7 +212,6 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
                         editor2.clear();
                         editor2.commit();
 
-                        progressDialog.setMessage("login in another device");
                         progressDialog.setCanceledOnTouchOutside(false);
                         progressDialog.show();
 

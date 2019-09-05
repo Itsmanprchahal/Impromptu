@@ -1,5 +1,6 @@
 package com.mandywebdesign.impromptu.Home_Screen_Fragments.favouriteTab;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -52,7 +53,7 @@ public class EventsFrag extends Fragment implements  DiscreteScrollView.OnItemCh
     TextView noEvnets;
     SharedPreferences sharedPreferences,itemPositionPref;
     String S_Token,itemPosition,formattedDate,getFormattedDate,timeFrom;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     FavouriteEventAdapter adapter;
     private InfiniteScrollAdapter infiniteAdapter;
     public static ArrayList<String> name1_fav = new ArrayList<>();
@@ -71,7 +72,8 @@ public class EventsFrag extends Fragment implements  DiscreteScrollView.OnItemCh
         view = inflater.inflate(R.layout.fragment_events, container, false);
         fragmentManager = getFragmentManager();
 
-        progressDialog = ProgressBarClass.showProgressDialog(getContext(),"please wait while we fetch your events");
+        progressDialog = ProgressBarClass.showProgressDialog(getContext());
+        progressDialog.dismiss();
 
         sharedPreferences = getContext().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         itemPositionPref = getContext().getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);
@@ -104,7 +106,7 @@ public class EventsFrag extends Fragment implements  DiscreteScrollView.OnItemCh
     }
 
     public void GetFavEvents(String token) {
-
+        progressDialog.show();
         String token1 = "Bearer " + token;
         Call<NormalGetFavEvents> call = WebAPI.getInstance().getApi().getFavEvents(token1, "application/json");
         call.enqueue(new Callback<NormalGetFavEvents>() {

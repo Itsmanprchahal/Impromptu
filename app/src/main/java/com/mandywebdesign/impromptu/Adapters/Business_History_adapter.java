@@ -3,10 +3,10 @@ package com.mandywebdesign.impromptu.Adapters;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,17 +22,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEvent_detailsFragment;
-import com.mandywebdesign.impromptu.Home_Screen_Fragments.HostingTabs.Drafts;
+import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEventDetailAcitvity;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.HostingTabs.History;
-import com.mandywebdesign.impromptu.Home_Screen_Fragments.HostingTabs.Live;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.Rating;
 import com.mandywebdesign.impromptu.Utils.Constants;
-import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.ProgressBarClass;
-import com.squareup.picasso.Picasso;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,7 +42,7 @@ public class Business_History_adapter extends RecyclerView.Adapter<Business_Hist
     SharedPreferences sharedPreferences;
     String token;
     SharedPreferences.Editor editor;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
 
     public Business_History_adapter(Context context,FragmentManager manager,String token) {
         this.context = context;
@@ -59,7 +55,7 @@ public class Business_History_adapter extends RecyclerView.Adapter<Business_Hist
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
         View view = layoutInflater.inflate(R.layout.custom_events,viewGroup,false);
-        progressDialog = ProgressBarClass.showProgressDialog( context,"Please wait...");
+        progressDialog = ProgressBarClass.showProgressDialog(context);
         progressDialog.dismiss();
 
         return new ViewHolder(view);
@@ -82,13 +78,15 @@ public class Business_History_adapter extends RecyclerView.Adapter<Business_Hist
             viewHolder.evetPrice.setText("£ "+History.prices.get(i));
         }
 
-        if (History.ratingstatus.get(i).equals("no"))
+        if (History.ratingstatus != null)
         {
-            viewHolder.ratenow_bt.setVisibility(View.VISIBLE);
-        }else {
-            viewHolder.ratenow_bt.setVisibility(View.GONE);
+            if (History.ratingstatus.get(i).equals("no"))
+            {
+                viewHolder.ratenow_bt.setVisibility(View.VISIBLE);
+            }else {
+                viewHolder.ratenow_bt.setVisibility(View.GONE);
+            }
         }
-
 
             viewHolder.overall_rating.setRating(Float.parseFloat(History.rating_overall.get(i)));
 
@@ -117,18 +115,29 @@ public class Business_History_adapter extends RecyclerView.Adapter<Business_Hist
             @Override
             public void onClick(View v) {
 
-                Bundle bundle = new Bundle();
                 String value = History.event_id.get(i);
-                bundle.putString("event_id", value);
-                bundle.putString("eventType","history");
-
+                Intent intent = new Intent(context, BusinessEventDetailAcitvity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra("event_id",value);
+                intent.putExtra("eventType","history");
                 editor.putString(Constants.itemPosition, String.valueOf(i));
                 editor.commit();
 
-                BusinessEvent_detailsFragment businessEvent_detailsFragment = new BusinessEvent_detailsFragment();
-                businessEvent_detailsFragment.setArguments(bundle);
-                manager.beginTransaction().replace(R.id.home_frame_layout,businessEvent_detailsFragment).commit();
-                Home_Screen.countt=1;
+                context.startActivity(intent);
+
+
+//                Bundle bundle = new Bundle();
+//                String value = History.event_id.get(i);
+//                bundle.putString("event_id", value);
+//                bundle.putString("eventType","history");
+//
+//                editor.putString(Constants.itemPosition, String.valueOf(i));
+//                editor.commit();
+//
+//                BusinessEvent_detailsFragment businessEvent_detailsFragment = new BusinessEvent_detailsFragment();
+//                businessEvent_detailsFragment.setArguments(bundle);
+//                manager.beginTransaction().replace(R.id.home_frame_layout,businessEvent_detailsFragment).commit();
+//                Home_Screen.countt=1;
 
             }
         });

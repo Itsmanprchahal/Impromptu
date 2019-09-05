@@ -1,5 +1,6 @@
 package com.mandywebdesign.impromptu.SettingFragmentsOptions;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -32,7 +33,7 @@ public class Privacy extends Fragment {
     View view;
     SharedPreferences sharedPreferences;
     String user,social_token;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     ImageView back;
     FragmentManager manager;
 
@@ -48,7 +49,8 @@ public class Privacy extends Fragment {
         user = sharedPreferences.getString("Usertoken", "");
         social_token = sharedPreferences.getString("Socailtoken", "");
 
-        progressDialog = ProgressBarClass.showProgressDialog(getContext(),"please wait...");
+        progressDialog = ProgressBarClass.showProgressDialog(getContext());
+        progressDialog.dismiss();
 
         init();
         listerners();
@@ -66,7 +68,7 @@ public class Privacy extends Fragment {
     }
 
     private void normalprivancy(String social_token) {
-
+        progressDialog.show();
         Call<RetroPrivancy> call = WebAPI.getInstance().getApi().privacy("Bearer "+social_token,"application/json");
         call.enqueue(new Callback<RetroPrivancy>() {
             @Override

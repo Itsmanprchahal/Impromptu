@@ -2,11 +2,11 @@ package com.mandywebdesign.impromptu.Adapters;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,10 +24,9 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEvent_detailsFragment;
+import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEventDetailAcitvity;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.AttendingTab.Past;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.AttendingTab.Upcoming;
-import com.mandywebdesign.impromptu.Home_Screen_Fragments.HostingTabs.Live;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Utils.Constants;
 import com.mandywebdesign.impromptu.ui.BarcodeEncoder;
@@ -133,19 +132,26 @@ public class Normal_pastbooked extends RecyclerView.Adapter<Normal_pastbooked.Vi
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Bundle bundle = new Bundle();
                 String value = Past.event_id.get(i);
-                bundle.putString("event_id", value);
-                bundle.putString("eventType","past");
-
+                Intent intent = new Intent(context, BusinessEventDetailAcitvity.class);
+                intent.putExtra("event_id",value);
+                intent.putExtra("eventType","past");
                 editor.putString(Constants.itemPosition, String.valueOf(i));
                 editor.commit();
+                context.startActivity(intent);
 
-                BusinessEvent_detailsFragment businessEvent_detailsFragment = new BusinessEvent_detailsFragment();
-                businessEvent_detailsFragment.setArguments(bundle);
-
-                manager.beginTransaction().replace(R.id.home_frame_layout,businessEvent_detailsFragment).addToBackStack(null).commit();
+//                Bundle bundle = new Bundle();
+//                String value = Past.event_id.get(i);
+//                bundle.putString("event_id", value);
+//                bundle.putString("eventType","past");
+//
+//                editor.putString(Constants.itemPosition, String.valueOf(i));
+//                editor.commit();
+//
+//                BusinessEvent_detailsFragment businessEvent_detailsFragment = new BusinessEvent_detailsFragment();
+//                businessEvent_detailsFragment.setArguments(bundle);
+//
+//                manager.beginTransaction().replace(R.id.home_frame_layout,businessEvent_detailsFragment).addToBackStack(null).commit();
 //                Toast.makeText(context, ""+Live.event_id.get(i), Toast.LENGTH_SHORT).show();
             }
         });

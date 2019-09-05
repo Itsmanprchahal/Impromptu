@@ -1,11 +1,10 @@
 package com.mandywebdesign.impromptu.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEvent_detailsFragment;
+import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEventDetailAcitvity;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.HostingTabs.Live;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Utils.Constants;
@@ -85,23 +84,34 @@ public class Business_LiveEventAdapter extends RecyclerView.Adapter<Business_Liv
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Bundle bundle = new Bundle();
                 String value = Live.event_id.get(i);
-                bundle.putString("event_id", value);
-                bundle.putString("eventType","live");
-                bundle.putString("event_method","hosting");
+                Intent intent = new Intent(context, BusinessEventDetailAcitvity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra("event_id",value);
+                intent.putExtra("eventType","live");
+                intent.putExtra("event_method","hosting");
 
                 editor.putString(Constants.itemPosition, String.valueOf(i));
                 editor.commit();
+                context.startActivity(intent);
 
-                BusinessEvent_detailsFragment businessEvent_detailsFragment = new BusinessEvent_detailsFragment();
-                businessEvent_detailsFragment.setArguments(bundle);
 
-                FragmentTransaction transaction2 = manager.beginTransaction();
-                transaction2.replace(R.id.home_frame_layout, businessEvent_detailsFragment);
-                transaction2.addToBackStack(null);
-                transaction2.commit();
+//                Bundle bundle = new Bundle();
+//                String value = Live.event_id.get(i);
+//                bundle.putString("event_id", value);
+//                bundle.putString("eventType","live");
+//                bundle.putString("event_method","hosting");
+//
+//                editor.putString(Constants.itemPosition, String.valueOf(i));
+//                editor.commit();
+//
+//                BusinessEvent_detailsFragment businessEvent_detailsFragment = new BusinessEvent_detailsFragment();
+//                businessEvent_detailsFragment.setArguments(bundle);
+//
+//                FragmentTransaction transaction2 = manager.beginTransaction();
+//                transaction2.replace(R.id.home_frame_layout, businessEvent_detailsFragment);
+//                transaction2.addToBackStack(null);
+//                transaction2.commit();
 
             }
         });

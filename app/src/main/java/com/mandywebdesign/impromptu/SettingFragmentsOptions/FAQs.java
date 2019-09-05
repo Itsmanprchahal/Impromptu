@@ -1,5 +1,6 @@
 package com.mandywebdesign.impromptu.SettingFragmentsOptions;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -29,7 +30,7 @@ public class FAQs extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     RecyclerView faq_recyclerview;
     ArrayList<FAQ.Datum> faqs = new ArrayList<>();
-    ProgressDialog dialog;
+    Dialog progressDialog;
     ImageButton faq_back;
 
     @Override
@@ -42,7 +43,8 @@ public class FAQs extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         BToken = sharedPreferences.getString("Usertoken", "");
         S_Token = sharedPreferences.getString("Socailtoken", "");
-        dialog = ProgressBarClass.showProgressDialog(this,"Please wait...");
+        progressDialog = ProgressBarClass.showProgressDialog(this);
+        progressDialog.dismiss();
 
 
         if (!BToken.equalsIgnoreCase("")) {
@@ -63,7 +65,7 @@ public class FAQs extends AppCompatActivity {
     }
 
     private void getques(String s_token) {
-
+        progressDialog.show();
         Call<FAQ> call = WebAPI.getInstance().getApi().faq("Bearer "+s_token);
         call.enqueue(new Callback<FAQ>() {
             @Override
@@ -71,7 +73,7 @@ public class FAQs extends AppCompatActivity {
                 if (response.body()!=null)
                 {
 
-                    dialog.dismiss();
+                    progressDialog.dismiss();
 
                     if (response.body().getStatus().equals("200"))
                     {
@@ -89,7 +91,7 @@ public class FAQs extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<FAQ> call, Throwable t) {
-                dialog.dismiss();
+                progressDialog.dismiss();
             }
         });
     }

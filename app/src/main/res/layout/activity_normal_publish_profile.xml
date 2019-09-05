@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colortextwhite"
+    tools:context=".SettingFragmentsOptions.NormalPublishProfile">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="10dp"
+                android:id="@+id/normal_user_profile_card">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/normal_user_profile_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/back"
+                            android:id="@+id/backonnormalpublish"></ImageView>
+
+                        <TextView
+                            android:id="@+id/normal_profile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/circularstdbold"
+                            android:layout_centerInParent="true"
+                            android:layout_marginRight="16dp"
+                            android:text="Profile"
+                            android:textColor="@color/colortextBlack"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            tools:ignore="MissingConstraints" />
+                    </RelativeLayout>
+
+                </android.support.v7.widget.Toolbar>
+
+
+            </android.support.v7.widget.CardView>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/normal_user_profile_card"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="16dp">
+
+
+                <RelativeLayout
+                    android:id="@+id/normal_user_profile_relative_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_toLeftOf="@id/normal_user_profile_userimage">
+
+                    <EditText
+                        android:id="@+id/normal_user_profile_username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_toLeftOf="@id/normal_user_profile_age"
+                        android:fontFamily="@font/sfuitextlight"
+                        android:hint="Name"
+                        android:background="@drawable/custom_edittext"
+                        android:padding="5dp"
+                        android:textColor="@color/colortextBlack"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
+
+
+                    <EditText
+                        android:id="@+id/normal_user_profile_age"
+                        android:layout_width="@dimen/_60sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="2dp"
+                        android:background="@drawable/custom_edittext"
+                        android:fontFamily="@font/sfuitextlight"
+                        android:gravity="center"
+                        android:hint="(21)"
+                        android:textSize="@dimen/_12sdp"
+                        android:inputType="number"
+                        android:padding="5dp"
+                        android:textColor="@color/colortextBlack"
+                        android:textStyle="bold" />
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/normal_user_profile_username"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        android:id="@+id/gendergroup">
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Male"
+                            android:textColor="@color/black"
+                            android:buttonTint="@color/colorTheme"
+                            android:fontFamily="@font/sfuitextlight"
+                            android:id="@+id/normal_user_male"/>
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:text="Female"
+                            android:textColor="@color/black"
+                            android:buttonTint="@color/colorTheme"
+                            android:fontFamily="@font/sfuitextlight"
+                            android:id="@+id/normal_user_female"/>
+
+                    </RadioGroup>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/gendergroup"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:paddingTop="10dp"
+                        android:padding="5dp"
+                        android:fontFamily="@font/sfuitextlight"
+                        android:textColor="@color/colortextBlack"
+                        android:maxLines="3"
+                        android:background="@drawable/custom_edittext"
+                        android:paddingBottom="10dp"
+                        android:paddingRight="10dp"
+                        android:id="@+id/normal_user_about"
+                        android:hint="@string/userProfileStatus"
+                        android:textSize="@dimen/_12sdp" />
+
+
+                </RelativeLayout>
+
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/normal_user_profile_userimage"
+                    app:riv_corner_radius="10dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_alignParentRight="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/screen1" />
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/normal_user_profile_question_recycle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/normal_user_profile_relative_name"
+                    android:layout_marginTop="@dimen/_10sdp">
+                </android.support.v7.widget.RecyclerView>
+
+                <TextView
+                    android:id="@+id/normal_user_profile_question"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/normal_user_profile_question_recycle"
+                    android:layout_marginTop="15dp"
+                    android:drawablePadding="5dp"
+                    android:gravity="center"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:text="@string/userProfileQuestion"
+                    android:textColor="@color/colorTheme" />
+
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_next_bt"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@id/normal_user_profile_question"
+                    android:layout_marginTop="15dp"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/circularstdblack"
+                    android:text="Publish"
+                    android:textColor="@color/colortextwhite"
+                    android:textAllCaps="false"
+                    android:id="@+id/normal_published_bt"/>
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
