@@ -13,6 +13,8 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.appcompat.app.ActionBar;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.util.Base64;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -291,7 +293,12 @@ public class BusinessProfileFragment1 extends Fragment {
                     bundle.putString("twitter", twitterUrl);
                     bundle.putString("web", webURL);
 
-                    manager.beginTransaction().replace(R.id.home_frame_layout, new Business_PublishProfileFragment()).addToBackStack(null).commit();
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    transaction.replace(R.id.home_frame_layout,new Business_PublishProfileFragment());
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+
+//                    manager.beginTransaction().replace(R.id.home_frame_layout, new Business_PublishProfileFragment()).addToBackStack(null).commit();
                     sharedPreferences = getActivity().getSharedPreferences("BusinessProfile2", Context.MODE_PRIVATE);
                     editor = sharedPreferences.edit();
                     editor.putString("weburl", webURL);

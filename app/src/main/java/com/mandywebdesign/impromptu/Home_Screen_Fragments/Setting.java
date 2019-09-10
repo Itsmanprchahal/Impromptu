@@ -49,10 +49,10 @@ import com.mandywebdesign.impromptu.Models.ChangePassword;
 import com.mandywebdesign.impromptu.Retrofit.RetroLogout;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.Contact_Us;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.FAQs;
-import com.mandywebdesign.impromptu.SettingFragmentsOptions.Help;
+import com.mandywebdesign.impromptu.SettingFragmentsOptions.HelpActivity;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalGetProfile;
-import com.mandywebdesign.impromptu.SettingFragmentsOptions.Privacy;
-import com.mandywebdesign.impromptu.SettingFragmentsOptions.TermsAndConditions;
+import com.mandywebdesign.impromptu.SettingFragmentsOptions.PrivancyActivity;
+import com.mandywebdesign.impromptu.SettingFragmentsOptions.TermsAndConditionsActivityy;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.Join_us;
 import com.mandywebdesign.impromptu.R;
@@ -134,9 +134,6 @@ public class Setting extends Fragment {
             profile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    FragmentTransaction transaction = manager.beginTransaction();
-//                    transaction.replace(R.id.home_frame_layout, new UserProfileFragment());
-//                    transaction.commit();
 
                     Intent intent = new Intent(getContext(), NormalGetProfile.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -170,21 +167,25 @@ public class Setting extends Fragment {
             setting_help_option.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    manager.beginTransaction().replace(R.id.home_frame_layout, new Help()).addToBackStack(null).commit();
+                    Intent intent = new Intent(getContext(), HelpActivity.class);
+                    startActivity(intent);
+//                    manager.beginTransaction().replace(R.id.home_frame_layout, new Help()).addToBackStack(null).commit();
                 }
             });
 
             terms.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    manager.beginTransaction().replace(R.id.home_frame_layout, new TermsAndConditions()).addToBackStack(null).commit();
+                    Intent intent = new Intent(getContext(), TermsAndConditionsActivityy.class);
+                    startActivity(intent);
                 }
             });
 
             privancy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    manager.beginTransaction().replace(R.id.home_frame_layout, new Privacy()).addToBackStack(null).commit();
+                    Intent intent = new Intent(getContext(), PrivancyActivity.class);
+                    startActivity(intent);
                 }
             });
 
@@ -323,7 +324,8 @@ public class Setting extends Fragment {
             setting_help_option.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    manager.beginTransaction().replace(R.id.home_frame_layout, new Help()).addToBackStack(null).commit();
+                    Intent intent = new Intent(getContext(), HelpActivity.class);
+                    startActivity(intent);
                 }
             });
 
@@ -347,14 +349,16 @@ public class Setting extends Fragment {
             terms.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    manager.beginTransaction().replace(R.id.home_frame_layout, new TermsAndConditions()).addToBackStack(null).commit();
+                    Intent intent = new Intent(getContext(), TermsAndConditionsActivityy.class);
+                    startActivity(intent);
                 }
             });
 
             privancy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    manager.beginTransaction().replace(R.id.home_frame_layout, new Privacy()).addToBackStack(null).commit();
+                    Intent intent = new Intent(getContext(), PrivancyActivity.class);
+                    startActivity(intent);
                 }
             });
 

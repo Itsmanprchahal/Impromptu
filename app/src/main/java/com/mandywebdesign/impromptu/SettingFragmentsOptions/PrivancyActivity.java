@@ -1,20 +1,18 @@
 package com.mandywebdesign.impromptu.SettingFragmentsOptions;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.Setting;
+import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.RetroPrivancy;
 import com.mandywebdesign.impromptu.ui.NoInternet;
@@ -25,8 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
-public class Privacy extends Fragment {
+public class PrivancyActivity extends AppCompatActivity {
 
     TextView privacy;
     View view;
@@ -34,21 +31,16 @@ public class Privacy extends Fragment {
     String user,social_token;
     Dialog progressDialog;
     ImageView back;
-    FragmentManager manager;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_privacy, container, false);
-
-        manager = getFragmentManager();
-
-        sharedPreferences = getActivity().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_privancy);
+        sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         user = sharedPreferences.getString("Usertoken", "");
         social_token = sharedPreferences.getString("Socailtoken", "");
 
-        progressDialog = ProgressBarClass.showProgressDialog(getContext());
+        progressDialog = ProgressBarClass.showProgressDialog(this);
         progressDialog.dismiss();
 
         init();
@@ -61,9 +53,6 @@ public class Privacy extends Fragment {
         {
             normalprivancy(social_token);
         }
-
-
-        return  view;
     }
 
     private void normalprivancy(String social_token) {
@@ -82,7 +71,7 @@ public class Privacy extends Fragment {
                         progressDialog.dismiss();
                     }
                 }else {
-                    Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                    Intent intent = new Intent(PrivancyActivity.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
@@ -92,12 +81,10 @@ public class Privacy extends Fragment {
 
             @Override
             public void onFailure(Call<RetroPrivancy> call, Throwable t) {
-                if (NoInternet.isOnline(getContext())==false)
-                {
-                    progressDialog.dismiss();
+                 progressDialog.dismiss();
 
-                    NoInternet.dialog(getContext());
-                }
+                    NoInternet.dialog(PrivancyActivity.this);
+
             }
         });
     }
@@ -107,15 +94,14 @@ public class Privacy extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                manager.beginTransaction().replace(R.id.home_frame_layout,new Setting()).commit();
+             onBackPressed();
             }
         });
     }
 
     private void init() {
-        privacy = view.findViewById(R.id.privacy);
-        back = view.findViewById(R.id.back_on_privacy);
+        privacy = findViewById(R.id.privacy);
+        back = findViewById(R.id.back_on_privacy);
 
     }
-
 }

@@ -1,20 +1,18 @@
 package com.mandywebdesign.impromptu.SettingFragmentsOptions;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.Setting;
+import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.RetroTerms;
 import com.mandywebdesign.impromptu.ui.Join_us;
@@ -26,8 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
-public class TermsAndConditions extends Fragment {
+public class TermsAndConditionsActivityy extends AppCompatActivity {
 
     TextView terms;
     View view;
@@ -35,19 +32,15 @@ public class TermsAndConditions extends Fragment {
     String user, social_token;
     Dialog progressDialog;
     ImageView back;
-    FragmentManager manager;
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_terms_and_conditions, container, false);
-        manager = getFragmentManager();
-
-        sharedPreferences = getActivity().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_terms_and_conditions_activityy);
+        sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         user =  sharedPreferences.getString("Usertoken", "");
         social_token = sharedPreferences.getString("Socailtoken", "");
 
-        progressDialog = ProgressBarClass.showProgressDialog(getContext());
+        progressDialog = ProgressBarClass.showProgressDialog(this);
         progressDialog.dismiss();
 
         init();
@@ -61,9 +54,7 @@ public class TermsAndConditions extends Fragment {
         }
 
 
-        return view;
     }
-
 
     private void B_tandC(String user) {
         progressDialog.show();
@@ -82,13 +73,13 @@ public class TermsAndConditions extends Fragment {
                     } else if (response.body().getStatus().equals("401")) {
                         //Toast.makeText(getContext(), ""+response.body().getStatus(), Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
-                        Intent intent = new Intent(getActivity(), Join_us.class);
-                        getActivity().startActivity(intent);
-                        getActivity().finish();
+                        Intent intent = new Intent(TermsAndConditionsActivityy.this, Join_us.class);
+                        startActivity(intent);
+                        finish();
 
                     }
                 }else {
-                    Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                    Intent intent = new Intent(TermsAndConditionsActivityy.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
@@ -97,12 +88,11 @@ public class TermsAndConditions extends Fragment {
 
             @Override
             public void onFailure(Call<RetroTerms> call, Throwable t) {
-                if (NoInternet.isOnline(getContext())==false)
-                {
+
                     progressDialog.dismiss();
 
-                    NoInternet.dialog(getContext());
-                }
+                    NoInternet.dialog(TermsAndConditionsActivityy.this);
+
             }
         });
     }
@@ -111,14 +101,14 @@ public class TermsAndConditions extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                manager.beginTransaction().replace(R.id.home_frame_layout, new Setting()).commit();
+              onBackPressed();
             }
         });
     }
 
     private void init() {
 
-        terms = (TextView) view.findViewById(R.id.terms_text);
-        back = view.findViewById(R.id.back_on_Teramandcondition);
+        terms = (TextView) findViewById(R.id.terms_text);
+        back = findViewById(R.id.back_on_Teramandcondition);
     }
 }
