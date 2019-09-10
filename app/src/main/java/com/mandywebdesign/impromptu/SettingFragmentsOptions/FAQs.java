@@ -1,16 +1,14 @@
 package com.mandywebdesign.impromptu.SettingFragmentsOptions;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.mandywebdesign.impromptu.Adapters.FAQ_Adapter;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;

@@ -2,28 +2,29 @@ package com.mandywebdesign.impromptu.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -34,11 +35,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -46,12 +45,18 @@ import android.widget.Toast;
 
 import com.borjabravo.readmoretextview.ReadMoreTextView;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.dynamiclinks.DynamicLink;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
+import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mandywebdesign.impromptu.Adapters.B_EventDetailImageAdapter;
 import com.mandywebdesign.impromptu.Adapters.Booked_users;
-import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEventDetailAcitvity;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.SeeAll_activity;
-import com.mandywebdesign.impromptu.Screenshot;
 import com.mandywebdesign.impromptu.Utils.Constants;
 import com.mandywebdesign.impromptu.messages.ChatBoxActivity;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
@@ -61,19 +66,14 @@ import com.mandywebdesign.impromptu.Retrofit.Booked_User;
 import com.mandywebdesign.impromptu.Retrofit.EventMessageClick;
 import com.mandywebdesign.impromptu.Retrofit.NormalRetroFav;
 import com.mandywebdesign.impromptu.Retrofit.NormalRetrodeleteFav;
-import com.mandywebdesign.impromptu.Retrofit.Rating;
 import com.mandywebdesign.impromptu.Retrofit.RemainingTickets;
 import com.mandywebdesign.impromptu.Retrofit.RetroGetEventData;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalPublishProfile;
 import com.mandywebdesign.impromptu.Utils.Util;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -83,14 +83,14 @@ import retrofit2.Response;
 public class BookEventActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private LinearLayout dotsLayout;
-    ImageView sharevent,screenshot;
+    ImageView sharevent, screenshot;
     private TextView[] dots;
-    ImageView book_message,backonbookevent;
+    ImageView book_message, backonbookevent;
     LinearLayout organiser_layout;
     RelativeLayout messagelayout, invite_layouit;
     FragmentManager fragmentManager;
     Button mBookEvent;
-    TextView organiserName,book_time,book_categry, peoplegoing, seeAll, remainingTicketTV, invitefriends, dialogtickttype,link1,link2,link3;
+    TextView organiserName, book_time, book_categry, peoplegoing, seeAll, remainingTicketTV, invitefriends, dialogtickttype, link1, link2, link3;
     ViewPager viewPager;
     RecyclerView users;
     ReadMoreTextView descri;
@@ -102,9 +102,9 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     Button dialogButoon;
     public static CheckBox addtoFavCheck_box;
     View view;
-    String checkgender,booklink1,booklink2,booklink3;
-    SharedPreferences.Editor editor,editorItemPos;
-    SharedPreferences sharedPreferences,itemPositionPref;
+    String checkgender, booklink1, booklink2, booklink3;
+    SharedPreferences.Editor editor, editorItemPos;
+    SharedPreferences sharedPreferences, itemPositionPref;
     Bundle bundle;
     ArrayList<String> userImage = new ArrayList<>();
     static String tot;
@@ -116,7 +116,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     static String timeFrom;
     static String timeTo;
     String itemPos;
-    static String value, S_token, fav_id, hostname, payvalue,spinnerposition;
+    static String value, S_token, fav_id, hostname, payvalue, spinnerposition;
     public static ArrayList<String> image = new ArrayList<>();
     public static String id, cate, host_image, date, decs, postcode, ticktType, ticktprice, timefrom, hostimage, timeto, title, location, location2, city, gender, andendeenumber, numberoftickts, freeEvent, username;
     int CurrentPage = 0;
@@ -132,13 +132,13 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
         fragmentManager = getSupportFragmentManager();
         sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
-        itemPositionPref = getSharedPreferences("ItemPosition",Context.MODE_PRIVATE);
+        itemPositionPref = getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         editorItemPos = itemPositionPref.edit();
         S_token = sharedPreferences.getString("Socailtoken", "");
         loginUserId = sharedPreferences.getString("userID", "");
         checkgender = sharedPreferences.getString("profilegender", "");
-        itemPos = itemPositionPref.getString("itemPosition","");
+        itemPos = itemPositionPref.getString("itemPosition", "");
 
         progressDialog = ProgressBarClass.showProgressDialog(this);
         progressDialog.dismiss();
@@ -147,6 +147,50 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                 PorterDuff.Mode.SRC_IN);
 
 
+        if (!S_token.equalsIgnoreCase(""))
+        {
+            FirebaseDynamicLinks.getInstance()
+                    .getDynamicLink(getIntent())
+                    .addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
+                        @Override
+                        public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
+                            // Get deep link from result (may be null if no link is found)
+                            Uri deepLink = null;
+                            if (pendingDynamicLinkData != null) {
+                                deepLink = pendingDynamicLinkData.getLink();
+                                String path = deepLink.getPath();
+                                Log.d("deeplink1", path.toString());
+                                String[] evetdata = path.split("/");
+                                String eventID = evetdata[2];
+                                Log.d("deeplink", eventID);
+                                getEventData(eventID);
+
+                                addFav(eventID);
+                                getRaminingEvents(S_token, eventID);
+                                getUsers(S_token, eventID);
+                                bookevent(eventID);
+                                gotoEventMesg(eventID);
+                            } else {
+                                getEventData(value);
+                                addFav(value);
+                                getRaminingEvents(S_token, value);
+                                getUsers(S_token, value);
+                                bookevent(value);
+                                gotoEventMesg(value);
+                            }
+
+                        }
+                    })
+                    .addOnFailureListener(this, new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w("dynamiclink", "getDynamicLink:onFailure", e);
+                        }
+                    });
+        }else {
+            Intent intent = new Intent(this,Join_us.class);
+            startActivity(intent);
+        }
 
 
 
@@ -159,46 +203,89 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         users.setNestedScrollingEnabled(false);
 
         intent = getIntent();
-        if (intent!=null)
-        {
+        if (intent != null) {
             value = intent.getStringExtra("event_id");
             payvalue = intent.getStringExtra("back_pay");
 
             //  fav_id = bundle.getString("fav_id");
             hostname = intent.getStringExtra("hostname");
             hostimage = intent.getStringExtra("hostImage");
-            if (hostname!=null)
-            {
+            if (hostname != null) {
                 String[] name = hostname.split(" ");
-                if (name.length==1)
-                {
+                if (name.length == 1) {
                     String Fname = name[0];
-                    organiserName.setText(Fname+" ");
-                }else {
+                    organiserName.setText(Fname + " ");
+                } else {
                     String Fname = name[0];
                     String Lname = name[1];
-                    organiserName.setText(Fname+" "+Lname.subSequence(0,1));
+                    organiserName.setText(Fname + " " + Lname.subSequence(0, 1));
                 }
 
 
-
-
-            }else {
+            } else {
                 organiserName.setText(hostname);
             }
-            getEventData(value);
 
-            addFav(value);
-
-
-            getUsers(S_token, value);
 
             book_message.setVisibility(View.VISIBLE);
         }
 
-        getRaminingEvents(S_token, value);
 
     }
+
+    private void gotoEventMesg(final String value) {
+        book_message.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final Intent intent = new Intent(BookEventActivity.this, ChatBoxActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra("event_title", title);
+                intent.putExtra("event_image", host_image);
+                intent.putExtra("eventID", value);
+                intent.putExtra("event_host_user", hostUserID);
+
+
+                Call<EventMessageClick> call = WebAPI.getInstance().getApi().eventMEsgClick("Bearer " + S_token, id);
+                call.enqueue(new Callback<EventMessageClick>() {
+                    @Override
+                    public void onResponse(Call<EventMessageClick> call, Response<EventMessageClick> response) {
+                        if (response.body() != null) {
+                            if (response.body().getStatus().equals("200")) {
+                                startActivity(intent);
+                            }
+
+                        } else {
+                            Intent intent = new Intent(BookEventActivity.this, NoInternetScreen.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<EventMessageClick> call, Throwable t) {
+                        Toast.makeText(BookEventActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+    }
+
+    private void bookevent(final String value) {
+        mBookEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (checkgender.equals("")) {
+                    dialogUpdate();
+                } else {
+                    dialog(value);
+                }
+            }
+        });
+    }
+
     //check remainig tickets
     private void getRaminingEvents(String s_token, String id) {
 
@@ -207,7 +294,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             @Override
             public void onResponse(Call<RemainingTickets> call, Response<RemainingTickets> response) {
 
-                if (response.body()!=null) {
+                if (response.body() != null) {
                     remaini_tickets = String.valueOf(response.body().getData());
                     remainingTicketTV.setText("Tickets Remaining " + remaini_tickets);
                 } else {
@@ -261,17 +348,20 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         sharevent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bitmap b = Screenshot.takescreenshotOfRootView(screenshot);
-                   getScreenShot(view);
+                String message = "https://play.google.com/store";
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("text/plain");
+                share.putExtra(Intent.EXTRA_TEXT, message);
+                startActivity(Intent.createChooser(share, "Testing Impromptu"));
             }
         });
 
         backonbookevent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BookEventActivity.this,Home_Screen.class);
+                Intent intent = new Intent(BookEventActivity.this, Home_Screen.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                editorItemPos.putString(Constants.itemPosition,itemPos);
+                editorItemPos.putString(Constants.itemPosition, itemPos);
                 editorItemPos.apply();
                 startActivity(intent);
                 finish();
@@ -282,11 +372,43 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         invite_layouit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String message = "https://play.google.com/store";
-                Intent share = new Intent(Intent.ACTION_SEND);
-                share.setType("text/plain");
-                share.putExtra(Intent.EXTRA_TEXT, message);
-                startActivity(Intent.createChooser(share, "Testing Impromptu"));
+
+                DynamicLink dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink()
+                        .setLink(Uri.parse("https://www.amit.com/" +"event_id/"+ value))
+                        .setDomainUriPrefix("impromptusocial.page.link")
+                        // Open links with this app on Android  amitpandey12.page.link
+                        .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build())
+                        // Open links with com.example.ios on iOS
+                        .setIosParameters(new DynamicLink.IosParameters.Builder("impromptusocial.page.link").build())
+                        .buildDynamicLink();
+
+                Uri dynamicLinkUri = dynamicLink.getUri();
+
+                Log.d("hello123", "1" + dynamicLink.getUri());
+
+
+                Task<ShortDynamicLink> shortLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink()
+                        .setLongLink(Uri.parse("https://" + dynamicLink.getUri().toString()))
+                        .buildShortDynamicLink()
+                        .addOnCompleteListener(BookEventActivity.this, new OnCompleteListener<ShortDynamicLink>() {
+                            @Override
+                            public void onComplete(@NonNull Task<ShortDynamicLink> task) {
+                                if (task.isSuccessful()) {
+                                    // Short link created
+                                    Uri shortLink = task.getResult().getShortLink();
+                                    Uri flowchartLink = task.getResult().getPreviewLink();
+                                    Intent share = new Intent(Intent.ACTION_SEND);
+                                    share.setType("text/plain");
+                                    share.putExtra(Intent.EXTRA_TEXT, shortLink.toString());
+                                    startActivity(Intent.createChooser(share, "Testing Impromptu"));
+
+
+                                } else {
+
+                                }
+                            }
+                        });
+
             }
         });
 
@@ -297,76 +419,28 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             }
         });
 
-        mBookEvent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                if (checkgender.equals("")) {
-                    dialogUpdate();
-                } else {
-                    dialog();
-                }
-            }
-        });
         seeAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BookEventActivity.this, SeeAll_activity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                intent.putExtra("value",id);
+                intent.putExtra("value", id);
                 startActivity(intent);
             }
         });
 
-        book_message.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                final Intent intent = new Intent(BookEventActivity.this, ChatBoxActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                intent.putExtra("event_title",title);
-                intent.putExtra("event_image",host_image);
-                intent.putExtra("eventID",value);
-                intent.putExtra("event_host_user",hostUserID);
-
-
-                Call<EventMessageClick> call = WebAPI.getInstance().getApi().eventMEsgClick("Bearer " + S_token, id);
-                call.enqueue(new Callback<EventMessageClick>() {
-                    @Override
-                    public void onResponse(Call<EventMessageClick> call, Response<EventMessageClick> response) {
-                        if (response.body()!=null) {
-                            if (response.body().getStatus().equals("200"))
-                            {
-                                startActivity(intent);
-                            }
-
-                        } else {
-                            Intent intent = new Intent(BookEventActivity.this, NoInternetScreen.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                        }
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<EventMessageClick> call, Throwable t) {
-                        Toast.makeText(BookEventActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
 
         link1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Uri uri = Uri.parse(booklink1);
-                if (uri.getPath().contains("https://"))
-                {
-                    Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+                if (uri.getPath().contains("https://")) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(intent);
-                }else {
-                    Uri uri1 = Uri.parse("https://"+uri);
-                    Intent intent = new Intent(Intent.ACTION_VIEW,uri1);
+                } else {
+                    Uri uri1 = Uri.parse("https://" + uri);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri1);
                     startActivity(intent);
                 }
             }
@@ -377,13 +451,12 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             public void onClick(View view) {
                 Uri uri = Uri.parse(booklink2);
 
-                if (uri.getPath().contains("https://"))
-                {
-                    Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+                if (uri.getPath().contains("https://")) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(intent);
-                }else {
-                    Uri uri1 = Uri.parse("https://"+uri);
-                    Intent intent = new Intent(Intent.ACTION_VIEW,uri1);
+                } else {
+                    Uri uri1 = Uri.parse("https://" + uri);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri1);
                     startActivity(intent);
                 }
 
@@ -394,13 +467,12 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             @Override
             public void onClick(View view) {
                 Uri uri = Uri.parse(booklink3);
-                if (uri.getPath().contains("https://"))
-                {
-                    Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+                if (uri.getPath().contains("https://")) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(intent);
-                }else {
-                    Uri uri1 = Uri.parse("https://"+uri);
-                    Intent intent = new Intent(Intent.ACTION_VIEW,uri1);
+                } else {
+                    Uri uri1 = Uri.parse("https://" + uri);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri1);
                     startActivity(intent);
                 }
             }
@@ -423,7 +495,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         return bitmap;
     }
 
-    public void dialog() {
+    public void dialog(final String value) {
         String ticketNum[] = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
 
         final Dialog dialog = new Dialog(BookEventActivity.this);
@@ -442,9 +514,8 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
-        if (spinnerposition !=null)
-        {
-            spinner.setSelection(Integer.parseInt(spinnerposition)-1);
+        if (spinnerposition != null) {
+            spinner.setSelection(Integer.parseInt(spinnerposition) - 1);
         }
 
 
@@ -466,14 +537,14 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             @Override
                             public void onResponse(Call<BookFreeEvents> call, Response<BookFreeEvents> response) {
 
-                                if (response.body()!=null) {
+                                if (response.body() != null) {
                                     progressDialog.dismiss();
                                     dialog.dismiss();
 
-                                    Intent intent = new Intent(BookEventActivity.this,ConfirmationActivity.class);
+                                    Intent intent = new Intent(BookEventActivity.this, ConfirmationActivity.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                    intent.putExtra("eventID",value);
-                                    intent.putExtra("paid",value);
+                                    intent.putExtra("eventID", value);
+                                    intent.putExtra("paid", value);
                                     editor.putString("eventImage", BookEventActivity.image.get(0));
                                     editor.apply();
                                     startActivity(intent);
@@ -501,12 +572,12 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                 public void onClick(View v) {
 
 
-                    Intent intent = new Intent(BookEventActivity.this,PayActivity.class);
+                    Intent intent = new Intent(BookEventActivity.this, PayActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    intent.putExtra("total_price",tot);
-                    intent.putExtra("event_id",value);
-                    intent.putExtra("total_tickets",total_ticket);
-                    intent.putExtra("ticket_Price",ticktprice);
+                    intent.putExtra("total_price", tot);
+                    intent.putExtra("event_id", value);
+                    intent.putExtra("total_tickets", total_ticket);
+                    intent.putExtra("ticket_Price", ticktprice);
                     startActivity(intent);
                     dialog.dismiss();
                 }
@@ -541,7 +612,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             public void onClick(View view) {
                 dialog.dismiss();
                 Intent intent = new Intent(BookEventActivity.this, NormalPublishProfile.class);
-                intent.putExtra("normal_edit","0");
+                intent.putExtra("normal_edit", "0");
                 startActivity(intent);
                 finish();
             }
@@ -590,7 +661,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             @Override
             public void onResponse(Call<Booked_User> call, Response<Booked_User> response) {
 
-                if (response.body()!=null) {
+                if (response.body() != null) {
 
                     Booked_User booked_users = response.body();
                     List<Booked_User.Datum> bookedUsersList = booked_users.getData();
@@ -634,7 +705,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             @Override
             public void onResponse(Call<RetroGetEventData> call, Response<RetroGetEventData> response) {
 
-                if (response.body()!=null) {
+                if (response.body() != null) {
                     if (response.body().getStatus().equals("200")) {
                         RetroGetEventData getEventData = response.body();
                         Log.d("123456", "" + getEventData.getData().size());
@@ -659,7 +730,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             InviteFriend = datum.getAttendeesGender();
                             booklink1 = datum.getLink1();
                             booklink2 = datum.getLink2();
-                            booklink3=datum.getLink3();
+                            booklink3 = datum.getLink3();
 
 
                             String dateformat = datum.getDate();
@@ -678,28 +749,24 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             image = (ArrayList<String>) datum.getFile().get(0).getImg();
                             Collections.reverse(image);
 
-                            if (ticktprice.equals("0"))
-                            {
+                            if (ticktprice.equals("0")) {
                                 eventprice.setText("Free");
-                            }else {
-                                eventprice.setText("£ "+ticktprice);
+                            } else {
+                                eventprice.setText("£ " + ticktprice);
                             }
-                            if (!datum.getLink1().isEmpty())
-                            {
+                            if (!datum.getLink1().isEmpty()) {
                                 SpannableString content = new SpannableString(datum.getLink1().toString());
                                 content.setSpan(new UnderlineSpan(), 0, datum.getLink1().length(), 0);
                                 link1.setText(content);
                                 link1.setVisibility(View.VISIBLE);
                             }
-                            if (!datum.getLink2().isEmpty())
-                            {
+                            if (!datum.getLink2().isEmpty()) {
                                 SpannableString content = new SpannableString(datum.getLink2());
                                 content.setSpan(new UnderlineSpan(), 0, datum.getLink2().length(), 0);
                                 link2.setText(content);
                                 link2.setVisibility(View.VISIBLE);
                             }
-                            if (!datum.getLink3().isEmpty())
-                            {
+                            if (!datum.getLink3().isEmpty()) {
                                 SpannableString content = new SpannableString(datum.getLink3());
                                 content.setSpan(new UnderlineSpan(), 0, datum.getLink3().length(), 0);
                                 link3.setText(content);
@@ -712,44 +779,43 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             Collections.reverse(image);
                             //get Time to in AM PM
 
-                            String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.","am").replaceFirst("p.m.","pm").replaceFirst("AM","am").replaceFirst("PM","pm");
-                            String time_to = Util.convertTimeStampToTime(Long.parseLong(datum.getEventEndDt())).replaceFirst("a.m.","am").replaceFirst("p.m.","pm").replaceFirst("AM","am").replaceFirst("PM","pm");
+                            String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
+                            String time_to = Util.convertTimeStampToTime(Long.parseLong(datum.getEventEndDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
                             String end_date = Util.convertTimeStampDate(Long.parseLong(datum.getEventEndDt()));
 
                             if (time_t.startsWith("0") && time_to.startsWith("0")) {
                                 timeFrom = time_t.substring(1);
                                 timeTo = time_to.substring(1);
                                 book_time.setText(timeFrom + " - " + timeTo);
-                                book_date.setText(str2 + "/" + str1 + "/" + str3 +" - "+ end_date);
+                                book_date.setText(str2 + "/" + str1 + "/" + str3 + " - " + end_date);
                             } else if (time_t.startsWith("0")) {
                                 timeFrom = time_t.substring(1);
                                 if (time_to.startsWith("0")) {
                                     timeTo = time_to.substring(1);
                                     book_time.setText(timeFrom + " - " + timeTo);
-                                    book_date.setText(str2 + "/" + str1 + "/" + str3 +" - "+ end_date);
+                                    book_date.setText(str2 + "/" + str1 + "/" + str3 + " - " + end_date);
                                 } else {
                                     timeTo = time_to.substring(0);
                                     book_time.setText(timeFrom + " - " + timeTo);
-                                    book_date.setText(str2 + "/" + str1 + "/" + str3 +" - "+ end_date);
+                                    book_date.setText(str2 + "/" + str1 + "/" + str3 + " - " + end_date);
                                 }
                             } else if (time_to.startsWith("0")) {
                                 timeTo = time_to.substring(1);
                                 if (time_t.startsWith("0")) {
                                     timeFrom = time_t.substring(1);
                                     book_time.setText(timeFrom + " - " + timeTo);
-                                    book_date.setText(str2 + "/" + str1 + "/" + str3 +" - "+ end_date);
+                                    book_date.setText(str2 + "/" + str1 + "/" + str3 + " - " + end_date);
                                 } else {
                                     timeFrom = time_t.substring(0);
                                     book_time.setText(timeFrom + " - " + timeTo);
-                                    book_date.setText(str2 + "/" + str1 + "/" + str3 +" - "+ end_date);
+                                    book_date.setText(str2 + "/" + str1 + "/" + str3 + " - " + end_date);
                                 }
                             } else if (!time_t.startsWith("0") && !time_to.startsWith("0")) {
                                 timeFrom = time_t.substring(0);
                                 timeTo = time_to.substring(0);
                                 book_time.setText(timeFrom + " - " + timeTo);
-                                book_date.setText(str2 + "/" + str1 + "/" + str3 +" - "+ end_date);
+                                book_date.setText(str2 + "/" + str1 + "/" + str3 + " - " + end_date);
                             }
-
 
 
                             Log.d("hostImage", "" + host_image);
@@ -850,8 +916,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                         call.enqueue(new Callback<NormalRetroFav>() {
                             @Override
                             public void onResponse(Call<NormalRetroFav> call, Response<NormalRetroFav> response) {
-                                if (response.body()!=null)
-                                {
+                                if (response.body() != null) {
 
                                 }
                                 //Toast.makeText(getContext(), "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -869,8 +934,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                     call.enqueue(new Callback<NormalRetrodeleteFav>() {
                         @Override
                         public void onResponse(Call<NormalRetrodeleteFav> call, Response<NormalRetrodeleteFav> response) {
-                            if (response.body()!=null)
-                            {
+                            if (response.body() != null) {
 
                             }
                             //  Toast.makeText(getContext(), "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();

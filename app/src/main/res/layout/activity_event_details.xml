@@ -8,12 +8,12 @@
     tools:context=".Home_Screen_Fragments.AddEvents.EventDetailsActivity">
 
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/event_toolbar"
         android:layout_width="match_parent"
         android:layout_height="55dp">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -41,9 +41,9 @@
                 tools:ignore="MissingConstraints" />
 
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <ProgressBar
         android:paddingLeft="@dimen/defaultmargin"

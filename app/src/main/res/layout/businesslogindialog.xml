@@ -52,17 +52,33 @@
         android:textColor="@color/colortextBlack"
         android:textSize="@dimen/_13sdp" />
 
-    <EditText
-        android:id="@+id/business_login_password_Et"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_7sdp"
-        android:fontFamily="@font/sfuitextlight"
-        android:hint="******"
-        android:layout_gravity="center_vertical"
         android:background="@drawable/custom_edittext"
-        android:padding="@dimen/_7sdp"
-        android:inputType="textPassword" />
+        android:layout_marginTop="@dimen/_7sdp">
+
+        <EditText
+            android:id="@+id/business_login_password_Et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sfuitextlight"
+            android:hint="******"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/custom_edittext"
+            android:padding="@dimen/_7sdp"
+            android:inputType="textPassword" />
+
+        <CheckBox
+            android:id="@+id/showpassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"></CheckBox>
+    </RelativeLayout>
+
+
 
     <Button
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.mandywebdesign.impromptu.FirebaseNotification;
+package com.mandywebdesign.impromptu.firebasenotification;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -9,7 +9,8 @@ import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.app.NotificationCompat;
+
+import androidx.core.app.NotificationCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -30,11 +31,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void sendNotification(Map<String, String> data) {
        SharedPreferences preferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
        String userToken = preferences.getString("Usertoken", "");
+       String socailTOken = preferences.getString("Socailtoken","");
        Intent intent=null;
+
         if (!userToken.equalsIgnoreCase("")) {
              intent = new Intent(this, Home_Screen.class);
              intent.putExtra("type",data.get("type"));
-        } else {
+        }else if (!socailTOken.equalsIgnoreCase(""))
+        {
+            intent = new Intent(this, Home_Screen.class);
+            intent.putExtra("type",data.get("type"));
+        }else {
              intent = new Intent(this, MainActivity.class);
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -45,8 +52,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
                         .setSmallIcon(R.drawable.logo)
-                        .setContentTitle(data.get("title").toString())
-                        .setContentText(data.get("body").toString())
+//                        .setContentTitle(data.get("title").toString())
+//                        .setContentText(data.get("body").toString())
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent);

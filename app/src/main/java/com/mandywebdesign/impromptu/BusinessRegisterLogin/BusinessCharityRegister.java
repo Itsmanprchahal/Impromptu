@@ -1,28 +1,29 @@
 package com.mandywebdesign.impromptu.BusinessRegisterLogin;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,6 +61,7 @@ public class BusinessCharityRegister extends AppCompatActivity {
     SharedPreferences.Editor editor;
     Dialog popup, resetpopup;
     ImageView close;
+    CheckBox showpassword;
     String email;
 
     @Override
@@ -143,7 +145,6 @@ public class BusinessCharityRegister extends AppCompatActivity {
                         public void onResponse(Call<RetroRegisterPojo> call, Response<RetroRegisterPojo> response) {
 
                             if (response.body() != null) {
-                                // Log.d("response", "" + response.body().getStatus());
                                 if (response.body().getStatus().equals("200")) {
                                     progressDialog.dismiss();
                                     confirmaccountdialog();
@@ -236,11 +237,27 @@ public class BusinessCharityRegister extends AppCompatActivity {
         mloginDialog = dialog.findViewById(R.id.businessdialognextbtt);
         closeLOginDialog = dialog.findViewById(R.id.close_logindialog);
         forgot_password = dialog.findViewById(R.id.forgot_password);
+        showpassword = dialog.findViewById(R.id.showpassword);
 
         closeLOginDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+            }
+        });
+
+        showpassword.setButtonDrawable(R.drawable.ic_visibility_off_black_24dp);
+        showpassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (showpassword.isChecked())
+                {
+                    showpassword.setButtonDrawable(R.drawable.ic_visibility_off_black_24dp);
+                    mBusinessPasswordEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }else {
+                    showpassword.setButtonDrawable(R.drawable.ic_visibility_black_24dp);
+                    mBusinessPasswordEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
             }
         });
 
@@ -265,12 +282,11 @@ public class BusinessCharityRegister extends AppCompatActivity {
                         @Override
                         public void onSuccess(InstanceIdResult instanceIdResult) {
                             String token = instanceIdResult.getToken();
-                            Log.e("Devicetoken",token);
-
+                            Log.e("token",token);
                             BussinessLogin(BusinessLoginEmail,BusinessPasswordEt);
+
                         }
                     });
-
                 }
             }
         });

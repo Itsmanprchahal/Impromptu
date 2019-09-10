@@ -18,7 +18,7 @@
     </FrameLayout>
 
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/home_tabs_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
         app:cardElevation="16dp"
         tools:ignore="MissingConstraints">
 
-        <android.support.design.widget.BottomNavigationView
+        <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomnavigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,10 +37,10 @@
             app:labelVisibilityMode="unlabeled"
             app:menu="@menu/tabs">
 
-        </android.support.design.widget.BottomNavigationView>
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 
 </RelativeLayout>

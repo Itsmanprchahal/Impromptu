@@ -10,13 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardElevation="2dp"
             android:id="@+id/event_card">
 
-            <android.support.v7.widget.Toolbar
+            <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
                 android:id="@+id/my_events_toolbar">
@@ -41,8 +41,8 @@
 
                 </RelativeLayout>
 
-            </android.support.v7.widget.Toolbar>
-        </android.support.v7.widget.CardView>
+            </androidx.appcompat.widget.Toolbar>
+        </androidx.cardview.widget.CardView>
 
 
 

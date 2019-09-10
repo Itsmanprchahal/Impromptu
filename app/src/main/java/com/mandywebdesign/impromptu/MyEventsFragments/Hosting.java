@@ -4,24 +4,19 @@ package com.mandywebdesign.impromptu.MyEventsFragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.vision.text.Line;
-import com.mandywebdesign.impromptu.Home_Screen_Fragments.AttendingTab.Upcoming;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.HostingTabs.Drafts;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.HostingTabs.History;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.HostingTabs.Live;
-import com.mandywebdesign.impromptu.Home_Screen_Fragments.ListingFragment;
 import com.mandywebdesign.impromptu.R;
 
 /**

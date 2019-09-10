@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Filter.FilterScreen">
 
-   <android.support.constraint.ConstraintLayout
+   <androidx.constraintlayout.widget.ConstraintLayout
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        >
@@ -15,7 +15,7 @@
            android:layout_width="match_parent"
            android:layout_height="match_parent">
 
-           <android.support.constraint.ConstraintLayout
+           <androidx.constraintlayout.widget.ConstraintLayout
                android:layout_width="match_parent"
                android:layout_height="match_parent">
 
@@ -291,10 +291,10 @@
                    app:layout_constraintTop_toBottomOf="@id/filter_bt_filter"
                    android:layout_marginTop="@dimen/_5sdp"></View>
 
-           </android.support.constraint.ConstraintLayout>
+           </androidx.constraintlayout.widget.ConstraintLayout>
 
        </ScrollView>
 
-   </android.support.constraint.ConstraintLayout>
+   </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

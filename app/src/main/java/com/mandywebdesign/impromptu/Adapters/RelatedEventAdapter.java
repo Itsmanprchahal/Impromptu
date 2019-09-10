@@ -4,10 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +36,7 @@ import retrofit2.Response;
 public class RelatedEventAdapter extends RecyclerView.Adapter<RelatedEventAdapter.ViewHolder> {
 
     Context context;
-    android.support.v4.app.FragmentManager manager;
+    FragmentManager manager;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String token;

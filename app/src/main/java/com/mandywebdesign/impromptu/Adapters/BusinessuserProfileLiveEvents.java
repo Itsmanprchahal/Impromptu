@@ -1,9 +1,9 @@
 package com.mandywebdesign.impromptu.Adapters;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessUserProfile;
-import com.mandywebdesign.impromptu.Home_Screen_Fragments.HostingTabs.Drafts;
-import com.mandywebdesign.impromptu.Home_Screen_Fragments.HostingTabs.Live;
 import com.mandywebdesign.impromptu.R;
-import com.mandywebdesign.impromptu.ui.Home_Screen;
 
 public class BusinessuserProfileLiveEvents extends RecyclerView.Adapter<BusinessuserProfileLiveEvents.ViewHolder> {
 

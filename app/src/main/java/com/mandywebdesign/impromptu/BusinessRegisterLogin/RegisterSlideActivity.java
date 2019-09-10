@@ -1,26 +1,24 @@
 package com.mandywebdesign.impromptu.BusinessRegisterLogin;
 
-import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mandywebdesign.impromptu.Adapters.RegisterSliderAdapter;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.ui.Join_us;
-import com.mandywebdesign.impromptu.ui.MainActivity;
 
 public class RegisterSlideActivity extends AppCompatActivity {
 
@@ -37,7 +35,10 @@ public class RegisterSlideActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_slide);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow();
+            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
         init();
 
         adapter = new RegisterSliderAdapter(RegisterSlideActivity.this);

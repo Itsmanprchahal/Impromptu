@@ -8,11 +8,11 @@
     tools:context=".BusinessRegisterLogin.BusinessUserProfile">
 
 
-    <android.support.design.widget.CoordinatorLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cardview"
             android:layout_width="match_parent"
             android:layout_height="55dp"
@@ -41,14 +41,14 @@
                 android:src="@drawable/edit"
                 tools:ignore="MissingConstraints" />
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="60dp"
@@ -205,13 +205,13 @@
                     app:layout_constraintTop_toBottomOf="@id/social_layout"
                     tools:ignore="MissingConstraints" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/UserProfile_business_publish_live_events_recylerview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_7sdp"
                     app:layout_constraintTop_toBottomOf="@id/UserProfie_live_event_text"
-                    tools:ignore="MissingConstraints"></android.support.v7.widget.RecyclerView>
+                    tools:ignore="MissingConstraints"></androidx.recyclerview.widget.RecyclerView>
 
 
                 <TextView
@@ -237,17 +237,17 @@
                     app:layout_constraintTop_toBottomOf="@id/UserProfile_business_publish_live_events_recylerview"
                     tools:ignore="MissingConstraints" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/UserProfile_business_publish__pastevents_recylerview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:layout_marginBottom="55dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/UserProfile_past_events_tv"></android.support.v7.widget.RecyclerView>
-            </android.support.constraint.ConstraintLayout>
+                    app:layout_constraintTop_toBottomOf="@id/UserProfile_past_events_tv"></androidx.recyclerview.widget.RecyclerView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
 
-    </android.support.design.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </FrameLayout>

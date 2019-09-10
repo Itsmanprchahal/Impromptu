@@ -1,15 +1,14 @@
 package com.mandywebdesign.impromptu.Adapters;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -126,30 +125,16 @@ public class Business_History_adapter extends RecyclerView.Adapter<Business_Hist
                 context.startActivity(intent);
 
 
-//                Bundle bundle = new Bundle();
-//                String value = History.event_id.get(i);
-//                bundle.putString("event_id", value);
-//                bundle.putString("eventType","history");
-//
-//                editor.putString(Constants.itemPosition, String.valueOf(i));
-//                editor.commit();
-//
-//                BusinessEvent_detailsFragment businessEvent_detailsFragment = new BusinessEvent_detailsFragment();
-//                businessEvent_detailsFragment.setArguments(bundle);
-//                manager.beginTransaction().replace(R.id.home_frame_layout,businessEvent_detailsFragment).commit();
-//                Home_Screen.countt=1;
-
             }
         });
 
         viewHolder.ratenow_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                progressDialog.show();
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.custom_rating_box);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.setCancelable(false);
+                dialog.setCancelable(true);
 
                 final RatingBar ratingBar = dialog.findViewById(R.id.rating_bar);
                 final EditText feedback = dialog.findViewById(R.id.feedback);
@@ -165,6 +150,7 @@ public class Business_History_adapter extends RecyclerView.Adapter<Business_Hist
                         if (rating.equals("") | feedbck.equals("")) {
                             Toast.makeText(context, "Add Rating  and reviews", Toast.LENGTH_SHORT).show();
                         } else {
+                            progressDialog.show();
                             Call<Rating> call = WebAPI.getInstance().getApi().rating("Bearer " + token, History.event_id.get(i), rating, feedbck);
                             call.enqueue(new Callback<Rating>() {
                                 @Override
@@ -175,8 +161,9 @@ public class Business_History_adapter extends RecyclerView.Adapter<Business_Hist
                                         if (response.body().getStatus().equals("200"))
                                         {
                                             viewHolder.ratenow_bt.setVisibility(View.GONE);
+                                        }else {
+                                            Toast.makeText(context, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                         }
-//                                        Toast.makeText(context, ""+response.body().getStatus(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
 

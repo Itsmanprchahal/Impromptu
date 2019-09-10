@@ -7,9 +7,9 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,12 +88,12 @@ public class Normal_pastbooked extends RecyclerView.Adapter<Normal_pastbooked.Vi
 
         viewHolder.eventAddress.setText(Past.addres.get(i));
         viewHolder.date.setText(Past.time.get(i));
+        viewHolder.total_tickettext1.setVisibility(View.GONE);
 
         viewHolder.category.setText(Past.categois.get(i));
         Glide.with(context).load(Past.images.get(i)).into(viewHolder.eventImage);
 
         //MAke QR code here.....................................
-
 
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
@@ -140,20 +140,7 @@ public class Normal_pastbooked extends RecyclerView.Adapter<Normal_pastbooked.Vi
                 editor.commit();
                 context.startActivity(intent);
 
-//                Bundle bundle = new Bundle();
-//                String value = Past.event_id.get(i);
-//                bundle.putString("event_id", value);
-//                bundle.putString("eventType","past");
-//
-//                editor.putString(Constants.itemPosition, String.valueOf(i));
-//                editor.commit();
-//
-//                BusinessEvent_detailsFragment businessEvent_detailsFragment = new BusinessEvent_detailsFragment();
-//                businessEvent_detailsFragment.setArguments(bundle);
-//
-//                manager.beginTransaction().replace(R.id.home_frame_layout,businessEvent_detailsFragment).addToBackStack(null).commit();
-//                Toast.makeText(context, ""+Live.event_id.get(i), Toast.LENGTH_SHORT).show();
-            }
+       }
         });
     }
 
@@ -165,7 +152,7 @@ public class Normal_pastbooked extends RecyclerView.Adapter<Normal_pastbooked.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView eventImage,QRImage;
         TextView eventName,eventAddress,date;
-        TextView evetPrice,category;
+        TextView evetPrice,category,total_tickettext1;
 
         public ViewHolder(final View itemView) {
             super(itemView);
@@ -177,6 +164,7 @@ public class Normal_pastbooked extends RecyclerView.Adapter<Normal_pastbooked.Vi
             category = itemView.findViewById(R.id.custom_category_name);
             QRImage  = itemView.findViewById(R.id.QR_image);
             date = itemView.findViewById(R.id.date);
+            total_tickettext1 = itemView.findViewById(R.id.total_tickettext1);
 
         }
     }

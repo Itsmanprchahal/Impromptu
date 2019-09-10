@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".Home_Screen_Fragments.AddEvents.Add_Event_Activity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/add_event_toolbar"
         android:layout_width="match_parent"
         android:layout_height="55dp">
@@ -44,7 +44,7 @@
 
         </RelativeLayout>
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
     <ProgressBar
         android:paddingLeft="@dimen/defaultmargin"
         android:paddingRight="@dimen/defaultmargin"
@@ -55,7 +55,7 @@
         android:layout_below="@id/add_event_toolbar"/>
 
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_below="@id/add_event_progress_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -156,12 +156,12 @@
                 android:textColor="@color/colortextBlack"
                 android:textSize="@dimen/_13sdp"/>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/add_event_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            </android.support.v7.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
             <TextView
                 android:layout_marginTop="15dp"
@@ -378,7 +378,7 @@
 
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <Button
         android:id="@+id/add_event_next"

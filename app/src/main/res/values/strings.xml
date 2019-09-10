@@ -33,7 +33,7 @@
 
     <string name="facebook_app_id">837238269949836</string>
     <string name="fb_login_protocol_scheme">fb837238269949836</string>
-    <string name="googleclientId">AIzaSyC4saBshrgnDdwiHE-gaLeh4vagQnzOXlc</string>
+    <string name="googleclientId">AIzaSyBv3FYZuLZJR8mOlONc6hMGqh-Taeo7-7g</string>
     <!--<string name="googleclientId">AIzaSyAmYry1bhZSOxVdIb3HmWz3QjqRda8yvrA</string>-->
     <string name="userProfileQuestion">+ Answer up to three of these questions "\n" (Showcase your personality in the process)</string>
     <string name="userProfileStatus">Write a bit about yourself to share with other users</string>
@@ -42,4 +42,6 @@
     <string name="dialog_seekbar_transition_time"><![CDATA[<string name=\"dialog_seekbar_transition_time\">Item transition time in millis</string>]]></string>
     <string name="server_client_id">905451169371-f5bfnn34du4j1p41o3if6m6mjd4gsvlk.apps.googleusercontent.com</string>
     <string name="default_notification_channel_id">firebase_default_channel</string>
+    <string name="msg_subscribed">Impromptu Notify</string>
+    <string name="msg_subscribe_failed">Notify failed</string>
 </resources>

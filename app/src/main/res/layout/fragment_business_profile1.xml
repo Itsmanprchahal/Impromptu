@@ -6,11 +6,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".BusinessRegisterLogin.BusinessProfileFragment1">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="55dp"
             app:cardElevation="5dp"
@@ -42,7 +42,7 @@
             android:fontFamily="@font/circularstdbold"
             android:padding="@dimen/_7sdp"
             tools:ignore="MissingConstraints" />
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
 
 <ScrollView
@@ -52,7 +52,7 @@
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintTop_toBottomOf="@id/cardview">
 
-       <android.support.constraint.ConstraintLayout
+       <androidx.constraintlayout.widget.ConstraintLayout
            android:layout_width="match_parent"
            android:layout_height="match_parent"
            app:layout_constraintTop_toTopOf="parent"
@@ -189,12 +189,12 @@
                android:layout_height="10dp"
                app:layout_constraintBottom_toBottomOf="parent"
                app:layout_constraintTop_toBottomOf="@id/previewBT_onbusinessprofile1"></View>
-       </android.support.constraint.ConstraintLayout>
+       </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
 </ScrollView>
 
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

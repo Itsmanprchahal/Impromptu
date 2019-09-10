@@ -1,21 +1,21 @@
 package com.mandywebdesign.impromptu.BusinessRegisterLogin;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -36,6 +36,15 @@ import com.bumptech.glide.Glide;
 import com.facebook.AccessToken;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.appinvite.FirebaseAppInvite;
+import com.google.firebase.dynamiclinks.DynamicLink;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
+import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mandywebdesign.impromptu.Adapters.B_EventDetailImageAdapter;
 import com.mandywebdesign.impromptu.Adapters.Booked_users;
@@ -84,7 +93,6 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
     SharedPreferences sharedPreferences, sharedPreferences1, profileupdatedPref;
     String user, fav_id;
     RoundedImageView bannerImage;
-    Bundle bundle;
     public static String value, event_type, otherEvnts, formattedDate, getFormattedDate;
     Dialog progressDialog;
     ViewPager viewPager;
@@ -124,14 +132,34 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
         init();
         listerners();
 
+        checkEventtype();
+        gotomessagebox(id);
+
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         users.setLayoutManager(layoutManager);
         users.setNestedScrollingEnabled(false);
 
+
+    }
+
+    private void gotomessagebox(final String id) {
+        seemessagesforthisevent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (!S_Token.equals("")) {
+                    OpenEventChat(S_Token, id);
+                } else {
+                    OpenEventChat(BToken, id);
+                }
+            }
+        });
+    }
+
+    private void checkEventtype() {
+
         Intent intent = getIntent();
-
-
         if (intent != null) {
 
             value = intent.getStringExtra("event_id");
@@ -180,6 +208,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                     addFav(value);
                 }
             } else if (event_type.equals("history")) {
+
                 if (!BToken.equalsIgnoreCase("")) {
                     getEventdata(BToken, value);
                     getUsers(BToken, value);
@@ -189,6 +218,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
 
                 }
             } else if (event_type.equals("fav")) {
+
                 if (!S_Token.equalsIgnoreCase("")) {
                     getEventdata(S_Token, value);
                     getUsers(S_Token, value);
@@ -198,12 +228,14 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
 
                 }
             } else if (event_type.equals("upcoming")) {
+
                 if (!S_Token.equalsIgnoreCase("")) {
                     getEventdata(S_Token, value);
                     getUsers(S_Token, value);
                     linearLayout.setVisibility(View.GONE);
                 }
             } else if (event_type.equals("past")) {
+
                 if (!S_Token.equalsIgnoreCase("")) {
                     getEventdata(S_Token, value);
                     getUsers(S_Token, value);
@@ -219,6 +251,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                     getUsers(S_Token, value);
                     addFav(value);
                 }
+            }else {
             }
 
             editevent.setOnClickListener(new View.OnClickListener() {
@@ -229,10 +262,9 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                         Intent intent = new Intent(BusinessEventDetailAcitvity.this, Add_Event_Activity.class);
                         intent.putExtra("editevent", "edit");
                         intent.putExtra("value", value);
-//                        editor.putString("editimages",image.);
                         startActivity(intent);
                     }else {
-                        String message = "Testing";
+                        String message = "https://play.google.com/store";
                         Intent share = new Intent(Intent.ACTION_SEND);
                         share.setType("text/plain");
                         share.putExtra(Intent.EXTRA_TEXT, message);
@@ -269,24 +301,6 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
         });
     }
 
-    private void getRaminingEvents(String s_token, String id) {
-
-        Call<RemainingTickets> call = WebAPI.getInstance().getApi().remainingTickets("Bearer " + s_token, id);
-        call.enqueue(new Callback<RemainingTickets>() {
-            @Override
-            public void onResponse(Call<RemainingTickets> call, Response<RemainingTickets> response) {
-
-                String tickets = String.valueOf(response.body().getData());
-                //Toast.makeText(getContext(), ""+tickets, Toast.LENGTH_SHORT).show();
-                //   remainingTicketTV.setText("Tickets Remaining "+tickets);
-            }
-
-            @Override
-            public void onFailure(Call<RemainingTickets> call, Throwable t) {
-
-            }
-        });
-    }
 
     private void getTotalTickets(String token, String value) {
         Call<TotalTickets> call = WebAPI.getInstance().getApi().totalEvents("Bearer " + token, value);
@@ -464,7 +478,6 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
 
                             String imageurl = image.get(0).toString();
                             Glide.with(BusinessEventDetailAcitvity.this).load(imageurl).into(bannerImage);
-//                        Picasso.get().load(imageurl).resize(110,110).into(bannerImage);
 
                             //Check Event Fav Status
                             if (fav_id.equals("1")) {
@@ -602,38 +615,6 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
-//                if (!BToken.equals("")) {
-//
-//                    Bundle bundle1 = new Bundle();
-//                    bundle1.putString("eventType", event_type);
-//
-//                    Hosting attending = new Hosting();
-//                    attending.setArguments(bundle1);
-//
-//
-//                    FragmentTransaction transaction = manager.beginTransaction();
-//                    transaction.replace(R.id.home_frame_layout, attending);
-//                    transaction.addToBackStack(null);
-//                    transaction.commit();
-//                    Home_Screen.countt = 0;
-//                } else if (!S_Token.equalsIgnoreCase("")) {
-//
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString("eventType", event_type);
-//                    bundle.putString("other_events", otherEvnts);
-//
-//                    Events events = new Events();
-//                    events.setArguments(bundle);
-//
-//
-//                    FragmentTransaction transaction = manager.beginTransaction();
-//                    transaction.replace(R.id.home_frame_layout, events);
-//                    transaction.addToBackStack(null);
-//                    transaction.commit();
-//                    Home_Screen.countt = 0;
-//
-//
-//                }
             }
         });
 
@@ -707,17 +688,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
             }
         });
 
-        seemessagesforthisevent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                if (!S_Token.equals("")) {
-                    OpenEventChat(S_Token, id);
-                } else {
-                    OpenEventChat(BToken, id);
-                }
-            }
-        });
     }
 
     private void OpenEventChat(String s, String id) {
@@ -725,7 +696,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
         final Intent intent = new Intent(BusinessEventDetailAcitvity.this, ChatBoxActivity.class);
         intent.putExtra("event_title",title);
         intent.putExtra("event_image",hostImage);
-        intent.putExtra("eventID",value);
+        intent.putExtra("eventID",id);
         intent.putExtra("event_host_user",hostUserID);
 
 
@@ -756,7 +727,6 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
 
     private void init() {
 
-        Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
         event_price = findViewById(R.id.event_price);
         editevent = findViewById(R.id.editevent);
         eventdetail_favbt = findViewById(R.id.eventdetail_favbt);

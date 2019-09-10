@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,13 +14,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardElevation="2dp"
                 android:id="@+id/user_card">
 
-                <android.support.v7.widget.Toolbar
+                <androidx.appcompat.widget.Toolbar
                     android:id="@+id/user_profile_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -56,9 +56,9 @@
                             android:src="@drawable/edit" />
 
                     </RelativeLayout>
-                </android.support.v7.widget.Toolbar>
+                </androidx.appcompat.widget.Toolbar>
 
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
 
 
@@ -173,12 +173,12 @@
                     android:src="@drawable/screen1" />
 
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/user_profile_question_recycle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/user_profile_userimage"
-                    android:layout_marginTop="@dimen/_10sdp"></android.support.v7.widget.RecyclerView>
+                    android:layout_marginTop="@dimen/_10sdp"></androidx.recyclerview.widget.RecyclerView>
 
 
 
@@ -205,11 +205,11 @@
                     android:textStyle="bold"
                     android:id="@+id/normal_user_total_live_events"/>
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/user_profile_events_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/user_profile_Event"></android.support.v7.widget.RecyclerView>
+                    android:layout_below="@+id/user_profile_Event"></androidx.recyclerview.widget.RecyclerView>
 
 
                 <TextView
@@ -235,11 +235,11 @@
                     android:textStyle="bold"
                     android:id="@+id/normal_user_total_past_events"/>
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/user_profile_eventAttend_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/user_profile_Event_attend"></android.support.v7.widget.RecyclerView>
+                    android:layout_below="@+id/user_profile_Event_attend"></androidx.recyclerview.widget.RecyclerView>
 
 
             </RelativeLayout>
@@ -249,4 +249,4 @@
 
     </ScrollView>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

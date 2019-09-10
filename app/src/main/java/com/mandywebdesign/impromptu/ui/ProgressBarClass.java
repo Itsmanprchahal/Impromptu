@@ -1,16 +1,10 @@
 package com.mandywebdesign.impromptu.ui;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.view.Window;
-import android.widget.ProgressBar;
 
 import com.mandywebdesign.impromptu.R;
-import com.yarolegovich.mp.util.Utils;
 
 public class ProgressBarClass {
 
