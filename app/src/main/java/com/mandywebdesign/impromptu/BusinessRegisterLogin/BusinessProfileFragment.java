@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.core.content.ContextCompat;
 
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,10 +111,9 @@ public class BusinessProfileFragment extends Fragment {
                     public void onClick(View v) {
 
                         FragmentTransaction transaction = manager.beginTransaction();
-                        transaction.replace(R.id.home_frame_layout,new BusinessUserProfile());
+                        transaction.replace(R.id.home_frame_layout, new BusinessUserProfile());
                         transaction.addToBackStack(null);
                         transaction.commit();
-//                        manager.beginTransaction().replace(R.id.home_frame_layout, new BusinessUserProfile()).commit();
                     }
                 });
 
@@ -133,7 +133,10 @@ public class BusinessProfileFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
 
-                        manager.beginTransaction().replace(R.id.home_frame_layout, new BusinessUserProfile()).commit();
+                        FragmentTransaction transaction = manager.beginTransaction();
+                        transaction.replace(R.id.home_frame_layout, new BusinessUserProfile());
+                        transaction.addToBackStack(null);
+                        transaction.commit();
                     }
                 });
             }
@@ -165,25 +168,19 @@ public class BusinessProfileFragment extends Fragment {
                     postcode_business_ET.setError("Enter Postcode");
                     city_business_ET.setError("Enter City");
                     aboutyouroragnisation_ET.setError("Enter About Organisation");
-                }else if (name.isEmpty())
-                {
+                } else if (name.isEmpty()) {
                     business_profile_Name_ET.setError("Enter Name");
-                }else if (address1.isEmpty())
-                {
+                } else if (address1.isEmpty()) {
                     addressline1ET.setError("Enter Addressline 1");
-                }else if (address2.isEmpty())
-                {
+                } else if (address2.isEmpty()) {
                     addressline2ET.setError("Enter Addressline 2");
-                }else if (postcode.isEmpty())
-                {
+                } else if (postcode.isEmpty()) {
                     postcode_business_ET.setError("Enter Postcode");
-                }else if ( city.isEmpty())
-                {
+                } else if (city.isEmpty()) {
                     city_business_ET.setError("Enter City");
-                }else if (aboutOrga.isEmpty())
-                {
+                } else if (aboutOrga.isEmpty()) {
                     aboutyouroragnisation_ET.setError("Enter About Organisation");
-                }else {
+                } else {
                     sharedPreferences = getActivity().getSharedPreferences("BusinessProfile1", Context.MODE_PRIVATE);
                     editor = sharedPreferences.edit();
                     editor = sharedPreferences.edit();
@@ -219,7 +216,6 @@ public class BusinessProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 showDialg();
-//                onSelectImageClick(v);
             }
         });
 
@@ -315,8 +311,6 @@ public class BusinessProfileFragment extends Fragment {
 
                 business_user_Image.setImageBitmap(bitmap);
                 part = sendImageFileToserver(bitmap);
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -371,21 +365,27 @@ public class BusinessProfileFragment extends Fragment {
             String urlimage = url[0];
 
             bitmap = null;
+            Log.d("part", String.valueOf(bitmap));
+
+
             try {
                 InputStream stream = new URL(urlimage).openStream();
                 bitmap = BitmapFactory.decodeStream(stream);
                 part = sendImageFileToserver(bitmap);
 
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+
             return bitmap;
         }
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
-            imageView.setImageBitmap(bitmap);
+//            imageView.setImageBitmap(bitmap);
         }
     }
 

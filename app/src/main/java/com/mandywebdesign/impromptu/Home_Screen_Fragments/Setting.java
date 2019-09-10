@@ -365,7 +365,6 @@ public class Setting extends Fragment {
             FAQ.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    manager.beginTransaction().replace(R.id.home_frame_layout, new FAQ()).addToBackStack(null).commit();
                     Intent intent = new Intent(getContext(), FAQs.class);
                     startActivity(intent);
                 }
@@ -374,7 +373,6 @@ public class Setting extends Fragment {
             contactus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    manager.beginTransaction().replace(R.id.home_frame_layout, new ContactUs()).addToBackStack(null).commit();
                     Intent intent = new Intent(getContext(), Contact_Us.class);
                     startActivity(intent);
                 }
@@ -522,7 +520,7 @@ public class Setting extends Fragment {
         NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
         if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
-            // Toast.makeText(getContext(), "No Internet connection!,Unable to SignOut", Toast.LENGTH_LONG).show();
+
             return false;
         }
 

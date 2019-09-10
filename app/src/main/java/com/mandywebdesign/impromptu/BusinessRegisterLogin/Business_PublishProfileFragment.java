@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Base64;
@@ -261,7 +262,11 @@ public class Business_PublishProfileFragment extends Fragment {
                                 editor.putString("1234","1");
                                 editor.apply();
                                 Toast.makeText(getContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
-                                manager.beginTransaction().replace(R.id.home_frame_layout, new BusinessUserProfile()).addToBackStack(null).commit();
+                                FragmentTransaction transaction = manager.beginTransaction();
+                                transaction.replace(R.id.home_frame_layout,new BusinessUserProfile());
+                                transaction.addToBackStack(null);
+                                transaction.commit();
+//                                manager.beginTransaction().replace(R.id.home_frame_layout, new BusinessUserProfile()).addToBackStack(null).commit();
 
                             }
 
