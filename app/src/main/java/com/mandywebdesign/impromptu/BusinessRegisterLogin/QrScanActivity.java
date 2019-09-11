@@ -164,8 +164,6 @@ public class QrScanActivity extends AppCompatActivity {
                             Log.e("Value_of_bar", booked_user_id + "");
                             Log.e("Value_of_bar", event_title + "");
 
-                            //  Toast.makeText(getContext(), ""+bar_values, Toast.LENGTH_SHORT).show();
-
 
                             if (!BToken.equals("")) {
                                 if (id.equals(event_id)) {

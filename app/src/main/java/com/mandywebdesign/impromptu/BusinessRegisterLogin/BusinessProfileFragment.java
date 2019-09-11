@@ -2,6 +2,7 @@ package com.mandywebdesign.impromptu.BusinessRegisterLogin;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -37,6 +38,7 @@ import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
+import com.mandywebdesign.impromptu.ui.ProgressBarClass;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -72,6 +74,7 @@ public class BusinessProfileFragment extends Fragment {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     FragmentManager manager;
+    Dialog progressDialog;
     public static MultipartBody.Part part;
     Uri uri;
     File filesDir;
@@ -84,6 +87,8 @@ public class BusinessProfileFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_business_profile, container, false);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         //Glide.with(getContext()).load(BusinessUserProfile.avatar).into(business_user_Image);
+        progressDialog = ProgressBarClass.showProgressDialog(getContext());
+        progressDialog.show();
         manager = getFragmentManager();
         filesDir = getActivity().getFilesDir();
 
@@ -147,7 +152,6 @@ public class BusinessProfileFragment extends Fragment {
     }
 
     private void listeners() {
-
 
         mNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -372,6 +376,10 @@ public class BusinessProfileFragment extends Fragment {
                 InputStream stream = new URL(urlimage).openStream();
                 bitmap = BitmapFactory.decodeStream(stream);
                 part = sendImageFileToserver(bitmap);
+                Log.d("part1", String.valueOf(bitmap));
+
+                    progressDialog.dismiss();
+
 
 
             } catch (IOException e) {

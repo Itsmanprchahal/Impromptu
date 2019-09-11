@@ -1,6 +1,7 @@
 package com.mandywebdesign.impromptu.messages;
 
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -200,6 +201,7 @@ public class Messages extends Fragment {
         lastMEsg.clear();
     }
 
+    @SuppressLint("WrongConstant")
     private void setData() {
         LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -213,7 +215,6 @@ public class Messages extends Fragment {
     private void Search(final String token) {
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, eventTitle);
         message_search.setAdapter(arrayAdapter);
-
 
         message_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

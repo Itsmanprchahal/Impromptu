@@ -114,7 +114,7 @@ public class Join_us extends AppCompatActivity {
 
     public void onClick(View v) {
         if (v == mfacebook) {
-            progressDialog.show();
+//            progressDialog.show();
             facebooklogin.performClick();
             if (isOnline() == false) {
                 progressDialog.dismiss();

@@ -448,6 +448,8 @@
                         android:layout_height="3dp"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layerType="software"
+                        android:layout_marginLeft="@dimen/defaultmargin"
+                        android:layout_marginRight="@dimen/defaultmargin"
                         android:src="@drawable/dashed"></ImageView>
 
                     <TextView

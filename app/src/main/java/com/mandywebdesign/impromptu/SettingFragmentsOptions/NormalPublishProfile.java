@@ -381,7 +381,7 @@ public class NormalPublishProfile extends AppCompatActivity {
                                 @Override
                                 public void onResponse(Call<com.mandywebdesign.impromptu.Retrofit.NormalPublishProfile> call, Response<com.mandywebdesign.impromptu.Retrofit.NormalPublishProfile> response) {
                                     if (response.body()!=null)
-                                    {progressDialog.dismiss();
+                                    {
                                         if (response.body().getStatus().equals("200"))
                                         {
                                             editor =  sharedPreferences.edit();
@@ -594,7 +594,7 @@ public class NormalPublishProfile extends AppCompatActivity {
                 InputStream stream = new URL(urlimage).openStream();
                 bitmap = BitmapFactory.decodeStream(stream);
                 part = sendImageFileToserver(bitmap);
-
+                progressDialog.dismiss();
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -56,6 +56,7 @@ import com.mandywebdesign.impromptu.SettingFragmentsOptions.TermsAndConditionsAc
 import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.Join_us;
 import com.mandywebdesign.impromptu.R;
+import com.mandywebdesign.impromptu.ui.ProgressBarClass;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -75,7 +76,7 @@ public class Setting extends Fragment {
     SharedPreferences sharedPreferences, sharedPreferences1, socialpref;
     SharedPreferences.Editor editor;
     String user, token, socialtoken;
-    ProgressDialog progressDialog;
+    Dialog progressDialog;
     AlertDialog.Builder builder;
     Dialog  changepasswordpopup;
     EditText oldepassword, newpassword, confirmpass;
@@ -94,12 +95,8 @@ public class Setting extends Fragment {
         builder.setMessage("Coming soon...");
 
 
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Please wait...");
-        Drawable drawable = new ProgressBar(getContext()).getIndeterminateDrawable().mutate();
-        drawable.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorTheme),
-                PorterDuff.Mode.SRC_IN);
-        progressDialog.setIndeterminateDrawable(drawable);
+        progressDialog = ProgressBarClass.showProgressDialog(getContext());
+        progressDialog.dismiss();
 
 
         sharedPreferences1 = getActivity().getSharedPreferences("BusinessProfile1", Context.MODE_PRIVATE);
@@ -255,8 +252,6 @@ public class Setting extends Fragment {
                         editor1.clear();
                         editor1.commit();
 
-                        progressDialog.setMessage("Please wait until we logout your account");
-                        progressDialog.setCanceledOnTouchOutside(false);
                         progressDialog.show();
                         getActivity().finish();
                     } else {
@@ -290,8 +285,6 @@ public class Setting extends Fragment {
                                     editor1.clear();
                                     editor1.commit();
 
-                                    progressDialog.setMessage("Please wait until we logout your account");
-                                    progressDialog.setCanceledOnTouchOutside(false);
                                     progressDialog.show();
 
                                     Intent intent = new Intent(getActivity(), Join_us.class);
@@ -405,7 +398,6 @@ public class Setting extends Fragment {
                             @Override
                             public void onResult(@NonNull Status status) {
 
-                                progressDialog.setMessage("Please wait until we logout your account");
                                 progressDialog.setCanceledOnTouchOutside(false);
                                 progressDialog.show();
 
@@ -565,10 +557,7 @@ public class Setting extends Fragment {
 
                 if (isOnline() == true) {
 
-                    progressDialog.setMessage("Please wait until we delete your account");
-                    progressDialog.setCanceledOnTouchOutside(false);
                     progressDialog.show();
-
 
                     Call call = WebAPI.getInstance().getApi().delete(usrToken, "application/json");
                     call.enqueue(new Callback() {

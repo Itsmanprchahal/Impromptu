@@ -163,13 +163,6 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
     @Override
     public void onResume() {
         super.onResume();
-//        statusCheck();
-//        if (Home_Screen.newCount == 1) {
-//            Home_Screen.newCount = 0;
-//            statusCheck();
-//        } else {
-//            statusCheck();
-//        }
     }
 
     private void init() {
@@ -319,7 +312,14 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                 .build());
         recyclerView.setAdapter(adapter);
-        recyclerView.scrollToPosition(Integer.parseInt(itemPosition));
+        if (itemPosition.equals(""))
+        {
+            itemPosition = String.valueOf(0);
+        }else
+        {
+            recyclerView.scrollToPosition(Integer.parseInt(itemPosition));
+        }
+
         adapter.notifyDataSetChanged();
 
         clearPref();
