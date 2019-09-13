@@ -68,6 +68,7 @@ import com.mandywebdesign.impromptu.ui.NoInternetScreen;
 import com.mandywebdesign.impromptu.ui.ProgressBarClass;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -433,6 +434,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                             timefrom = datum.getTimeFrom();
                             timeto = datum.getTimeTo();
                             image = (ArrayList<String>) datum.getFile().get(0).getImg();
+                            Collections.reverse(image);
                             fav_id = datum.getFavourite().toString();
 
                             //get Time to in AM PM
@@ -695,7 +697,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
 
         final Intent intent = new Intent(BusinessEventDetailAcitvity.this, ChatBoxActivity.class);
         intent.putExtra("event_title",title);
-        intent.putExtra("event_image",hostImage);
+        intent.putExtra("event_image",image.get(0));
         intent.putExtra("eventID",id);
         intent.putExtra("event_host_user",hostUserID);
 

@@ -167,7 +167,6 @@ public class NormalPublishProfile extends AppCompatActivity {
                     {
                         if (response.body().getStatus().equals("200")) {
 
-                            progressDialog.dismiss();
 
                             getUsername = response.body().getData().get(0).getUsername();
                             getUserAge = response.body().getData().get(0).getAge();

@@ -101,7 +101,7 @@ public class PerviewEventActivity extends AppCompatActivity {
         address1 = intent.getStringExtra("address1");
         frommilles = intent.getStringExtra("fromtimeinmilles");
         tomilles = intent.getStringExtra("totimeinmilles");
-        To_date = intent.getStringExtra("To_date");
+        To_date = intent.getStringExtra("To_Date");
         editvalue = intent.getStringExtra("value");
 
         Log.d("TimeCheck", frommilles + "  " + tomilles);

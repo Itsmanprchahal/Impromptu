@@ -241,7 +241,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                 final Intent intent = new Intent(BookEventActivity.this, ChatBoxActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 intent.putExtra("event_title", title);
-                intent.putExtra("event_image", host_image);
+                intent.putExtra("event_image", image.get(0));
                 intent.putExtra("eventID", value);
                 intent.putExtra("event_host_user", hostUserID);
 
@@ -479,21 +479,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         });
     }
 
-    private void openScreenshot(File imageFile) {
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_SEND);
-        Uri uri = Uri.fromFile(imageFile);
-        intent.setDataAndType(uri, "image/*");
-        startActivity(intent);
-    }
-
-    public static Bitmap getScreenShot(View view) {
-        View screenView = view.getRootView();
-        screenView.setDrawingCacheEnabled(true);
-        Bitmap bitmap = Bitmap.createBitmap(screenView.getDrawingCache());
-        screenView.setDrawingCacheEnabled(false);
-        return bitmap;
-    }
 
     public void dialog(final String value) {
         String ticketNum[] = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
@@ -747,7 +732,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             timeto = datum.getTimeTo();
                             host_image = datum.getHostImage();
                             image = (ArrayList<String>) datum.getFile().get(0).getImg();
-                            Collections.reverse(image);
+//                            Collections.reverse(image);
 
                             if (ticktprice.equals("0")) {
                                 eventprice.setText("Free");

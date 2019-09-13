@@ -1,21 +1,38 @@
 package com.mandywebdesign.impromptu.messages;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
 import androidx.fragment.app.FragmentManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,21 +49,26 @@ import com.mandywebdesign.impromptu.ui.ProgressBarClass;
 
 import java.util.ArrayList;
 
+import hani.momanii.supernova_emoji_library.Actions.EmojIconActions;
+import hani.momanii.supernova_emoji_library.Helper.EmojiconEditText;
+import io.codetail.animation.SupportAnimator;
+import io.codetail.animation.ViewAnimationUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ChatBoxActivity extends AppCompatActivity {
 
-    SwipeRefreshLayout pullToRefresh;
+    LinearLayout revealeffect;
     NotificationManager notificationManager;
     View view;
-    ImageView back, add_smuiley;
+    ImageView back;
+    ImageButton add_smuiley;
     SwipeRefreshLayout swipeRefreshLayout;
     RoundedImageView event_image;
     TextView title;
     FragmentManager manager;
-    EditText typemess;
+    EmojiconEditText typemess;
     ImageView sendmessg;
     String seen_status;
     Dialog progressDialog;
@@ -55,6 +77,8 @@ public class ChatBoxActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     ArrayList<RetroGetMessages.Datum> arrayList = new ArrayList<>();
     Intent intent;
+    EmojIconActions emojIcon;
+    boolean hidden = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +105,6 @@ public class ChatBoxActivity extends AppCompatActivity {
             eventID = intent.getStringExtra("eventID");
             hostUserID = intent.getStringExtra("event_host_user");
             seen_status = intent.getStringExtra("seen_status");
-
 
 
             title.setText(titl);
@@ -113,13 +136,14 @@ public class ChatBoxActivity extends AppCompatActivity {
         });
 
     }
+
     private void listerners() {
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               onBackPressed();
-               finish();
+                onBackPressed();
+                finish();
             }
         });
 
@@ -140,6 +164,23 @@ public class ChatBoxActivity extends AppCompatActivity {
                 }
             }
         });
+
+        event_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog dialog = new Dialog(ChatBoxActivity.this);
+                Window window = dialog.getWindow();
+                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                dialog.setContentView(R.layout.custom_imagedialog);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.getWindow().getAttributes().windowAnimations = R.style.CustomDialogAnimation;
+                dialog.setCancelable(true);
+                dialog.show();
+
+                ImageView eventimage = dialog.findViewById(R.id.eventbigimage);
+                Glide.with(ChatBoxActivity.this).load(image).into(eventimage);
+            }
+        });
     }
 
 
@@ -148,10 +189,9 @@ public class ChatBoxActivity extends AppCompatActivity {
         call.enqueue(new Callback<RetroChat>() {
             @Override
             public void onResponse(Call<RetroChat> call, Response<RetroChat> response) {
-                if (response.body()!=null)
-                {
+                if (response.body() != null) {
 
-                }else {
+                } else {
                     Intent intent = new Intent(ChatBoxActivity.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
@@ -163,23 +203,41 @@ public class ChatBoxActivity extends AppCompatActivity {
                 if (NoInternet.isOnline(ChatBoxActivity.this) == false) {
 
                     NoInternet.dialog(ChatBoxActivity.this);
-                }else {
-                    Toast.makeText(ChatBoxActivity.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ChatBoxActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
     private void init() {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
+        revealeffect = findViewById(R.id.revealeffect);
         back = findViewById(R.id.chat_back);
         event_image = findViewById(R.id.chat_iamge);
         title = findViewById(R.id.chat_title);
-        // add_smuiley = view.findViewById(R.id.add_smiley);
+        add_smuiley = findViewById(R.id.add_smiley);
         typemess = findViewById(R.id.type_messeage);
         sendmessg = findViewById(R.id.send_mesg);
+        view = findViewById(R.id.root_view);
         recyclerView = findViewById(R.id.chats_recycler);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.pullToRefresh);
+
+        emojIcon = new EmojIconActions(this, view, typemess, add_smuiley);
+        emojIcon.ShowEmojIcon();
+        emojIcon.setIconsIds(R.drawable.ic_action_keyboard, R.drawable.smiley);
+        emojIcon.setKeyboardListener(new EmojIconActions.KeyboardListener() {
+            @Override
+            public void onKeyboardOpen() {
+                Log.e("smiley", "Keyboard opened!");
+            }
+
+            @Override
+            public void onKeyboardClose() {
+                Log.e("smiley", "Keyboard closed");
+            }
+        });
     }
 
     public void getChat(String token, String eventID, String seenStatus) {
@@ -188,8 +246,7 @@ public class ChatBoxActivity extends AppCompatActivity {
         chatCall.enqueue(new Callback<RetroGetMessages>() {
             @Override
             public void onResponse(Call<RetroGetMessages> call, Response<RetroGetMessages> response) {
-                if (response.body()!=null)
-                {
+                if (response.body() != null) {
                     arrayList.clear();
                     if (response.body().getStatus().equals("200")) {
                         arrayList.clear();
@@ -200,9 +257,8 @@ public class ChatBoxActivity extends AppCompatActivity {
                             setAdapter(arrayList);
                         }
                     } else {
-                        //Toast.makeText(getContext(), ""+response.body().getStatus(), Toast.LENGTH_SHORT).show();
                     }
-                }else {
+                } else {
                     Intent intent = new Intent(ChatBoxActivity.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
@@ -214,8 +270,8 @@ public class ChatBoxActivity extends AppCompatActivity {
             public void onFailure(Call<RetroGetMessages> call, Throwable t) {
                 if (NoInternet.isOnline(ChatBoxActivity.this) == false) {
                     NoInternet.dialog(ChatBoxActivity.this);
-                }else {
-                    Toast.makeText(ChatBoxActivity.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ChatBoxActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -223,8 +279,6 @@ public class ChatBoxActivity extends AppCompatActivity {
 
     private void setAdapter(ArrayList<RetroGetMessages.Datum> arrayList) {
         LinearLayoutManager linearLayout = new LinearLayoutManager(ChatBoxActivity.this);
-//        linearLayout.setOrientation(LinearLayout.VERTICAL);
-//        linearLayout.setReverseLayout(true);
         linearLayout.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayout);
         recyclerView.scrollToPosition(arrayList.size() - 1);
@@ -233,4 +287,94 @@ public class ChatBoxActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
+    /*###################Code to Close the keyboard when your touch anywhere############*/
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+
+        View v = getCurrentFocus();
+        boolean ret = super.dispatchTouchEvent(event);
+
+        if (v instanceof EditText) {
+            View w = getCurrentFocus();
+            int scrcoords[] = new int[2];
+            w.getLocationOnScreen(scrcoords);
+            float x = event.getRawX() + w.getLeft() - scrcoords[0];
+            float y = event.getRawY() + w.getTop() - scrcoords[1];
+
+            if (event.getAction() == MotionEvent.ACTION_UP && (x < w.getLeft() || x >= w.getRight() || y < w.getTop() || y > w.getBottom())) {
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getWindow().getCurrentFocus().getWindowToken(), 0);
+            }
+        }
+        return ret;
+    }
+
+    private void makeEffect(final LinearLayout layout,int cx,int cy){
+
+        int radius = Math.max(layout.getWidth(), layout.getHeight());
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+
+            SupportAnimator animator =
+                    ViewAnimationUtils.createCircularReveal(layout, cx, cy, 0, radius);
+            animator.setInterpolator(new AccelerateDecelerateInterpolator());
+            animator.setDuration(800);
+
+            SupportAnimator animator_reverse = animator.reverse();
+
+            if (hidden) {
+                layout.setVisibility(View.VISIBLE);
+                animator.start();
+                hidden = false;
+            } else {
+                animator_reverse.addListener(new SupportAnimator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart() {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd() {
+                        layout.setVisibility(View.INVISIBLE);
+                        hidden = true;
+
+                    }
+
+                    @Override
+                    public void onAnimationCancel() {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat() {
+
+                    }
+                });
+                animator_reverse.start();
+
+            }
+        } else {
+            if (hidden) {
+                Animator anim = android.view.ViewAnimationUtils.createCircularReveal(layout, cx, cy, 0, radius);
+                layout.setVisibility(View.VISIBLE);
+                anim.start();
+                hidden = false;
+
+            } else {
+                Animator anim = android.view.ViewAnimationUtils.createCircularReveal(layout, cx, cy, radius, 0);
+                anim.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        layout.setVisibility(View.INVISIBLE);
+                        hidden = true;
+                    }
+                });
+                anim.start();
+
+            }
+        }
+    }
 }

@@ -10,10 +10,14 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -353,6 +357,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                     intent.putExtra("link3", link3);
                     intent.putExtra("fromtimeinmilles", frommilles);
                     intent.putExtra("totimeinmilles", tomilles);
+                    to_date = event_details_date_etto.getText().toString();
                     intent.putExtra("to_Date", to_date);
                     startActivity(intent);
                 } else {
@@ -365,10 +370,10 @@ public class EventDetailsActivity extends AppCompatActivity {
         dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-               year1 = year;
-               month1 = month;
-               date1 = dayOfMonth;
-              calendar.set(Calendar.YEAR, year);
+                year1 = year;
+                month1 = month;
+                date1 = dayOfMonth;
+                calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 myFormat = "MM/dd/yyyy";
@@ -386,9 +391,9 @@ public class EventDetailsActivity extends AppCompatActivity {
                 calendar.set(Calendar.MONTH, month1);
                 calendar.set(Calendar.DAY_OF_MONTH, date1);
 
-                calendar.set(Calendar.YEAR,year);
-                calendar.set(Calendar.MONTH,month);
-                calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 myFormat = "MM/dd/yyyy";
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myFormat, Locale.US);
 
@@ -572,14 +577,32 @@ public class EventDetailsActivity extends AppCompatActivity {
                     event_lcation_address2.setText(response.body().getData().get(0).getAddressline2());
                     event_postcode.setText(response.body().getData().get(0).getPostcode());
                     event_city.setText(response.body().getData().get(0).getCity());
-                    mDate.setText(response.body().getData().get(0).getDate());
+
+
+                    String dateformat = response.body().getData().get(0).getDate();
+                    /*to change server date formate*/
+                    String s1 = dateformat;
+                    String[] str = s1.split("/");
+                    String str1 = str[0];
+                    String str2 = str[1];
+                    String str3 = str[2];
+
+                    mDate.setText(str1 + "/" + str2 + "/" + str3);
                     eventTime_from.setText(response.body().getData().get(0).getTimeFrom());
                     eventTime_to.setText(response.body().getData().get(0).getTimeTo());
                     event_attendees_no.setText(response.body().getData().get(0).getAttendeesNo());
                     tickettype = response.body().getData().get(0).getTicketType();
                     prceET = response.body().getData().get(0).getPrice();
-                    to_date = Util.convertTimeStampDate(Long.parseLong(response.body().getData().get(0).getEventStartDt()));
-                    event_details_date_etto.setText(to_date);
+                    to_date = Util.convertTimeStampDate(Long.parseLong(response.body().getData().get(0).getEventEndDt()));
+
+                    String dateformat1 = to_date;
+                    /*to change server date formate*/
+                    String s2 = dateformat1;
+                    String[] strr = s2.split("/");
+                    String str11 = strr[0];
+                    String str21 = strr[1];
+                    String str31 = strr[2];
+                    event_details_date_etto.setText(str21 + "/" + str11 + "/" + str31);
                     getPrceET = prceET;
                     getTicketET = ticketET;
                     getTickettype = tickettype;

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:id="@+id/revealeffect"
+    android:gravity="center">
+
+<io.codetail.widget.RevealFrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    >
+
+    <ImageView
+        android:id="@+id/eventbigimage"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_200sdp"
+        android:layout_gravity="center"
+        android:scaleType="center"></ImageView>
+</io.codetail.widget.RevealFrameLayout>
+
+
+</LinearLayout>

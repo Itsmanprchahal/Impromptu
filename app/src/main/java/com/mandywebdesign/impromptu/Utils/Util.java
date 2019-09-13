@@ -77,12 +77,6 @@ public class Util {
     }
 
     public static String convertTimeStampDate(long timestamp) {
-//        Calendar calendar = Calendar.getInstance();
-//        TimeZone tz = TimeZone.getDefault();
-//        calendar.add(Calendar.MILLISECOND, tz.getOffset(calendar.getTimeInMillis()));
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-//        sdf.setTimeZone(tz);
-//        Date currenTimeZone = new Date(timestamp * 1000);
 
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 

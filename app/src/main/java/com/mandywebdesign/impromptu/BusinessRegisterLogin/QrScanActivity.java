@@ -10,6 +10,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -124,7 +126,6 @@ public class QrScanActivity extends AppCompatActivity {
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
-
                 source.stop();
             }
         });
@@ -140,6 +141,7 @@ public class QrScanActivity extends AppCompatActivity {
             public void receiveDetections(Detector.Detections<Barcode> detections) {
 
                 final SparseArray<Barcode> qrcode = detections.getDetectedItems();
+
 
                 if (qrcode.size() != 0) {
 
@@ -208,6 +210,7 @@ public class QrScanActivity extends AppCompatActivity {
 
         progressDialog.show();
         source.stop();
+
         Call<GusetCheckIns> checkInsCall = WebAPI.getInstance().getApi().guestCheckIns("Bearer " + s_token, event_id, s, booked_user_id);
         checkInsCall.enqueue(new Callback<GusetCheckIns>() {
 
@@ -220,6 +223,9 @@ public class QrScanActivity extends AppCompatActivity {
 
                     if (response.body().getStatus().equals("200")) {
                         Toast.makeText(QrScanActivity.this, "Checked In ", Toast.LENGTH_SHORT).show();
+
+                        ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+                        toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,150);
 
                         Vibrator v = null;
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
