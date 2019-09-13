@@ -522,7 +522,7 @@
                     android:id="@+id/perview_publish"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:layout_margin="@dimen/defaultmargin"
                     android:background="@drawable/custom_next_bt"
                     android:text="Publish"
                     android:fontFamily="@font/circularstdbold"

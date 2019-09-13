@@ -49,6 +49,29 @@ public class Normal_past_booked {
         @SerializedName("user_id")
         @Expose
         private Integer userId;
+        @SerializedName("rating")
+        @Expose
+        private String rating;
+        @SerializedName("total_rating")
+        @Expose
+        private String totalRating;
+
+        public String getRating() {
+            return rating;
+        }
+
+        public void setRating(String rating) {
+            this.rating = rating;
+        }
+
+        public String getTotalRating() {
+            return totalRating;
+        }
+
+        public void setTotalRating(String totalRating) {
+            this.totalRating = totalRating;
+        }
+
         @SerializedName("title")
         @Expose
         private String title;

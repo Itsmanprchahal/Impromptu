@@ -264,7 +264,8 @@ public interface RegisterApiInterface {
             @Query("social_id") String token,
             @Query("email") String email,
             @Query("name") String name,
-            @Query("provider_id") String provider_id
+            @Query("provider_id") String provider_id,
+            @Query("device_token") String device_token
     );
 
     @GET("all-events")

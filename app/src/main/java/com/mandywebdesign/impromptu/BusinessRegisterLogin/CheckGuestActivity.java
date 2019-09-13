@@ -95,13 +95,6 @@ finish();
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//               finish();
-//                Intent intent1 = new Intent(CheckGuestActivity.this,BusinessEventDetailAcitvity.class);
-//                intent1.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//                intent1.putExtra("eventType","CheckGuest");
-//                intent1.putExtra("event_id",id);
-//                startActivity(intent1);
-//                finish();
 
                 onBackPressed();
             }

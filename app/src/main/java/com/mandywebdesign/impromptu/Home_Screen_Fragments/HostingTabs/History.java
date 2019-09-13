@@ -90,8 +90,6 @@ public class History extends Fragment  implements  DiscreteScrollView.OnItemChan
         S_Token = sharedPreferences.getString("Socailtoken", "");
         itemPosition = itemPositionPref.getString(Constants.itemPosition, String.valueOf(0));
 
-
-
         recyclerView = (DiscreteScrollView) view.findViewById(R.id.business_history__recyclerview);
         recyclerView.setOrientation(DSVOrientation.HORIZONTAL);
         recyclerView.addOnItemChangedListener(this);

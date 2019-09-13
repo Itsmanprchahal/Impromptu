@@ -128,5 +128,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:17.2.0'
     implementation 'com.google.firebase:firebase-invites:17.0.0'
     implementation 'com.google.firebase:firebase-core:17.2.0'
+
+    // barcode reader library
+    implementation 'info.androidhive:barcode-reader:1.1.5'
+
+    // google vision library
+    implementation 'com.google.android.gms:play-services-vision:11.0.2'
 }
 apply plugin: 'io.fabric'

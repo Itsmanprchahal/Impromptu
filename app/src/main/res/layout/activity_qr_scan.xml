@@ -10,23 +10,30 @@
         android:id="@+id/qr_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/back_on_QR"/>
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/back"
-            android:id="@+id/back_on_QR"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Scan QR Code"
+        android:fontFamily="@font/circularstdbold"
+        android:textColor="@color/colortextBlack"
+        android:textSize="15dp"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Scan QR Code"
-            android:fontFamily="@font/circularstdbold"
-            android:textColor="@color/colortextBlack"
-            android:textSize="15dp"
-            android:layout_marginRight="50dp"
-            android:gravity="center_horizontal"/>
+</RelativeLayout>
+
 
     </androidx.appcompat.widget.Toolbar>
 

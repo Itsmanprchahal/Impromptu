@@ -697,7 +697,6 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
                                 c.add(Calendar.DATE, 1);
 
                                 getFormattedDate = df.format(c.getTime());
-                                // Toast.makeText(getContext(), "TOMORROW_DATE"+getFormattedDate, Toast.LENGTH_SHORT).show();
 
                                 System.out.println("Current time ==> " + c.getTime());
 
@@ -717,8 +716,6 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                                     Time.add(str2 + "/" + str1 + "/" + str3 + " at " + timeFrom);
                                 }
-
-                                //   Toast.makeText(getContext(), "14141 "+datum.getDate(), Toast.LENGTH_SHORT).show();
 
 
                             } catch (final ParseException e) {

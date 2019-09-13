@@ -16,7 +16,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:ignore="HardcodedDebugMode">
-        <activity android:name=".SettingFragmentsOptions.PrivancyActivity"></activity>
+        <activity android:name=".SettingFragmentsOptions.PrivancyActivity" />
         <activity android:name=".SettingFragmentsOptions.TermsAndConditionsActivityy" />
         <activity android:name=".SettingFragmentsOptions.HelpActivity" />
         <activity android:name=".ui.PayActivity" />
@@ -87,7 +87,13 @@
         <activity
             android:name=".ui.Home_Screen"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.mandywebdesign.impromptu.RATING_NOTIFY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.Join_us"
             android:screenOrientation="portrait"

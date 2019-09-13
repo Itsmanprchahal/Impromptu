@@ -32,7 +32,20 @@
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp"></ImageView>
 
-
+            <Button
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="@color/colorTheme"
+                android:text="Rate Now"
+                android:textAllCaps="false"
+                android:visibility="gone"
+                android:textSize="10sp"
+                android:textColor="@color/white"
+                android:id="@+id/ratenow_bt"></Button>
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:layout_width="100dp"
@@ -141,7 +154,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_20sdp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -175,7 +187,20 @@
                         android:fontFamily="@font/sfuitextlight"
                         android:textColor="@color/colorgrey"
                         android:textSize="@dimen/_12sdp"/>
+
                 </LinearLayout>
+                <RatingBar
+                    android:id="@+id/overall_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:stepSize="1.0"
+                    android:rating="5"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:visibility="gone"
+                    android:progressTint="@color/colorTheme"
+                    android:layout_marginTop="5dp"
+                    style="@style/Widget.AppCompat.RatingBar.Small"></RatingBar>
 
             </LinearLayout>
 

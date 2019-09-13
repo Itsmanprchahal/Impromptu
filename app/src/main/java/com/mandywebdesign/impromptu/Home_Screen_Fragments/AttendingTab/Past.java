@@ -65,6 +65,8 @@ public class Past extends Fragment implements DiscreteScrollView.OnItemChangedLi
     public static ArrayList<String> categois = new ArrayList<>();
     public static ArrayList<String> images = new ArrayList<>();
     public static ArrayList<String> event_id = new ArrayList<>();
+    public static ArrayList<String> rating = new ArrayList<>();
+    public static ArrayList<String> overall_rating = new ArrayList<>();
 
 
     @Override
@@ -89,7 +91,7 @@ public class Past extends Fragment implements DiscreteScrollView.OnItemChangedLi
         recyclerView = (DiscreteScrollView) view.findViewById(R.id.past_booked_recycler_view);
         recyclerView.setOrientation(DSVOrientation.HORIZONTAL);
         recyclerView.addOnItemChangedListener(this);
-        infiniteAdapter = InfiniteScrollAdapter.wrap(new Normal_pastbooked(getContext(), fragmentManager));
+        infiniteAdapter = InfiniteScrollAdapter.wrap(new Normal_pastbooked(getContext(), fragmentManager,S_Token));
         recyclerView.setAdapter(infiniteAdapter);
         recyclerView.setItemTransitionTimeMillis(DiscreteScrollViewOptions.getTransitionTime());
         recyclerView.setItemTransformer(new ScaleTransformer.Builder()
@@ -121,6 +123,8 @@ public class Past extends Fragment implements DiscreteScrollView.OnItemChangedLi
                         categois.clear();
                         images.clear();
                         event_id.clear();
+                        rating.clear();
+                        overall_rating.clear();
 
                         for (Normal_past_booked.Datum datum : datumArrayList) {
 
@@ -128,6 +132,8 @@ public class Past extends Fragment implements DiscreteScrollView.OnItemChangedLi
                             title.add(datum.getTitle());
                             addres.add(datum.getAddressline1());
                             prices.add(datum.getPrice());
+                            rating.add(datum.getRating());
+                            overall_rating.add(datum.getTotalRating());
 
                             Log.d("cates", "" + datum.getCategory());
 
@@ -173,7 +179,7 @@ public class Past extends Fragment implements DiscreteScrollView.OnItemChangedLi
                             event_id.add(datum.getEventId().toString());
 
 
-                            adapter = new Normal_pastbooked(getContext(), fragmentManager);
+                            adapter = new Normal_pastbooked(getContext(), fragmentManager,S_Token);
                             recyclerView.setAdapter(adapter);
                             recyclerView.getLayoutManager().scrollToPosition(Integer.parseInt(itemPosition));
 
@@ -230,5 +236,7 @@ public class Past extends Fragment implements DiscreteScrollView.OnItemChangedLi
         Collections.reverse(categois);
         Collections.reverse(images);
         Collections.reverse(event_id);
+        Collections.reverse(rating);
+        Collections.reverse(overall_rating);
     }
 }
