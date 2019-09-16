@@ -49,7 +49,6 @@ import retrofit2.Response;
  */
 public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChangedListener {
 
-
     public static DiscreteScrollView recyclerView;
     FragmentManager fragmentManager;
     SharedPreferences sharedPreferences, itemPositionPref;
