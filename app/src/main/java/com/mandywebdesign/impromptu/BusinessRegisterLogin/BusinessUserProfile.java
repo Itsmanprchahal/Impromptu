@@ -403,14 +403,11 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
         }
 
         if (v == editProfile) {
-            Bundle bundle = new Bundle();
-            String value = "1";
-            bundle.putString("value", value);
 
-            BusinessProfileFragment businessProfileFragment = new BusinessProfileFragment();
-            businessProfileFragment.setArguments(bundle);
-
-            manager.beginTransaction().replace(R.id.home_frame_layout, businessProfileFragment).commit();
+            Intent intent = new Intent(getContext(),BussinessProfileAcitivity1.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent.putExtra("value","1");
+            startActivity(intent);
         }
     }
 

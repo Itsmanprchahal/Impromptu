@@ -1,5 +1,6 @@
 package com.mandywebdesign.impromptu.firebasenotification;
 
+import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -13,7 +14,6 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
-
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.mandywebdesign.impromptu.R;
@@ -26,6 +26,8 @@ import org.json.JSONObject;
 import java.util.Map;
 import java.util.Random;
 
+import me.leolin.shortcutbadger.ShortcutBadger;
+
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     JSONObject jsonObject;
@@ -37,6 +39,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         String data = remoteMessage.getData().get("message");
 
+        String count = String.valueOf(remoteMessage.getData().size());
+        ShortcutBadger.applyCount(this, Integer.parseInt(count));
+        Log.d("count",count);
         try {
             jsonObject = new JSONObject(data);
             title = jsonObject.getString("title");
@@ -55,7 +60,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getData() != null && remoteMessage.getData().size() > 0) {
             Log.d("data++++++++++", "" + remoteMessage.getData());
             Log.d("data++++++++++", "" + data);
-
 
             sendNotification(remoteMessage.getData());
 
@@ -87,15 +91,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         String channelId = "121";
         CharSequence channelName = "Impromptu";
-        int importance = NotificationManager.IMPORTANCE_LOW;
-        NotificationChannel notificationChannel = new NotificationChannel(channelId, channelName, importance);
+        int importance = NotificationManager.IMPORTANCE_MAX;
+        @SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(channelId, channelName, importance);
         notificationChannel.enableLights(true);
         notificationChannel.setLightColor(getResources().getColor(R.color.colorTheme));
         notificationChannel.enableVibration(true);
+        notificationChannel.setShowBadge(false);
         notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
         notificationManager.createNotificationChannel(notificationChannel);
 
-         intent = new Intent(click_action);
+        intent = new Intent(click_action);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("Inid", invoiceId);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);

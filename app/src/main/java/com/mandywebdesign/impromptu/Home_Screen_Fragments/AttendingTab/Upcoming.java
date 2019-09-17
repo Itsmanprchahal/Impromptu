@@ -114,23 +114,23 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
             public void onResponse(Call<Normal_past_booked> call, Response<Normal_past_booked> response) {
 
                 Log.d("+++++++++", "++ response ++" + S_Token);
+                name1.clear();
+                title.clear();
+                prices.clear();
+                addres.clear();
+                time.clear();
+                categois.clear();
+                images.clear();
+                event_id.clear();
+                userID.clear();
+                book_tickets.clear();
+                total_book_tickets.clear();
                 progressDialog.dismiss();
                 if (response.body()!=null) {
                     if (response.body().getStatus().equals("200")) {
 
                         Normal_past_booked data = response.body();
                         List<Normal_past_booked.Datum> datumArrayList = data.getData();
-                        name1.clear();
-                        title.clear();
-                        prices.clear();
-                        addres.clear();
-                        time.clear();
-                        categois.clear();
-                        images.clear();
-                        event_id.clear();
-                        userID.clear();
-                        book_tickets.clear();
-                        total_book_tickets.clear();
 
                         for (Normal_past_booked.Datum datum : datumArrayList) {
 

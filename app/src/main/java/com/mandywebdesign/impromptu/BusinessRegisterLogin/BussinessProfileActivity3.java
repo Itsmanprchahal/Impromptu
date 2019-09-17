@@ -1,5 +1,10 @@
 package com.mandywebdesign.impromptu.BusinessRegisterLogin;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -11,17 +16,10 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,10 +42,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class Business_PublishProfileFragment extends Fragment {
+public class BussinessProfileActivity3 extends AppCompatActivity {
 
     View view;
     Button mBack;
@@ -62,23 +57,23 @@ public class Business_PublishProfileFragment extends Fragment {
     SharedPreferences.Editor editor;
     Button publishprofile_bt;
     Dialog progressDialog;
+    Intent intent;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_business__publish_profile, container, false);
-        manager = this.getFragmentManager();
-        progressDialog = ProgressBarClass.showProgressDialog(getContext());
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_bussiness_profile3);
+
+        progressDialog = ProgressBarClass.showProgressDialog(BussinessProfileActivity3.this);
         progressDialog.dismiss();
 
         init();
         listeners();
 
-        preferences = getActivity().getSharedPreferences("BusinessProfile2", Context.MODE_PRIVATE);
-        preferences1 = getActivity().getSharedPreferences("BusinessProfile1", Context.MODE_PRIVATE);
-        preferences2 = getActivity().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
-        profileUpdatedPref = getActivity().getSharedPreferences("profileupdated", Context.MODE_PRIVATE);
+        preferences = getSharedPreferences("BusinessProfile2", Context.MODE_PRIVATE);
+        preferences1 = getSharedPreferences("BusinessProfile1", Context.MODE_PRIVATE);
+        preferences2 = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
+        profileUpdatedPref = getSharedPreferences("profileupdated", Context.MODE_PRIVATE);
         editor = profileUpdatedPref.edit();
 
         Bname = preferences1.getString("name", "");
@@ -109,32 +104,28 @@ public class Business_PublishProfileFragment extends Fragment {
 
         LiveEventtv.setText("(" + pojosize + ")");
         PaseventTv.setText("(" + pojosize + ")");
-
-
-
-        return view;
     }
+
 
     private void init() {
 
         Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
-        mLiveEventsThumbs = (RecyclerView) view.findViewById(R.id.business_publish_live_events_recylerview);
-        mPastEventsThumbs = (RecyclerView) view.findViewById(R.id.business_publish__pastevents_recylerview);
-        LiveEventtv = (TextView) view.findViewById(R.id.live_event_texttotal);
-        PaseventTv = (TextView) view.findViewById(R.id.past_events_tv_totall);
-        fb_url_bt = (ImageView) view.findViewById(R.id.fb_url_bt);
-        twitter_url_bt = (ImageView) view.findViewById(R.id.twiter_url_bt);
-        instagram_url_bt = view.findViewById(R.id.insta_url_bt);
-        web_url_bt = view.findViewById(R.id.web_url_bt);
-        BName = (TextView) view.findViewById(R.id.business__publishprofile_user_Name);
-        address1 = (TextView) view.findViewById(R.id.business__publishprofile_address1);
-        address2 = (TextView) view.findViewById(R.id.business__publishprofile_address2);
-        aboutus = (TextView) view.findViewById(R.id.aboutUs_Desc_TV);
-        userImage = (RoundedImageView) view.findViewById(R.id.business_profilepublish_user_Image);
-        publishprofile_bt = (Button) view.findViewById(R.id.publish_profile);
-        mBack = (Button) view.findViewById(R.id.business_publish_profile_back_bt);
+        mLiveEventsThumbs = (RecyclerView) findViewById(R.id.business_publish_live_events_recylerview);
+        mPastEventsThumbs = (RecyclerView) findViewById(R.id.business_publish__pastevents_recylerview);
+        LiveEventtv = (TextView) findViewById(R.id.live_event_texttotal);
+        PaseventTv = (TextView) findViewById(R.id.past_events_tv_totall);
+        fb_url_bt = (ImageView) findViewById(R.id.fb_url_bt);
+        twitter_url_bt = (ImageView) findViewById(R.id.twiter_url_bt);
+        instagram_url_bt = findViewById(R.id.insta_url_bt);
+        web_url_bt = findViewById(R.id.web_url_bt);
+        BName = (TextView) findViewById(R.id.business__publishprofile_user_Name);
+        address1 = (TextView) findViewById(R.id.business__publishprofile_address1);
+        address2 = (TextView) findViewById(R.id.business__publishprofile_address2);
+        aboutus = (TextView) findViewById(R.id.aboutUs_Desc_TV);
+        userImage = (RoundedImageView) findViewById(R.id.business_profilepublish_user_Image);
+        publishprofile_bt = (Button) findViewById(R.id.publish_profile);
+        mBack = (Button) findViewById(R.id.business_publish_profile_back_bt);
     }
-
 
     private void listeners() {
 
@@ -142,14 +133,10 @@ public class Business_PublishProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Bundle bundle = new Bundle();
-                String value = "back";
-                bundle.putString("value", value);
-
-                BusinessProfileFragment1 businessProfileFragment = new BusinessProfileFragment1();
-                businessProfileFragment.setArguments(bundle);
-
-                manager.beginTransaction().replace(R.id.home_frame_layout, businessProfileFragment).commit();
+                Intent intent = new Intent(BussinessProfileActivity3.this,BussinessProfileActivity2.class);
+                intent.putExtra("value","back");
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
             }
         });
 
@@ -157,14 +144,13 @@ public class Business_PublishProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Bundle bundle = getArguments();
-
-                if (bundle!=null)
+                intent = getIntent();
+                if (intent!=null)
                 {
-                    facebook = bundle.getString("facebook");
+                    facebook = intent.getStringExtra("facebook");
                     if (!Patterns.WEB_URL.matcher(facebook).matches())
                     {
-                        Toast.makeText(getContext(), "No valid URL Added", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BussinessProfileActivity3.this, "No valid URL Added", Toast.LENGTH_SHORT).show();
                     }else {
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(facebook)));
                     }
@@ -176,14 +162,13 @@ public class Business_PublishProfileFragment extends Fragment {
         web_url_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = getArguments();
 
-                if (bundle!=null)
+                if (intent!=null)
                 {
-                    web = bundle.getString("web");
+                    web = intent.getStringExtra("web");
                     if (!Patterns.WEB_URL.matcher(web).matches())
                     {
-                        Toast.makeText(getContext(), "No valid URL Added", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BussinessProfileActivity3.this, "No valid URL Added", Toast.LENGTH_SHORT).show();
                     }else {
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(web)));
                     }
@@ -195,14 +180,13 @@ public class Business_PublishProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Bundle bundle = getArguments();
 
-                if (bundle!=null)
+                if (intent!=null)
                 {
-                    twitter = bundle.getString("twitter");
+                    twitter = intent.getStringExtra("twitter");
                     if (!Patterns.WEB_URL.matcher(web).matches())
                     {
-                        Toast.makeText(getContext(), "No valid URL Added", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BussinessProfileActivity3.this, "No valid URL Added", Toast.LENGTH_SHORT).show();
                     }else {
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(twitter)));
                     }
@@ -213,13 +197,12 @@ public class Business_PublishProfileFragment extends Fragment {
         instagram_url_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = getArguments();
-                if (bundle!=null)
+                if (intent!=null)
                 {
-                    instagram = bundle.getString("insta");
+                    instagram = intent.getStringExtra("insta");
                     if (!Patterns.WEB_URL.matcher(instagram).matches())
                     {
-                        Toast.makeText(getContext(), "No valid URL Added", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BussinessProfileActivity3.this, "No valid URL Added", Toast.LENGTH_SHORT).show();
                     }else {
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(instagram)));
                     }
@@ -235,7 +218,7 @@ public class Business_PublishProfileFragment extends Fragment {
                 progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.show();
 
-                Call<RetroUploadProfilePojo> call = WebAPI.getInstance().getApi().PublishProfile(userToken, id, Bname, Saddress1, Saddress2, SPostCode, SCity, SaboutUs, web, facebook, instagram, twitter, BusinessProfileFragment.part);
+                Call<RetroUploadProfilePojo> call = WebAPI.getInstance().getApi().PublishProfile(userToken, id, Bname, Saddress1, Saddress2, SPostCode, SCity, SaboutUs, web, facebook, instagram, twitter, BussinessProfileAcitivity1.part);
                 call.enqueue(new Callback<RetroUploadProfilePojo>() {
                     @Override
                     public void onResponse(Call<RetroUploadProfilePojo> call, Response<RetroUploadProfilePojo> response) {
@@ -257,21 +240,20 @@ public class Business_PublishProfileFragment extends Fragment {
                                         + response.body().getData().getFacebookUrl() + "\n"
                                         + response.body().getData().getInstagramUrl() + "\n"
                                         + response.body().getData().getTwitterUrl());
-                                SharedPreferences sharedPreferences=getActivity().getSharedPreferences("12345",Context.MODE_PRIVATE);
+                                SharedPreferences sharedPreferences=getSharedPreferences("12345",Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor=sharedPreferences.edit();
                                 editor.putString("1234","1");
                                 editor.apply();
-                                Toast.makeText(getContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
-                                FragmentTransaction transaction = manager.beginTransaction();
-                                transaction.replace(R.id.home_frame_layout,new BusinessUserProfile());
-                                transaction.addToBackStack(null);
-                                transaction.commit();
-//                                manager.beginTransaction().replace(R.id.home_frame_layout, new BusinessUserProfile()).addToBackStack(null).commit();
+                                Toast.makeText(BussinessProfileActivity3.this, "Profile Updated", Toast.LENGTH_SHORT).show();
 
+                                Intent intent = new Intent(BussinessProfileActivity3.this,Home_Screen.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
                             }
 
                         }else {
-                            Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                            Intent intent = new Intent(BussinessProfileActivity3.this, NoInternetScreen.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                         }
@@ -284,7 +266,7 @@ public class Business_PublishProfileFragment extends Fragment {
                             // Toast.makeText(getContext(), "Socket Time out. Please try again.", Toast.LENGTH_SHORT).show();
                             NoInternetdialog();
                         }else {
-                            Toast.makeText(getContext(), ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BussinessProfileActivity3.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                         Log.d("response1", "" + t);
                         progressDialog.dismiss();
@@ -296,21 +278,21 @@ public class Business_PublishProfileFragment extends Fragment {
 
 
     public void LiveEventAdapter() {
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(BussinessProfileActivity3.this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mLiveEventsThumbs.setLayoutManager(layoutManager);
         mLiveEventsThumbs.setNestedScrollingEnabled(false);
 
-        LiveEventAdapter adapter = new LiveEventAdapter(getContext(), pojoList);
+        LiveEventAdapter adapter = new LiveEventAdapter(BussinessProfileActivity3.this, pojoList);
         // mLiveEventsThumbs.setAdapter(adapter);
     }
 
     public void PastEventAdapter() {
-        final LinearLayoutManager layoutManager1 = new LinearLayoutManager(getContext());
+        final LinearLayoutManager layoutManager1 = new LinearLayoutManager(BussinessProfileActivity3.this);
         layoutManager1.setOrientation(LinearLayoutManager.HORIZONTAL);
         mPastEventsThumbs.setLayoutManager(layoutManager1);
         mPastEventsThumbs.setNestedScrollingEnabled(false);
-        LiveEventAdapter adapter = new LiveEventAdapter(getContext(), pojoList);
+        LiveEventAdapter adapter = new LiveEventAdapter(BussinessProfileActivity3.this, pojoList);
         // mPastEventsThumbs.setAdapter(adapter);
 
     }
@@ -324,7 +306,7 @@ public class Business_PublishProfileFragment extends Fragment {
 
     private void NoInternetdialog() {
 
-        final Dialog dialog = new Dialog(getContext());
+        final Dialog dialog = new Dialog(BussinessProfileActivity3.this);
         dialog.setContentView(R.layout.nointernetdialog);
         dialog.setCanceledOnTouchOutside(true);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

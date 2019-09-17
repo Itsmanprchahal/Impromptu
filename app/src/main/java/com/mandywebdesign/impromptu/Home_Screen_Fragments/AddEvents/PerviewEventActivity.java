@@ -121,7 +121,13 @@ public class PerviewEventActivity extends AppCompatActivity {
         FromTime = intent.getStringExtra("FromTime");
         sex = intent.getStringExtra("gender");
         attendeesNo = intent.getStringExtra("attendeesNo");
-        postcode = intent.getStringExtra("postcode");
+        if (intent.getStringExtra("postcode").contains(" "))
+        {
+            postcode = intent.getStringExtra("postcode").replace(" ","");
+        }else {
+            postcode = intent.getStringExtra("postcode");
+        }
+
         city = intent.getStringExtra("city");
         Tic_Price = intent.getStringExtra("Price");
         ticketType = intent.getStringExtra("ticketType");
@@ -131,6 +137,7 @@ public class PerviewEventActivity extends AppCompatActivity {
         link1 = intent.getStringExtra("link1");
         link2 = intent.getStringExtra("link2");
         link3 = intent.getStringExtra("link3");
+
 
         Username = preferences.getString("Username", "");
 

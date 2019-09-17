@@ -40,7 +40,7 @@ import com.facebook.AccessToken;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessProfileFragment;
+import com.mandywebdesign.impromptu.BusinessRegisterLogin.BussinessProfileAcitivity1;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessUserProfile;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.Home;
@@ -146,7 +146,6 @@ public class Home_Screen extends AppCompatActivity {
                         editor.putString("profilegender", "" + response.body().getData().get(0).getGender());
                         editor.apply();
                     }
-
                 }
             }
 
@@ -203,12 +202,17 @@ public class Home_Screen extends AppCompatActivity {
                                 menu.findItem(R.id.hometab).setIcon(R.drawable.iconprofile);
 
                             } else {
-                                FragmentTransaction transaction = manager.beginTransaction();
-                                transaction.replace(R.id.home_frame_layout, new BusinessProfileFragment());
-                                transaction.commit();
+                                Intent intent = new Intent(Home_Screen.this, BussinessProfileAcitivity1.class);
+                                intent.putExtra("value","0");
+                                startActivity(intent);
+                                finish();
 
-                                Menu menu = bottomNavigationView.getMenu();
-                                menu.findItem(R.id.hometab).setIcon(R.drawable.iconprofile);
+//                                FragmentTransaction transaction = manager.beginTransaction();
+//                                transaction.replace(R.id.home_frame_layout, new BusinessProfileFragment());
+//                                transaction.commit();
+
+//                                Menu menu = bottomNavigationView.getMenu();
+//                                menu.findItem(R.id.hometab).setIcon(R.drawable.iconprofile);
                             }
                         } else if (response.body().getStatus().equals("401")) {
                             SharedPreferences.Editor editor = sharedPreferences.edit();

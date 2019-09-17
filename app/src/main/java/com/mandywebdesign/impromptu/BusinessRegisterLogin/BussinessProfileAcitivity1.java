@@ -1,5 +1,11 @@
 package com.mandywebdesign.impromptu.BusinessRegisterLogin;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,24 +16,17 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-
-import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.core.content.ContextCompat;
-
 import android.util.Base64;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,8 +35,11 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
+import com.mandywebdesign.impromptu.Retrofit.RetroLogout;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
+import com.mandywebdesign.impromptu.ui.Join_us;
 import com.mandywebdesign.impromptu.ui.ProgressBarClass;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -52,11 +54,11 @@ import java.net.URL;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-import static android.app.Activity.RESULT_OK;
-
-
-public class BusinessProfileFragment extends Fragment {
+public class BussinessProfileAcitivity1 extends AppCompatActivity {
 
     public static int RESULT_LOAD_IMAGE = 101;
     public static int GALLERY_REQ = 1010;
@@ -71,43 +73,49 @@ public class BusinessProfileFragment extends Fragment {
     String name, address1, address2, postcode, city, aboutOrga, image1;
     String galleyImagePath;
     ImageView close;
-    SharedPreferences sharedPreferences;
+    SharedPreferences sharedPreferences,sharedPreferences1;
     SharedPreferences.Editor editor;
-    FragmentManager manager;
     Dialog progressDialog;
     public static MultipartBody.Part part;
     Uri uri;
     File filesDir;
+    Intent intent;
+    Button logout_profile_bt;
+    String user, token;
 
-    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_business_profile, container, false);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_bussiness_profile_acitivity1);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        sharedPreferences = getSharedPreferences("BusinessProfile1", Context.MODE_PRIVATE);
+        sharedPreferences1 = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
+        user = sharedPreferences.getString("Usertoken", "");
+        token = "Bearer " + sharedPreferences.getString("Usertoken", "");
         //Glide.with(getContext()).load(BusinessUserProfile.avatar).into(business_user_Image);
-        progressDialog = ProgressBarClass.showProgressDialog(getContext());
-        progressDialog.show();
-        manager = getFragmentManager();
-        filesDir = getActivity().getFilesDir();
+        progressDialog = ProgressBarClass.showProgressDialog(BussinessProfileAcitivity1.this);
+
+        filesDir = getFilesDir();
 
         init();
         listeners();
 
-        Bundle bundle = getArguments();
+        intent = getIntent();
 
-        if (bundle != null) {
-            String value = bundle.getString("value");
 
+
+        if (intent != null) {
+            String value = intent.getStringExtra("value");
             if (value.equals("1")) {
+                progressDialog.show();
                 business_profile_Name_ET.setText(BusinessUserProfile.userName);
                 addressline1ET.setText(BusinessUserProfile.address1);
                 addressline2ET.setText(BusinessUserProfile.address2);
                 postcode_business_ET.setText(BusinessUserProfile.postcode);
                 city_business_ET.setText(BusinessUserProfile.city);
                 aboutyouroragnisation_ET.setText(BusinessUserProfile.desc);
-                Glide.with(getContext()).load(BusinessUserProfile.avatar).into(business_user_Image);
+                Glide.with(BussinessProfileAcitivity1.this).load(BusinessUserProfile.avatar).into(business_user_Image);
                 new getImagefromURL(business_user_Image).execute(BusinessUserProfile.avatar);
 
                 close.setVisibility(View.VISIBLE);
@@ -115,10 +123,9 @@ public class BusinessProfileFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
 
-                        FragmentTransaction transaction = manager.beginTransaction();
-                        transaction.replace(R.id.home_frame_layout, new BusinessUserProfile());
-                        transaction.addToBackStack(null);
-                        transaction.commit();
+                        Intent intent = new Intent(BussinessProfileAcitivity1.this,Home_Screen.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(intent);
                     }
                 });
 
@@ -131,24 +138,25 @@ public class BusinessProfileFragment extends Fragment {
                 city_business_ET.setText(BusinessUserProfile.city);
                 aboutyouroragnisation_ET.setText(BusinessUserProfile.desc);
                 new getImagefromURL(business_user_Image).execute(BusinessUserProfile.avatar);
-                Glide.with(getContext()).load(BusinessUserProfile.avatar).into(business_user_Image);
+                Glide.with(BussinessProfileAcitivity1.this).load(BusinessUserProfile.avatar).into(business_user_Image);
                 close.setVisibility(View.VISIBLE);
 
                 close.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        FragmentTransaction transaction = manager.beginTransaction();
-                        transaction.replace(R.id.home_frame_layout, new BusinessUserProfile());
-                        transaction.addToBackStack(null);
-                        transaction.commit();
+                        Intent intent = new Intent(BussinessProfileAcitivity1.this,Home_Screen.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(intent);
+                        finish();
                     }
                 });
+            }else
+            {
+                logout_profile_bt.setVisibility(View.VISIBLE);
             }
 
         }
-
-        return view;
     }
 
     private void listeners() {
@@ -185,7 +193,7 @@ public class BusinessProfileFragment extends Fragment {
                 } else if (aboutOrga.isEmpty()) {
                     aboutyouroragnisation_ET.setError("Enter About Organisation");
                 } else {
-                    sharedPreferences = getActivity().getSharedPreferences("BusinessProfile1", Context.MODE_PRIVATE);
+                    sharedPreferences = getSharedPreferences("BusinessProfile1", Context.MODE_PRIVATE);
                     editor = sharedPreferences.edit();
                     editor = sharedPreferences.edit();
                     editor.putString("name", name);
@@ -195,21 +203,15 @@ public class BusinessProfileFragment extends Fragment {
                     editor.putString("city", city);
                     editor.putString("about", aboutOrga);
                     if (bitmap == null) {
-                        Toast.makeText(getContext(), "Add Image to Continue", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BussinessProfileAcitivity1.this, "Add Image to Continue", Toast.LENGTH_SHORT).show();
                     } else {
                         editor.putString("image", encodeTobase64(bitmap));
                         editor.apply();
 
-                        Bundle bundle = new Bundle();
-                        String value = "2";
-                        bundle.putString("value", value);
-
-                        BusinessProfileFragment1 businessProfileFragment = new BusinessProfileFragment1();
-                        businessProfileFragment.setArguments(bundle);
-
-                        FragmentTransaction transaction = manager.beginTransaction();
-                        transaction.replace(R.id.home_frame_layout, businessProfileFragment);
-                        transaction.commit();
+                        Intent intent = new Intent(BussinessProfileAcitivity1.this,BussinessProfileActivity2.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        intent.putExtra("value","2");
+                        startActivity(intent);
 
                     }
                 }
@@ -223,34 +225,75 @@ public class BusinessProfileFragment extends Fragment {
             }
         });
 
+        logout_profile_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isOnline() == false) {
+                    NoInternetdialog();
+                    progressDialog.dismiss();
+                } else {
+
+                    Call<RetroLogout> call = WebAPI.getInstance().getApi().logout(token, "application/json");
+                    call.enqueue(new Callback<RetroLogout>() {
+                        @Override
+                        public void onResponse(Call<RetroLogout> call, Response<RetroLogout> response) {
+                            if (response.body() != null) {
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.clear();
+                                editor.commit();
+
+                                SharedPreferences.Editor editor1 = sharedPreferences1.edit();
+                                editor1.clear();
+                                editor1.commit();
+
+                                progressDialog.show();
+
+                                Intent intent = new Intent(BussinessProfileAcitivity1.this, Join_us.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+
+
+                            } else {
+                                progressDialog.dismiss();
+                                Toast.makeText(BussinessProfileAcitivity1.this, "" + response.message(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<RetroLogout> call, Throwable t) {
+                            Toast.makeText(BussinessProfileAcitivity1.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
 
     }
 
 
     private void init() {
 
-        Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
-        mNext = view.findViewById(R.id.nextBT_onbusinessprofile);
-        business_profile_Name_ET = view.findViewById(R.id.business_profile_Name);
-        business_user_Image = view.findViewById(R.id.business_user_Image);
-        addressline1ET = view.findViewById(R.id.addressline1ET);
-        addressline2ET = view.findViewById(R.id.addressline2ET);
-        postcode_business_ET = view.findViewById(R.id.postcode_business);
-        city_business_ET = view.findViewById(R.id.city_business);
-        close = view.findViewById(R.id.close_on_business_profile);
-        aboutyouroragnisation_ET = view.findViewById(R.id.aboutyouroragnisation_ET);
-
+        mNext = findViewById(R.id.nextBT_onbusinessprofile);
+        business_profile_Name_ET = findViewById(R.id.business_profile_Name);
+        business_user_Image = findViewById(R.id.business_user_Image);
+        addressline1ET = findViewById(R.id.addressline1ET);
+        addressline2ET = findViewById(R.id.addressline2ET);
+        postcode_business_ET = findViewById(R.id.postcode_business);
+        city_business_ET = findViewById(R.id.city_business);
+        close = findViewById(R.id.close_on_business_profile);
+        aboutyouroragnisation_ET = findViewById(R.id.aboutyouroragnisation_ET);
         name = business_profile_Name_ET.getText().toString();
         address1 = addressline1ET.getText().toString();
         address2 = addressline2ET.getText().toString();
         postcode = postcode_business_ET.getText().toString();
         city = city_business_ET.getText().toString();
         aboutOrga = aboutyouroragnisation_ET.getText().toString();
+        logout_profile_bt = findViewById(R.id.logout_profile_bt);
     }
 
     private void showDialg() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(BussinessProfileAcitivity1.this);
         builder.setTitle("Select Images");
         builder.setCancelable(false);
 
@@ -259,14 +302,14 @@ public class BusinessProfileFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 if ("Camera".equals(dialogOptions[which])) {
 
-                    if (ContextCompat.checkSelfPermission(getContext(),
+                    if (ContextCompat.checkSelfPermission(BussinessProfileAcitivity1.this,
                             Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
 
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.CAMERA)) {
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(BussinessProfileAcitivity1.this, Manifest.permission.CAMERA)) {
 
-                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA);
+                            ActivityCompat.requestPermissions(BussinessProfileAcitivity1.this, new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA);
                         } else {
-                            ActivityCompat.requestPermissions(getActivity(),
+                            ActivityCompat.requestPermissions(BussinessProfileAcitivity1.this,
                                     new String[]{Manifest.permission.CAMERA},
                                     MY_PERMISSIONS_REQUEST_CAMERA);
                         }
@@ -295,7 +338,7 @@ public class BusinessProfileFragment extends Fragment {
     }
 
     public void onSelectImageClick(View view) {
-        CropImage.startPickImageActivity(getActivity());
+        CropImage.startPickImageActivity(this);
     }
 
 
@@ -310,8 +353,8 @@ public class BusinessProfileFragment extends Fragment {
 
             galleyImagePath = String.valueOf(uri);
             try {
-                CropImage.activity(uri).setGuidelines(CropImageView.Guidelines.ON).start(getContext(), this);
-                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+                CropImage.activity(uri).setGuidelines(CropImageView.Guidelines.ON).start( this);
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
 
                 business_user_Image.setImageBitmap(bitmap);
                 part = sendImageFileToserver(bitmap);
@@ -326,8 +369,8 @@ public class BusinessProfileFragment extends Fragment {
             if (resultCode == RESULT_OK) {
                 Uri imageURI = result.getUri();
                 try {
-                    bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageURI);
-                    Glide.with(getContext()).load(imageURI).into(business_user_Image);
+                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageURI);
+                    Glide.with(this).load(imageURI).into(business_user_Image);
                     encodeTobase64(bitmap);
                     part = sendImageFileToserver(bitmap);
                 } catch (IOException e) {
@@ -338,7 +381,7 @@ public class BusinessProfileFragment extends Fragment {
 
 
         if (requestCode == REQUEST_CAMERA && resultCode == RESULT_OK) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, requestCode);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, requestCode);
 
             Bundle bundle = data.getExtras();
             bitmap = (Bitmap) bundle.get("data");
@@ -378,7 +421,7 @@ public class BusinessProfileFragment extends Fragment {
                 part = sendImageFileToserver(bitmap);
                 Log.d("part1", String.valueOf(bitmap));
 
-                    progressDialog.dismiss();
+                progressDialog.dismiss();
 
 
 
@@ -428,5 +471,41 @@ public class BusinessProfileFragment extends Fragment {
         String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
 
         return imageEncoded;
+    }
+
+    //check internet is online or not
+    public boolean isOnline() {
+        ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+
+        if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
+
+            return false;
+        }
+
+        return true;
+    }
+
+    private void NoInternetdialog() {
+
+        final Dialog dialog = new Dialog(BussinessProfileAcitivity1.this);
+        dialog.setContentView(R.layout.nointernetdialog);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        Button done = dialog.findViewById(R.id.done_bt_on_no_net_dilog);
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                finish();
+//                System.exit(0);
+                Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+                homeIntent.addCategory(Intent.CATEGORY_HOME);
+                homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(homeIntent);
+            }
+        });
+
+        dialog.show();
     }
 }
