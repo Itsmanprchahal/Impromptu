@@ -402,7 +402,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
-                                android:layout_marginTop="10dp"
+                                android:gravity="center_vertical"
+                                android:layout_gravity="center_vertical"
                                 android:orientation="vertical">
 
                                 <TextView
@@ -422,6 +423,15 @@
                                     android:fontFamily="@font/sfuitextlight"
                                     android:textSize="12sp" />
 
+                                <Button
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="35dp"
+                                    android:background="@drawable/button_color_theme"
+                                    android:text="Follow"
+                                    android:layout_marginTop="5dp"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/white"></Button>
+
                             </LinearLayout>
 
 
@@ -436,6 +446,7 @@
                                     android:layout_height="30dp"
                                     android:layout_alignParentRight="true"
                                     android:layout_marginTop="10dp"
+                                    android:layout_centerVertical="true"
                                     android:layout_marginRight="10dp"
                                     android:src="@drawable/message" />
                             </RelativeLayout>

@@ -84,7 +84,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
     RecyclerView users;
     TextView category, event_price, datetime, loc, BusinessEvent_detailsFragment_book_time, ticketPrice, numberofTickets, totalPrice, freetext, event_title, see_all,
             BusinessEvent_detailsFragment_book_link1, BusinessEvent_detailsFragment_book_link2, BusinessEvent_detailsFragment_book_link3;
-    public TextView peoplecoming;
+    public TextView peoplecoming,revenue;
     ReadMoreTextView descri;
     FragmentManager manager;
     Button checkInGuest, publish, edit;
@@ -362,7 +362,14 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                             Log.d("userImage", "" + response.body().getData().get(i).getFile());
 
                         }
-                        peoplecoming.setText(bookedUsersList.size() + " People are coming");
+
+                        if (bookedUsersList.size()==1)
+                        {
+                            peoplecoming.setText("1 Person is coming");
+                        }else {
+                            peoplecoming.setText(bookedUsersList.size() + " People are coming");
+                        }
+
 
                     } else {
                         peoplecoming.setText("0 People coming");
@@ -420,6 +427,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                             link2 = datum.getLink2();
                             link3 = datum.getLink3();
 
+
                             String dateformat = datum.getDate();
                             /*to change server date formate*/
                             String s1 = dateformat;
@@ -434,13 +442,13 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                             timefrom = datum.getTimeFrom();
                             timeto = datum.getTimeTo();
                             image = (ArrayList<String>) datum.getFile().get(0).getImg();
-                            Collections.reverse(image);
                             fav_id = datum.getFavourite().toString();
 
                             //get Time to in AM PM
                             String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM","am").replaceFirst("PM","pm");
                             String time_to = Util.convertTimeStampToTime(Long.parseLong(datum.getEventEndDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM","am").replaceFirst("PM","pm");
                             String end_date = Util.convertTimeStampDate(Long.parseLong(datum.getEventEndDt()));
+
 
 
                             if (time_t.startsWith("0") && time_to.startsWith("0")) {
@@ -526,6 +534,8 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
 
                             if (ticktprice.equals("0")) {
                                 event_price.setText("Free");
+                                priceLayput.setVisibility(View.GONE);
+                                revenue.setVisibility(View.GONE);
                             } else {
                                 event_price.setText("£ " + ticktprice);
                             }
@@ -729,6 +739,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
 
     private void init() {
 
+        revenue = findViewById(R.id.revenue);
         event_price = findViewById(R.id.event_price);
         editevent = findViewById(R.id.editevent);
         eventdetail_favbt = findViewById(R.id.eventdetail_favbt);

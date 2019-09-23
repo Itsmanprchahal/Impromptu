@@ -19,6 +19,7 @@ import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -159,6 +160,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         event_lcation_address1 = (EditText) findViewById(R.id.event_lcation_address1);
         event_lcation_address2 = (EditText) findViewById(R.id.event_lcation_address2);
         event_postcode = (EditText) findViewById(R.id.event_postcode);
+        event_postcode.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
         event_city = (EditText) findViewById(R.id.event_city);
         event_radiobutton_all = (RadioButton) findViewById(R.id.event_radiobutton_all);
         event_radiobutton_female = (RadioButton) findViewById(R.id.event_radiobutton_female);

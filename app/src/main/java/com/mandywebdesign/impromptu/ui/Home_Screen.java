@@ -184,7 +184,6 @@ public class Home_Screen extends AppCompatActivity {
 
 
         } else {
-
             Call<RetroGetProfile> call = WebAPI.getInstance().getApi().getProfile(userToken, accept);
             call.enqueue(new Callback<RetroGetProfile>() {
                 @Override
@@ -207,12 +206,6 @@ public class Home_Screen extends AppCompatActivity {
                                 startActivity(intent);
                                 finish();
 
-//                                FragmentTransaction transaction = manager.beginTransaction();
-//                                transaction.replace(R.id.home_frame_layout, new BusinessProfileFragment());
-//                                transaction.commit();
-
-//                                Menu menu = bottomNavigationView.getMenu();
-//                                menu.findItem(R.id.hometab).setIcon(R.drawable.iconprofile);
                             }
                         } else if (response.body().getStatus().equals("401")) {
                             SharedPreferences.Editor editor = sharedPreferences.edit();

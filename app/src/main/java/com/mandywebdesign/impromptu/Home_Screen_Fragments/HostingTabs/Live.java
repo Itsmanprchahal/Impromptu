@@ -200,6 +200,7 @@ public class Live extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                             categois.add(datum.getCategory());
                             images.add(datum.getFile());
+
                             event_id.add(datum.getEventId().toString());
 
                             adapter = new Business_LiveEventAdapter(getContext(), fragmentManager);

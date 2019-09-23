@@ -92,20 +92,7 @@ public class Business_DraftsEventAdapter extends RecyclerView.Adapter<Business_D
                 editor.commit();
                 context.startActivity(intent);
 
-//                Bundle bundle = new Bundle();
-//                String value = Drafts.event_id.get(i);
-//                bundle.putString("event_id", value);
-//                bundle.putString("eventType","draft");
-//
-//                editor.putString(Constants.itemPosition, String.valueOf(i));
-//                editor.commit();
-//
-//                BusinessEvent_detailsFragment businessEvent_detailsFragment = new BusinessEvent_detailsFragment();
-//                businessEvent_detailsFragment.setArguments(bundle);
-//
-//                manager.beginTransaction().replace(R.id.home_frame_layout,businessEvent_detailsFragment).addToBackStack(null).commit();
-////                Toast.makeText(context, ""+Live.event_id.get(i), Toast.LENGTH_SHORT).show();
-            }
+         }
         });
     }
 

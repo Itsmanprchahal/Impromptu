@@ -402,7 +402,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="15dp"
+                                android:layout_marginTop="10dp"
                                 android:fontFamily="@font/circularstdbold"
                                 android:text="Bulletin"
                                 android:textColor="@color/colortextBlack"
@@ -413,7 +413,7 @@
                                 android:id="@+id/seemessagesforthisevent"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
+                                android:layout_marginTop="7dp"
                                 android:fontFamily="@font/circularstdbold"
                                 android:text="@string/seemessages"
                                 android:textColor="@color/colorTheme"
@@ -432,11 +432,12 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="2dp"
-                                android:layout_marginTop="10dp"
+                                android:layout_marginTop="15dp"
                                 android:layerType="software"
                                 android:background="@drawable/dashed" />
 
                             <TextView
+                                android:id="@+id/revenue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Revenue"
@@ -599,23 +600,22 @@
                                 </LinearLayout>
 
 
-                                <Button
-
-                                    android:id="@+id/BusinessEvent_detailsFragment_book_event_book_bt"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="@dimen/_40sdp"
-                                    android:layout_alignParentBottom="true"
-                                    android:layout_marginTop="@dimen/defaultmargin"
-                                    android:background="@drawable/custom_next_bt"
-                                    android:fontFamily="@font/circularstdbold"
-                                    android:text="Check In Guests"
-                                    android:textAllCaps="false"
-                                    android:textColor="@color/colortextwhite"
-                                    android:textSize="20sp" />
                             </LinearLayout>
                         </LinearLayout>
 
+                        <Button
 
+                            android:id="@+id/BusinessEvent_detailsFragment_book_event_book_bt"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_40sdp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginTop="@dimen/defaultmargin"
+                            android:background="@drawable/custom_next_bt"
+                            android:fontFamily="@font/circularstdbold"
+                            android:text="Check In Guests"
+                            android:textAllCaps="false"
+                            android:textColor="@color/colortextwhite"
+                            android:textSize="20sp" />
 
                         <Button
                             android:layout_width="match_parent"

@@ -11,12 +11,16 @@ import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.ItemTouchHelper;
+
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -58,6 +62,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -73,13 +79,14 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
     public static int RESULT_LOAD_IMAGE = 121;
     ProgressBar addEvent_progress;
     Button nextButton;
-    ImageView back, add_event_close,valid_image,invalid_image,valid_image1,valid_image2,invalid_image1,invalid_image2,deleteimage1,deleteimage2,deleteimage3;
+    ImageView back, add_event_close, valid_image, invalid_image, valid_image1, valid_image2, invalid_image1, invalid_image2, deleteimage1, deleteimage2, deleteimage3;
     Spinner spinner;
-    EditText your_event_title, your_event_description,hyperlinkone,hyperlinktwo,hyperlinkthree;
-    TextView mAddPhoto,createvent_addlink,createvent_addlink1,createvent_addlink2;
+    EditText your_event_title, your_event_description, hyperlinkone, hyperlinktwo, hyperlinkthree;
+    TextView mAddPhoto, createvent_addlink, createvent_addlink1, createvent_addlink2;
     RecyclerView recyclerView;
     AddImageAdapter adapter;
     ArrayList<String> cate = new ArrayList<>();
+    ArrayList<String> cate_id = new ArrayList<>();
     SharedPreferences sharedPreferences;
     String userToken, BToken, S_Token;
     String categ;
@@ -87,7 +94,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
     public static ArrayList<MultipartBody.Part> part = new ArrayList<>();
     static int count = 0;
     public static Bitmap bitmap;
-    RelativeLayout link_layoutone,link_layouttwo,link_layoutthree;
+    RelativeLayout link_layoutone, link_layouttwo, link_layoutthree;
     String edit, value, edittitle, editdesc, editcate;
     public static ArrayList<String> image_uris = new ArrayList<>();
 
@@ -100,7 +107,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
         image_uris.clear();
 
         TimeZone tz = TimeZone.getDefault();
-        Log.d("timezone",tz.getDisplayName()+"  "+tz.getID());
+        Log.d("timezone", tz.getDisplayName() + "  " + tz.getID());
 
         progressDialog = ProgressBarClass.showProgressDialog(this);
         progressDialog.dismiss();
@@ -138,11 +145,11 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
 
         }
 
-        ItemTouchHelper helper=new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT,
+        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT,
                 ItemTouchHelper.DOWN | ItemTouchHelper.UP) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder dragged, @NonNull RecyclerView.ViewHolder target) {
-                moveItem(dragged.getAdapterPosition(),target.getAdapterPosition());
+                moveItem(dragged.getAdapterPosition(), target.getAdapterPosition());
                 return true;
             }
 
@@ -161,10 +168,8 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
             @Override
             public void onResponse(Call<RetroEventCategory> call, Response<RetroEventCategory> response) {
 
-                if (response.body() != null)
-                {
-                    if (response.body().getStatus().equals("200"))
-                    {
+                if (response.body() != null) {
+                    if (response.body().getStatus().equals("200")) {
                         RetroEventCategory category = response.body();
                         List<RetroEventCategory.Datum> datumList = category.data;
                         for (RetroEventCategory.Datum datum : datumList) {
@@ -203,43 +208,58 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
             public void onClick(View v) {
 
                 PickImageDialog.build(new PickSetup()
-                .setButtonOrientation(LinearLayout.HORIZONTAL)).show(Add_Event_Activity.this);
+                        .setButtonOrientation(LinearLayout.HORIZONTAL)).show(Add_Event_Activity.this);
             }
         });
 
+        if (!S_Token.equalsIgnoreCase(""))
+        {
+            createvent_addlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    link_layoutone.setVisibility(View.VISIBLE);
+                    hyperlinkone.setVisibility(View.VISIBLE);
+                    createvent_addlink.setVisibility(View.GONE);
+                    deleteimage1.setVisibility(View.VISIBLE);
+                }
+            });
 
-        createvent_addlink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                link_layoutone.setVisibility(View.VISIBLE);
-                hyperlinkone.setVisibility(View.VISIBLE);
-                createvent_addlink.setVisibility(View.GONE);
-                deleteimage1.setVisibility(View.VISIBLE);
-            }
-        });
+        }else {
+            createvent_addlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    link_layoutone.setVisibility(View.VISIBLE);
+                    hyperlinkone.setVisibility(View.VISIBLE);
+                    createvent_addlink.setVisibility(View.GONE);
+                    deleteimage1.setVisibility(View.VISIBLE);
+                }
+            });
 
-        createvent_addlink1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                link_layouttwo.setVisibility(View.VISIBLE);
-                hyperlinktwo.setVisibility(View.VISIBLE);
-                createvent_addlink1.setVisibility(View.GONE);
-                deleteimage1.setVisibility(View.GONE);
-                deleteimage2.setVisibility(View.VISIBLE);
-            }
-        });
+            createvent_addlink1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    link_layouttwo.setVisibility(View.VISIBLE);
+                    hyperlinktwo.setVisibility(View.VISIBLE);
+                    createvent_addlink1.setVisibility(View.GONE);
+                    deleteimage1.setVisibility(View.GONE);
+                    deleteimage2.setVisibility(View.VISIBLE);
+                }
+            });
 
-        createvent_addlink2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                link_layoutthree.setVisibility(View.VISIBLE);
-                hyperlinkthree.setVisibility(View.VISIBLE);
-                createvent_addlink2.setVisibility(View.GONE);
-                deleteimage1.setVisibility(View.GONE);
-                deleteimage2.setVisibility(View.GONE);
-                deleteimage3.setVisibility(View.VISIBLE);
-            }
-        });
+            createvent_addlink2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    link_layoutthree.setVisibility(View.VISIBLE);
+                    hyperlinkthree.setVisibility(View.VISIBLE);
+                    createvent_addlink2.setVisibility(View.GONE);
+                    deleteimage1.setVisibility(View.GONE);
+                    deleteimage2.setVisibility(View.GONE);
+                    deleteimage3.setVisibility(View.VISIBLE);
+                }
+            });
+        }
+
+
 
         hyperlinkone.addTextChangedListener(new TextWatcher() {
             @Override
@@ -249,11 +269,10 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (Patterns.WEB_URL.matcher(hyperlinkone.getText().toString()).matches())
-                {
+                if (Patterns.WEB_URL.matcher(hyperlinkone.getText().toString()).matches()) {
                     valid_image.setVisibility(View.VISIBLE);
                     invalid_image.setVisibility(View.GONE);
-                }else {
+                } else {
                     valid_image.setVisibility(View.GONE);
                     invalid_image.setVisibility(View.VISIBLE);
                 }
@@ -261,13 +280,23 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (editable.length()==0)
+
+                if (!S_Token.equalsIgnoreCase(""))
                 {
-                    valid_image.setVisibility(View.GONE);
-                    invalid_image.setVisibility(View.GONE);
+                    if (editable.length() == 0) {
+                        valid_image.setVisibility(View.GONE);
+                        invalid_image.setVisibility(View.GONE);
+                    }
                 }else {
-                    createvent_addlink1.setVisibility(View.VISIBLE);
+                    if (editable.length() == 0) {
+                        valid_image.setVisibility(View.GONE);
+                        invalid_image.setVisibility(View.GONE);
+                    } else {
+                        createvent_addlink1.setVisibility(View.VISIBLE);
+                    }
                 }
+
+
             }
         });
 
@@ -279,12 +308,11 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (Patterns.WEB_URL.matcher(hyperlinktwo.getText().toString()).matches())
-                {
+                if (Patterns.WEB_URL.matcher(hyperlinktwo.getText().toString()).matches()) {
                     valid_image1.setVisibility(View.VISIBLE);
                     invalid_image1.setVisibility(View.GONE);
 
-                }else {
+                } else {
                     valid_image1.setVisibility(View.GONE);
                     invalid_image1.setVisibility(View.VISIBLE);
 
@@ -293,11 +321,10 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (editable.length()==0)
-                {
+                if (editable.length() == 0) {
                     valid_image1.setVisibility(View.GONE);
                     invalid_image1.setVisibility(View.GONE);
-                }else {
+                } else {
                     createvent_addlink2.setVisibility(View.VISIBLE);
                 }
             }
@@ -311,13 +338,12 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (Patterns.WEB_URL.matcher(hyperlinkthree.getText().toString()).matches())
-                {
+                if (Patterns.WEB_URL.matcher(hyperlinkthree.getText().toString()).matches()) {
                     valid_image2.setVisibility(View.VISIBLE);
                     invalid_image2.setVisibility(View.GONE);
 
 
-                }else {
+                } else {
                     valid_image2.setVisibility(View.GONE);
                     invalid_image2.setVisibility(View.VISIBLE);
 
@@ -326,8 +352,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (editable.length()==0)
-                {
+                if (editable.length() == 0) {
                     valid_image2.setVisibility(View.GONE);
                     invalid_image2.setVisibility(View.GONE);
                 }
@@ -392,9 +417,9 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
                 intent.putExtra("eventCate", categ);
                 intent.putExtra("editevent", "edit");
                 intent.putExtra("value", value);
-                intent.putExtra("link1",hyperlinkone.getText().toString());
-                intent.putExtra("link2",hyperlinktwo.getText().toString());
-                intent.putExtra("link3",hyperlinkthree.getText().toString());
+                intent.putExtra("link1", hyperlinkone.getText().toString());
+                intent.putExtra("link2", hyperlinktwo.getText().toString());
+                intent.putExtra("link3", hyperlinkthree.getText().toString());
 
 
                 if (TextUtils.isEmpty(eventTitle) && TextUtils.isEmpty(eventDesc) && categ.equals("Select Category")) {
@@ -433,8 +458,6 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
     }
 
 
-
-
     private void init() {
         addEvent_progress = (ProgressBar) findViewById(R.id.add_event_progress_bar);
         nextButton = (Button) findViewById(R.id.add_event_next);
@@ -443,26 +466,32 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
         mAddPhoto = (TextView) findViewById(R.id.your_event_add_picture);
         recyclerView = (RecyclerView) findViewById(R.id.add_event_recyclerView);
         your_event_title = (EditText) findViewById(R.id.your_event_title);
+        your_event_title.setInputType(
+                InputType.TYPE_CLASS_TEXT|
+                        InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+        );
+
         your_event_description = (EditText) findViewById(R.id.your_event_description);
+        your_event_description.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         add_event_close = (ImageView) findViewById(R.id.add_event_close);
-        createvent_addlink = (TextView)findViewById(R.id.createvent_addlink);
-        createvent_addlink1 = (TextView)findViewById(R.id.createvent_addlink1);
-        createvent_addlink2 = (TextView)findViewById(R.id.createvent_addlink2);
-        hyperlinkone =(EditText)findViewById(R.id.hyperlinkone);
-        hyperlinktwo =(EditText)findViewById(R.id.hyperlinktwo);
-        hyperlinkthree =(EditText)findViewById(R.id.hyperlinkthree);
-        valid_image =(ImageView)findViewById(R.id.valid_image);
-        valid_image1 =(ImageView)findViewById(R.id.valid_image1);
-        valid_image2 =(ImageView)findViewById(R.id.valid_image2);
-        invalid_image = (ImageView)findViewById(R.id.invalid_image);
-        invalid_image1 = (ImageView)findViewById(R.id.invalid_image1);
-        invalid_image2 = (ImageView)findViewById(R.id.invalid_image2);
-        deleteimage1 = (ImageView)findViewById(R.id.delete_hyperlinkone);
-        deleteimage2 = (ImageView)findViewById(R.id.delete_hyperlinktwo);
-        deleteimage3 = (ImageView)findViewById(R.id.delete_hyperlinkthree);
-        link_layoutone = (RelativeLayout)findViewById(R.id.link_layoutone);
-        link_layouttwo = (RelativeLayout)findViewById(R.id.link_layouttwo);
-        link_layoutthree = (RelativeLayout)findViewById(R.id.link_layoutthree);
+        createvent_addlink = (TextView) findViewById(R.id.createvent_addlink);
+        createvent_addlink1 = (TextView) findViewById(R.id.createvent_addlink1);
+        createvent_addlink2 = (TextView) findViewById(R.id.createvent_addlink2);
+        hyperlinkone = (EditText) findViewById(R.id.hyperlinkone);
+        hyperlinktwo = (EditText) findViewById(R.id.hyperlinktwo);
+        hyperlinkthree = (EditText) findViewById(R.id.hyperlinkthree);
+        valid_image = (ImageView) findViewById(R.id.valid_image);
+        valid_image1 = (ImageView) findViewById(R.id.valid_image1);
+        valid_image2 = (ImageView) findViewById(R.id.valid_image2);
+        invalid_image = (ImageView) findViewById(R.id.invalid_image);
+        invalid_image1 = (ImageView) findViewById(R.id.invalid_image1);
+        invalid_image2 = (ImageView) findViewById(R.id.invalid_image2);
+        deleteimage1 = (ImageView) findViewById(R.id.delete_hyperlinkone);
+        deleteimage2 = (ImageView) findViewById(R.id.delete_hyperlinktwo);
+        deleteimage3 = (ImageView) findViewById(R.id.delete_hyperlinkthree);
+        link_layoutone = (RelativeLayout) findViewById(R.id.link_layoutone);
+        link_layouttwo = (RelativeLayout) findViewById(R.id.link_layouttwo);
+        link_layoutthree = (RelativeLayout) findViewById(R.id.link_layoutthree);
     }
 
 
@@ -475,7 +504,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
 
-            Log.d("++++++++++","++++ data log +++"+imageBitmap);
+            Log.d("++++++++++", "++++ data log +++" + imageBitmap);
 
         }
     }
@@ -493,7 +522,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
     }
 
 
-    void moveItem(int oldPos, int newPos){
+    void moveItem(int oldPos, int newPos) {
         String image = image_uris.get(oldPos);
 
         image_uris.remove(oldPos);
@@ -502,7 +531,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
 
     }
 
-    void deleteItem(final int position){
+    void deleteItem(final int position) {
         image_uris.remove(position);
         adapter.notifyItemRemoved(position);
     }
@@ -528,32 +557,28 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
 
                 progressDialog.dismiss();
                 if (response.body() != null) {
-                    if (response.body().getStatus().equals("200"))
-                    {
+                    if (response.body().getStatus().equals("200")) {
                         edittitle = response.body().getData().get(0).getTitle();
                         editdesc = response.body().getData().get(0).getDescription();
                         editcate = response.body().getData().get(0).getCategory();
 
 
-                        if (!response.body().getData().get(0).getLink1().equals("") && response.body().getData().get(0).getLink2().equals("") && response.body().getData().get(0).getLink3().equals(""))
-                        {
+                        if (!response.body().getData().get(0).getLink1().equals("") && response.body().getData().get(0).getLink2().equals("") && response.body().getData().get(0).getLink3().equals("")) {
                             hyperlinkone.setText(response.body().getData().get(0).getLink1());
                             hyperlinkone.setVisibility(View.VISIBLE);
                             createvent_addlink.setVisibility(View.GONE);
                             createvent_addlink1.setVisibility(View.VISIBLE);
                             deleteimage1.setVisibility(View.VISIBLE);
-                        }else if (!response.body().getData().get(0).getLink1().equals("") && !response.body().getData().get(0).getLink2().equals("")&& response.body().getData().get(0).getLink3().equals(""))
-                        {
+                        } else if (!response.body().getData().get(0).getLink1().equals("") && !response.body().getData().get(0).getLink2().equals("") && response.body().getData().get(0).getLink3().equals("")) {
                             hyperlinkone.setText(response.body().getData().get(0).getLink1());
                             hyperlinktwo.setText(response.body().getData().get(0).getLink2());
                             hyperlinkone.setVisibility(View.VISIBLE);
                             hyperlinktwo.setVisibility(View.VISIBLE);
-                           createvent_addlink.setVisibility(View.GONE);
+                            createvent_addlink.setVisibility(View.GONE);
                             createvent_addlink1.setVisibility(View.GONE);
                             createvent_addlink2.setVisibility(View.VISIBLE);
                             deleteimage2.setVisibility(View.VISIBLE);
-                        }else if (!response.body().getData().get(0).getLink1().equals("") && !response.body().getData().get(0).getLink2().equals("") && !response.body().getData().get(0).getLink3().equals("") )
-                        {
+                        } else if (!response.body().getData().get(0).getLink1().equals("") && !response.body().getData().get(0).getLink2().equals("") && !response.body().getData().get(0).getLink3().equals("")) {
                             hyperlinkone.setText(response.body().getData().get(0).getLink1());
                             hyperlinktwo.setText(response.body().getData().get(0).getLink2());
                             hyperlinkthree.setText(response.body().getData().get(0).getLink3());
@@ -640,7 +665,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
     @Override
     public void onPickResult(PickResult r) {
         if (r.getError() == null) {
-           try {
+            try {
 
                 part.add(sendImageFileToserver(r.getBitmap()));
                 image_uris.add(r.getPath());
@@ -660,7 +685,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
     public MultipartBody.Part sendImageFileToserver(Bitmap bitMap) throws IOException {
 
         File filesDir = getApplicationContext().getFilesDir();
-        File file = new File(filesDir, "image" + ".png"+System.currentTimeMillis());
+        File file = new File(filesDir, "image" + ".png" + System.currentTimeMillis());
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         bitMap.compress(Bitmap.CompressFormat.PNG, 50, bos);
@@ -706,7 +731,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
             super.onPostExecute(bitmap);
 
             try {
-               part.add(sendImageFileToserver(bitmap));
+                part.add(sendImageFileToserver(bitmap));
             } catch (IOException e) {
                 e.printStackTrace();
             }
