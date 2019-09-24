@@ -64,6 +64,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 android:text="0"
                 android:textColor="@color/white"
+                android:fontFamily="@font/sfuitextlight"
                 android:shadowColor="#A90A0A0A"
                 android:shadowDx="2"
                 android:shadowDy="2"
@@ -85,10 +86,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:fontFamily="@font/circularstdblack"
+                    android:fontFamily="@font/circularstdbold"
                     android:textColor="@color/colortextwhite"
                     android:layout_marginLeft="@dimen/_10sdp"
-                    android:textSize="@dimen/_22sdp"
+                    android:textSize="26sp"
                     android:shadowColor="#A90A0A0A"
                     android:shadowDx="2"
                     android:shadowDy="2"
@@ -202,6 +203,10 @@
                     android:layout_marginTop="5dp"
                     style="@style/Widget.AppCompat.RatingBar.Small"></RatingBar>
 
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/_10sdp"></View>
             </LinearLayout>
 
 

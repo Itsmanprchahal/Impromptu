@@ -33,7 +33,7 @@
                         android:textSize="@dimen/toolbartext"
                         android:fontFamily="@font/circularstdbold"
                         android:textColor="@color/colortextBlack"
-                        android:text="Help"
+                        android:text="Help Guide"
                         android:gravity="center_horizontal"/>
 
                     <ImageView

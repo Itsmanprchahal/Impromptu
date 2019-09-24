@@ -43,6 +43,7 @@ import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.RetroChat;
 import com.mandywebdesign.impromptu.Retrofit.RetroGetMessages;
+import com.mandywebdesign.impromptu.ui.BookEventActivity;
 import com.mandywebdesign.impromptu.ui.NoInternet;
 import com.mandywebdesign.impromptu.ui.NoInternetScreen;
 import com.mandywebdesign.impromptu.ui.ProgressBarClass;
@@ -62,6 +63,7 @@ public class ChatBoxActivity extends AppCompatActivity {
     LinearLayout revealeffect;
     NotificationManager notificationManager;
     View view;
+    TextView chat_title;
     ImageView back;
     ImageButton add_smuiley;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -165,20 +167,26 @@ public class ChatBoxActivity extends AppCompatActivity {
             }
         });
 
+
+
         event_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Dialog dialog = new Dialog(ChatBoxActivity.this);
-                Window window = dialog.getWindow();
-                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-                dialog.setContentView(R.layout.custom_imagedialog);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.getWindow().getAttributes().windowAnimations = R.style.CustomDialogAnimation;
-                dialog.setCancelable(true);
-                dialog.show();
 
-                ImageView eventimage = dialog.findViewById(R.id.eventbigimage);
-                Glide.with(ChatBoxActivity.this).load(image).into(eventimage);
+                Intent intent = new Intent(ChatBoxActivity.this, BookEventActivity.class);
+                intent.putExtra("event_id",eventID);
+//                intent.putExtra("user_ID",)
+                startActivity(intent);
+            }
+        });
+
+        chat_title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChatBoxActivity.this, BookEventActivity.class);
+                intent.putExtra("event_id",eventID);
+//                intent.putExtra("user_ID",)
+                startActivity(intent);
             }
         });
     }
@@ -214,6 +222,7 @@ public class ChatBoxActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         revealeffect = findViewById(R.id.revealeffect);
+        chat_title = findViewById(R.id.chat_title);
         back = findViewById(R.id.chat_back);
         event_image = findViewById(R.id.chat_iamge);
         title = findViewById(R.id.chat_title);

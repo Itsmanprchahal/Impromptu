@@ -717,15 +717,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             booklink2 = datum.getLink2();
                             booklink3 = datum.getLink3();
 
-
-                            String dateformat = datum.getDate();
-                            /*to change server date formate*/
-                            String s1 = dateformat;
-                            String[] str = s1.split("/");
-                            String str1 = str[0];
-                            String str2 = str[1];
-                            String str3 = str[2];
-
                             book_categry.setText(cate);
                             title = datum.getTitle();
                             timefrom = datum.getTimeFrom();
@@ -766,40 +757,41 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
                             String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
                             String time_to = Util.convertTimeStampToTime(Long.parseLong(datum.getEventEndDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
+                            String start_date =Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
                             String end_date = Util.convertTimeStampDate(Long.parseLong(datum.getEventEndDt()));
 
                             if (time_t.startsWith("0") && time_to.startsWith("0")) {
                                 timeFrom = time_t.substring(1);
                                 timeTo = time_to.substring(1);
                                 book_time.setText(timeFrom + " - " + timeTo);
-                                book_date.setText(str2 + "/" + str1 + "/" + str3 + " - " + end_date);
+                                book_date.setText(start_date+ " - " + end_date);
                             } else if (time_t.startsWith("0")) {
                                 timeFrom = time_t.substring(1);
                                 if (time_to.startsWith("0")) {
                                     timeTo = time_to.substring(1);
                                     book_time.setText(timeFrom + " - " + timeTo);
-                                    book_date.setText(str2 + "/" + str1 + "/" + str3 + " - " + end_date);
+                                    book_date.setText(start_date + " - " + end_date);
                                 } else {
                                     timeTo = time_to.substring(0);
                                     book_time.setText(timeFrom + " - " + timeTo);
-                                    book_date.setText(str2 + "/" + str1 + "/" + str3 + " - " + end_date);
+                                    book_date.setText(start_date + " - " + end_date);
                                 }
                             } else if (time_to.startsWith("0")) {
                                 timeTo = time_to.substring(1);
                                 if (time_t.startsWith("0")) {
                                     timeFrom = time_t.substring(1);
                                     book_time.setText(timeFrom + " - " + timeTo);
-                                    book_date.setText(str2 + "/" + str1 + "/" + str3 + " - " + end_date);
+                                    book_date.setText(start_date + " - " + end_date);
                                 } else {
                                     timeFrom = time_t.substring(0);
                                     book_time.setText(timeFrom + " - " + timeTo);
-                                    book_date.setText(str2 + "/" + str1 + "/" + str3 + " - " + end_date);
+                                    book_date.setText(start_date + " - " + end_date);
                                 }
                             } else if (!time_t.startsWith("0") && !time_to.startsWith("0")) {
                                 timeFrom = time_t.substring(0);
                                 timeTo = time_to.substring(0);
                                 book_time.setText(timeFrom + " - " + timeTo);
-                                book_date.setText(str2 + "/" + str1 + "/" + str3 + " - " + end_date);
+                                book_date.setText(start_date + " - " + end_date);
                             }
 
 

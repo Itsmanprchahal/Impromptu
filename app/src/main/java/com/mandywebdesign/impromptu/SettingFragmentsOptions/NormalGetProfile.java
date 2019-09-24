@@ -58,8 +58,10 @@ public class NormalGetProfile extends AppCompatActivity {
     public static String s_username, s_image,getS_username="",getProfileStatus="",getNormalUserImage,getUserImage,getgender;
     public static ArrayList<String> images = new ArrayList<>();
     public static ArrayList<String> eventTitle = new ArrayList<>();
+    public static ArrayList<String> liveevent_id = new ArrayList<>();
     public static ArrayList<String> attendingimage = new ArrayList<>();
     public static ArrayList<String> attentingTietle= new ArrayList<>();
+    public static ArrayList<String> attentingevent_id= new ArrayList<>();
     public static ArrayList<String> Questions = new ArrayList<>();
     public static ArrayList<String> Answer = new ArrayList<>();
     public static ArrayList<String> QA_id = new ArrayList<>();
@@ -107,10 +109,12 @@ public class NormalGetProfile extends AppCompatActivity {
                         List<RetroLiveEvents.Datum> datumList = retroLiveEvents.getData();
                         images.clear();
                         eventTitle.clear();
+                        liveevent_id.clear();
 
                         for (RetroLiveEvents.Datum datum : datumList) {
                             eventTitle.add(datum.getCategory());
                             images.add(datum.getFile());
+                            liveevent_id.add(String.valueOf(datum.getEventId()));
                             totlaEvents.setText("( " + String.valueOf(images.size()) + " )");
 
                             LinearLayoutManager layoutManager = new LinearLayoutManager(NormalGetProfile.this, LinearLayoutManager.HORIZONTAL, false);
@@ -156,6 +160,7 @@ public class NormalGetProfile extends AppCompatActivity {
 
                         attentingTietle.clear();
                         attendingimage.clear();
+                        attentingevent_id.clear();
 
                         for (Normal_past_booked.Datum datum : datumArrayList) {
 
@@ -163,6 +168,7 @@ public class NormalGetProfile extends AppCompatActivity {
 
                             attendingimage.add(datum.getFile().get(0));
                             attentingTietle.add(datum.getTitle().toString());
+                            attentingevent_id.add(String.valueOf(datum.getEventId()));
                             pastEvents.setText("( "+attentingTietle.size()+" )");
 
 

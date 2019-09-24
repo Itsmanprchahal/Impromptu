@@ -373,7 +373,7 @@ public class Join_us extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                         Log.d("socailtoken",response.body().getData().getToken());
-                        Toast.makeText(Join_us.this, "Login Sucessfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Join_us.this, "Login Successful", Toast.LENGTH_SHORT).show();
 
                     } else if (response.body().getStatus().equals("401")) {
                         Toast.makeText(Join_us.this, "Your email already exist in business account", Toast.LENGTH_SHORT).show();

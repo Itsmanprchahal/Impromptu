@@ -120,6 +120,7 @@ public class Normal_pastbooked extends RecyclerView.Adapter<Normal_pastbooked.Vi
 
         viewHolder.category.setText(Past.categois.get(i));
         Glide.with(context).load(Past.images.get(i)).into(viewHolder.eventImage);
+        viewHolder.QRImage.setVisibility(View.GONE);
 
         //MAke QR code here.....................................
 

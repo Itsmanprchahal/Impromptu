@@ -158,12 +158,12 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
 
                                 System.out.println("Current time ==> " + c.getTime());
 
-                                if (formattedDate.matches(datum.getDate())) {
+                                if (formattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
                                     eventTIme.add("Today at " + timeFrom);
-                                } else if (getFormattedDate.matches(datum.getDate())) {
+                                } else if (getFormattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
                                     eventTIme.add("Tomorrow at " + timeFrom);
                                 } else {
-                                    String date = datum.getDate();
+                                    String date = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
                                     /*to change server date formate*/
                                     String s1 = date;
                                     String[] str = s1.split("/");

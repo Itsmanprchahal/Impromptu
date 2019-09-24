@@ -241,7 +241,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             DatePickerDialog datePickerDialog = new DatePickerDialog(EventDetailsActivity.this, R.style.DialogTheme
-                                    , dateSetListener1, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                                    ,dateSetListener1, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                             datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                             datePickerDialog.show();
                         }
@@ -319,7 +319,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                 } else if (event_radiobutton_male.isChecked() | event_radiobutton_female.isChecked() | event_radiobutton_all.isChecked()) {
 
                     String givenDateString = mDate.getText().toString() + " " + eventTime_from.getText().toString();
-                    DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+                    DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                     Date date = null;
                     try {
                         date = (Date) formatter.parse(givenDateString);
@@ -328,9 +328,11 @@ public class EventDetailsActivity extends AppCompatActivity {
                     }
                     frommilles = String.valueOf(date.getTime());
 
+                    Log.d("frommilles",""+frommilles);
+
 
                     String givenDateString1 = event_details_date_etto.getText().toString() + " " + eventTime_to.getText().toString();
-                    DateFormat formatter1 = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+                    DateFormat formatter1 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                     Date date1 = null;
                     try {
                         date1 = (Date) formatter1.parse(givenDateString1);
@@ -378,7 +380,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                myFormat = "MM/dd/yyyy";
+                myFormat = "dd/MM/yyyy";
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myFormat, Locale.US);
 
                 mDate.setText(simpleDateFormat.format(calendar.getTime()));
@@ -396,7 +398,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                myFormat = "MM/dd/yyyy";
+                myFormat = "dd/MM/yyyy";
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myFormat, Locale.US);
 
                 event_details_date_etto.setText(simpleDateFormat.format(calendar.getTime()));

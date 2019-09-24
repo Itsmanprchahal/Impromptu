@@ -50,8 +50,10 @@ import com.mandywebdesign.impromptu.Retrofit.RetroLogout;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.Contact_Us;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.FAQs;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.HelpActivity;
+import com.mandywebdesign.impromptu.SettingFragmentsOptions.HelpOptionsActivity;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalGetProfile;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.PrivancyActivity;
+import com.mandywebdesign.impromptu.SettingFragmentsOptions.TandCOptions;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.TermsAndConditionsActivityy;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.Join_us;
@@ -111,12 +113,10 @@ public class Setting extends Fragment {
 
         Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
         logout = view.findViewById(R.id.setting_logout_option);
-        setting_help_option = (TextView) view.findViewById(R.id.setting_help_option);
         terms = view.findViewById(R.id.setting_termsandconditions_option);
-        privancy = view.findViewById(R.id.setting_privancyStatement_option);
-        FAQ = view.findViewById(R.id.setting_FAQ_option);
+        setting_help_option = view.findViewById(R.id.setting_help_option);
         contactus = view.findViewById(R.id.setting_contactUs_option);
-        deleteAccount = view.findViewById(R.id.setting_deleteAccount_option);
+
         invite = view.findViewById(R.id.setting_inviteuser_option);
         setting_verification_option = view.findViewById(R.id.setting_verification_option);
         setting_paymentdetails_option = view.findViewById(R.id.setting_paymentdetails_option);
@@ -161,39 +161,19 @@ public class Setting extends Fragment {
                 }
             });
 
-            setting_help_option.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getContext(), HelpActivity.class);
-                    startActivity(intent);
-//                    manager.beginTransaction().replace(R.id.home_frame_layout, new Help()).addToBackStack(null).commit();
-                }
-            });
+
 
             terms.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getContext(), TermsAndConditionsActivityy.class);
+                    Intent intent = new Intent(getContext(), TandCOptions.class);
                     startActivity(intent);
                 }
             });
 
-            privancy.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getContext(), PrivancyActivity.class);
-                    startActivity(intent);
-                }
-            });
 
-            FAQ.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-//                    manager.beginTransaction().replace(R.id.home_frame_layout, new FAQ()).addToBackStack(null).commit();
-                    Intent intent = new Intent(getContext(), FAQs.class);
-                    startActivity(intent);
-                }
-            });
+
+
 
             contactus.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -204,18 +184,21 @@ public class Setting extends Fragment {
                 }
             });
 
-            deleteAccount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ConfirmationDialog(socialtoken);
-                }
-            });
+
 
             invite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
                     intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.infrasoft.uboi"));
+                    startActivity(intent);
+                }
+            });
+
+            setting_help_option.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getContext(), HelpOptionsActivity.class);
                     startActivity(intent);
                 }
             });
@@ -317,7 +300,7 @@ public class Setting extends Fragment {
             setting_help_option.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getContext(), HelpActivity.class);
+                    Intent intent = new Intent(getContext(), HelpOptionsActivity.class);
                     startActivity(intent);
                 }
             });
@@ -342,7 +325,7 @@ public class Setting extends Fragment {
             terms.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getContext(), TermsAndConditionsActivityy.class);
+                    Intent intent = new Intent(getContext(), TandCOptions.class);
                     startActivity(intent);
                 }
             });
@@ -371,12 +354,7 @@ public class Setting extends Fragment {
                 }
             });
 
-            deleteAccount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ConfirmationDialog(token);
-                }
-            });
+
 
             invite.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -543,68 +521,7 @@ public class Setting extends Fragment {
     }
 
 
-    public void ConfirmationDialog(final String usrToken) {
-        final Dialog dialog = new Dialog(getContext());
-        dialog.setContentView(R.layout.confirmationdialog);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        Button yes = dialog.findViewById(R.id.yesdialog);
-        Button no = dialog.findViewById(R.id.nodialog);
-        yes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (isOnline() == true) {
-
-                    progressDialog.show();
-
-                    Call call = WebAPI.getInstance().getApi().delete(usrToken, "application/json");
-                    call.enqueue(new Callback() {
-                        @Override
-                        public void onResponse(Call call, Response response) {
-                            if (response.body() != null) {
-                                progressDialog.dismiss();
-                                dialog.dismiss();
-
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.clear();
-                                editor.commit();
-
-                                Toast.makeText(getContext(), "Your account removed succussfully", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getActivity(), Join_us.class);
-                                getActivity().startActivity(intent);
-                                getActivity().finish();
-
-                            } else {
-                                progressDialog.dismiss();
-                                Toast.makeText(getContext(), "" + response.message(), Toast.LENGTH_SHORT).show();
-                            }
-
-                        }
-
-                        @Override
-                        public void onFailure(Call call, Throwable t) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } else {
-                    NoInternetdialog();
-                    progressDialog.dismiss();
-                }
-            }
-        });
-
-        no.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
-    }
 
     public int getWifiLevel() {
         WifiManager wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);

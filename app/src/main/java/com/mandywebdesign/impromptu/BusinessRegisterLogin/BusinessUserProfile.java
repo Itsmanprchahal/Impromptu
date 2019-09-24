@@ -76,7 +76,9 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
     Dialog progressDialog;
     String usertoken, token;
     public static ArrayList<String> profileliveevents = new ArrayList<>();
+    public static ArrayList<String> profileliveevents_id = new ArrayList<>();
     public static ArrayList<String> profilePastEvents = new ArrayList<>();
+    public static ArrayList<String> profilePastEvents_id = new ArrayList<>();
     public static ArrayList<String> images = new ArrayList<>();
     public static ArrayList<String> pastImages = new ArrayList<>();
 
@@ -257,6 +259,7 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
                         images.clear();
                         for (RetroLiveEvents.Datum datum : datumArrayList) {
                             profileliveevents.add(datum.getCategory());
+                            profileliveevents_id.add(String.valueOf(datum.getEventId()));
                             images.add(datum.getFile().toString());
                             Collections.reverse(images);
                             Collections.reverse(profileliveevents);
@@ -316,6 +319,8 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
                             pastImages.add(datum.getFile());
                             Collections.reverse(profilePastEvents);
                             Collections.reverse(pastImages);
+                            profilePastEvents_id.add(String.valueOf(datum.getEventId()));
+                            Collections.reverse(profilePastEvents_id);
 
                             String total = String.valueOf(profilePastEvents.size());
                             pastevnets.setText("(" + String.valueOf(profilePastEvents.size()) + ")");

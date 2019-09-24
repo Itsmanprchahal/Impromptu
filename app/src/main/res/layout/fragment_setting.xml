@@ -90,6 +90,25 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Invite User"
+            android:drawableLeft="@drawable/ic_envelope"
+            android:gravity="center_vertical"
+            android:padding="@dimen/_8sdp"
+            android:drawablePadding="15dp"
+            android:fontFamily="@font/sfuitextlight"
+            android:textColor="@color/colortextBlack"
+            android:id="@+id/setting_inviteuser_option"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/colorgrey">
+
+        </View>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="Change Password"
             android:drawableLeft="@drawable/ic_password"
             android:gravity="center_vertical"
@@ -108,16 +127,16 @@
             android:background="@color/colorgrey"></View>
 
         <TextView
+            android:id="@+id/setting_help_option"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Help"
             android:drawableLeft="@drawable/ic_enqury"
-            android:gravity="center_vertical"
-            android:fontFamily="@font/sfuitextlight"
-            android:padding="@dimen/_8sdp"
             android:drawablePadding="15dp"
-            android:textColor="@color/colortextBlack"
-            android:id="@+id/setting_help_option"/>
+            android:fontFamily="@font/sfuitextlight"
+            android:gravity="center_vertical"
+            android:padding="@dimen/_8sdp"
+            android:text="Help"
+            android:textColor="@color/colortextBlack" />
 
         <View
             android:layout_width="match_parent"
@@ -145,24 +164,7 @@
 
         </View>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Invite User"
-            android:drawableLeft="@drawable/ic_envelope"
-            android:gravity="center_vertical"
-            android:padding="@dimen/_8sdp"
-            android:drawablePadding="15dp"
-            android:fontFamily="@font/sfuitextlight"
-            android:textColor="@color/colortextBlack"
-            android:id="@+id/setting_inviteuser_option"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:background="@color/colorgrey">
-
-        </View>
 
 
         <TextView
@@ -183,47 +185,6 @@
             android:background="@color/colorgrey">
 
         </View>
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Privacy Policy"
-            android:drawableLeft="@drawable/ic_privacy"
-            android:gravity="center_vertical"
-            android:padding="@dimen/_8sdp"
-            android:drawablePadding="15dp"
-            android:fontFamily="@font/sfuitextlight"
-            android:textColor="@color/colortextBlack"
-            android:id="@+id/setting_privancyStatement_option"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:background="@color/colorgrey">
-
-        </View>
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Frequently asked questions"
-            android:drawableLeft="@drawable/ic_faq"
-            android:gravity="center_vertical"
-            android:fontFamily="@font/sfuitextlight"
-            android:padding="@dimen/_8sdp"
-            android:drawablePadding="15dp"
-            android:textColor="@color/colortextBlack"
-            android:id="@+id/setting_FAQ_option"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:background="@color/colorgrey">
-
-        </View>
-
 
         <TextView
             android:layout_width="match_parent"
@@ -264,24 +225,6 @@
         </View>
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Delete Account"
-            android:drawableLeft="@drawable/ic_delete"
-            android:gravity="center_vertical"
-            android:padding="@dimen/_8sdp"
-            android:drawablePadding="15dp"
-            android:fontFamily="@font/sfuitextlight"
-            android:textColor="@color/colortextBlack"
-            android:id="@+id/setting_deleteAccount_option"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:background="@color/colorgrey">
-
-        </View>
 
 
     </LinearLayout>

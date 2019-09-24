@@ -3,6 +3,8 @@ package com.mandywebdesign.impromptu.Adapters;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEventDetailAcitvity;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalGetProfile;
 
@@ -31,9 +34,19 @@ public class NormalUserAttendingEvents extends RecyclerView.Adapter<NormalUserAt
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NormalUserAttendingEvents.VeiewHolder veiewHolder, int i) {
+    public void onBindViewHolder(@NonNull NormalUserAttendingEvents.VeiewHolder veiewHolder, final int i) {
         veiewHolder.category.setText(NormalGetProfile.attentingTietle.get(i));
         Glide.with(context).load(NormalGetProfile.attendingimage.get(i)).into(veiewHolder.imageView);
+
+        veiewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, BusinessEventDetailAcitvity.class);
+                intent.putExtra("eventType","history");
+                intent.putExtra("event_id",NormalGetProfile.attentingevent_id.get(i));
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -279,7 +279,7 @@ public class PerviewEventActivity extends AppCompatActivity {
 
             Calendar c = Calendar.getInstance();
 
-            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             formattedDate = df.format(c.getTime());
             c.add(Calendar.DATE, 1);
 
@@ -292,34 +292,34 @@ public class PerviewEventActivity extends AppCompatActivity {
                 timeFrom = time_t.substring(1);
                 timeTo = time_to.substring(1);
                 perview_time.setText( timeFrom + " - " + timeTo);
-                perview_date.setText(str2 + "/" + str1 + "/" + str3);
+                perview_date.setText(str1 + "/" + str2 + "/" + str3);
             } else if (time_t.startsWith("0")) {
                 timeFrom = time_t.substring(1);
                 if (time_to.startsWith("0")) {
                     timeTo = time_to.substring(1);
                     perview_time.setText( timeFrom + " - " + timeTo);
-                    perview_date.setText(str2 + "/" + str1 + "/" + str3);
+                    perview_date.setText(str1 + "/" + str2+ "/" + str3);
                 } else {
                     timeTo = time_to.substring(0);
                     perview_time.setText( timeFrom + " - " + timeTo);
-                    perview_date.setText(str2 + "/" + str1 + "/" + str3);
+                    perview_date.setText(str1 + "/" + str2 + "/" + str3);
                 }
             } else if (time_to.startsWith("0")) {
                 timeTo = time_to.substring(1);
                 if (time_t.startsWith("0")) {
                     timeFrom = time_t.substring(1);
                     perview_time.setText( timeFrom + " - " + timeTo);
-                    perview_date.setText(str2 + "/" + str1 + "/" + str3);
+                    perview_date.setText(str1 + "/" + str2 + "/" + str3);
                 } else {
                     timeFrom = time_t.substring(0);
                     perview_time.setText( timeFrom + " - " + timeTo);
-                    perview_date.setText(str2 + "/" + str1 + "/" + str3);
+                    perview_date.setText(str1 + "/" + str2 + "/" + str3);
                 }
             } else if (!time_t.startsWith("0") && !time_to.startsWith("0")) {
                 timeFrom = time_t.substring(0);
                 timeTo = time_to.substring(0);
                 perview_time.setText( timeFrom + " - " + timeTo);
-                perview_date.setText(str2 + "/" + str1 + "/" + str3);
+                perview_date.setText(str1 + "/" + str2 + "/" + str3);
             }
 
 

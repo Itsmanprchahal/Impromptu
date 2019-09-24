@@ -80,10 +80,6 @@ public class Business_History_adapter extends RecyclerView.Adapter<Business_Hist
         }
 
 
-
-//        viewHolder.overall_rating.setRating(Float.parseFloat(History.rating_overall.get(i)));
-
-
         String s = History.addres.get(i);
         Log.e("addre", s);
 

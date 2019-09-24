@@ -172,7 +172,7 @@ public class Live extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                                 Calendar c = Calendar.getInstance();
 
-                                SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                                 formattedDate = df.format(c.getTime());
                                 c.add(Calendar.DATE, 1);
 
@@ -180,13 +180,13 @@ public class Live extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                                 System.out.println("Current time ==> " + c.getTime());
 
-                                if (formattedDate.matches(datum.getDate())) {
+                                if (formattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
                                     event_time.add("Today at " + timeFrom);
-                                } else if (getFormattedDate.matches(datum.getDate())) {
+                                } else if (getFormattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
                                     event_time.add("Tomorrow at " + timeFrom);
                                 } else {
 
-                                    String date = datum.getDate();
+                                    String date = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
                                     /*to change server date formate*/
                                     String s1 = date;
                                     String[] str = s1.split("/");

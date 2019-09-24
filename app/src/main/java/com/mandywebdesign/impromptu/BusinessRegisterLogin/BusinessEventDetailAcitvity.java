@@ -167,6 +167,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
             event_type = intent.getStringExtra("eventType");
             otherEvnts = intent.getStringExtra("other_events");
 
+
             if (event_type.equals("draft")) {
 
                 linearLayout.setVisibility(View.GONE);
@@ -362,13 +363,23 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                             Log.d("userImage", "" + response.body().getData().get(i).getFile());
 
                         }
-
+                    if(event_type.equals("past"))
+                    {
+                        if (bookedUsersList.size()==1)
+                        {
+                            peoplecoming.setText("1 Person was come");
+                        }else {
+                            peoplecoming.setText(bookedUsersList.size() + " People was come");
+                        }
+                    }else {
                         if (bookedUsersList.size()==1)
                         {
                             peoplecoming.setText("1 Person is coming");
                         }else {
                             peoplecoming.setText(bookedUsersList.size() + " People are coming");
                         }
+                    }
+
 
 
                     } else {
@@ -428,14 +439,6 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                             link3 = datum.getLink3();
 
 
-                            String dateformat = datum.getDate();
-                            /*to change server date formate*/
-                            String s1 = dateformat;
-                            String[] str = s1.split("/");
-                            String str1 = str[0];
-                            String str2 = str[1];
-                            String str3 = str[2];
-
                             title = datum.getTitle();
                             hostImage = datum.getHostImage();
                             hostUserID = datum.getUserid().toString();
@@ -447,6 +450,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                             //get Time to in AM PM
                             String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM","am").replaceFirst("PM","pm");
                             String time_to = Util.convertTimeStampToTime(Long.parseLong(datum.getEventEndDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM","am").replaceFirst("PM","pm");
+                            String start_date = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
                             String end_date = Util.convertTimeStampDate(Long.parseLong(datum.getEventEndDt()));
 
 
@@ -455,34 +459,34 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                                 timeFrom = time_t.substring(1);
                                 timeTo = time_to.substring(1);
                                 BusinessEvent_detailsFragment_book_time.setText(timeFrom + " - " + timeTo);
-                                datetime.setText(str2 + "/" + str1 + "/" + str3 + " - " + end_date );
+                                datetime.setText(start_date+" - " + end_date );
                             } else if (time_t.startsWith("0")) {
                                 timeFrom = time_t.substring(1);
                                 if (time_to.startsWith("0")) {
                                     timeTo = time_to.substring(1);
                                     BusinessEvent_detailsFragment_book_time.setText(timeFrom + " - " + timeTo);
-                                    datetime.setText(str2 + "/" + str1 + "/" + str3 + " - " + end_date );
+                                    datetime.setText(start_date+ " - " + end_date );
                                 } else {
                                     timeTo = time_to.substring(0);
                                     BusinessEvent_detailsFragment_book_time.setText(timeFrom + " - " + timeTo);
-                                    datetime.setText(str2 + "/" + str1 + "/" + str3 + " - " + end_date );
+                                    datetime.setText(start_date+ " - " + end_date );
                                 }
                             } else if (time_to.startsWith("0")) {
                                 timeTo = time_to.substring(1);
                                 if (time_t.startsWith("0")) {
                                     timeFrom = time_t.substring(1);
                                     BusinessEvent_detailsFragment_book_time.setText(timeFrom + " - " + timeTo);
-                                    datetime.setText(str2 + "/" + str1 + "/" + str3 + " - " + end_date );
+                                    datetime.setText(start_date+ " - " + end_date );
                                 } else {
                                     timeFrom = time_t.substring(0);
                                     BusinessEvent_detailsFragment_book_time.setText(timeFrom + " - " + timeTo);
-                                    datetime.setText(str2 + "/" + str1 + "/" + str3 + " - " + end_date );
+                                    datetime.setText(start_date+ " - " + end_date );
                                 }
                             } else if (!time_t.startsWith("0") && !time_to.startsWith("0")) {
                                 timeFrom = time_t.substring(0);
                                 timeTo = time_to.substring(0);
                                 BusinessEvent_detailsFragment_book_time.setText(timeFrom + " - " + timeTo);
-                                datetime.setText(str2 + "/" + str1 + "/" + str3 + " - " + end_date );
+                                datetime.setText(start_date+ " - " + end_date );
                             }
 
 

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".SettingFragmentsOptions.HelpOptionsActivity">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="2dp">
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/toolbartext"
+                    android:fontFamily="@font/circularstdbold"
+                    android:textColor="@color/colortextBlack"
+                    android:text="Help"
+                    android:gravity="center_horizontal"/>
+
+                <ImageView
+                    android:id="@+id/back_on_help"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/transperent"
+                    android:src="@drawable/ic_arrow_back_black_24dp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/defaultmargin"
+            android:layout_marginRight="@dimen/defaultmargin"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Help Guide"
+                android:drawableLeft="@drawable/ic_delete"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_8sdp"
+                android:drawablePadding="15dp"
+                android:fontFamily="@font/sfuitextlight"
+                android:textColor="@color/colortextBlack"
+                android:id="@+id/help_help_guide"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/colorgrey">
+
+            </View>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Frequently asked questions"
+                android:drawableLeft="@drawable/ic_faq"
+                android:gravity="center_vertical"
+                android:fontFamily="@font/sfuitextlight"
+                android:padding="@dimen/_8sdp"
+                android:drawablePadding="15dp"
+                android:textColor="@color/colortextBlack"
+                android:id="@+id/setting_FAQ_option"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/colorgrey">
+
+            </View>
+
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Flag Inappropriate Behaviour"
+                android:drawableLeft="@drawable/ic_delete"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_8sdp"
+                android:drawablePadding="15dp"
+                android:fontFamily="@font/sfuitextlight"
+                android:textColor="@color/colortextBlack"
+                android:id="@+id/help_help_flag"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/colorgrey">
+
+            </View>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delete Account"
+                android:drawableLeft="@drawable/ic_delete"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_8sdp"
+                android:drawablePadding="15dp"
+                android:fontFamily="@font/sfuitextlight"
+                android:textColor="@color/colortextBlack"
+                android:id="@+id/setting_deleteAccount_option"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/colorgrey">
+
+            </View>
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</LinearLayout>

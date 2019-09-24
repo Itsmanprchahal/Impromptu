@@ -466,13 +466,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
         mAddPhoto = (TextView) findViewById(R.id.your_event_add_picture);
         recyclerView = (RecyclerView) findViewById(R.id.add_event_recyclerView);
         your_event_title = (EditText) findViewById(R.id.your_event_title);
-        your_event_title.setInputType(
-                InputType.TYPE_CLASS_TEXT|
-                        InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
-        );
-
         your_event_description = (EditText) findViewById(R.id.your_event_description);
-        your_event_description.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         add_event_close = (ImageView) findViewById(R.id.add_event_close);
         createvent_addlink = (TextView) findViewById(R.id.createvent_addlink);
         createvent_addlink1 = (TextView) findViewById(R.id.createvent_addlink1);

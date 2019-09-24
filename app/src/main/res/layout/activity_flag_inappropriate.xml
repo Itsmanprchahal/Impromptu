@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".SettingFragmentsOptions.FlagInappropriate">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="13dp">
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/toolbartext"
+                    android:fontFamily="@font/circularstdbold"
+                    android:textColor="@color/colortextBlack"
+                    android:text="Flag inappropriate behaviour"
+                    android:gravity="center_horizontal"/>
+
+                <ImageView
+                    android:id="@+id/back_on_help"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/transperent"
+                    android:src="@drawable/ic_arrow_back_black_24dp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/defaultmargin"
+                android:text="Have you had a bad experience with a host/attendee or at an event you have attended?"
+                android:textColor="@color/black"
+                android:fontFamily="@font/circularstdbold"
+                android:textSize="@dimen/normalText">
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/defaultmargin"
+                android:textSize="@dimen/normalText"
+                android:textColor="@color/black"
+                android:fontFamily="@font/circularstdbold"
+                android:text="If so, please input unique event ID (found at the bottom right corner of the event details)"></TextView>
+
+            <EditText
+                android:id="@+id/event_id"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_edittext"
+                android:layout_marginLeft="@dimen/defaultmargin"
+                android:textColor="@color/black"
+                android:fontFamily="@font/circularstdbold"
+                android:inputType="number"
+                android:singleLine="true"
+                android:padding="10dp"></EditText>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/defaultmargin"
+                android:text="Which of the following did you find inappropriate?"
+                android:textColor="@color/black"
+                android:textSize="@dimen/normalText"
+                android:fontFamily="@font/circularstdbold"></TextView>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_margin="@dimen/defaultmargin">
+
+                <RadioButton
+                    android:id="@+id/hostRB"
+                    android:text="Host"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/circularstdbold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorTheme"></RadioButton>
+
+
+                <RadioButton
+                    android:id="@+id/Attendee"
+                    android:text="Attendee"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/circularstdbold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorTheme"></RadioButton>
+
+
+                <RadioButton
+                    android:id="@+id/Other"
+                    android:text="Other"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/circularstdbold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorTheme"></RadioButton>
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Please provide a description of the inappropriate behaviour that you have witnessed (limited 500 characters)"
+                android:textSize="@dimen/normalText"
+                android:textColor="@color/black"
+                android:layout_margin="@dimen/defaultmargin"
+                android:fontFamily="@font/circularstdbold"></TextView>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:textAlignment="viewStart"
+                android:padding="@dimen/_10sdp"
+                android:gravity="start"
+                android:background="@drawable/custom_edittext"
+                android:layout_margin="@dimen/defaultmargin"
+                android:id="@+id/complaint_et"
+                android:fontFamily="@font/circularstdbold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/normalText"></EditText>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
