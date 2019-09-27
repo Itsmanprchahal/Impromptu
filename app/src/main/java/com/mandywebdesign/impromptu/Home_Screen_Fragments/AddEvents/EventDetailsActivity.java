@@ -160,7 +160,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         event_lcation_address1 = (EditText) findViewById(R.id.event_lcation_address1);
         event_lcation_address2 = (EditText) findViewById(R.id.event_lcation_address2);
         event_postcode = (EditText) findViewById(R.id.event_postcode);
-        event_postcode.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
+        event_postcode.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
         event_city = (EditText) findViewById(R.id.event_city);
         event_radiobutton_all = (RadioButton) findViewById(R.id.event_radiobutton_all);
         event_radiobutton_female = (RadioButton) findViewById(R.id.event_radiobutton_female);
@@ -241,7 +241,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             DatePickerDialog datePickerDialog = new DatePickerDialog(EventDetailsActivity.this, R.style.DialogTheme
-                                    ,dateSetListener1, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                                    , dateSetListener1, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                             datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                             datePickerDialog.show();
                         }
@@ -328,7 +328,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                     }
                     frommilles = String.valueOf(date.getTime());
 
-                    Log.d("frommilles",""+frommilles);
+                    Log.d("frommilles", "" + frommilles);
 
 
                     String givenDateString1 = event_details_date_etto.getText().toString() + " " + eventTime_to.getText().toString();
@@ -355,7 +355,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                     intent.putExtra("ToTime", eventTime_to.getText().toString());
                     intent.putExtra("attendeesNo", event_attendees_no.getText().toString());
                     intent.putExtra("value", value);
-                    intent.putExtra("editevent", "edit");
+                    intent.putExtra("editevent", edit);
                     intent.putExtra("link1", link1);
                     intent.putExtra("link2", link2);
                     intent.putExtra("link3", link3);
@@ -384,6 +384,8 @@ public class EventDetailsActivity extends AppCompatActivity {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myFormat, Locale.US);
 
                 mDate.setText(simpleDateFormat.format(calendar.getTime()));
+
+
             }
         };
 
@@ -402,6 +404,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myFormat, Locale.US);
 
                 event_details_date_etto.setText(simpleDateFormat.format(calendar.getTime()));
+
 
             }
         };
@@ -583,15 +586,18 @@ public class EventDetailsActivity extends AppCompatActivity {
                     event_city.setText(response.body().getData().get(0).getCity());
 
 
-                    String dateformat = response.body().getData().get(0).getDate();
-                    /*to change server date formate*/
-                    String s1 = dateformat;
-                    String[] str = s1.split("/");
-                    String str1 = str[0];
-                    String str2 = str[1];
-                    String str3 = str[2];
+                    if (edit.equalsIgnoreCase("republish"))
+                    {
+                        Calendar c = Calendar.getInstance();
 
-                    mDate.setText(str1 + "/" + str2 + "/" + str3);
+                        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
+                        mDate.setText(df.format(c.getTime()));
+                    }else {
+                        mDate.setText( Util.convertTimeStampDate(Long.parseLong(response.body().getData().get(0).getEventStartDt())));
+                    }
+
+
                     eventTime_from.setText(response.body().getData().get(0).getTimeFrom());
                     eventTime_to.setText(response.body().getData().get(0).getTimeTo());
                     event_attendees_no.setText(response.body().getData().get(0).getAttendeesNo());
@@ -599,14 +605,18 @@ public class EventDetailsActivity extends AppCompatActivity {
                     prceET = response.body().getData().get(0).getPrice();
                     to_date = Util.convertTimeStampDate(Long.parseLong(response.body().getData().get(0).getEventEndDt()));
 
-                    String dateformat1 = to_date;
-                    /*to change server date formate*/
-                    String s2 = dateformat1;
-                    String[] strr = s2.split("/");
-                    String str11 = strr[0];
-                    String str21 = strr[1];
-                    String str31 = strr[2];
-                    event_details_date_etto.setText(str21 + "/" + str11 + "/" + str31);
+
+                    if (edit.equalsIgnoreCase("republish"))
+                    {
+                        Calendar c = Calendar.getInstance();
+
+                        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
+                        event_details_date_etto.setText(df.format(c.getTime()));
+                    }else {
+                        event_details_date_etto.setText(to_date);
+                    }
+
                     getPrceET = prceET;
                     getTicketET = ticketET;
                     getTickettype = tickettype;

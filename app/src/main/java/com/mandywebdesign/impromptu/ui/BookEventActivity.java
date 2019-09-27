@@ -56,7 +56,11 @@ import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mandywebdesign.impromptu.Adapters.B_EventDetailImageAdapter;
 import com.mandywebdesign.impromptu.Adapters.Booked_users;
+import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessUserPRofileActivity;
+import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessUserProfile;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.SeeAll_activity;
+import com.mandywebdesign.impromptu.Retrofit.FollowUnfollow;
+import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalGetProfile;
 import com.mandywebdesign.impromptu.Utils.Constants;
 import com.mandywebdesign.impromptu.messages.ChatBoxActivity;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
@@ -89,7 +93,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     LinearLayout organiser_layout;
     RelativeLayout messagelayout, invite_layouit;
     FragmentManager fragmentManager;
-    Button mBookEvent;
+    Button mBookEvent,follow_button;
     TextView organiserName, book_time, book_categry, peoplegoing, seeAll, remainingTicketTV, invitefriends, dialogtickttype, link1, link2, link3;
     ViewPager viewPager;
     RecyclerView users;
@@ -114,11 +118,11 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     static String hostUserID;
     static String remaini_tickets;
     static String timeFrom;
-    static String timeTo;
+    static String timeTo,usertype;
     String itemPos;
     static String value, S_token, fav_id, hostname, payvalue, spinnerposition;
     public static ArrayList<String> image = new ArrayList<>();
-    public static String id, cate, host_image, date, decs, postcode, ticktType, ticktprice, timefrom, hostimage, timeto, title, location, location2, city, gender, andendeenumber, numberoftickts, freeEvent, username;
+    public static String id, cate, host_image, date, decs,follow_status, postcode, ticktType, ticktprice, timefrom, hostimage, timeto, title, location, location2, city, gender, andendeenumber, numberoftickts, freeEvent, username;
     int CurrentPage = 0;
     AlertDialog.Builder builder;
     Intent intent;
@@ -295,7 +299,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             public void onResponse(Call<RemainingTickets> call, Response<RemainingTickets> response) {
 
                 if (response.body() != null) {
-                    remaini_tickets = String.valueOf(response.body().getData());
+                    remaini_tickets = String.valueOf(response.body().getData().getRemaining());
                     remainingTicketTV.setText("Tickets Remaining " + remaini_tickets);
                 } else {
                     Intent intent = new Intent(BookEventActivity.this, NoInternetScreen.class);
@@ -313,6 +317,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     }
 
     private void init() {
+        follow_button = findViewById(R.id.follow_button);
         screenshot = findViewById(R.id.screenshot);
         backonbookevent = findViewById(R.id.backonbookevent);
         book_time = findViewById(R.id.book_time);
@@ -477,6 +482,50 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                 }
             }
         });
+
+        follow_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Call<FollowUnfollow> call = WebAPI.getInstance().getApi().followunfollow("Bearer " + S_token,hostUserID);
+                call.enqueue(new Callback<FollowUnfollow>() {
+                    @Override
+                    public void onResponse(Call<FollowUnfollow> call, Response<FollowUnfollow> response) {
+                        if (response.isSuccessful())
+                        {
+                            if (response.body().getMessage().equals("Follow successfully."))
+                            {
+                                follow_button.setText("Unfollow");
+                            }else {
+                                follow_button.setText("Follow");
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<FollowUnfollow> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
+
+        host_pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (usertype.equals("business"))
+                {
+                    Intent intent = new Intent(BookEventActivity.this, BusinessUserPRofileActivity.class);
+                    intent.putExtra("user_id",hostUserID);
+                    startActivity(intent);
+                }else {
+                    Intent intent = new Intent(BookEventActivity.this, NormalGetProfile.class);
+                    intent.putExtra("user_id",hostUserID);
+                    startActivity(intent);
+                }
+
+            }
+        });
     }
 
 
@@ -555,12 +604,11 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             dialogButoon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-
                     Intent intent = new Intent(BookEventActivity.this, PayActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     intent.putExtra("total_price", tot);
                     intent.putExtra("event_id", value);
+                    intent.putExtra("event_Title", title);
                     intent.putExtra("total_tickets", total_ticket);
                     intent.putExtra("ticket_Price", ticktprice);
                     startActivity(intent);
@@ -709,7 +757,14 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             andendeenumber = datum.getAttendeesNo();
                             freeEvent = datum.getFreeEvent();
                             ticktType = datum.getTicketType();
+                            usertype = datum.getUser_type();
                             ticktprice = datum.getPrice();
+                            follow_status = datum.getFollow_status();
+                            if (follow_status.equals("1"))
+                            {
+                                follow_button.setText("Unfollow");
+                            }
+
                             numberoftickts = datum.getNoOfTickets();
                             username = datum.getBEventHostname();
                             InviteFriend = datum.getAttendeesGender();

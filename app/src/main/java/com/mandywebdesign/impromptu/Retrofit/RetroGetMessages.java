@@ -7,7 +7,6 @@ import java.util.List;
 
 public class RetroGetMessages {
 
-
     @SerializedName("status")
     @Expose
     private String status;
@@ -59,6 +58,9 @@ public class RetroGetMessages {
         @SerializedName("user_id")
         @Expose
         private Integer userId;
+        @SerializedName("message_datetime")
+        @Expose
+        private String messageDatetime;
         @SerializedName("seen_status")
         @Expose
         private Integer seenStatus;
@@ -101,6 +103,14 @@ public class RetroGetMessages {
 
         public void setUserId(Integer userId) {
             this.userId = userId;
+        }
+
+        public String getMessageDatetime() {
+            return messageDatetime;
+        }
+
+        public void setMessageDatetime(String messageDatetime) {
+            this.messageDatetime = messageDatetime;
         }
 
         public Integer getSeenStatus() {

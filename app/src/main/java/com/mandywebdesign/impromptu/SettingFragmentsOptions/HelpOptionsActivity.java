@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.ui.Join_us;
+import com.mandywebdesign.impromptu.ui.ProgressBarClass;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,6 +41,7 @@ public class HelpOptionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help_options);
 
+        progressDialog = ProgressBarClass.showProgressDialog(this);
         sharedPreferences1 = getSharedPreferences("BusinessProfile1", Context.MODE_PRIVATE);
         sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         user = sharedPreferences.getString("Usertoken", "");
@@ -128,6 +130,7 @@ public class HelpOptionsActivity extends AppCompatActivity {
 
                                 Toast.makeText(HelpOptionsActivity.this, "Your account removed succussfully", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(HelpOptionsActivity.this, Join_us.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
                                 finish();
 

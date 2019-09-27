@@ -125,20 +125,21 @@ public class Live extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
 
     public void liveEvnts(final String token) {
+        name1.clear();
+        title.clear();
+        prices.clear();
+        addres.clear();
+        categois.clear();
+        images.clear();
+        event_id.clear();
+        event_time.clear();
+
         Call<RetroLiveEvents> call = WebAPI.getInstance().getApi().liveEvents("Bearer " + token, "application/json");
         call.enqueue(new Callback<RetroLiveEvents>() {
             @Override
             public void onResponse(Call<RetroLiveEvents> call, Response<RetroLiveEvents> response) {
 
                 if (response.body() !=null) {
-                    name1.clear();
-                    title.clear();
-                    prices.clear();
-                    addres.clear();
-                    categois.clear();
-                    images.clear();
-                    event_id.clear();
-                    event_time.clear();
 
                     if (response.body().getStatus().equals("200")) {
 

@@ -44,4 +44,5 @@
     <string name="default_notification_channel_id">firebase_default_channel</string>
     <string name="msg_subscribed">Impromptu Notify</string>
     <string name="msg_subscribe_failed">Notify failed</string>
+    <string name="feedback"><u>Leave Feedback</u></string>
 </resources>

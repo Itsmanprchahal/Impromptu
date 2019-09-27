@@ -19,6 +19,7 @@ import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEventDetailAci
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.favouriteTab.Hosts;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Utils.Constants;
+import com.mandywebdesign.impromptu.ui.BookEventActivity;
 
 public class Hosting_fav_events_Adapter extends RecyclerView.Adapter<Hosting_fav_events_Adapter.ViewHolder> {
 
@@ -87,7 +88,7 @@ public class Hosting_fav_events_Adapter extends RecyclerView.Adapter<Hosting_fav
             public void onClick(View v) {
 
                 String value = Hosts.event_id_fav.get(i);
-                Intent intent = new Intent(context, BusinessEventDetailAcitvity.class);
+                Intent intent = new Intent(context, BookEventActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 intent.putExtra("event_id",value);
                 intent.putExtra("eventType","fav");
@@ -96,20 +97,7 @@ public class Hosting_fav_events_Adapter extends RecyclerView.Adapter<Hosting_fav
                 editor.commit();
                 context.startActivity(intent);
 
-//                Bundle bundle = new Bundle();
-//                String value = Hosts.event_id_fav.get(i);
-//                bundle.putString("event_id", value);
-//                bundle.putString("eventType","fav");
-//                bundle.putString("other_events","");
-//                editor.putString(Constants.itemPosition, String.valueOf(i));
-//                editor.commit();
-
-
-//                BusinessEvent_detailsFragment businessEvent_detailsFragment = new BusinessEvent_detailsFragment();
-//                businessEvent_detailsFragment.setArguments(bundle);
-
-//                manager.beginTransaction().replace(R.id.home_frame_layout, businessEvent_detailsFragment).addToBackStack(null).commit();
-            }
+          }
         });
     }
 

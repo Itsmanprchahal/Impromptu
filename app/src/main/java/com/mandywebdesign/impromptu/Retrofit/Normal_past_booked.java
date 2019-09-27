@@ -180,6 +180,18 @@ public class Normal_past_booked {
         @SerializedName("timezone")
         @Expose
         private String timezone;
+
+        public String getUser_type() {
+            return user_type;
+        }
+
+        public void setUser_type(String user_type) {
+            this.user_type = user_type;
+        }
+
+        @SerializedName("user_type")
+        @Expose
+        private String user_type;
         @SerializedName("file")
         @Expose
         private List<String> file = null;

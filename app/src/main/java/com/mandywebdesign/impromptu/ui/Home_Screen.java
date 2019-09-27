@@ -71,7 +71,7 @@ public class Home_Screen extends AppCompatActivity {
     Intent intent;
     Dialog progressDialog;
     String accept = "application/json";
-    public static String BprofileStatus, data;
+    public static String BprofileStatus, data,profilestatus;
     public static int countt = 0, newCount = 0;
     String refreshvalue, checkgender, socailtoken, itemPos;
 
@@ -134,13 +134,26 @@ public class Home_Screen extends AppCompatActivity {
 
     private void getProfile(String socailtoken) {
 
-        Call<NormalGetProfile> call = WebAPI.getInstance().getApi().normalGetPRofile(socailtoken, "application/json");
+        Call<NormalGetProfile> call = WebAPI.getInstance().getApi().normalGetPRofile(socailtoken, "application/json","");
         call.enqueue(new Callback<NormalGetProfile>() {
             @Override
             public void onResponse(Call<NormalGetProfile> call, Response<NormalGetProfile> response) {
                 if (response.body() != null) {
                     if (response.body().getData().get(0).getGender() == null) {
-                        Toast.makeText(Home_Screen.this, "Please update your profile.", Toast.LENGTH_SHORT).show();
+                        final Dialog dialog = new Dialog(Home_Screen.this);
+                        dialog.setContentView(R.layout.welcomedialog);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.setCancelable(true);
+                        dialog.show();
+
+                        Button continue_bt = dialog.findViewById(R.id.continue_bt);
+                        continue_bt.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+
                     } else {
                         editor = sharedPreferences.edit();
                         editor.putString("profilegender", "" + response.body().getData().get(0).getGender());
@@ -164,12 +177,13 @@ public class Home_Screen extends AppCompatActivity {
 
             Intent intent1 = getIntent();
             String value = intent1.getStringExtra("bookevent");
+
             if (value == null)
             {
-
                 FragmentTransaction transaction = manager.beginTransaction();
                 transaction.replace(R.id.home_frame_layout, new Home());
                 transaction.commit();
+
             }else {
                 FragmentTransaction transaction = manager.beginTransaction();
                 transaction.replace(R.id.home_frame_layout, new Events());
@@ -184,7 +198,7 @@ public class Home_Screen extends AppCompatActivity {
 
 
         } else {
-            Call<RetroGetProfile> call = WebAPI.getInstance().getApi().getProfile(userToken, accept);
+            Call<RetroGetProfile> call = WebAPI.getInstance().getApi().getProfile(userToken, accept,"");
             call.enqueue(new Callback<RetroGetProfile>() {
                 @Override
                 public void onResponse(Call<RetroGetProfile> call, Response<RetroGetProfile> response) {

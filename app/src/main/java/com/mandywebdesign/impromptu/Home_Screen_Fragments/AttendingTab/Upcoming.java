@@ -71,6 +71,7 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
     public static ArrayList<String> event_id = new ArrayList<>();
     public static ArrayList<String> book_tickets = new ArrayList<>();
     public static ArrayList<String> total_book_tickets = new ArrayList<>();
+    public static ArrayList<String> usertype = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -107,6 +108,18 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
     }
 
     private void upcoming_events(String s_token) {
+        name1.clear();
+        title.clear();
+        prices.clear();
+        addres.clear();
+        time.clear();
+        categois.clear();
+        images.clear();
+        event_id.clear();
+        userID.clear();
+        book_tickets.clear();
+        total_book_tickets.clear();
+        usertype.clear();
         progressDialog.show();
         Call<Normal_past_booked> call = WebAPI.getInstance().getApi().upcoming_booked("Bearer " + s_token, "application/json");
         call.enqueue(new Callback<Normal_past_booked>() {
@@ -114,17 +127,7 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
             public void onResponse(Call<Normal_past_booked> call, Response<Normal_past_booked> response) {
 
                 Log.d("+++++++++", "++ response ++" + S_Token);
-                name1.clear();
-                title.clear();
-                prices.clear();
-                addres.clear();
-                time.clear();
-                categois.clear();
-                images.clear();
-                event_id.clear();
-                userID.clear();
-                book_tickets.clear();
-                total_book_tickets.clear();
+
                 progressDialog.dismiss();
                 if (response.body()!=null) {
                     if (response.body().getStatus().equals("200")) {
@@ -139,6 +142,7 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
                             title.add(datum.getTitle());
                             book_tickets.add(datum.getBook_tickets().toString());
                             total_book_tickets.add(datum.getTotal_book_tickets().toString());
+                            usertype.add(datum.getUser_type().toString());
                             if (datum.getPrice().equals("")) {
 
                                 prices.add("Free");

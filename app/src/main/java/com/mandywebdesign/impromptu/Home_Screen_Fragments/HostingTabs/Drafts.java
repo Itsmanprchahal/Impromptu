@@ -6,10 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +57,7 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
     TextView noEvents;
     View view;
     Business_DraftsEventAdapter adapter;
-    String user, BToken, S_Token, itemPosition,formattedDate,getFormattedDate,timeFrom;
+    String user, BToken, S_Token, itemPosition, formattedDate, getFormattedDate, timeFrom;
     Dialog progressDialog;
     public static ArrayList<String> name1 = new ArrayList<>();
     public static ArrayList<String> title = new ArrayList<>();
@@ -77,7 +79,8 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
         progressDialog.dismiss();
 
         sharedPreferences = getContext().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
-        itemPositionPref = getContext().getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);sharedPreferences1 = getActivity().getSharedPreferences("BusinessProfile1", Context.MODE_PRIVATE);
+        itemPositionPref = getContext().getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);
+        sharedPreferences1 = getActivity().getSharedPreferences("BusinessProfile1", Context.MODE_PRIVATE);
         profileupdatedPref = getContext().getSharedPreferences("profileupdated", Context.MODE_PRIVATE);
         user = "Bearer " + sharedPreferences.getString("Usertoken", "");
         BToken = sharedPreferences.getString("Usertoken", "");
@@ -112,8 +115,16 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
 
 
     private void Drafts(String bToken) {
-            progressDialog.show();
-        Call<RetroDraftsEvents> call = WebAPI.getInstance().getApi().drafts("Bearer " + bToken,"application/json");
+        name1.clear();
+        title.clear();
+        prices.clear();
+        eventTIme.clear();
+        addres.clear();
+        categois.clear();
+        draftsimages.clear();
+        event_id.clear();
+        progressDialog.show();
+        Call<RetroDraftsEvents> call = WebAPI.getInstance().getApi().drafts("Bearer " + bToken, "application/json");
         call.enqueue(new Callback<RetroDraftsEvents>() {
             @Override
             public void onResponse(Call<RetroDraftsEvents> call, Response<RetroDraftsEvents> response) {
@@ -122,14 +133,7 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
                     if (response.body().getStatus().equals("200")) {
                         RetroDraftsEvents data = response.body();
                         List<RetroDraftsEvents.Datum> datumArrayList = data.getData();
-                        name1.clear();
-                        title.clear();
-                        prices.clear();
-                        eventTIme.clear();
-                        addres.clear();
-                        categois.clear();
-                        draftsimages.clear();
-                        event_id.clear();
+
                         for (RetroDraftsEvents.Datum datum : datumArrayList) {
 
                             name1.add(datum.getBEventHostname());
@@ -138,40 +142,40 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
                             prices.add(datum.getPrice());
                             addres.add(datum.getAddressline1());
 
-                            String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.","am").replaceFirst("p.m.","pm").replaceFirst("AM","am").replaceFirst("PM","pm");
+                            String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
 
 
-                                if (time_t.startsWith("0")) {
-                                    timeFrom = time_t.substring(1);
-                                } else {
-                                    timeFrom = time_t.substring(0);
-                                }
+                            if (time_t.startsWith("0")) {
+                                timeFrom = time_t.substring(1);
+                            } else {
+                                timeFrom = time_t.substring(0);
+                            }
 
-                                Calendar c = Calendar.getInstance();
+                            Calendar c = Calendar.getInstance();
 
-                                SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-                                formattedDate = df.format(c.getTime());
-                                c.add(Calendar.DATE, 1);
+                            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                            formattedDate = df.format(c.getTime());
+                            c.add(Calendar.DATE, 1);
 
-                                getFormattedDate = df.format(c.getTime());
-                                // Toast.makeText(getContext(), "TOMORROW_DATE"+getFormattedDate, Toast.LENGTH_SHORT).show();
+                            getFormattedDate = df.format(c.getTime());
+                            // Toast.makeText(getContext(), "TOMORROW_DATE"+getFormattedDate, Toast.LENGTH_SHORT).show();
 
-                                System.out.println("Current time ==> " + c.getTime());
+                            System.out.println("Current time ==> " + c.getTime());
 
-                                if (formattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
-                                    eventTIme.add("Today at " + timeFrom);
-                                } else if (getFormattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
-                                    eventTIme.add("Tomorrow at " + timeFrom);
-                                } else {
-                                    String date = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
-                                    /*to change server date formate*/
-                                    String s1 = date;
-                                    String[] str = s1.split("/");
-                                    String str1 = str[0];
-                                    String str2 = str[1];
-                                    String str3 = str[2];
-                                    eventTIme.add(str2 + "/" + str1 + "/" + str3 + " at " + timeFrom);
-                                }
+                            if (formattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
+                                eventTIme.add("Today at " + timeFrom);
+                            } else if (getFormattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
+                                eventTIme.add("Tomorrow at " + timeFrom);
+                            } else {
+                                String date = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
+                                /*to change server date formate*/
+                                String s1 = date;
+                                String[] str = s1.split("/");
+                                String str1 = str[0];
+                                String str2 = str[1];
+                                String str3 = str[2];
+                                eventTIme.add(str2 + "/" + str1 + "/" + str3 + " at " + timeFrom);
+                            }
 
                             categois.add(datum.getCategory());
                             event_id.add(datum.getEventId().toString());
@@ -208,7 +212,7 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
                         getActivity().startActivity(intent);
                         getActivity().finish();
                     }
-                }else {
+                } else {
                     Intent intent = new Intent(getContext(), NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
@@ -224,8 +228,8 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
                     progressDialog.dismiss();
 
                     NoInternet.dialog(getContext());
-                }else {
-                    Toast.makeText(getContext(), ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

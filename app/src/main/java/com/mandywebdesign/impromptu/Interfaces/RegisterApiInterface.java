@@ -10,6 +10,8 @@ import com.mandywebdesign.impromptu.Retrofit.BookFreeEvents;
 import com.mandywebdesign.impromptu.Retrofit.Booked_User;
 import com.mandywebdesign.impromptu.Retrofit.EventMessageClick;
 import com.mandywebdesign.impromptu.Retrofit.FAQ;
+import com.mandywebdesign.impromptu.Retrofit.FollowUnfollow;
+import com.mandywebdesign.impromptu.Retrofit.FollowerPublish;
 import com.mandywebdesign.impromptu.Retrofit.GusetCheckIns;
 import com.mandywebdesign.impromptu.Retrofit.NormalEventPrice;
 import com.mandywebdesign.impromptu.Retrofit.NormalFilterEvents;
@@ -184,7 +186,8 @@ public interface RegisterApiInterface {
     @GET("view-profile")
     Call<RetroGetProfile> getProfile(
             @Header("Authorization") String token,
-            @Header("Accept") String accept
+            @Header("Accept") String accept,
+            @Query("user_id") String user_id
 
     );
 
@@ -309,6 +312,12 @@ public interface RegisterApiInterface {
             @Header("Accept") String accept
     );
 
+    @POST("followersPublish")
+    Call<FollowerPublish> followersPublish(
+            @Header("Authorization") String token
+
+    );
+
 
     @GET("related-events")
     Call<NormalrelatedEvents> getrelatedEvents(
@@ -359,7 +368,8 @@ public interface RegisterApiInterface {
     @GET("view-profile")
     Call<NormalGetProfile> normalGetPRofile(
             @Header("Authorization") String token,
-            @Header("Accept") String accept
+            @Header("Accept") String accept,
+            @Query("user_id") String user_id
 
     );
 
@@ -508,5 +518,11 @@ public interface RegisterApiInterface {
             @Query("old_password") String old_password,
             @Query("password") String password,
             @Query("confirm_password") String confirm_password
+    );
+
+    @POST("follow")
+    Call<FollowUnfollow> followunfollow(
+            @Header("Authorization") String token,
+            @Query("follow_user_id") String follow_user_id
     );
 }

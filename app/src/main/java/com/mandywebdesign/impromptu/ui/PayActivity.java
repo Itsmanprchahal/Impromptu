@@ -54,7 +54,7 @@ public class PayActivity extends AppCompatActivity {
     Button dialogratingshare_button;
     EditText feedback;
     ImageView close;
-    TextView total_price, ticket_price, tickt_num;
+    TextView total_price, ticket_price, tickt_num,event_Titletv;
     EditText CardNumber, CardName, Card_ExpiryDate, Card_CSV;
     FragmentManager fragmentManager;
     DatePickerDialog.OnDateSetListener dateSetListener;
@@ -64,7 +64,7 @@ public class PayActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     String userToken;
     String tokenPay, eventId, tot;
-    static String total_tickets, ticketprice, totalprice, paid, eventID;
+    static String total_tickets, ticketprice, totalprice, paid, eventID,event_Title;
     Intent intent;
 
     @Override
@@ -109,10 +109,12 @@ public class PayActivity extends AppCompatActivity {
         total_price.setText("£ " + intent.getStringExtra("total_price"));
         ticketprice = intent.getStringExtra("ticket_Price");
         total_tickets = intent.getStringExtra("total_tickets");
+        event_Title = intent.getStringExtra("event_Title");
 
 
         ticket_price.setText("£ " + ticketprice);
         tickt_num.setText(total_tickets);
+        event_Titletv.setText(event_Title);
 
     }
 
@@ -253,20 +255,6 @@ public class PayActivity extends AppCompatActivity {
                     editor.apply();
                     startActivity(intent);
 
-//                    Bundle bundle1 = new Bundle();
-//                    bundle1.putString("eventID", eventId);
-//                    //  bundle1.putString("userId",userId);
-//                    bundle1.putString("paid", "Paid");
-//                    editor.putString("eventImage", BookEventActivity.image.get(0));
-//                    editor.apply();
-//
-//                    ConfirmationFragment confirmationFragment = new ConfirmationFragment();
-//                    confirmationFragment.setArguments(bundle1);
-//
-//                    FragmentTransaction transaction2 = fragmentManager.beginTransaction();
-//                    transaction2.replace(R.id.home_frame_layout, confirmationFragment);
-//                    transaction2.addToBackStack(null);
-//                    transaction2.commit();
                 } else {
                     Intent intent = new Intent(PayActivity.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -294,6 +282,7 @@ public class PayActivity extends AppCompatActivity {
         close = (ImageView) findViewById(R.id.pay_close);
         ticket_price = (TextView) findViewById(R.id.pay_ticket_price);
         tickt_num = (TextView) findViewById(R.id.pay_ticket_type);
+        event_Titletv = (TextView)findViewById(R.id.event_Title);
     }
 
     public void dialog() {

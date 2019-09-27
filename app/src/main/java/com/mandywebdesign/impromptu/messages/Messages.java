@@ -31,12 +31,15 @@ import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.RetroAllChats;
 import com.mandywebdesign.impromptu.Retrofit.SearchMessages;
+import com.mandywebdesign.impromptu.Utils.Util;
 import com.mandywebdesign.impromptu.ui.Join_us;
 import com.mandywebdesign.impromptu.ui.NoInternet;
 import com.mandywebdesign.impromptu.ui.NoInternetScreen;
 import com.mandywebdesign.impromptu.ui.ProgressBarClass;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -66,6 +69,10 @@ public class Messages extends Fragment {
     public static ArrayList<String> hostUserID = new ArrayList<>();
     public static ArrayList<String> MesgCount = new ArrayList<>();
     public static ArrayList<String> lastMEsg = new ArrayList<>();
+    public static ArrayList<String> bookingstatus = new ArrayList<>();
+    public static ArrayList<String> event_status = new ArrayList<>();
+    public static ArrayList<Integer> rating_status = new ArrayList<>();
+    public static ArrayList<String> lastmesgtime = new ArrayList<>();
 
 
     @Override
@@ -136,7 +143,12 @@ public class Messages extends Fragment {
                             eventID.add(datum.getEventId().toString());
                             hostUserID.add(datum.getSenderId().toString());
                             MesgCount.add(datum.getCount().toString());
-                            lastMEsg.add(datum.getLastmesg());
+                            lastMEsg.add(datum.getLastMessageShow());
+                            rating_status.add(datum.getRatingStatus());
+                            bookingstatus.add(datum.getBookingStatus());
+                            event_status.add(datum.getEventStatus());
+
+                            lastmesgtime.add(datum.getLastMessageDatetime().toString());
                             setData();
 
                             Search(token);
@@ -192,6 +204,7 @@ public class Messages extends Fragment {
     }
 
     private void clear() {
+        lastmesgtime.clear();
         eventImage.clear();
         eventTicketType.clear();
         eventTitle.clear();
@@ -207,7 +220,7 @@ public class Messages extends Fragment {
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayout);
-        adapter = new MessageAdapter(manager, getContext(), eventTitle);
+        adapter = new MessageAdapter(manager, getContext(), eventTitle,S_Token);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

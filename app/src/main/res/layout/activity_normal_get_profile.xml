@@ -25,37 +25,42 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/back"
-                        android:id="@+id/back_user_profile"/>
-
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/profile"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_toLeftOf="@id/user_profile_edit_toolbar"
-                            android:fontFamily="@font/circularstdbold"
-                            android:gravity="center"
-                            android:text="Profile"
-                            android:textColor="@color/colortextBlack"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                        android:layout_height="wrap_content">
 
                         <ImageView
-                            android:id="@+id/user_profile_edit_toolbar"
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="20dp"
-                            android:src="@drawable/edit" />
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/back"
+                            android:id="@+id/back_user_profile"/>
 
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/profile"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/circularstdbold"
+                                android:gravity="center"
+                                android:text="Profile"
+                                android:textColor="@color/colortextBlack"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/user_profile_edit_toolbar"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="20dp"
+                                android:src="@drawable/edit" />
+
+                        </RelativeLayout>
                     </RelativeLayout>
+
                 </androidx.appcompat.widget.Toolbar>
 
             </androidx.cardview.widget.CardView>
@@ -89,49 +94,52 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="5dp"
-                            android:layout_toLeftOf="@id/user_profile_age"
-                            android:fontFamily="@font/circularstdbold"
+                             android:fontFamily="@font/circularstdbold"
                             android:text="Name"
-                            android:textColor="@color/colortextBlack"
+                            android:textColor="@color/colorTheme"
                             android:textSize="@dimen/_14sdp"
                             android:textStyle="bold" />
 
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:id="@+id/agelayout"
+                        android:layout_below="@id/usernamelayout"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Gender"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/sfuitextlight"
+                            android:id="@+id/normal_user_gender"/>
 
                         <TextView
                             android:id="@+id/user_profile_age"
                             android:layout_width="@dimen/_40sdp"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/circularstdbold"
-                            android:text="(Age)"
+                            android:fontFamily="@font/sfuitextlight"
+                            android:text=",Age"
                             android:gravity="bottom"
-                            android:textColor="@color/colortextBlack"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/black"
                             android:textSize="@dimen/_8sdp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            tools:ignore="RtlCompat" />
                     </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/usernamelayout"
-                        android:hint="Gender"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/sfuitextlight"
-                        android:id="@+id/normal_user_gender"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:id="@+id/pointslayout"
-                        android:layout_below="@id/normal_user_gender"
-                        android:layout_marginTop="@dimen/_5sdp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Total Posints:"
-                            android:textSize="12sp"
-                            android:textColor="@color/colortextBlack"></TextView>
+                        android:layout_below="@id/agelayout">
 
                         <TextView
                             android:layout_width="wrap_content"

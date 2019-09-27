@@ -12,7 +12,7 @@
         android:layout_toLeftOf="@+id/recyler_question_close"
         android:text="What Your Hobbies?"
         android:textSize="15sp"
-        android:textColor="@color/colortextBlack"
+        android:textColor="@color/colorTheme"
         android:textStyle="bold" />
 
 

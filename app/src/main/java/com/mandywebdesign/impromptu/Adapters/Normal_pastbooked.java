@@ -89,13 +89,6 @@ public class Normal_pastbooked extends RecyclerView.Adapter<Normal_pastbooked.Vi
             viewHolder.evetPrice.setText("£ " + Past.prices.get(i));
         }
 
-        if (Past.rating != null) {
-            if (Past.rating.get(i).equals("no")) {
-                viewHolder.ratenow_bt.setVisibility(View.VISIBLE);
-            } else {
-                viewHolder.ratenow_bt.setVisibility(View.GONE);
-            }
-        }
 
         viewHolder.overall_rating.setRating(Float.parseFloat(Past.overall_rating.get(i)));
         String s = Past.addres.get(i);
@@ -158,55 +151,6 @@ public class Normal_pastbooked extends RecyclerView.Adapter<Normal_pastbooked.Vi
             }
         });
 
-        viewHolder.ratenow_bt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                final Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.custom_rating_box);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.setCancelable(true);
-
-                final RatingBar ratingBar = dialog.findViewById(R.id.rating_bar);
-                final EditText feedback = dialog.findViewById(R.id.feedback);
-                Button dialogratingshare_button = dialog.findViewById(R.id.dialogratingshare_button);
-                dialog.show();
-
-                dialogratingshare_button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        String rating = String.valueOf(ratingBar.getRating());
-                        String feedbck = feedback.getText().toString();
-                        if (rating.equals("") | feedbck.equals("")) {
-                            Toast.makeText(context, "Add Rating  and reviews", Toast.LENGTH_SHORT).show();
-                        } else {
-                            progressDialog.show();
-                            Call<Rating> call = WebAPI.getInstance().getApi().rating("Bearer " + token, Past.event_id.get(i), rating, feedbck);
-                            call.enqueue(new Callback<Rating>() {
-                                @Override
-                                public void onResponse(Call<Rating> call, Response<Rating> response) {
-                                    if (response.body() != null) {
-                                        progressDialog.dismiss();
-                                        dialog.dismiss();
-                                        if (response.body().getStatus().equals("200")) {
-                                            viewHolder.ratenow_bt.setVisibility(View.GONE);
-                                        } else {
-                                            Toast.makeText(context, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<Rating> call, Throwable t) {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(context, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                    }
-                });
-            }
-        });
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

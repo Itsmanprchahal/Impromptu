@@ -18,6 +18,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.zxing.BarcodeFormat;
@@ -86,7 +87,23 @@ public class Normal_upcoming_events_adpater extends RecyclerView.Adapter<Normal_
 
 
         viewHolder.eventAddress.setText(Upcoming.addres.get(i));
-        viewHolder.total_tickettext1.setText("+"+Upcoming.total_book_tickets.get(i));
+        if (Upcoming.usertype.get(i).equals("business"))
+        {
+
+                int count = Integer.parseInt(Upcoming.total_book_tickets.get(i));
+
+                int count1 = count-1;
+                if (count1==0)
+                {
+                    viewHolder.total_tickettext1.setVisibility(View.GONE);
+                }else {
+                    viewHolder.total_tickettext1.setText("+"+count1);
+                }
+
+
+
+        }
+
         viewHolder.category.setText(Upcoming.categois.get(i));
         Glide.with(context).load(Upcoming.images.get(i)).into(viewHolder.eventImage);
 

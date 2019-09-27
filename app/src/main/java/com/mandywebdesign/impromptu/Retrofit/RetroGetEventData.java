@@ -142,6 +142,49 @@ public class RetroGetEventData {
         @SerializedName("timezone")
         @Expose
         private String timezone;
+        @SerializedName("follow_status")
+        @Expose
+        private String follow_status;
+
+        public String getTotal_book_tickets() {
+            return total_book_tickets;
+        }
+
+        public void setTotal_book_tickets(String total_book_tickets) {
+            this.total_book_tickets = total_book_tickets;
+        }
+
+        @SerializedName("total_book_tickets")
+        @Expose
+        private String total_book_tickets;
+
+        public String getUser_type() {
+            return user_type;
+        }
+
+        public void setUser_type(String user_type) {
+            this.user_type = user_type;
+        }
+
+        @SerializedName("user_type")
+        @Expose
+        private String user_type;
+
+        public String getbEventHostname() {
+            return bEventHostname;
+        }
+
+        public void setbEventHostname(String bEventHostname) {
+            this.bEventHostname = bEventHostname;
+        }
+
+        public String getFollow_status() {
+            return follow_status;
+        }
+
+        public void setFollow_status(String follow_status) {
+            this.follow_status = follow_status;
+        }
 
         public Integer getEventId() {
             return eventId;

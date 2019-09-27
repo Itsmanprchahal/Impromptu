@@ -74,7 +74,7 @@ public class PerviewEventActivity extends AppCompatActivity {
     Dialog progressDialog;
     String publish = "publish";
     String draft = "draft";
-    String B_token = "", S_Token = "";
+    String B_token = "", S_Token = "",edit;
     FragmentManager manager;
     static String Tic_Price;
     String id, title, desc, cate, address1, address2, date, To_date, FromTime, Username, frommilles, tomilles, sex, freeevent, attendeesNo, link1, link2, link3, postcode, city, ticketType, numbersTickets;
@@ -98,6 +98,7 @@ public class PerviewEventActivity extends AppCompatActivity {
         title = intent.getStringExtra("eventTitle");
         desc = intent.getStringExtra("eventDesc");
         cate = intent.getStringExtra("eventCate");
+        edit = intent.getStringExtra("editevent");
         address1 = intent.getStringExtra("address1");
         frommilles = intent.getStringExtra("fromtimeinmilles");
         tomilles = intent.getStringExtra("totimeinmilles");
@@ -181,7 +182,14 @@ public class PerviewEventActivity extends AppCompatActivity {
                     progressDialog.show();
                     if (editvalue!=null)
                     {
-                        publishdraft("Bearer "+B_token,editvalue);
+                        if (edit.equalsIgnoreCase("edit"))
+                        {
+                            publishdraft("Bearer "+B_token,editvalue);
+                        }else if (edit.equalsIgnoreCase("republish"))
+                        {
+                            PublishEvent("Bearer " + B_token);
+                        }
+
                     }else {
                     PublishEvent("Bearer " + B_token);}
                 } else {
@@ -190,7 +198,13 @@ public class PerviewEventActivity extends AppCompatActivity {
                     progressDialog.show();
                     if (editvalue!=null)
                     {
-                        publishdraft("Bearer "+S_Token,editvalue);
+                        if (edit.equalsIgnoreCase("edit"))
+                        {
+                            publishdraft("Bearer "+S_Token,editvalue);
+                        }else if (edit.equalsIgnoreCase("republish"))
+                        {
+                            NormalEvent("Bearer " + S_Token);
+                        }
 
                     }else {
                     NormalEvent("Bearer " + S_Token);}
@@ -204,7 +218,8 @@ public class PerviewEventActivity extends AppCompatActivity {
                 if (!B_token.equalsIgnoreCase("")) {
                     Add_Event_Activity.image_uris.clear();
                     progressDialog.show();
-                    BusinessDraft("Bearer " + B_token);
+                        BusinessDraft("Bearer " + B_token);
+
                 } else {
                     Add_Event_Activity.image_uris.clear();
                     progressDialog.show();

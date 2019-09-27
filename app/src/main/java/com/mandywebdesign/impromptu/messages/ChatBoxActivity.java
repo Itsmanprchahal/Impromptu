@@ -281,6 +281,7 @@ public class ChatBoxActivity extends AppCompatActivity {
                     NoInternet.dialog(ChatBoxActivity.this);
                 } else {
                     Toast.makeText(ChatBoxActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.d("HERE",t.getMessage());
                 }
             }
         });

@@ -13,7 +13,7 @@ public class RemainingTickets {
     private String message;
     @SerializedName("data")
     @Expose
-    private Integer data;
+    private Data data;
 
     public String getStatus() {
         return status;
@@ -31,12 +31,49 @@ public class RemainingTickets {
         this.message = message;
     }
 
-    public Integer getData() {
+    public Data getData() {
         return data;
     }
 
-    public void setData(Integer data) {
+    public void setData(Data data) {
         this.data = data;
     }
 
+    public class Data {
+
+        @SerializedName("remaining")
+        @Expose
+        private Integer remaining;
+        @SerializedName("booked")
+        @Expose
+        private Integer booked;
+        @SerializedName("total")
+        @Expose
+        private String total;
+
+        public Integer getRemaining() {
+            return remaining;
+        }
+
+        public void setRemaining(Integer remaining) {
+            this.remaining = remaining;
+        }
+
+        public Integer getBooked() {
+            return booked;
+        }
+
+        public void setBooked(Integer booked) {
+            this.booked = booked;
+        }
+
+        public String getTotal() {
+            return total;
+        }
+
+        public void setTotal(String total) {
+            this.total = total;
+        }
+
+    }
 }

@@ -12,10 +12,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.RetroGetMessages;
+import com.mandywebdesign.impromptu.Utils.Util;
 
 import java.util.ArrayList;
 
@@ -49,10 +51,12 @@ public class ChatBox_Adapter extends RecyclerView.Adapter<ChatBox_Adapter.ViewHo
         String mesg = arrayList.get(i).getMessage();
 
 
-        if (id.equals(userID)) {
+        if (!id.equals(userID)) {
             viewHolder.right.setText(arrayList.get(i).getMessage());
             Glide.with(context).load(arrayList.get(i).getUserAvatar()).into(viewHolder.rightUserImage);
             viewHolder.rightUserName.setText(arrayList.get(i).getUsername() );
+            viewHolder.righttime.setVisibility(View.GONE);
+            viewHolder.righttime.setText(Util.convertTimeStampDateTime(Long.parseLong(arrayList.get(i).getMessageDatetime())) );
             viewHolder.leftUsername.setVisibility(View.GONE);
             viewHolder.leftUserImage.setVisibility(View.GONE);
             viewHolder.left.setVisibility(View.GONE);
@@ -61,6 +65,8 @@ public class ChatBox_Adapter extends RecyclerView.Adapter<ChatBox_Adapter.ViewHo
             viewHolder.left.setText(arrayList.get(i).getMessage());
             Glide.with(context).load(arrayList.get(i).getUserAvatar()).into(viewHolder.leftUserImage);
             viewHolder.leftUsername.setText(arrayList.get(i).getUsername());
+            viewHolder.lefttime.setVisibility(View.GONE);
+            viewHolder.lefttime.setText(Util.convertTimeStampDateTime(Long.parseLong(arrayList.get(i).getMessageDatetime())));
             viewHolder.rightUserName.setVisibility(View.GONE);
             viewHolder.rightUserImage.setVisibility(View.GONE);
             viewHolder.right.setVisibility(View.GONE);
@@ -86,9 +92,9 @@ public class ChatBox_Adapter extends RecyclerView.Adapter<ChatBox_Adapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView message_text,messageUser;
-        TextView leftUsername, rightUserName,left,right;
+        TextView leftUsername, rightUserName,left,right,righttime,lefttime;
         LinearLayout  leftLayout;
-        ConstraintLayout rightLayout;
+        LinearLayout rightLayout;
         ImageView leftUserImage, rightUserImage;
         RelativeLayout layout;
 
@@ -103,6 +109,8 @@ public class ChatBox_Adapter extends RecyclerView.Adapter<ChatBox_Adapter.ViewHo
             rightUserImage = itemView.findViewById(R.id.right_iamge);
             rightLayout = itemView.findViewById(R.id.right);
             leftLayout = itemView.findViewById(R.id.left);
+            righttime = itemView.findViewById(R.id.righttime);
+            lefttime = itemView.findViewById(R.id.lefttime);
 
         }
     }

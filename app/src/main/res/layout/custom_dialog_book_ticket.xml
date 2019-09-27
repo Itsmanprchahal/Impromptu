@@ -67,39 +67,80 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:weightSum="5"
+            android:weightSum="8"
             android:orientation="horizontal">
 
-            <Spinner
-                android:id="@+id/dailog_spinner"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:layout_alignParentRight="true"
-                android:layout_weight="1"
+                android:layout_weight="2"
+                android:layout_gravity="center"
                 android:gravity="center"
-                android:text="Ticket Count"
-                android:textSize="18sp" />
+                android:orientation="vertical">
 
+                <Spinner
+                    android:id="@+id/dailog_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_alignParentRight="true"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Ticket Count"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:text="Total Tickets"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:layout_gravity="center"
                 android:fontFamily="@font/sfuitextlight"
                 android:text="X"
                 android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/dailog_ticket_price"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_gravity="center"
                 android:gravity="center"
-                android:fontFamily="@font/sfuitextlight"
-                android:text="6"
-                android:textSize="18sp" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/dailog_ticket_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:text="6"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:text="Tickets Price"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
 
 
             <TextView
@@ -108,53 +149,41 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/sfuitextlight"
                 android:text="="
+                android:layout_gravity="center"
                 android:gravity="center"
                 android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/dailog_total_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:fontFamily="@font/sfuitextlight"
-                android:text="£90"
-                android:textColor="@color/colorTheme"
-                android:textSize="22sp" />
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="6"
-            android:orientation="horizontal">
-
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:layout_gravity="center"
                 android:gravity="center"
-                android:fontFamily="@font/sfuitextlight"
-                android:text="Total Tickets"
-                android:textSize="12sp" />
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:fontFamily="@font/sfuitextlight"
-                android:gravity="center"
-                android:text="Tickets Price"
-                android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/dailog_total_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:text="£90"
+                    android:textColor="@color/colorTheme"
+                    android:textSize="22sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:fontFamily="@font/sfuitextlight"
-                android:text="Total Price"
-                android:textSize="12sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:text="Total Price"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
 
         </LinearLayout>
 

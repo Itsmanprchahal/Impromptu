@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.ItemTouchHelper;
 
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -95,7 +96,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
     static int count = 0;
     public static Bitmap bitmap;
     RelativeLayout link_layoutone, link_layouttwo, link_layoutthree;
-    String edit, value, edittitle, editdesc, editcate;
+    String edit, value, edittitle, editdesc, editcate, republish;
     public static ArrayList<String> image_uris = new ArrayList<>();
 
 
@@ -118,8 +119,13 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
 
 
         Intent intent = getIntent();
-        edit = intent.getStringExtra("editevent");
-        value = intent.getStringExtra("value");
+        if (intent != null) {
+            edit = intent.getStringExtra("editevent");
+            value = intent.getStringExtra("value");
+
+
+        }
+        republish = intent.getStringExtra("republish");
         init();
 
         addEvent_progress.setProgress(35);
@@ -135,14 +141,24 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        if (value != null) {
-            if (!S_Token.equalsIgnoreCase("")) {
-                editEVnet("Bearer " + S_Token, value);
 
-            } else if (!BToken.equalsIgnoreCase("")) {
-                editEVnet("Bearer " + BToken, value);
+        if (edit!=null)
+        {
+            if (edit.equalsIgnoreCase("edit")) {
+                if (!S_Token.equalsIgnoreCase("")) {
+                    editEVnet("Bearer " + S_Token, value);
+
+                } else if (!BToken.equalsIgnoreCase("")) {
+                    editEVnet("Bearer " + BToken, value);
+                }
+            } else if (edit.equalsIgnoreCase("republish")) {
+                if (!S_Token.equalsIgnoreCase("")) {
+                    editEVnet("Bearer " + S_Token, value);
+
+                } else if (!BToken.equalsIgnoreCase("")) {
+                    editEVnet("Bearer " + BToken, value);
+                }
             }
-
         }
 
         ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT,
@@ -179,8 +195,6 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
                         }
                     }
                 }
-
-
             }
 
             @Override
@@ -212,8 +226,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
             }
         });
 
-        if (!S_Token.equalsIgnoreCase(""))
-        {
+        if (!S_Token.equalsIgnoreCase("")) {
             createvent_addlink.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -224,7 +237,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
                 }
             });
 
-        }else {
+        } else {
             createvent_addlink.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -260,7 +273,6 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
         }
 
 
-
         hyperlinkone.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -281,13 +293,12 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
             @Override
             public void afterTextChanged(Editable editable) {
 
-                if (!S_Token.equalsIgnoreCase(""))
-                {
+                if (!S_Token.equalsIgnoreCase("")) {
                     if (editable.length() == 0) {
                         valid_image.setVisibility(View.GONE);
                         invalid_image.setVisibility(View.GONE);
                     }
-                }else {
+                } else {
                     if (editable.length() == 0) {
                         valid_image.setVisibility(View.GONE);
                         invalid_image.setVisibility(View.GONE);
@@ -415,7 +426,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
                 intent.putExtra("eventTitle", eventTitle);
                 intent.putExtra("eventDesc", eventDesc);
                 intent.putExtra("eventCate", categ);
-                intent.putExtra("editevent", "edit");
+                intent.putExtra("editevent", edit);
                 intent.putExtra("value", value);
                 intent.putExtra("link1", hyperlinkone.getText().toString());
                 intent.putExtra("link2", hyperlinktwo.getText().toString());
@@ -466,6 +477,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
         mAddPhoto = (TextView) findViewById(R.id.your_event_add_picture);
         recyclerView = (RecyclerView) findViewById(R.id.add_event_recyclerView);
         your_event_title = (EditText) findViewById(R.id.your_event_title);
+
         your_event_description = (EditText) findViewById(R.id.your_event_description);
         add_event_close = (ImageView) findViewById(R.id.add_event_close);
         createvent_addlink = (TextView) findViewById(R.id.createvent_addlink);

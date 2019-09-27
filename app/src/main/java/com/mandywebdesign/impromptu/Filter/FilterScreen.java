@@ -346,7 +346,7 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
 
             Calendar c = Calendar.getInstance();
 
-            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             formattedDate = df.format(c.getTime());
 
 
@@ -363,7 +363,7 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
 
             System.out.println("Current time ==> " + c.getTime());
 
-            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             formattedDate = df.format(c.getTime());
 
         }
@@ -434,10 +434,9 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
         final FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(getActivity());
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            //Toast.makeText(this, "Location Not Found...", Toast.LENGTH_SHORT).show();
+
             return;
         } else {
-
             Task<Location> locationTask = client.getLastLocation();
             if (locationTask != null) {
                 locationTask.addOnCompleteListener(new OnCompleteListener<Location>() {
@@ -464,7 +463,6 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
                                     if (address != null) {
                                         city = address.get(0).getAdminArea();
                                         cityname.setText(address.get(0).toString());
-//                                        Toast.makeText(getContext(), "141 "+address.get(0), Toast.LENGTH_SHORT).show();
                                     } else {
                                         cityname.setText("Address not found");
                                     }
@@ -500,12 +498,12 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
         Gmap = googleMap;
         Gmap.getUiSettings().setMyLocationButtonEnabled(true);
         Gmap.getUiSettings().setZoomControlsEnabled(true);
-//        Gmap.getUiSettings().setScrollGesturesEnabled(false);
+
 
 
         CameraPosition cameraPosition = CameraPosition.builder().target(new LatLng(Double.parseDouble(lat), Double.parseDouble(lng))).zoom(15).bearing(0).tilt(40).build();
         Gmap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-//        googleMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(lat), Double.parseDouble(lng))).title(city));
+
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             // here to request the missing permissions, and then overriding

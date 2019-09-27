@@ -10,6 +10,7 @@
     <color name="colorTrans">#0000</color>
     <color name="colorgrey">#E6E2E2</color>
     <color name="colordialog">#008577</color>
+    <color name="colorGold">#B6A119</color>
     <color name="colorLightBlack">#646161</color>
 
     <string-array name="movie_serial_bg">

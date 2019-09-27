@@ -17,21 +17,17 @@
             android:orientation="horizontal"
             android:id="@+id/left"
             android:visibility="visible"
-            android:padding="@dimen/_5sdp"
             android:layout_marginLeft="@dimen/_5sdp"
             android:layout_marginRight="@dimen/_20sdp"
             android:background="@drawable/roundtextview"
             tools:ignore="MissingConstraints">
 
             <com.makeramen.roundedimageview.RoundedImageView
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_25sdp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="@dimen/_5sdp"
-                app:riv_oval="true"
                 android:scaleType="fitXY"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginLeft="@dimen/_10sdp"
                 app:riv_corner_radius="5dp"
                 android:background="@drawable/profile"
                 android:id="@+id/left_iamge"
@@ -41,6 +37,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:padding="3dp"
+                android:layout_marginLeft="1dp"
+                android:background="@color/colorTheme"
                 app:layout_constraintLeft_toRightOf="@id/left_iamge"
                 tools:ignore="MissingConstraints">
 
@@ -49,8 +48,8 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:textColor="@color/colortextBlack"
-                    android:fontFamily="@font/circularstdblack"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/circularstdbold"
                     android:layout_gravity="start"
                     android:layout_marginLeft="@dimen/_5sdp"
                     android:id="@+id/lft_username"
@@ -60,19 +59,29 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colortextBlack"
+                    android:textColor="@color/white"
                     android:textSize="15dp"
                     android:hint="2"
                     android:fontFamily="@font/sfuitextlight"
                     android:id="@+id/left_text"
                     android:layout_margin="@dimen/_5sdp"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                   android:textAlignment="viewEnd"
+                    android:layout_margin="2dp"
+                    android:textSize="15dp"
+                    android:visibility="gone"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:textColor="@color/white"
+                    android:id="@+id/righttime"></TextView>
             </LinearLayout>
 
         </LinearLayout>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -82,14 +91,12 @@
         android:visibility="visible"
         android:id="@+id/right"
         android:layout_alignParentRight="true"
-        android:padding="@dimen/_5sdp"
         android:layout_marginRight="@dimen/_5sdp">
-
         <com.makeramen.roundedimageview.RoundedImageView
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:scaleType="fitXY"
-            app:riv_oval="true"
+            android:layout_marginRight="1dp"
             app:layout_constraintRight_toRightOf="parent"
             android:background="@drawable/profile"
             android:id="@+id/right_iamge"
@@ -99,8 +106,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="3dp"
+            android:layout_marginRight="1dp"
+            android:background="@color/white"
             android:layout_centerVertical="true"
-            app:layout_constraintRight_toLeftOf="@id/right_iamge"
             android:id="@+id/right_layout">
 
             <TextView
@@ -108,8 +117,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/right_username"
                 android:layout_gravity="end"
-                android:fontFamily="@font/circularstdblack"
-                android:textColor="@color/colortextwhite"
+                android:fontFamily="@font/circularstdbold"
+                android:textColor="@color/black"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:hint="1"
                 android:layout_marginRight="@dimen/_5sdp"
@@ -119,15 +128,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
-                android:textColor="@color/colortextwhite"
+                android:textColor="@color/black"
                 android:hint="2"
                 android:layout_margin="@dimen/_5sdp"
                 android:textAlignment="viewEnd"
                 android:fontFamily="@font/sfuitextlight"
                 android:id="@+id/right_text"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:visibility="gone"
+                android:fontFamily="@font/sfuitextlight"
+                android:id="@+id/lefttime"></TextView>
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+    </LinearLayout>
 
 </RelativeLayout>

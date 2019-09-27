@@ -54,7 +54,7 @@ public class NormalGetProfile extends AppCompatActivity {
     ImageView editprofile;
     Dialog progressDialog;
     FragmentManager manager;
-    TextView totlaEvents,pastEvents;
+    TextView totlaEvents,pastEvents,user_profile_Event,user_profile_Event_attend;
     public static String s_username, s_image,getS_username="",getProfileStatus="",getNormalUserImage,getUserImage,getgender;
     public static ArrayList<String> images = new ArrayList<>();
     public static ArrayList<String> eventTitle = new ArrayList<>();
@@ -66,6 +66,7 @@ public class NormalGetProfile extends AppCompatActivity {
     public static ArrayList<String> Answer = new ArrayList<>();
     public static ArrayList<String> QA_id = new ArrayList<>();
     static String prfileAge;
+    Intent intent;
 
 
     @Override
@@ -88,8 +89,30 @@ public class NormalGetProfile extends AppCompatActivity {
         init();
         listeners();
 
+        intent = getIntent();
+        if (intent!=null)
+        {
+            String userid = intent.getStringExtra("user_id");
+            getProfile(userToken,userid);
+            editprofile.setVisibility(View.GONE);
+            user_profile_Event.setVisibility(View.GONE);
+            pastEvents.setVisibility(View.GONE);
+            user_profile_Event_attend.setVisibility(View.GONE);
+            hostRecycler.setVisibility(View.GONE);
+            eventsAttendingRecycler.setVisibility(View.GONE);
+            totlaEvents.setVisibility(View.GONE);
+        }else {
+            getProfile(userToken,"");
+            editprofile.setVisibility(View.VISIBLE);
+            user_profile_Event.setVisibility(View.VISIBLE);
+            pastEvents.setVisibility(View.VISIBLE);
+            user_profile_Event_attend.setVisibility(View.VISIBLE);
+            hostRecycler.setVisibility(View.VISIBLE);
+            eventsAttendingRecycler.setVisibility(View.VISIBLE);
+            totlaEvents.setVisibility(View.VISIBLE);
+        }
 
-        getProfile(userToken);
+
         getLiveEvents(userToken);
         getattendingEvents(userToken);
 
@@ -205,8 +228,8 @@ public class NormalGetProfile extends AppCompatActivity {
 
     }
 
-    private void getProfile(String userToken) {
-        Call<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> call = WebAPI.getInstance().getApi().normalGetPRofile("Bearer " + userToken, "application/json");
+    private void getProfile(String userToken,String user_id) {
+        Call<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> call = WebAPI.getInstance().getApi().normalGetPRofile("Bearer " + userToken, "application/json",user_id);
         call.enqueue(new Callback<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile>() {
             @Override
             public void onResponse(Call<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> call, Response<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> response) {
@@ -228,13 +251,30 @@ public class NormalGetProfile extends AppCompatActivity {
                             getNormalUserImage =response.body().getData().get(0).getImage();
                             getgender = response.body().getData().get(0).getGender();
                             editor.putString("UserImage",getNormalUserImage);
-                            username.setText(getS_username);
+
+                            if (getS_username != null) {
+                                String[] name = getS_username.split(" ");
+                                if (name.length == 1) {
+                                    String Fname = name[0];
+                                    username.setText(Fname + " ");
+                                } else {
+                                    String Fname = name[0];
+                                    String Lname = name[1];
+                                    username.setText(Fname + " " + Lname.subSequence(0, 1));
+                                }
+
+
+                            } else {
+                                username.setText(getS_username);
+                            }
+
+//                            username.setText(getS_username);
                             normal_user_gender.setText(response.body().getData().get(0).getGender());
-                            user_profile_age.setText( "("+response.body().getData().get(0).getAge()+")");
+                            user_profile_age.setText( ","+response.body().getData().get(0).getAge()+"yo");
                             status.setText(getProfileStatus);
                             if (response.body().getData().get(0).getRating_points()!=null)
                             {
-                                totalpoints.setText(response.body().getData().get(0).getRating_points());
+                                totalpoints.setText(response.body().getData().get(0).getRating_points()+" Points");
                             }
 
                             Glide.with(NormalGetProfile.this).load(response.body().getData().get(0).getImage().toString()).into(userImage);
@@ -330,6 +370,8 @@ public class NormalGetProfile extends AppCompatActivity {
         pastEvents =findViewById(R.id.normal_user_total_past_events);
         normal_user_gender = findViewById(R.id.normal_user_gender);
         totalpoints = findViewById(R.id.totalpoints);
+        user_profile_Event = findViewById(R.id.user_profile_Event);
+        user_profile_Event_attend = findViewById(R.id.user_profile_Event_attend);
 
     }
 }

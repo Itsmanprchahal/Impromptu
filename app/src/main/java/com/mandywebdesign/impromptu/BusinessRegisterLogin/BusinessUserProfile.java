@@ -82,7 +82,6 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
     public static ArrayList<String> images = new ArrayList<>();
     public static ArrayList<String> pastImages = new ArrayList<>();
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -143,7 +142,7 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
 
     private void getUserPRofileData() {
         progressDialog.show();
-        Call<RetroGetProfile> call = WebAPI.getInstance().getApi().getProfile(user, accept);
+        Call<RetroGetProfile> call = WebAPI.getInstance().getApi().getProfile(user, accept,"");
         call.enqueue(new Callback<RetroGetProfile>() {
             @Override
             public void onResponse(Call<RetroGetProfile> call, Response<RetroGetProfile> response) {
@@ -190,7 +189,23 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
                             charity_number = response.body().getData().get(0).getCharityNumber().toString();
                             // Toast.makeText(getContext(), ""+charity_number, Toast.LENGTH_SHORT).show();
 
-                            UserName.setText(userName);
+                            if (userName != null) {
+                                String[] name = userName.split(" ");
+                                if (name.length == 1) {
+                                    String Fname = name[0];
+                                    UserName.setText(Fname + " ");
+                                } else {
+                                    String Fname = name[0];
+                                    String Lname = name[1];
+                                    UserName.setText(Fname + " " + Lname.subSequence(0, 1));
+                                }
+
+
+                            } else {
+                                UserName.setText(userName);
+                            }
+
+//                            UserName.setText(userName);
                             Address.setText(address1);
                             Address2.setText(address2);
                             AboutUs.setText(desc);

@@ -104,6 +104,16 @@ public class Past extends Fragment implements DiscreteScrollView.OnItemChangedLi
     }
 
     private void past_EVnets(final String bToken) {
+        name1.clear();
+        title.clear();
+        prices.clear();
+        time.clear();
+        addres.clear();
+        categois.clear();
+        images.clear();
+        event_id.clear();
+        rating.clear();
+        overall_rating.clear();
     progressDialog.show();
         Call<Normal_past_booked> call = WebAPI.getInstance().getApi().past_booked("Bearer " + bToken, "application/json");
         call.enqueue(new Callback<Normal_past_booked>() {
@@ -115,16 +125,7 @@ public class Past extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                         Normal_past_booked data = response.body();
                         List<Normal_past_booked.Datum> datumArrayList = data.getData();
-                        name1.clear();
-                        title.clear();
-                        prices.clear();
-                        time.clear();
-                        addres.clear();
-                        categois.clear();
-                        images.clear();
-                        event_id.clear();
-                        rating.clear();
-                        overall_rating.clear();
+
 
                         for (Normal_past_booked.Datum datum : datumArrayList) {
 

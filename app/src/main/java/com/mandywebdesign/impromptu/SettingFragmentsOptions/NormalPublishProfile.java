@@ -158,7 +158,7 @@ public class NormalPublishProfile extends AppCompatActivity {
 
         if (profileStstus.equals("1"))
         {
-            Call<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> call = WebAPI.getInstance().getApi().normalGetPRofile("Bearer " + userToken, "application/json");
+            Call<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> call = WebAPI.getInstance().getApi().normalGetPRofile("Bearer " + userToken, "application/json","");
             call.enqueue(new Callback<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile>() {
                 @Override
                 public void onResponse(Call<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> call, Response<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> response) {
@@ -176,18 +176,28 @@ public class NormalPublishProfile extends AppCompatActivity {
                             if (getGender.equals("Male"))
                             {
                                 male.setChecked(true);
+                                female.setVisibility(View.GONE);
                             }else if (getGender.equals("Female"))
                             {
                                 female.setChecked(true);
+                                male.setVisibility(View.GONE);
                             }else {
                                 male.setChecked(false);
                                 female.setChecked(false);
                             }
 
+
                             username.setText(getUsername);
+                            username.setClickable(false);
+                            username.setFocusable(false);
+
                             Glide.with(NormalPublishProfile.this).load(response.body().getData().get(0).getImage()).into(userImage);
                             new getImagefromURL(userImage).execute(NormalGetProfile.getNormalUserImage);
+
                             age.setText(getUserAge);
+                            age.setClickable(false);
+                            age.setFocusable(false);
+
                             about.setText(getUserStatus);
                             com.mandywebdesign.impromptu.Retrofit.NormalGetProfile normalGetProfile = response.body();
                             List<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile.Question> datum = normalGetProfile.getData().get(0).getQuestion();
@@ -255,6 +265,7 @@ public class NormalPublishProfile extends AppCompatActivity {
             }
         });
 
+
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -271,9 +282,6 @@ public class NormalPublishProfile extends AppCompatActivity {
                 }
             }
         });
-
-
-
 
         backonnormalpublish.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -68,7 +68,7 @@ public class Util {
 //        return sdf.format(currenTimeZone);
 
         // Create a DateFormatter object for displaying date in specified format.
-        DateFormat formatter = new SimpleDateFormat("hh:mm aa");
+        DateFormat formatter = new SimpleDateFormat("hh:mm");
 
         // Create a calendar object that will convert the date and time value in milliseconds to date.
         Calendar calendar = Calendar.getInstance();
@@ -90,7 +90,7 @@ public class Util {
         Calendar calendar = Calendar.getInstance();
         TimeZone tz = TimeZone.getDefault();
         calendar.add(Calendar.MILLISECOND, tz.getOffset(calendar.getTimeInMillis()));
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         sdf.setTimeZone(tz);
         Date currenTimeZone = new Date(timestamp * 1000);
         return sdf.format(currenTimeZone);

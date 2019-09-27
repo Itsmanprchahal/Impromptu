@@ -103,6 +103,14 @@ public class EventsFrag extends Fragment implements  DiscreteScrollView.OnItemCh
     }
 
     public void GetFavEvents(String token) {
+        name1_fav.clear();
+        title_fav.clear();
+        prices_fav.clear();
+        addres_fav.clear();
+        time_fav.clear();
+        categois_fav.clear();
+        images_fav.clear();
+        event_id_fav.clear();
         progressDialog.show();
         String token1 = "Bearer " + token;
         Call<NormalGetFavEvents> call = WebAPI.getInstance().getApi().getFavEvents(token1, "application/json");
@@ -115,14 +123,7 @@ public class EventsFrag extends Fragment implements  DiscreteScrollView.OnItemCh
 
                         NormalGetFavEvents data = response.body();
                         List<NormalGetFavEvents.Datum> datumArrayList = data.getData();
-                        name1_fav.clear();
-                        title_fav.clear();
-                        prices_fav.clear();
-                        addres_fav.clear();
-                        time_fav.clear();
-                        categois_fav.clear();
-                        images_fav.clear();
-                        event_id_fav.clear();
+
 
                         for (NormalGetFavEvents.Datum datum : datumArrayList) {
 

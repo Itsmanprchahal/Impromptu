@@ -48,7 +48,8 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:ignore="HardcodedDebugMode">
-        <activity android:name=".SettingFragmentsOptions.FlagInappropriate"></activity>
+        <activity android:name=".BusinessRegisterLogin.BusinessUserPRofileActivity"></activity>
+        <activity android:name=".SettingFragmentsOptions.FlagInappropriate" />
         <activity android:name=".SettingFragmentsOptions.TandCOptions" />
         <activity android:name=".SettingFragmentsOptions.HelpOptionsActivity" />
         <activity android:name=".BusinessRegisterLogin.BussinessProfileActivity3" />

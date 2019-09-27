@@ -44,12 +44,12 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@color/colorTheme"
-                android:text="Rate Now"
+                android:text="Relist"
                 android:textAllCaps="false"
                 android:visibility="gone"
                 android:textSize="10sp"
                 android:textColor="@color/white"
-                android:id="@+id/ratenow_bt"></Button>
+                android:id="@+id/relist"></Button>
 
             <CheckBox
                 android:id="@+id/book_event_favourite_checkBox"

@@ -95,6 +95,7 @@ public class BussinessProfileAcitivity1 extends AppCompatActivity {
         token = "Bearer " + sharedPreferences.getString("Usertoken", "");
         //Glide.with(getContext()).load(BusinessUserProfile.avatar).into(business_user_Image);
         progressDialog = ProgressBarClass.showProgressDialog(BussinessProfileAcitivity1.this);
+        progressDialog.dismiss();
 
         filesDir = getFilesDir();
 
@@ -154,6 +155,19 @@ public class BussinessProfileAcitivity1 extends AppCompatActivity {
             }else
             {
                 logout_profile_bt.setVisibility(View.VISIBLE);
+                final Dialog dialog = new Dialog(BussinessProfileAcitivity1.this);
+                dialog.setContentView(R.layout.welcomedialog);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.setCancelable(true);
+                dialog.show();
+
+                Button continue_bt = dialog.findViewById(R.id.continue_bt);
+                continue_bt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
             }
 
         }

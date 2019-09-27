@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEventDetailAcitvity;
+import com.mandywebdesign.impromptu.Home_Screen_Fragments.AddEvents.Add_Event_Activity;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.HostingTabs.History;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
@@ -69,7 +70,7 @@ public class Business_History_adapter extends RecyclerView.Adapter<Business_Hist
         editor = sharedPreferences.edit();
 
         viewHolder.overall_rating.setVisibility(View.GONE);
-        viewHolder.ratenow_bt.setVisibility(View.GONE);
+        viewHolder.relist.setVisibility(View.VISIBLE);
         viewHolder.date.setText(History.eventTime.get(i));
         viewHolder.eventName.setText(History.title.get(i));
 
@@ -116,6 +117,17 @@ public class Business_History_adapter extends RecyclerView.Adapter<Business_Hist
             }
         });
 
+        viewHolder.relist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String value = History.event_id.get(i);
+                Intent intent = new Intent(context, Add_Event_Activity.class);
+                intent.putExtra("editevent", "republish");
+                intent.putExtra("value", value);
+                context.startActivity(intent);
+            }
+        });
+
 
     }
 
@@ -130,7 +142,7 @@ public class Business_History_adapter extends RecyclerView.Adapter<Business_Hist
         ImageView eventImage;
         TextView eventName, eventAddress;
         TextView evetPrice, category, date;
-        Button ratenow_bt;
+        Button relist;
         RatingBar overall_rating;
 
         public ViewHolder(final View itemView) {
@@ -142,7 +154,7 @@ public class Business_History_adapter extends RecyclerView.Adapter<Business_Hist
             eventAddress = itemView.findViewById(R.id.custom_text1);
             category = itemView.findViewById(R.id.custom_category_name);
             date = itemView.findViewById(R.id.date);
-            ratenow_bt = itemView.findViewById(R.id.ratenow_bt);
+            relist = itemView.findViewById(R.id.relist);
             overall_rating = itemView.findViewById(R.id.overall_rating);
         }
     }

@@ -330,21 +330,21 @@ public class Setting extends Fragment {
                 }
             });
 
-            privancy.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getContext(), PrivancyActivity.class);
-                    startActivity(intent);
-                }
-            });
+//            privancy.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(getContext(), PrivancyActivity.class);
+//                    startActivity(intent);
+//                }
+//            });
 
-            FAQ.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getContext(), FAQs.class);
-                    startActivity(intent);
-                }
-            });
+//            FAQ.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(getContext(), FAQs.class);
+//                    startActivity(intent);
+//                }
+//            });
 
             contactus.setOnClickListener(new View.OnClickListener() {
                 @Override

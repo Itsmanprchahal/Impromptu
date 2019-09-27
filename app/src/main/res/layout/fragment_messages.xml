@@ -1,15 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".messages.Messages">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".messages.Messages"
+    android:orientation="vertical">
 
+   <androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="13dp">
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Messages"
+                android:textColor="@color/colortextBlack"
+                android:textSize="@dimen/toolbartext"
+                android:fontFamily="@font/circularstdbold"
+                android:gravity="center_horizontal"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+</androidx.cardview.widget.CardView>
 
     <RelativeLayout
         android:layout_margin="@dimen/defaultmargin"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
         <AutoCompleteTextView
             android:id="@+id/message_search"
@@ -55,4 +86,4 @@
     </RelativeLayout>
 
 
-</FrameLayout>
+</LinearLayout>

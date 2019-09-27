@@ -61,6 +61,7 @@ import com.mandywebdesign.impromptu.Retrofit.RetroGetEventData;
 import com.mandywebdesign.impromptu.Retrofit.RetroPostDraft;
 import com.mandywebdesign.impromptu.Retrofit.TotalTickets;
 import com.mandywebdesign.impromptu.Utils.Util;
+import com.mandywebdesign.impromptu.ui.BookEventActivity;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.Join_us;
 import com.mandywebdesign.impromptu.ui.NoInternet;
@@ -103,10 +104,10 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
     public static ArrayList<String> userName = new ArrayList<>();
     String BToken, S_Token, attendess, ticktprice, link1, link2, link3;
     ArrayList<String> image = new ArrayList<>();
-    static String id, cate, hostImage, hostUserID, decs, postcode, ticktType, timefrom, timeto, title, location, location2, city, gender, andendeenumber, numberoftickts, freeEvent, username, timeFrom, timeTo;
+    static String id, cate, hostImage, hostUserID, decs, postcode, ticktType, timefrom, timeto, title, location, location2, city, gender, andendeenumber,bookedtickets, numberoftickts, freeEvent, username, timeFrom, timeTo;
     int CurrentPage = 0;
     CheckBox eventdetail_favbt;
-    TextView seemessagesforthisevent;
+    TextView seemessagesforthisevent,ticketview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,6 +175,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                 publish.setVisibility(View.VISIBLE);
                 editevent.setImageDrawable(getResources().getDrawable(R.drawable.edit));
                 eventdetail_favbt.setVisibility(View.GONE);
+                checkInGuest.setVisibility(View.GONE);
 
                 if (!BToken.equalsIgnoreCase("")) {
                     getEventdata(BToken, value);
@@ -204,10 +206,13 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                 if (!BToken.equalsIgnoreCase("")) {
                     getEventdata(BToken, value);
                     getUsers(BToken, value);
+                    getRaminingEvents(BToken,value);
                 } else if (!S_Token.equalsIgnoreCase("")) {
                     getEventdata(S_Token, value);
                     getUsers(S_Token, value);
                     addFav(value);
+                    eventdetail_favbt.setVisibility(View.GONE);
+                    getRaminingEvents(S_Token,value);
                 }
             } else if (event_type.equals("history")) {
 
@@ -235,6 +240,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                     getEventdata(S_Token, value);
                     getUsers(S_Token, value);
                     linearLayout.setVisibility(View.GONE);
+                    checkInGuest.setVisibility(View.GONE);
                 }
             } else if (event_type.equals("past")) {
 
@@ -242,6 +248,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                     getEventdata(S_Token, value);
                     getUsers(S_Token, value);
                     linearLayout.setVisibility(View.GONE);
+                    checkInGuest.setVisibility(View.GONE);
                 }
             }else if (event_type.equals("CheckGuest"))
             {
@@ -432,6 +439,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                             freeEvent = datum.getFreeEvent();
                             ticktType = datum.getTicketType();
                             ticktprice = datum.getPrice();
+                            bookedtickets = datum.getTotal_book_tickets();
                             numberoftickts = datum.getNoOfTickets();
                             username = datum.getBEventHostname();
                             link1 = datum.getLink1();
@@ -743,6 +751,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
 
     private void init() {
 
+        ticketview = findViewById(R.id.ticketview);
         revenue = findViewById(R.id.revenue);
         event_price = findViewById(R.id.event_price);
         editevent = findViewById(R.id.editevent);
@@ -840,5 +849,40 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
             }
         });
 
+    }
+
+    //check remainig tickets
+    private void getRaminingEvents(String s_token, String id) {
+
+        Call<RemainingTickets> call = WebAPI.getInstance().getApi().remainingTickets("Bearer " + s_token, id);
+        call.enqueue(new Callback<RemainingTickets>() {
+            @Override
+            public void onResponse(Call<RemainingTickets> call, Response<RemainingTickets> response) {
+
+                if (response.body() != null) {
+                    String totalticket = String.valueOf(response.body().getData().getTotal());
+                    String bookedtciket = String.valueOf(response.body().getData().getBooked());
+                    if (bookedtciket.equals("null"))
+                    {
+                        bookedtciket = "0";
+                        ticketview.setText(" "+"("+"0"+"/"+totalticket+")");
+                    }else {
+                        ticketview.setText(" "+"("+bookedtciket+"/"+totalticket+")");
+                    }
+
+
+                } else {
+                    Intent intent = new Intent(BusinessEventDetailAcitvity.this, NoInternetScreen.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RemainingTickets> call, Throwable t) {
+                Toast.makeText(BusinessEventDetailAcitvity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

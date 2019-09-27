@@ -29,6 +29,8 @@ import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.RetroGetEventData;
 import com.mandywebdesign.impromptu.Utils.Util;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -40,12 +42,12 @@ public class ConfirmationActivity extends AppCompatActivity {
     ImageView QRIMAge, confirm_image, confirm_close;
     Button gotomyEvents;
     Bundle bundle;
-    TextView eventTitle, eventAddress, eventPrice;
+    TextView eventTitle, eventAddress, eventPrice,confirm_date,confirm_category;
     SharedPreferences preferences;
     String userToken, eventId, eventImage;
     FragmentManager fragmentManager;
     Dialog progressDialog;
-    public static String id, image, date, postcode, ticktprice, timefrom, timeto, title, location, city, gender, username;
+    public static String timeFrom,formattedDate,getFormattedDate,id, image, date, postcode, ticktprice, timefrom, timeto, title, location, city, gender, username;
     Intent intent;
 
     @Override
@@ -96,8 +98,41 @@ public class ConfirmationActivity extends AppCompatActivity {
                             timeto = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt()));
                             image = String.valueOf(datum.getFile().get(0).getImg().toString());
 
+                            if (timeto.startsWith("0")) {
+                                timeFrom = timeto.substring(1);
+                            } else {
+                                timeFrom = timeto.substring(0);
+                            }
+
+                            Calendar c = Calendar.getInstance();
+
+                            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                            formattedDate = df.format(c.getTime());
+                            c.add(Calendar.DATE, 1);
+
+                            getFormattedDate = df.format(c.getTime());
+
+                            System.out.println("Current time ==> " + c.getTime());
+
+                            if (formattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
+                                confirm_date.setText("Today at " + timeFrom);
+                            } else if (getFormattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
+                                confirm_date.setText("Tomorrow at " + timeFrom);
+                            } else {
+
+                                String date = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
+                                /*to change server date formate*/
+                                String s1 = date;
+                                String[] str = s1.split("/");
+                                String str1 = str[0];
+                                String str2 = str[1];
+                                String str3 = str[2];
+                                confirm_date.setText(str2 + "/" + str1 + "/" + str3 + " at " + timeFrom);
+                            }
+
+                            confirm_category.setText(datum.getCategory());
                             eventTitle.setText(title);
-                            eventAddress.setText(location + "\n" + timeto);
+                            eventAddress.setText(location);
                             eventPrice.setText( ticktprice);
                             Log.d("image", image);
 
@@ -177,5 +212,7 @@ public class ConfirmationActivity extends AppCompatActivity {
         eventAddress = (TextView) findViewById(R.id.confirm_address);
         eventPrice = (TextView) findViewById(R.id.confirm_price);
         confirm_close = (ImageView) findViewById(R.id.confirm_close);
+        confirm_date = findViewById(R.id.confirm_date);
+        confirm_category = findViewById(R.id.confirm_category);
     }
 }

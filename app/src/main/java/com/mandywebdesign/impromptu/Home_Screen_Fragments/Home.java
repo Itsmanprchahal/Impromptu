@@ -131,6 +131,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
         progressDialog = ProgressBarClass.showProgressDialog(getContext());
         progressDialog.dismiss();
 
+
         itemPositionPref = getContext().getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);
 
 
@@ -543,6 +544,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
             public void onResponse(Call<NormalGetEvent> call, Response<NormalGetEvent> response) {
                 if (response.body() != null) {
                     if (response.body().getStatus().equals("200")) {
+                        progressDialog.dismiss();
 
                         NormalGetEvent data = response.body();
                         List<NormalGetEvent.Datum> datumArrayList = data.getData();

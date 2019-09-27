@@ -44,7 +44,7 @@ public class See_Add_adpater extends RecyclerView.Adapter<See_Add_adpater.ViewHo
 
         Glide.with(context).load(userIamge.get(i)).into(viewHolder.imageView);
         viewHolder.userName.setText(userName.get(i));
-        viewHolder.bookedtickets.setText(totalticketbuy.get(i));
+        viewHolder.bookedtickets.setText("Tickets: "+totalticketbuy.get(i));
 
     }
 

@@ -114,6 +114,16 @@ public class History extends Fragment  implements  DiscreteScrollView.OnItemChan
     }
 
     private void histortEvnts(String bToken) {
+        name1.clear();
+        title.clear();
+        categois.clear();
+        prices.clear();
+        //images.clear();
+        event_id.clear();
+        eventTime.clear();
+        addres.clear();
+        ratingstatus.clear();
+        rating_overall.clear();
         progressDialog.show();
         Call<RetroHistoryEvents> call = WebAPI.getInstance().getApi().history("Bearer "+bToken,"application/json");
         call.enqueue(new Callback<RetroHistoryEvents>() {
@@ -124,16 +134,7 @@ public class History extends Fragment  implements  DiscreteScrollView.OnItemChan
 
                 if (response.isSuccessful()) {
                     if (response.body().getStatus().equals("200")) {
-                        name1.clear();
-                        title.clear();
-                        categois.clear();
-                        prices.clear();
-                        //images.clear();
-                        event_id.clear();
-                        eventTime.clear();
-                        addres.clear();
-                        ratingstatus.clear();
-                        rating_overall.clear();
+
                         for (RetroHistoryEvents.Datum datum : datumList) {
                             name1.add(datum.getBEventHostname());
                             title.add(datum.getTitle());

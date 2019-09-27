@@ -366,6 +366,12 @@
                                 android:text="4 people are going" />
 
                             <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/circularstdblack"
+                                android:id="@+id/ticketview"></TextView>
+
+                            <TextView
                                 android:id="@+id/BusinessEvent_detailsFragment_book_seeAll"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
