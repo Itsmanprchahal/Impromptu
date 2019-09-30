@@ -33,7 +33,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     JSONObject jsonObject;
     String title,message,click_action,invoiceId;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
@@ -52,57 +52,29 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //Log.d("data+++++++", "From: " + remoteMessage.getFrom());
 
-        // Check if message contains a data payload.
-        //In case when notification was send in "notification" parameter we need to check wheather data is null or not.
-
-        if (remoteMessage.getData() != null && remoteMessage.getData().size() > 0) {
-            Log.d("data++++++++++", "" + remoteMessage.getData());
-            Log.d("data++++++++++", "" + data);
-
-            sendNotification(remoteMessage.getData());
-
-
-        }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void sendNotification(Map<String, String> data) {
-
-
-        SharedPreferences preferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
-        String userToken = preferences.getString("Usertoken", "");
-        String socailTOken = preferences.getString("Socailtoken", "");
-        Intent intent = null;
-
-        if (!userToken.equalsIgnoreCase("")) {
-            intent = new Intent(this, Home_Screen.class);
-            intent.putExtra("type", data.get("type"));
-        } else if (!socailTOken.equalsIgnoreCase("")) {
-            intent = new Intent(this, Home_Screen.class);
-            intent.putExtra("type", data.get("type"));
-        } else {
-            intent = new Intent(this, MainActivity.class);
-        }
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         String channelId = "121";
-        CharSequence channelName = "Impromptu";
-        int importance = NotificationManager.IMPORTANCE_MAX;
-        @SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(channelId, channelName, importance);
-        notificationChannel.enableLights(true);
-        notificationChannel.setLightColor(getResources().getColor(R.color.colorTheme));
-        notificationChannel.enableVibration(true);
-        notificationChannel.setShowBadge(false);
-        notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-        notificationManager.createNotificationChannel(notificationChannel);
+        CharSequence channelName = "m8r8";
+        int importance = NotificationManager.IMPORTANCE_LOW;
+        NotificationChannel notificationChannel = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            notificationChannel = new NotificationChannel(channelId, channelName, importance);
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(getResources().getColor(R.color.colorTheme));
+            notificationChannel.enableVibration(true);
+            notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
 
-        intent = new Intent(click_action);
+
+        Intent intent = new Intent(click_action);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("Inid", invoiceId);
+        intent.putExtra("msg", message);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId)
                 .setContentTitle(title)
@@ -112,9 +84,75 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setAutoCancel(true)
+                .setOnlyAlertOnce(true)
                 .setContentIntent(pendingIntent);
 
-
         notificationManager.notify(0, notificationBuilder.build());
+
+        //Log.d("data+++++++", "From: " + remoteMessage.getFrom());
+
+        // Check if message contains a data payload.
+        //In case when notification was send in "notification" parameter we need to check wheather data is null or not.
+
+//        if (remoteMessage.getData() != null && remoteMessage.getData().size() > 0) {
+//            Log.d("data++++++++++", "" + remoteMessage.getData());
+//            Log.d("data++++++++++", "" + data);
+//
+//            sendNotification(remoteMessage.getData());
+//
+//
+//        }
     }
+
+//    @SuppressLint("NewApi")
+//    private void sendNotification(Map<String, String> data) {
+//
+//
+//        SharedPreferences preferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
+//        String userToken = preferences.getString("Usertoken", "");
+//        String socailTOken = preferences.getString("Socailtoken", "");
+//        Intent intent = null;
+//
+//        if (!userToken.equalsIgnoreCase("")) {
+//            intent = new Intent(this, Home_Screen.class);
+//            intent.putExtra("type", data.get("type"));
+//        } else if (!socailTOken.equalsIgnoreCase("")) {
+//            intent = new Intent(this, Home_Screen.class);
+//            intent.putExtra("type", data.get("type"));
+//        } else {
+//            intent = new Intent(this, MainActivity.class);
+//        }
+//
+//        NotificationManager notificationManager =
+//                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//
+//        String channelId = "121";
+//        CharSequence channelName = "Impromptu";
+//        int importance = NotificationManager.IMPORTANCE_MAX;
+//        @SuppressLint({"NewApi", "LocalSuppress", "WrongConstant"})
+//        NotificationChannel notificationChannel = new NotificationChannel(channelId, channelName, importance);
+//        notificationChannel.enableLights(true);
+//        notificationChannel.setLightColor(getResources().getColor(R.color.colorTheme));
+//        notificationChannel.enableVibration(true);
+//        notificationChannel.setShowBadge(false);
+//        notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+//        notificationManager.createNotificationChannel(notificationChannel);
+//
+//        intent = new Intent(click_action);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        intent.putExtra("Inid", invoiceId);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+//        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId)
+//                .setContentTitle(title)
+//                .setContentText(message)
+//                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+//                .setStyle(new NotificationCompat.BigTextStyle())
+//                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+//                .setSmallIcon(R.mipmap.ic_launcher)
+//                .setAutoCancel(true)
+//                .setContentIntent(pendingIntent);
+//
+//
+//        notificationManager.notify(0, notificationBuilder.build());
+//    }
 }

@@ -6,10 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -117,81 +119,82 @@ public class Hosts extends Fragment implements DiscreteScrollView.OnItemChangedL
         categois_fav.clear();
         images_fav.clear();
         event_id_fav.clear();
-        Call<FollowerPublish> publishCall = WebAPI.getInstance().getApi().followersPublish("Bearer "+s_token);
+        Call<FollowerPublish> publishCall = WebAPI.getInstance().getApi().followersPublish("Bearer " + s_token);
         publishCall.enqueue(new Callback<FollowerPublish>() {
             @Override
             public void onResponse(Call<FollowerPublish> call, Response<FollowerPublish> response) {
-                if (response.isSuccessful())
-                {
-                    FollowerPublish followerPublish = response.body();
-                    List<FollowerPublish.Datum> followerPublishList = followerPublish.getData();
+                if (response.isSuccessful()) {
 
-                    for (FollowerPublish.Datum datum: followerPublishList)
-                    {
-                        name1_fav.add(datum.getBEventHostname());
-                        title_fav.add(datum.getTitle());
-                        addres_fav.add(datum.getAddressline1());
-                        prices_fav.add(datum.getPrice());
-                        Log.d("cates", "" + datum.getEventId());
+                    if (response.body().getStatus().equals("200")) {
+                        FollowerPublish followerPublish = response.body();
+                        List<FollowerPublish.Datum> followerPublishList = followerPublish.getData();
 
-                        String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.","am").replaceFirst("p.m.","pm").replaceFirst("AM","am").replaceFirst("PM","pm");
+                        for (FollowerPublish.Datum datum : followerPublishList) {
+                            name1_fav.add(datum.getBEventHostname());
+                            title_fav.add(datum.getTitle());
+                            addres_fav.add(datum.getAddressline1());
+                            prices_fav.add(datum.getPrice());
+                            Log.d("cates", "" + datum.getEventId());
+
+                            String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
 
 
+                            if (time_t.startsWith("0")) {
+                                timeFrom = time_t.substring(1);
+                            } else {
+                                timeFrom = time_t.substring(0);
+                            }
 
-                        if (time_t.startsWith("0")) {
-                            timeFrom = time_t.substring(1);
-                        } else {
-                            timeFrom = time_t.substring(0);
+                            Calendar c = Calendar.getInstance();
+
+                            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                            formattedDate = df.format(c.getTime());
+                            c.add(Calendar.DATE, 1);
+
+                            getFormattedDate = df.format(c.getTime());
+                            // Toast.makeText(getContext(), "TOMORROW_DATE"+getFormattedDate, Toast.LENGTH_SHORT).show();
+
+                            System.out.println("Current time ==> " + c.getTime());
+
+                            if (formattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
+                                Time_fav.add("Today at " + timeFrom);
+                            } else if (getFormattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
+                                Time_fav.add("Tomorrow at " + timeFrom);
+                            } else {
+                                String date = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
+                                /*to change server date formate*/
+                                String s1 = date;
+                                String[] str = s1.split("/");
+                                String str1 = str[0];
+                                String str2 = str[1];
+                                String str3 = str[2];
+                                Time_fav.add(str2 + "/" + str1 + "/" + str3 + " at " + timeFrom);
+                            }
+
+                            categois_fav.add(datum.getCategory());
+                            images_fav.add(datum.getFile());
+                            event_id_fav.add(datum.getEventId().toString());
+
+
+                            adapter = new Hosting_fav_events_Adapter(getContext(), fragmentManager);
+                            recyclerView.setAdapter(adapter);
+                            recyclerView.getLayoutManager().scrollToPosition(Integer.parseInt(itemPosition));
+
+                            SharedPreferences.Editor editor = itemPositionPref.edit();
+                            editor.clear();
+                            editor.commit();
                         }
 
-                        Calendar c = Calendar.getInstance();
+                    } else if (response.body().getStatus().equals("400")) {
+                        noEvnets.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
 
-                        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-                        formattedDate = df.format(c.getTime());
-                        c.add(Calendar.DATE, 1);
-
-                        getFormattedDate = df.format(c.getTime());
-                        // Toast.makeText(getContext(), "TOMORROW_DATE"+getFormattedDate, Toast.LENGTH_SHORT).show();
-
-                        System.out.println("Current time ==> " + c.getTime());
-
-                        if (formattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
-                            Time_fav.add("Today at " + timeFrom);
-                        } else if (getFormattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
-                            Time_fav.add("Tomorrow at " + timeFrom);
-                        } else {
-                            String date = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
-                            /*to change server date formate*/
-                            String s1 = date;
-                            String[] str = s1.split("/");
-                            String str1 = str[0];
-                            String str2 = str[1];
-                            String str3 = str[2];
-                            Time_fav.add(str2 + "/" + str1 + "/" + str3 + " at " + timeFrom);
-                        }
-
-                        categois_fav.add(datum.getCategory());
-                        images_fav.add(datum.getFile());
-                        event_id_fav.add(datum.getEventId().toString());
-
-
-                        adapter = new Hosting_fav_events_Adapter(getContext(), fragmentManager);
-                        recyclerView.setAdapter(adapter);
-                        recyclerView.getLayoutManager().scrollToPosition(Integer.parseInt(itemPosition));
-
-                        SharedPreferences.Editor editor = itemPositionPref.edit();
-                        editor.clear();
-                        editor.commit();
+                    } else {
+                        progressDialog.dismiss();
+                        Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
                     }
-                }else if (response.body().getStatus().equals("400")) {
-                    noEvnets.setVisibility(View.VISIBLE);
-                    recyclerView.setVisibility(View.GONE);
-
-                }else {
-                    progressDialog.dismiss();
-                    Intent intent = new Intent(getContext(), NoInternetScreen.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
                 }
                 progressDialog.dismiss();
                 reverse();

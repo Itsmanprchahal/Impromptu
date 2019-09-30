@@ -13,6 +13,7 @@ import com.mandywebdesign.impromptu.Retrofit.FAQ;
 import com.mandywebdesign.impromptu.Retrofit.FollowUnfollow;
 import com.mandywebdesign.impromptu.Retrofit.FollowerPublish;
 import com.mandywebdesign.impromptu.Retrofit.GusetCheckIns;
+import com.mandywebdesign.impromptu.Retrofit.InappropriateBehaviour;
 import com.mandywebdesign.impromptu.Retrofit.NormalEventPrice;
 import com.mandywebdesign.impromptu.Retrofit.NormalFilterEvents;
 import com.mandywebdesign.impromptu.Retrofit.NormalGetEvent;
@@ -524,5 +525,13 @@ public interface RegisterApiInterface {
     Call<FollowUnfollow> followunfollow(
             @Header("Authorization") String token,
             @Query("follow_user_id") String follow_user_id
+    );
+
+    @POST("inappropriate_behaviour")
+    Call<InappropriateBehaviour> inappropriate_behaviour(
+            @Header("Authorization") String token,
+            @Query("event_id") String event_id,
+            @Query("user_type") String user_type,
+            @Query("description") String description
     );
 }

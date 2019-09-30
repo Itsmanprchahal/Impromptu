@@ -152,9 +152,9 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
                             Log.d("cates", "" + datum.getCategory());
 
                             String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.","am").replaceFirst("p.m.","pm").replaceFirst("AM","am").replaceFirst("PM","pm");
+                            String start_date = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
+                            String end_date = Util.convertTimeStampDate(Long.parseLong(datum.getEventEndDt()));
 
-
-                                final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
                                  if (time_t.startsWith("0")) {
                                     timeFrom = time_t.substring(1);
                                 } else {
@@ -163,21 +163,20 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
 
                                 Calendar c = Calendar.getInstance();
 
-                                SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                                 formattedDate = df.format(c.getTime());
                                 c.add(Calendar.DATE, 1);
 
                                 getFormattedDate = df.format(c.getTime());
-                                // Toast.makeText(getContext(), "TOMORROW_DATE"+getFormattedDate, Toast.LENGTH_SHORT).show();
 
                                 System.out.println("Current time ==> " + c.getTime());
 
-                                if (formattedDate.matches(datum.getDate())) {
+                                if (formattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
                                     time.add("Today at " + timeFrom);
-                                } else if (getFormattedDate.matches(datum.getDate())) {
+                                } else if (getFormattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
                                     time.add("Tomorrow at " + timeFrom);
                                 } else {
-                                    String date = datum.getDate();
+                                    String date =Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
                                     /*to change server date formate*/
                                     String s1 = date;
                                     String[] str = s1.split("/");

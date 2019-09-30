@@ -147,9 +147,9 @@ public class FilteredScreen extends Fragment implements DiscreteScrollView.OnIte
 
                             System.out.println("Current time ==> " + c.getTime());
 
-                            if (formattedDate.matches(datum.getDate())) {
+                            if (formattedDate.matches(Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())))) {
                                 event_time.add("Today at " + timeFrom);
-                            } else if (getFormattedDate.matches(datum.getDate())) {
+                            } else if (getFormattedDate.matches(Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())))) {
                                 event_time.add("Tomorrow at " + timeFrom);
                             }
 

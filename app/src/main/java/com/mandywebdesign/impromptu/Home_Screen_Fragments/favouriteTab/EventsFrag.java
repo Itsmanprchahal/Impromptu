@@ -148,7 +148,7 @@ public class EventsFrag extends Fragment implements  DiscreteScrollView.OnItemCh
 
                                 Calendar c = Calendar.getInstance();
 
-                                SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                                 formattedDate = df.format(c.getTime());
                                 c.add(Calendar.DATE, 1);
 

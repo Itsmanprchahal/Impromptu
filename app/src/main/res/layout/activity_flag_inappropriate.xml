@@ -98,6 +98,7 @@
                 android:fontFamily="@font/circularstdbold"></TextView>
 
             <RadioGroup
+                android:id="@+id/radiogroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -115,7 +116,7 @@
 
 
                 <RadioButton
-                    android:id="@+id/Attendee"
+                    android:id="@+id/AttendeeRB"
                     android:text="Attendee"
                     android:layout_weight="1"
                     android:fontFamily="@font/circularstdbold"
@@ -125,7 +126,7 @@
 
 
                 <RadioButton
-                    android:id="@+id/Other"
+                    android:id="@+id/OtherRB"
                     android:text="Other"
                     android:layout_weight="1"
                     android:fontFamily="@font/circularstdbold"
@@ -155,6 +156,15 @@
                 android:fontFamily="@font/circularstdbold"
                 android:textColor="@color/black"
                 android:textSize="@dimen/normalText"></EditText>
+
+            <Button
+                android:id="@+id/inappropriate_send"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/defaultmargin"
+                android:background="@drawable/button_color_theme"
+                android:text="Send"
+                android:textAllCaps="false"></Button>
         </LinearLayout>
     </ScrollView>
 

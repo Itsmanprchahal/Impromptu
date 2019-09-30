@@ -153,7 +153,7 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
 
                             Calendar c = Calendar.getInstance();
 
-                            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                             formattedDate = df.format(c.getTime());
                             c.add(Calendar.DATE, 1);
 
