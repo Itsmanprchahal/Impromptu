@@ -276,8 +276,9 @@ public class Messages extends Fragment {
                         eventImage.add(response.body().getData().get(i).getFile());
                         eventID.add(response.body().getData().get(i).getEventId().toString());
                         hostUserID.add(response.body().getData().get(i).getSenderId().toString());
-                        lastMEsg.add(response.body().getData().get(i).getLastmesg());
+                        lastMEsg.add(response.body().getData().get(i).getLastMessageShow());
                         MesgCount.add(response.body().getData().get(i).getCount().toString());
+                        lastmesgtime.add(response.body().getData().get(i).getLastMessageDatetime().toString());
                         setData();
                     }
                 }else {

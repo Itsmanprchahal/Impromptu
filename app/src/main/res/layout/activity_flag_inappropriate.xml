@@ -164,6 +164,7 @@
                 android:layout_margin="@dimen/defaultmargin"
                 android:background="@drawable/button_color_theme"
                 android:text="Send"
+                android:textColor="@color/white"
                 android:textAllCaps="false"></Button>
         </LinearLayout>
     </ScrollView>

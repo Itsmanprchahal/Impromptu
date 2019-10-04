@@ -172,24 +172,24 @@
                         android:shadowRadius="3"
                         tools:ignore="MissingConstraints" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/custom_category_name"
-                        android:layout_marginRight="@dimen/_20sdp"
-                        android:layout_marginTop="5dp"
-                        android:gravity="end"
-                        android:visibility="visible"
-                        android:text=""
-                        android:shadowColor="#A90A0A0A"
-                        android:shadowDx="2"
-                        android:shadowDy="2"
-                        android:shadowRadius="3"
-                        android:fontFamily="@font/sfuitextlight"
-                        android:textColor="@color/colorgrey"
-                        android:textSize="@dimen/_12sdp"/>
 
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/custom_category_name"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:gravity="start"
+                    android:visibility="visible"
+                    android:text=""
+                    android:shadowColor="#A90A0A0A"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="3"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:textColor="@color/colorgrey"
+                    android:textSize="@dimen/_12sdp"/>
                 <RatingBar
                     android:id="@+id/overall_rating"
                     android:layout_width="wrap_content"
@@ -208,6 +208,7 @@
                     android:layout_height="1dp"
                     android:layout_marginTop="@dimen/_10sdp"></View>
             </LinearLayout>
+
 
 
 

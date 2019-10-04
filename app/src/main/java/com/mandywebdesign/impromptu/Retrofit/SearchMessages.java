@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class SearchMessages {
+
     @SerializedName("status")
     @Expose
     private String status;
@@ -14,7 +15,7 @@ public class SearchMessages {
     private String message;
     @SerializedName("data")
     @Expose
-    private List<SearchMessages.Datum> data = null;
+    private List<Datum> data = null;
 
     public String getStatus() {
         return status;
@@ -32,11 +33,11 @@ public class SearchMessages {
         this.message = message;
     }
 
-    public List<SearchMessages.Datum> getData() {
+    public List<Datum> getData() {
         return data;
     }
 
-    public void setData(List<SearchMessages.Datum> data) {
+    public void setData(List<Datum> data) {
         this.data = data;
     }
 
@@ -63,18 +64,21 @@ public class SearchMessages {
         @SerializedName("count")
         @Expose
         private Integer count;
-
         @SerializedName("last_message_show")
         @Expose
-        private String lastmesg;
-
-        public String getLastmesg() {
-            return lastmesg;
-        }
-
-        public void setLastmesg(String lastmesg) {
-            this.lastmesg = lastmesg;
-        }
+        private String lastMessageShow;
+        @SerializedName("last_message_datetime")
+        @Expose
+        private String lastMessageDatetime;
+        @SerializedName("rating_status")
+        @Expose
+        private Integer ratingStatus;
+        @SerializedName("booking_status")
+        @Expose
+        private String bookingStatus;
+        @SerializedName("event_status")
+        @Expose
+        private String eventStatus;
 
         public Integer getSenderId() {
             return senderId;
@@ -130,6 +134,46 @@ public class SearchMessages {
 
         public void setCount(Integer count) {
             this.count = count;
+        }
+
+        public String getLastMessageShow() {
+            return lastMessageShow;
+        }
+
+        public void setLastMessageShow(String lastMessageShow) {
+            this.lastMessageShow = lastMessageShow;
+        }
+
+        public String getLastMessageDatetime() {
+            return lastMessageDatetime;
+        }
+
+        public void setLastMessageDatetime(String lastMessageDatetime) {
+            this.lastMessageDatetime = lastMessageDatetime;
+        }
+
+        public Integer getRatingStatus() {
+            return ratingStatus;
+        }
+
+        public void setRatingStatus(Integer ratingStatus) {
+            this.ratingStatus = ratingStatus;
+        }
+
+        public String getBookingStatus() {
+            return bookingStatus;
+        }
+
+        public void setBookingStatus(String bookingStatus) {
+            this.bookingStatus = bookingStatus;
+        }
+
+        public String getEventStatus() {
+            return eventStatus;
+        }
+
+        public void setEventStatus(String eventStatus) {
+            this.eventStatus = eventStatus;
         }
 
     }

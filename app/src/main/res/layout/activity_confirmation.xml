@@ -85,6 +85,7 @@
                         android:layout_height="100dp"
                         android:id="@+id/confirm_qrCode"
                         android:text="14dp"
+                        android:visibility="gone"
                         android:scaleType="fitXY"
                         android:fontFamily="@font/circularstdbold"
                         android:textColor="@color/colorTheme"

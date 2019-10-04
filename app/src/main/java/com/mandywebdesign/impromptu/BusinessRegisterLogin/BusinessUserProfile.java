@@ -276,8 +276,6 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
                             profileliveevents.add(datum.getCategory());
                             profileliveevents_id.add(String.valueOf(datum.getEventId()));
                             images.add(datum.getFile().toString());
-                            Collections.reverse(images);
-                            Collections.reverse(profileliveevents);
                             String total = String.valueOf(profileliveevents.size());
                             totalliveevents.setText("(" + String.valueOf(profileliveevents.size()) + ")");
                             progressDialog.dismiss();
@@ -377,6 +375,7 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
     private void reverseLive() {
         Collections.reverse(profileliveevents);
         Collections.reverse(images);
+        Collections.reverse(profileliveevents_id);
     }
 
 

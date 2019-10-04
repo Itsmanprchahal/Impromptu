@@ -12,6 +12,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,10 +32,11 @@ import retrofit2.Response;
 public class HelpOptionsActivity extends AppCompatActivity {
   SharedPreferences sharedPreferences, sharedPreferences1, socialpref;
   SharedPreferences.Editor editor;
-  String user, token, socialtoken;
+  String user, token, socialtoken,type;
   Dialog progressDialog;
   TextView setting_help_option,deleteAccount,FAQ,help_help_flag;
   ImageView back_on_help;
+  Intent intent;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,9 @@ public class HelpOptionsActivity extends AppCompatActivity {
     user = sharedPreferences.getString("Usertoken", "");
     token = "Bearer " + sharedPreferences.getString("Usertoken", "");
     socialtoken = "Bearer " + sharedPreferences.getString("Socailtoken", "");
+
+    intent = getIntent();
+    type = intent.getStringExtra("usertype");
 
     setting_help_option = (TextView) findViewById(R.id.help_help_guide);
     deleteAccount = findViewById(R.id.setting_deleteAccount_option);
@@ -91,13 +96,20 @@ public class HelpOptionsActivity extends AppCompatActivity {
       }
     });
 
-    help_help_flag.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        Intent intent = new Intent(HelpOptionsActivity.this,FlagInappropriate.class);
-        startActivity(intent);
-      }
-    });
+
+    if (type.equalsIgnoreCase("1"))
+    {
+      help_help_flag.setVisibility(View.GONE);
+    }else
+    {
+      help_help_flag.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          Intent intent = new Intent(HelpOptionsActivity.this,FlagInappropriate.class);
+          startActivity(intent);
+        }
+      });
+    }
   }
 
   public void ConfirmationDialog(final String usrToken) {

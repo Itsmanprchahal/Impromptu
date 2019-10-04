@@ -118,7 +118,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     static String hostUserID;
     static String remaini_tickets;
     static String timeFrom;
-    static String timeTo,usertype;
+    static String timeTo,usertype,eventType;
     String itemPos;
     static String value, S_token, fav_id, hostname, payvalue, spinnerposition;
     public static ArrayList<String> image = new ArrayList<>();
@@ -210,7 +210,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         if (intent != null) {
             value = intent.getStringExtra("event_id");
             payvalue = intent.getStringExtra("back_pay");
-
+            eventType = intent.getStringExtra("eventType");
             //  fav_id = bundle.getString("fav_id");
             hostname = intent.getStringExtra("hostname");
             hostimage = intent.getStringExtra("hostImage");
@@ -224,14 +224,18 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                     String Lname = name[1];
                     organiserName.setText(Fname + " " + Lname.subSequence(0, 1));
                 }
-
-
             } else {
                 organiserName.setText(hostname);
             }
-
-
             book_message.setVisibility(View.VISIBLE);
+            if (eventType!=null)
+            {
+                mBookEvent.setVisibility(View.GONE);
+                invite_layouit.setVisibility(View.GONE);
+            }else {
+                mBookEvent.setVisibility(View.VISIBLE);
+                invite_layouit.setVisibility(View.VISIBLE);
+            }
         }
 
 
@@ -815,38 +819,45 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             String start_date =Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
                             String end_date = Util.convertTimeStampDate(Long.parseLong(datum.getEventEndDt()));
 
+                            if (start_date.matches(end_date))
+                            {
+                                book_date.setText(start_date);
+                            }else {
+                                book_date.setText(start_date+ " - " + end_date);
+                            }
                             if (time_t.startsWith("0") && time_to.startsWith("0")) {
                                 timeFrom = time_t.substring(1);
                                 timeTo = time_to.substring(1);
                                 book_time.setText(timeFrom + " - " + timeTo);
-                                book_date.setText(start_date+ " - " + end_date);
+
+//                                book_date.setText(start_date+ " - " + end_date);
                             } else if (time_t.startsWith("0")) {
                                 timeFrom = time_t.substring(1);
                                 if (time_to.startsWith("0")) {
                                     timeTo = time_to.substring(1);
                                     book_time.setText(timeFrom + " - " + timeTo);
-                                    book_date.setText(start_date + " - " + end_date);
+//                                    book_date.setText(start_date + " - " + end_date);
                                 } else {
                                     timeTo = time_to.substring(0);
                                     book_time.setText(timeFrom + " - " + timeTo);
-                                    book_date.setText(start_date + " - " + end_date);
+//                                    book_date.setText(start_date + " - " + end_date);
                                 }
                             } else if (time_to.startsWith("0")) {
                                 timeTo = time_to.substring(1);
                                 if (time_t.startsWith("0")) {
                                     timeFrom = time_t.substring(1);
                                     book_time.setText(timeFrom + " - " + timeTo);
-                                    book_date.setText(start_date + " - " + end_date);
+//                                    book_date.setText(start_date + " - " + end_date);
                                 } else {
                                     timeFrom = time_t.substring(0);
                                     book_time.setText(timeFrom + " - " + timeTo);
-                                    book_date.setText(start_date + " - " + end_date);
+//                                    book_date.setText(start_date + " - " + end_date);
                                 }
                             } else if (!time_t.startsWith("0") && !time_to.startsWith("0")) {
                                 timeFrom = time_t.substring(0);
                                 timeTo = time_to.substring(0);
                                 book_time.setText(timeFrom + " - " + timeTo);
-                                book_date.setText(start_date + " - " + end_date);
+//                                book_date.setText(start_date + " - " + end_date);
                             }
 
 

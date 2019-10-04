@@ -199,6 +199,7 @@ public class Setting extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getContext(), HelpOptionsActivity.class);
+                    intent.putExtra("usertype","0");
                     startActivity(intent);
                 }
             });
@@ -301,6 +302,7 @@ public class Setting extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getContext(), HelpOptionsActivity.class);
+                    intent.putExtra("usertype","1");
                     startActivity(intent);
                 }
             });

@@ -157,11 +157,11 @@ public class ChatBoxActivity extends AppCompatActivity {
                     if (!BToken.equals("")) {
                         SendMesg("Bearer " + BToken, eventID, titl, message);
                         typemess.setText("");
-                        getChat("Bearer " + BToken, eventID, seen_status);
+//                        getChat("Bearer " + BToken, eventID, seen_status);
                     } else if (!S_Token.equals("")) {
                         SendMesg("Bearer " + S_Token, eventID, titl, message);
                         typemess.setText("");
-                        getChat("Bearer " + S_Token, eventID, seen_status);
+//                        getChat("Bearer " + S_Token, eventID, seen_status);
                     }
                 }
             }
@@ -192,12 +192,18 @@ public class ChatBoxActivity extends AppCompatActivity {
     }
 
 
-    public void SendMesg(String token, final String eventID, final String titl, String message) {
+    public void SendMesg(final String token, final String eventID, final String titl, String message) {
+        progressDialog.show();
         Call<RetroChat> call = WebAPI.getInstance().getApi().chat(token, eventID, titl, message, userId);
         call.enqueue(new Callback<RetroChat>() {
             @Override
             public void onResponse(Call<RetroChat> call, Response<RetroChat> response) {
                 if (response.body() != null) {
+
+
+//                    Toast.makeText(ChatBoxActivity.this, ""+response.body().getStatus(), Toast.LENGTH_SHORT).show();
+                        getChat( token, eventID, seen_status);
+
 
                 } else {
                     Intent intent = new Intent(ChatBoxActivity.this, NoInternetScreen.class);
@@ -250,6 +256,7 @@ public class ChatBoxActivity extends AppCompatActivity {
     }
 
     public void getChat(String token, String eventID, String seenStatus) {
+        progressDialog.show();
         Call<RetroGetMessages> chatCall = WebAPI.getInstance().getApi().getMessages(token, eventID, seen_status);
 
         chatCall.enqueue(new Callback<RetroGetMessages>() {
@@ -258,6 +265,7 @@ public class ChatBoxActivity extends AppCompatActivity {
                 if (response.body() != null) {
                     arrayList.clear();
                     if (response.body().getStatus().equals("200")) {
+                        progressDialog.dismiss();
                         arrayList.clear();
                         for (int i = 0; i < response.body().getData().size(); i++) {
                             RetroGetMessages.Datum datum = response.body().getData().get(i);

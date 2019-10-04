@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
@@ -90,19 +91,33 @@ public class NormalGetProfile extends AppCompatActivity {
         listeners();
 
         intent = getIntent();
+
         if (intent!=null)
         {
             String userid = intent.getStringExtra("user_id");
-            getProfile(userToken,userid);
-            editprofile.setVisibility(View.GONE);
-            user_profile_Event.setVisibility(View.GONE);
-            pastEvents.setVisibility(View.GONE);
-            user_profile_Event_attend.setVisibility(View.GONE);
-            hostRecycler.setVisibility(View.GONE);
-            eventsAttendingRecycler.setVisibility(View.GONE);
-            totlaEvents.setVisibility(View.GONE);
+
+            if (userid!=null)
+            {
+                getProfile(userToken,userid);
+                editprofile.setVisibility(View.GONE);
+                user_profile_Event.setVisibility(View.GONE);
+                pastEvents.setVisibility(View.GONE);
+                user_profile_Event_attend.setVisibility(View.GONE);
+                hostRecycler.setVisibility(View.GONE);
+                eventsAttendingRecycler.setVisibility(View.GONE);
+                totlaEvents.setVisibility(View.GONE);
+            }else {
+                getProfile(userToken,userid);
+                editprofile.setVisibility(View.VISIBLE);
+                user_profile_Event.setVisibility(View.VISIBLE);
+                pastEvents.setVisibility(View.VISIBLE);
+                user_profile_Event_attend.setVisibility(View.VISIBLE);
+                hostRecycler.setVisibility(View.VISIBLE);
+                eventsAttendingRecycler.setVisibility(View.VISIBLE);
+                totlaEvents.setVisibility(View.VISIBLE);
+            }
         }else {
-            getProfile(userToken,"");
+            Toast.makeText(this, "HERE ", Toast.LENGTH_SHORT).show();
             editprofile.setVisibility(View.VISIBLE);
             user_profile_Event.setVisibility(View.VISIBLE);
             pastEvents.setVisibility(View.VISIBLE);
@@ -251,6 +266,7 @@ public class NormalGetProfile extends AppCompatActivity {
                             getNormalUserImage =response.body().getData().get(0).getImage();
                             getgender = response.body().getData().get(0).getGender();
                             editor.putString("UserImage",getNormalUserImage);
+
 
                             if (getS_username != null) {
                                 String[] name = getS_username.split(" ");

@@ -538,7 +538,6 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
                     try {
                         List<Address> address = (List<Address>) geocoder.getFromLocation(Double.valueOf(latt), Double.valueOf(lnng), 1);
                         city = address.get(0).getLocality();
-                        Toast.makeText(getContext(), ""+address.get(0).getLocale(), Toast.LENGTH_SHORT).show();
                         if (address != null) {
                             city = address.get(0).getAddressLine(0);
                             cityname.setText(address.get(0).getAddressLine(0));

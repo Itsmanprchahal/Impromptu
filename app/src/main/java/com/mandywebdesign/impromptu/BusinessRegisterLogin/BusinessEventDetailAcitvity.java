@@ -460,41 +460,46 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                             String time_to = Util.convertTimeStampToTime(Long.parseLong(datum.getEventEndDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM","am").replaceFirst("PM","pm");
                             String start_date = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
                             String end_date = Util.convertTimeStampDate(Long.parseLong(datum.getEventEndDt()));
-
+                            if (start_date.matches(end_date))
+                            {
+                                datetime.setText(start_date);
+                            }else {
+                                datetime.setText(start_date+ " - " + end_date);
+                            }
 
 
                             if (time_t.startsWith("0") && time_to.startsWith("0")) {
                                 timeFrom = time_t.substring(1);
                                 timeTo = time_to.substring(1);
                                 BusinessEvent_detailsFragment_book_time.setText(timeFrom + " - " + timeTo);
-                                datetime.setText(start_date+" - " + end_date );
+//                                datetime.setText(start_date+" - " + end_date );
                             } else if (time_t.startsWith("0")) {
                                 timeFrom = time_t.substring(1);
                                 if (time_to.startsWith("0")) {
                                     timeTo = time_to.substring(1);
                                     BusinessEvent_detailsFragment_book_time.setText(timeFrom + " - " + timeTo);
-                                    datetime.setText(start_date+ " - " + end_date );
+//                                    datetime.setText(start_date+ " - " + end_date );
                                 } else {
                                     timeTo = time_to.substring(0);
                                     BusinessEvent_detailsFragment_book_time.setText(timeFrom + " - " + timeTo);
-                                    datetime.setText(start_date+ " - " + end_date );
+//                                    datetime.setText(start_date+ " - " + end_date );
                                 }
                             } else if (time_to.startsWith("0")) {
                                 timeTo = time_to.substring(1);
                                 if (time_t.startsWith("0")) {
                                     timeFrom = time_t.substring(1);
                                     BusinessEvent_detailsFragment_book_time.setText(timeFrom + " - " + timeTo);
-                                    datetime.setText(start_date+ " - " + end_date );
+//                                    datetime.setText(start_date+ " - " + end_date );
                                 } else {
                                     timeFrom = time_t.substring(0);
                                     BusinessEvent_detailsFragment_book_time.setText(timeFrom + " - " + timeTo);
-                                    datetime.setText(start_date+ " - " + end_date );
+//                                    datetime.setText(start_date+ " - " + end_date );
                                 }
                             } else if (!time_t.startsWith("0") && !time_to.startsWith("0")) {
                                 timeFrom = time_t.substring(0);
                                 timeTo = time_to.substring(0);
                                 BusinessEvent_detailsFragment_book_time.setText(timeFrom + " - " + timeTo);
-                                datetime.setText(start_date+ " - " + end_date );
+//                                datetime.setText(start_date+ " - " + end_date );
                             }
 
 

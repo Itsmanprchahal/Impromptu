@@ -92,7 +92,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             viewHolder.mesgCount.setVisibility(View.VISIBLE);
             viewHolder.mesgCount.setText(Messages.MesgCount.get(i));
             viewHolder.ticketType.setTypeface(viewHolder.mesgCount.getTypeface(), Typeface.BOLD);
-            viewHolder.ticketType.setTextColor(context.getColor(R.color.colortextBlack));
+//            viewHolder.ticketType.setTextColor(context.getColor(R.color.colortextBlack));
             Typeface typeface = ResourcesCompat.getFont(context, R.font.circularstdbold);
             viewHolder.ticketType.setTypeface(typeface);
         }

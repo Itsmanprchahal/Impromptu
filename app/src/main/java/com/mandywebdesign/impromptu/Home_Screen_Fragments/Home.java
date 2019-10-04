@@ -573,6 +573,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                             String time_t = Util.convertTimeStampToTime(Long.parseLong(normalGetEvent.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM","am").replaceFirst("PM","pm");
 
+                            Log.d("eventTIme",time_t);
 
                             if (time_t.startsWith("0")) {
                                 timeFrom = time_t.substring(1);

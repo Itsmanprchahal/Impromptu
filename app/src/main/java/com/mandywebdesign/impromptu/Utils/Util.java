@@ -68,7 +68,7 @@ public class Util {
 //        return sdf.format(currenTimeZone);
 
         // Create a DateFormatter object for displaying date in specified format.
-        DateFormat formatter = new SimpleDateFormat("hh:mm");
+        DateFormat formatter = new SimpleDateFormat("hh:mm a");
 
         // Create a calendar object that will convert the date and time value in milliseconds to date.
         Calendar calendar = Calendar.getInstance();
