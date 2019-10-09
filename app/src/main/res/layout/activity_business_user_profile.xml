@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".BusinessRegisterLogin.BusinessUserPRofileActivity">
+
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            app:cardElevation="10dp"
+            tools:ignore="MissingConstraints">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/back"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/bacck_obviewbusnessprofile"></ImageView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/circularstdbold"
+                android:gravity="center_horizontal"
+                android:padding="@dimen/_7sdp"
+                android:text="Profile"
+                android:textColor="@color/colortextBlack"
+                android:textSize="@dimen/toolbartext"
+                tools:ignore="MissingConstraints" />
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/_UserPRofile_edit_busines_publish_profile"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginRight="@dimen/defaultmargin"
+                android:src="@drawable/edit"
+                tools:ignore="MissingConstraints" />
+
+        </androidx.cardview.widget.CardView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="60dp"
+                android:background="@color/colortextwhite"
+                android:padding="@dimen/defaultmargin"
+                >
+
+
+                <TextView
+                    android:id="@+id/UserProfile_business__publishprofile_user_Name"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/circularstdbold"
+                    android:textColor="@color/colortextBlack"
+                    android:textSize="@dimen/toolbartext"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints" />
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/UserProfile_business_profilepublish_user_Image"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_120sdp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:riv_corner_radius="10dp"
+                    tools:ignore="MissingConstraints" />
+
+
+                <TextView
+                    android:id="@+id/UserProfile_business__publishprofile_address1"
+                    android:layout_width="@dimen/_150sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginRight="@dimen/defaultmargin"
+                    android:textColor="@color/colortextBlack"
+                    android:maxLines="5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/UserProfile_business_profilepublish_user_Image"
+                    app:layout_constraintTop_toBottomOf="@id/UserProfile_business__publishprofile_user_Name"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/UserProfile_business__publishprofile_address2"
+                    android:layout_width="@dimen/_150sdp"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/colortextBlack"
+                    app:layout_constraintTop_toBottomOf="@id/UserProfile_business__publishprofile_address1"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/UserProfile_aboutus_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="About Us"
+                    android:fontFamily="@font/circularstdblack"
+                    android:textColor="@color/colortextBlack"
+                    android:textSize="@dimen/normalText"
+                    app:layout_constraintTop_toBottomOf="@id/UserProfile_business_profilepublish_user_Image"
+                    tools:ignore="MissingConstraints" />
+
+                <com.borjabravo.readmoretextview.ReadMoreTextView
+                    android:id="@+id/userProfile_aboutUs_Desc_TV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:text="We are a family run Turkish restaurant that has been in South Ken since 1972. Always fresh, Always great value"
+                    android:textAlignment="textStart"
+                    app:trimLength="150"
+                    app:trimMode="trimModeLength"
+                    app:trimCollapsedText="Show less"
+                    app:trimExpandedText="Show more"
+                    app:colorClickableText="@color/colorTheme"
+                    android:textColor="@color/colortextBlack"
+                    app:layout_constraintTop_toBottomOf="@id/UserProfile_aboutus_tv" />
+
+                <LinearLayout
+                    android:id="@+id/social_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/userProfile_aboutUs_Desc_TV">
+
+
+                    <ImageButton
+                        android:id="@+id/UserPRofile_web_url_bt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="onClick"
+                        android:background="#00000000"
+                        android:src="@drawable/ic_weburl" />
+
+
+                    <ImageButton
+                        android:id="@+id/userProfile_fb_url_bt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="onClick"
+                        android:background="#00000000"
+                        android:src="@drawable/ic_facebookurl" />
+
+
+                    <ImageButton
+                        android:id="@+id/UserProfile_insta_url_bt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="onClick"
+                        android:background="#00000000"
+                        android:src="@drawable/ic_instagramurl" />
+
+
+                    <ImageButton
+                        android:id="@+id/UserProfile_twiter_url_bt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="onClick"
+                        android:background="#00000000"
+                        android:src="@drawable/ic_twitterurl" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/UserProfie_live_event_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:fontFamily="@font/circularstdbold"
+                    android:text="Live Events"
+                    android:textColor="@color/colortextBlack"
+                    app:layout_constraintTop_toBottomOf="@id/social_layout"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/UserProfile_live_event_texttotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="365dp"
+                    android:layout_marginLeft="365dp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:fontFamily="@font/circularstdbold"
+                    android:text="0"
+                    android:textColor="@color/colortextBlack"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/social_layout"
+                    tools:ignore="MissingConstraints" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/UserProfile_business_publish_live_events_recylerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    app:layout_constraintTop_toBottomOf="@id/UserProfie_live_event_text"
+                    tools:ignore="MissingConstraints"></androidx.recyclerview.widget.RecyclerView>
+
+
+                <TextView
+                    android:id="@+id/UserProfile_past_events_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:fontFamily="@font/circularstdbold"
+                    android:text="Past Events"
+                    android:textColor="@color/colortextBlack"
+                    app:layout_constraintTop_toBottomOf="@id/UserProfile_business_publish_live_events_recylerview"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/UserProfile_past_events_tv_totall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:fontFamily="@font/circularstdbold"
+                    android:gravity="end"
+                    android:text="0"
+                    android:textColor="@color/colortextBlack"
+                    app:layout_constraintTop_toBottomOf="@id/UserProfile_business_publish_live_events_recylerview"
+                    tools:ignore="MissingConstraints" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/UserProfile_business_publish__pastevents_recylerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:layout_marginBottom="55dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/UserProfile_past_events_tv"></androidx.recyclerview.widget.RecyclerView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>
