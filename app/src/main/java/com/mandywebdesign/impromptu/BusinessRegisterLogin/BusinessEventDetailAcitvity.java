@@ -230,6 +230,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                 if (!S_Token.equalsIgnoreCase("")) {
                     getEventdata(S_Token, value);
                     getUsers(S_Token, value);
+                    checkInGuest.setVisibility(View.GONE);
                     if (!otherEvnts.equalsIgnoreCase("")) {
                         linearLayout.setVisibility(View.GONE);
                     }

@@ -117,7 +117,6 @@ public class NormalGetProfile extends AppCompatActivity {
                 totlaEvents.setVisibility(View.VISIBLE);
             }
         }else {
-            Toast.makeText(this, "HERE ", Toast.LENGTH_SHORT).show();
             editprofile.setVisibility(View.VISIBLE);
             user_profile_Event.setVisibility(View.VISIBLE);
             pastEvents.setVisibility(View.VISIBLE);
@@ -150,7 +149,7 @@ public class NormalGetProfile extends AppCompatActivity {
                         liveevent_id.clear();
 
                         for (RetroLiveEvents.Datum datum : datumList) {
-                            eventTitle.add(datum.getCategory());
+                            eventTitle.add(datum.getTitle());
                             images.add(datum.getFile());
                             liveevent_id.add(String.valueOf(datum.getEventId()));
                             totlaEvents.setText("( " + String.valueOf(images.size()) + " )");

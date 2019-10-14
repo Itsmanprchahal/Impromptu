@@ -58,6 +58,18 @@ public class Booked_User {
         @SerializedName("ticket_type")
         @Expose
         private String ticketType;
+
+        public String getUtype() {
+            return utype;
+        }
+
+        public void setUtype(String utype) {
+            this.utype = utype;
+        }
+
+        @SerializedName("utype")
+        @Expose
+        private String utype;
         @SerializedName("total_tickets")
         @Expose
         private Integer totalTickets;

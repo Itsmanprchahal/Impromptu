@@ -4,14 +4,21 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessUserPRofileActivity;
+import com.mandywebdesign.impromptu.BusinessRegisterLogin.SeeAll_activity;
 import com.mandywebdesign.impromptu.R;
+import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalGetProfile;
+import com.mandywebdesign.impromptu.ui.BookEventActivity;
 
 import java.util.ArrayList;
 
@@ -40,11 +47,25 @@ public class See_Add_adpater extends RecyclerView.Adapter<See_Add_adpater.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull See_Add_adpater.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull See_Add_adpater.ViewHolder viewHolder, final int i) {
 
         Glide.with(context).load(userIamge.get(i)).into(viewHolder.imageView);
         viewHolder.userName.setText(userName.get(i));
         viewHolder.bookedtickets.setText("Tickets: "+totalticketbuy.get(i));
+
+        viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (SeeAll_activity.userType.get(i).equals("normal"))
+                {
+                    Intent intent = new Intent(context, NormalGetProfile.class);
+                    intent.putExtra("user_id",SeeAll_activity.userID.get(i));
+                    context.startActivity(intent);
+                }
+
+            }
+        });
 
     }
 

@@ -43,6 +43,8 @@ public class SeeAll_activity extends AppCompatActivity {
     public static ArrayList<String> userImage = new ArrayList<>();
     public static ArrayList<String> totalticketbuy = new ArrayList<>();
     public static ArrayList<String> userName = new ArrayList<>();
+    public static ArrayList<String> userType = new ArrayList<>();
+    public static ArrayList<String> userID = new ArrayList<>();
     String BToken,S_Token;
     Intent intent;
 
@@ -108,13 +110,17 @@ public class SeeAll_activity extends AppCompatActivity {
                     Booked_User booked_users = response.body();
                     List<Booked_User.Datum> bookedUsersList = booked_users.getData();
                     userImage.clear();
+                    userID.clear();
+                    userName.clear();
                     totalticketbuy.clear();
 
                     if (response.body().getStatus().equals("200")) {
                         for (int i = 0; i < bookedUsersList.size(); i++) {
                             userImage.add(response.body().getData().get(i).getFile());
                             userName.add(response.body().getData().get(i).getUsername());
-                            totalticketbuy.add(response.body().getData().get(i).getTotalTickets().toString());
+                            userType.add(response.body().getData().get(i).getUtype());
+                            userID.add(String.valueOf(response.body().getData().get(i).getUserid()));
+                           totalticketbuy.add(response.body().getData().get(i).getTotalTickets().toString());
 
                             Log.d("userImage", "" + response.body().getData().get(i).getFile());
                             progressDialog.dismiss();

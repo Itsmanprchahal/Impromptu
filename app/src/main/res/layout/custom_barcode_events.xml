@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/QR_image"
                 app:layout_constraintRight_toRightOf="parent"
-                android:text="0"
+                android:text=""
                 android:textColor="@color/white"
                 android:fontFamily="@font/sfuitextlight"
                 android:shadowColor="#A90A0A0A"

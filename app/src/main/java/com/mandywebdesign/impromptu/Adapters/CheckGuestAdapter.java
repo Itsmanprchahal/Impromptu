@@ -5,16 +5,22 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.mandywebdesign.impromptu.BusinessRegisterLogin.CheckGuestActivity;
+import com.mandywebdesign.impromptu.BusinessRegisterLogin.SeeAll_activity;
 import com.mandywebdesign.impromptu.Models.CheckInGuest;
 import com.mandywebdesign.impromptu.R;
+import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalGetProfile;
 
 import java.util.ArrayList;
 
@@ -40,9 +46,9 @@ public class CheckGuestAdapter extends RecyclerView.Adapter<CheckGuestAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
 
-        CheckInGuest.Datum datum = categoryArrayList.get(i);
+        final CheckInGuest.Datum datum = categoryArrayList.get(i);
 
 
         Glide.with(context).load(datum.getFile()).into(viewHolder.imageView);
@@ -57,6 +63,19 @@ public class CheckGuestAdapter extends RecyclerView.Adapter<CheckGuestAdapter.Vi
         } else {
             viewHolder.custom_guest_check.setImageResource(R.drawable.ic_checked);
         }
+
+
+
+        viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, NormalGetProfile.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra("user_id", CheckGuestActivity.userID.get(i));
+                context.startActivity(intent);
+//                Toast.makeText(context, ""+datum.getUserid(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 

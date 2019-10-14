@@ -121,7 +121,7 @@
 
                         <TextView
                             android:id="@+id/user_profile_age"
-                            android:layout_width="@dimen/_40sdp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/sfuitextlight"
                             android:text=",Age"

@@ -275,7 +275,7 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
                         profileliveevents.clear();
                         images.clear();
                         for (RetroLiveEvents.Datum datum : datumArrayList) {
-                            profileliveevents.add(datum.getCategory());
+                            profileliveevents.add(datum.getTitle());
                             profileliveevents_id.add(String.valueOf(datum.getEventId()));
                             images.add(datum.getFile().toString());
                             String total = String.valueOf(profileliveevents.size());
@@ -329,7 +329,7 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
                         profilePastEvents.clear();
                         pastImages.clear();
                         for (RetroHistoryEvents.Datum datum : datumArrayList) {
-                            profilePastEvents.add(datum.getCategory());
+                            profilePastEvents.add(datum.getTitle());
                             Collections.reverse(profilePastEvents);
                             pastImages.add(datum.getFile());
                             Collections.reverse(profilePastEvents);

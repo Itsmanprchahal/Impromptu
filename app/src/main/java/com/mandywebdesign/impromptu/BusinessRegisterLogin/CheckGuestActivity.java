@@ -43,6 +43,7 @@ public class CheckGuestActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     TextView checkInguset;
     static   String id,eventType;
+    public static ArrayList<String> userID = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,13 +110,13 @@ finish();
             @Override
             public void onResponse(Call<CheckInGuest> call, Response<CheckInGuest> response) {
 
-
+                    checkinguset.clear();
                 if (response.body()!=null) {
 
                     if (response.body().getStatus().equals("200")) {
                         for (int i = 0; i < response.body().getData().size(); i++) {
                             checkinguset.add(response.body().getData().get(i));
-
+                            userID.add(String.valueOf(response.body().getData().get(i).getUserid()));
                             setDat(checkinguset);
 
                         }

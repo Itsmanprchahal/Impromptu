@@ -93,19 +93,7 @@ public class FavouriteEventAdapter extends RecyclerView.Adapter<FavouriteEventAd
                 editor.commit();
                 context.startActivity(intent);
 
-//                Bundle bundle = new Bundle();
-//                String value = EventsFrag.event_id_fav.get(i);
-//                bundle.putString("event_id", value);
-//                bundle.putString("eventType","fav");
-//                bundle.putString("other_events","other_events");
-//                editor.putString(Constants.itemPosition, String.valueOf(i));
-//                editor.commit();
-//
-//                BusinessEvent_detailsFragment businessEvent_detailsFragment = new BusinessEvent_detailsFragment();
-//                businessEvent_detailsFragment.setArguments(bundle);
-//
-//                manager.beginTransaction().replace(R.id.home_frame_layout, businessEvent_detailsFragment).addToBackStack(null).commit();
-            }
+          }
         });
     }
 

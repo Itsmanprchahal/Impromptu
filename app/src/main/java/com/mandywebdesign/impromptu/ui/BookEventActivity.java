@@ -707,7 +707,13 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                     if (response.body().getStatus().equals("200")) {
                         for (int i = 0; i < bookedUsersList.size(); i++) {
                             userImage.add(response.body().getData().get(i).getFile());
-                            peoplegoing.setText(bookedUsersList.size() + " People are going");
+                            if (bookedUsersList.size()==1)
+                            {
+                                peoplegoing.setText(bookedUsersList.size() + " Person is going");
+                            }else {
+                                peoplegoing.setText(bookedUsersList.size()+" People are going");
+                            }
+
                             Log.d("userImage", "" + response.body().getData().get(i).toString());
 
                         }
