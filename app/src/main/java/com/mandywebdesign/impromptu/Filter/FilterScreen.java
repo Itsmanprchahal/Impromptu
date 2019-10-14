@@ -67,10 +67,13 @@ import com.mandywebdesign.impromptu.ui.NoInternetScreen;
 import com.mandywebdesign.impromptu.ui.ProgressBarClass;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -134,10 +137,15 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
         init();
         Calendar c = Calendar.getInstance();
 
-
-
-        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-        formattedDate = df.format(c.getTime());
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        Date date = null;
+        try {
+            date = (Date) formatter.parse(formatter.format(c.getTime()));
+            Log.d("TodayDate", String.valueOf(date.getTime()));
+            formattedDate = String.valueOf(date.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         sharedPreferences = getActivity().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         social_token = "Bearer " + sharedPreferences.getString("Socailtoken", "");
@@ -344,10 +352,19 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
             tomorrow.setTextColor(getResources().getColor(R.color.colorTheme));
 
 
+//            frommilles = String.valueOf(date.getTime());
+
             Calendar c = Calendar.getInstance();
 
-            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-            formattedDate = df.format(c.getTime());
+            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            Date date = null;
+            try {
+                date = (Date) formatter.parse(formatter.format(c.getTime()));
+                Log.d("TodayDate", String.valueOf(date.getTime()));
+                formattedDate = String.valueOf(date.getTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
 
         } else if (v == tomorrow) {
@@ -363,8 +380,15 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
 
             System.out.println("Current time ==> " + c.getTime());
 
-            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-            formattedDate = df.format(c.getTime());
+            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            Date date = null;
+            try {
+                date = (Date) formatter.parse(formatter.format(c.getTime()));
+                Log.d("Tommorow", String.valueOf(date.getTime()));
+                formattedDate = String.valueOf(date.getTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
         }
 

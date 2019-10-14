@@ -264,8 +264,9 @@ public class ChatBoxActivity extends AppCompatActivity {
             public void onResponse(Call<RetroGetMessages> call, Response<RetroGetMessages> response) {
                 if (response.body() != null) {
                     arrayList.clear();
+                    progressDialog.dismiss();
                     if (response.body().getStatus().equals("200")) {
-                        progressDialog.dismiss();
+
                         arrayList.clear();
                         for (int i = 0; i < response.body().getData().size(); i++) {
                             RetroGetMessages.Datum datum = response.body().getData().get(i);
@@ -285,6 +286,7 @@ public class ChatBoxActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<RetroGetMessages> call, Throwable t) {
+                progressDialog.dismiss();
                 if (NoInternet.isOnline(ChatBoxActivity.this) == false) {
                     NoInternet.dialog(ChatBoxActivity.this);
                 } else {

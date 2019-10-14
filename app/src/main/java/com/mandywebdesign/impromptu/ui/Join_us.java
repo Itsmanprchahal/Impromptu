@@ -355,7 +355,6 @@ public class Join_us extends AppCompatActivity {
 
                 if (response.body() != null)
                 {
-
                     Log.d("email", "" + response.body().getMessage());
                     if (response.body().getStatus().equals("200")) {
                         progressDialog.dismiss();

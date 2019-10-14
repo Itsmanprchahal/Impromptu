@@ -107,7 +107,8 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
     static String id, cate, hostImage, hostUserID, decs, postcode, ticktType, timefrom, timeto, title, location, location2, city, gender, andendeenumber,bookedtickets, numberoftickts, freeEvent, username, timeFrom, timeTo;
     int CurrentPage = 0;
     CheckBox eventdetail_favbt;
-    TextView seemessagesforthisevent,ticketview;
+    TextView ticketview;
+    Button seemessagesforthisevent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

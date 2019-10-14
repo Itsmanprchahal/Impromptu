@@ -415,12 +415,14 @@
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
 
-                            <TextView
+                            <Button
                                 android:id="@+id/seemessagesforthisevent"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="7dp"
+                                android:background="@color/colorTrans"
                                 android:fontFamily="@font/circularstdbold"
+                                android:textAllCaps="false"
                                 android:text="@string/seemessages"
                                 android:textColor="@color/colorTheme"
                                 android:textSize="15sp"/>
