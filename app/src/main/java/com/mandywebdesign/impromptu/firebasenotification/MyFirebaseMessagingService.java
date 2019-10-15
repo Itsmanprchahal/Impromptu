@@ -11,9 +11,11 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
+
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.mandywebdesign.impromptu.R;
@@ -30,25 +32,27 @@ import me.leolin.shortcutbadger.ShortcutBadger;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
-    JSONObject jsonObject;
-    String title,message,click_action,invoiceId;
-
+    String title, message, click_action, invoiceId, get_userID;
+    JSONObject jsonObject1;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-
+        remoteMessage.getData();
         String data = remoteMessage.getData().get("message");
+        Log.d("remotedata", data);
+        Log.d("remotedata1", "" + remoteMessage.getData());
 
         String count = String.valueOf(remoteMessage.getData().size());
         ShortcutBadger.applyCount(this, Integer.parseInt(count));
-        Log.d("count",count);
+        Log.d("count", count);
         try {
-            jsonObject = new JSONObject(data);
-            title = jsonObject.getString("title");
-            message = jsonObject.getString("body");
-            click_action = jsonObject.getString("click_action");
-            invoiceId = jsonObject.get("invoice_id").toString();
-            Log.d("++++++++++data", jsonObject.get("title").toString());
+            jsonObject1 = new JSONObject(data);
+            title = jsonObject1.getString("title");
+            get_userID = jsonObject1.getString("user_id");
+            Log.d("remotedata", get_userID);
+            message = jsonObject1.getString("body");
+            click_action = jsonObject1.getString("click_action");
+            invoiceId = jsonObject1.get("invoice_id").toString();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -58,7 +62,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         String channelId = "121";
-        CharSequence channelName = "m8r8";
+        CharSequence channelName = "impromptu";
         int importance = NotificationManager.IMPORTANCE_LOW;
         NotificationChannel notificationChannel = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -75,6 +79,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("Inid", invoiceId);
         intent.putExtra("msg", message);
+
+        intent.putExtra("user_id", get_userID);
+
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId)
                 .setContentTitle(title)
@@ -86,73 +93,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setAutoCancel(true)
                 .setOnlyAlertOnce(true)
                 .setContentIntent(pendingIntent);
-
         notificationManager.notify(0, notificationBuilder.build());
-
-        //Log.d("data+++++++", "From: " + remoteMessage.getFrom());
-
-        // Check if message contains a data payload.
-        //In case when notification was send in "notification" parameter we need to check wheather data is null or not.
-
-//        if (remoteMessage.getData() != null && remoteMessage.getData().size() > 0) {
-//            Log.d("data++++++++++", "" + remoteMessage.getData());
-//            Log.d("data++++++++++", "" + data);
-//
-//            sendNotification(remoteMessage.getData());
-//
-//
-//        }
     }
-
-//    @SuppressLint("NewApi")
-//    private void sendNotification(Map<String, String> data) {
-//
-//
-//        SharedPreferences preferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
-//        String userToken = preferences.getString("Usertoken", "");
-//        String socailTOken = preferences.getString("Socailtoken", "");
-//        Intent intent = null;
-//
-//        if (!userToken.equalsIgnoreCase("")) {
-//            intent = new Intent(this, Home_Screen.class);
-//            intent.putExtra("type", data.get("type"));
-//        } else if (!socailTOken.equalsIgnoreCase("")) {
-//            intent = new Intent(this, Home_Screen.class);
-//            intent.putExtra("type", data.get("type"));
-//        } else {
-//            intent = new Intent(this, MainActivity.class);
-//        }
-//
-//        NotificationManager notificationManager =
-//                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//
-//        String channelId = "121";
-//        CharSequence channelName = "Impromptu";
-//        int importance = NotificationManager.IMPORTANCE_MAX;
-//        @SuppressLint({"NewApi", "LocalSuppress", "WrongConstant"})
-//        NotificationChannel notificationChannel = new NotificationChannel(channelId, channelName, importance);
-//        notificationChannel.enableLights(true);
-//        notificationChannel.setLightColor(getResources().getColor(R.color.colorTheme));
-//        notificationChannel.enableVibration(true);
-//        notificationChannel.setShowBadge(false);
-//        notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-//        notificationManager.createNotificationChannel(notificationChannel);
-//
-//        intent = new Intent(click_action);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        intent.putExtra("Inid", invoiceId);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-//        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId)
-//                .setContentTitle(title)
-//                .setContentText(message)
-//                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-//                .setStyle(new NotificationCompat.BigTextStyle())
-//                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-//                .setSmallIcon(R.mipmap.ic_launcher)
-//                .setAutoCancel(true)
-//                .setContentIntent(pendingIntent);
-//
-//
-//        notificationManager.notify(0, notificationBuilder.build());
-//    }
 }

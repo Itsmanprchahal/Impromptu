@@ -48,7 +48,13 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:ignore="HardcodedDebugMode">
-        <activity android:name=".BusinessRegisterLogin.BusinessUserPRofileActivity"></activity>
+        <activity android:name=".BusinessRegisterLogin.BusinessUserPRofileActivity">
+
+            <intent-filter>
+                <action android:name="com.mandywebdesign.impromptu.PROFILE_BUSINESS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".SettingFragmentsOptions.FlagInappropriate" />
         <activity android:name=".SettingFragmentsOptions.TandCOptions" />
         <activity android:name=".SettingFragmentsOptions.HelpOptionsActivity" />
@@ -59,7 +65,12 @@
         <activity android:name=".SettingFragmentsOptions.TermsAndConditionsActivityy" />
         <activity android:name=".SettingFragmentsOptions.HelpActivity" />
         <activity android:name=".ui.PayActivity" />
-        <activity android:name=".messages.ChatBoxActivity" />
+        <activity android:name=".messages.ChatBoxActivity" >
+            <!--<intent-filter>
+                <action android:name="com.mandywebdesign.impromptu.EVENT_CHAT" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>-->
+        </activity>
         <activity android:name=".BusinessRegisterLogin.SeeAll_activity" />
         <activity android:name=".BusinessRegisterLogin.QrScanActivity" />
         <activity android:name=".ui.ConfirmationActivity" />
@@ -77,7 +88,13 @@
         </activity>
         <activity android:name=".BusinessRegisterLogin.CheckGuestActivity" />
         <activity android:name=".BusinessRegisterLogin.BusinessEventDetailAcitvity" />
-        <activity android:name=".SettingFragmentsOptions.NormalGetProfile" />
+        <activity android:name=".SettingFragmentsOptions.NormalGetProfile">
+            <intent-filter>
+                <action android:name="com.mandywebdesign.impromptu.PROFILE_NORMAL" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".SettingFragmentsOptions.NormalPublishProfile" />
         <activity
             android:name=".SettingFragmentsOptions.FAQs"

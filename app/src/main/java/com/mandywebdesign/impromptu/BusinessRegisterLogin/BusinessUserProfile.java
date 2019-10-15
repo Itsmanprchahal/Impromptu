@@ -330,7 +330,6 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
                         pastImages.clear();
                         for (RetroHistoryEvents.Datum datum : datumArrayList) {
                             profilePastEvents.add(datum.getTitle());
-                            Collections.reverse(profilePastEvents);
                             pastImages.add(datum.getFile());
                             Collections.reverse(profilePastEvents);
                             Collections.reverse(pastImages);

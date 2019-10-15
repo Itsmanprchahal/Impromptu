@@ -1,6 +1,7 @@
 package com.mandywebdesign.impromptu.Adapters;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,13 +28,13 @@ public class See_Add_adpater extends RecyclerView.Adapter<See_Add_adpater.ViewHo
     Context context;
     FragmentManager manager;
     ArrayList<String> userIamge = new ArrayList<>();
-    ArrayList<String> userName ;
+    ArrayList<String> userName;
     ArrayList<String> totalticketbuy;
 
-    public See_Add_adpater(Context context, FragmentManager manager,ArrayList<String> userIamge,ArrayList<String> userName,ArrayList<String> totalticketbuy) {
+    public See_Add_adpater(Context context, FragmentManager manager, ArrayList<String> userIamge, ArrayList<String> userName, ArrayList<String> totalticketbuy) {
         this.context = context;
         this.manager = manager;
-        this.userIamge= userIamge;
+        this.userIamge = userIamge;
         this.userName = userName;
         this.totalticketbuy = totalticketbuy;
     }
@@ -41,8 +42,8 @@ public class See_Add_adpater extends RecyclerView.Adapter<See_Add_adpater.ViewHo
     @NonNull
     @Override
     public See_Add_adpater.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        LayoutInflater inflater =LayoutInflater.from(viewGroup.getContext());
-        View view = inflater.inflate(R.layout.custom_see_all_users,viewGroup,false);
+        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+        View view = inflater.inflate(R.layout.custom_see_all_users, viewGroup, false);
         return new ViewHolder(view);
     }
 
@@ -51,18 +52,15 @@ public class See_Add_adpater extends RecyclerView.Adapter<See_Add_adpater.ViewHo
 
         Glide.with(context).load(userIamge.get(i)).into(viewHolder.imageView);
         viewHolder.userName.setText(userName.get(i));
-        viewHolder.bookedtickets.setText("Tickets: "+totalticketbuy.get(i));
+        viewHolder.bookedtickets.setText("Tickets: " + totalticketbuy.get(i));
 
         viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (SeeAll_activity.userType.get(i).equals("normal"))
-                {
-                    Intent intent = new Intent(context, NormalGetProfile.class);
-                    intent.putExtra("user_id",SeeAll_activity.userID.get(i));
-                    context.startActivity(intent);
-                }
+                Intent intent = new Intent(context, NormalGetProfile.class);
+                intent.putExtra("user_id", SeeAll_activity.userID.get(i));
+                context.startActivity(intent);
 
             }
         });
@@ -77,7 +75,7 @@ public class See_Add_adpater extends RecyclerView.Adapter<See_Add_adpater.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         RoundedImageView imageView;
-        TextView userName,bookedtickets;
+        TextView userName, bookedtickets;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

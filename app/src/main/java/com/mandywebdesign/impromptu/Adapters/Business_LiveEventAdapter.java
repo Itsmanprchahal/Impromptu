@@ -95,24 +95,6 @@ public class Business_LiveEventAdapter extends RecyclerView.Adapter<Business_Liv
                 editor.commit();
                 context.startActivity(intent);
 
-
-//                Bundle bundle = new Bundle();
-//                String value = Live.event_id.get(i);
-//                bundle.putString("event_id", value);
-//                bundle.putString("eventType","live");
-//                bundle.putString("event_method","hosting");
-//
-//                editor.putString(Constants.itemPosition, String.valueOf(i));
-//                editor.commit();
-//
-//                BusinessEvent_detailsFragment businessEvent_detailsFragment = new BusinessEvent_detailsFragment();
-//                businessEvent_detailsFragment.setArguments(bundle);
-//
-//                FragmentTransaction transaction2 = manager.beginTransaction();
-//                transaction2.replace(R.id.home_frame_layout, businessEvent_detailsFragment);
-//                transaction2.addToBackStack(null);
-//                transaction2.commit();
-
             }
         });
 

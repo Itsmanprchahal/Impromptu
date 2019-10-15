@@ -139,7 +139,7 @@ public class FilteredScreen extends Fragment implements DiscreteScrollView.OnIte
 
                             Calendar c = Calendar.getInstance();
 
-                            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                             formattedDate = df.format(c.getTime());
                             c.add(Calendar.DATE, 1);
 
@@ -147,10 +147,19 @@ public class FilteredScreen extends Fragment implements DiscreteScrollView.OnIte
 
                             System.out.println("Current time ==> " + c.getTime());
 
-                            if (formattedDate.matches(Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())))) {
+                            if (formattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
                                 event_time.add("Today at " + timeFrom);
-                            } else if (getFormattedDate.matches(Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())))) {
-                                event_time.add("Tomorrow at " + timeFrom);
+                            } else if (getFormattedDate.matches(Util.convertTimeStampDate (Long.parseLong(datum.getEventStartDt())))) {
+                                 event_time.add("Tomorrow at " + timeFrom);
+                            }else {
+                                String date = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
+                                /*to change server date formate*/
+                                String s1 = date;
+                                String[] str = s1.split("/");
+                                String str1 = str[0];
+                                String str2 = str[1];
+                                String str3 = str[2];
+                                event_time.add(str1 + "/" + str2 + "/" + str3 + " at " + timeFrom);
                             }
 
 
@@ -186,6 +195,7 @@ public class FilteredScreen extends Fragment implements DiscreteScrollView.OnIte
                 Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
 
         return view;
     }

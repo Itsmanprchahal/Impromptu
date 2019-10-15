@@ -1,6 +1,7 @@
 package com.mandywebdesign.impromptu.SettingFragmentsOptions;
 
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -51,7 +52,7 @@ public class NormalGetProfile extends AppCompatActivity {
     TextView totalpoints;
     ImageView back;
     TextView normal_user_gender;
-    String userToken;
+    String userToken,BToken;
     ImageView editprofile;
     Dialog progressDialog;
     FragmentManager manager;
@@ -77,6 +78,7 @@ public class NormalGetProfile extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         userToken = sharedPreferences.getString("Socailtoken", "");
+        BToken =sharedPreferences.getString("Usertoken", "");
         s_username = sharedPreferences.getString("Social_username", "");
         s_image = sharedPreferences.getString("Social_image", "");
 
@@ -92,13 +94,20 @@ public class NormalGetProfile extends AppCompatActivity {
 
         intent = getIntent();
 
-        if (intent!=null)
+        if(intent!=null)
         {
             String userid = intent.getStringExtra("user_id");
 
             if (userid!=null)
             {
-                getProfile(userToken,userid);
+                if (!userToken.equals(""))
+                {
+                    getProfile(userToken,userid);
+                }else {
+                    getProfile(BToken,userid);
+                }
+
+
                 editprofile.setVisibility(View.GONE);
                 user_profile_Event.setVisibility(View.GONE);
                 pastEvents.setVisibility(View.GONE);
@@ -107,7 +116,12 @@ public class NormalGetProfile extends AppCompatActivity {
                 eventsAttendingRecycler.setVisibility(View.GONE);
                 totlaEvents.setVisibility(View.GONE);
             }else {
-                getProfile(userToken,userid);
+                if (!userToken.equals(""))
+                {
+                    getProfile(userToken,userid);
+                }else {
+                    getProfile(BToken,userid);
+                }
                 editprofile.setVisibility(View.VISIBLE);
                 user_profile_Event.setVisibility(View.VISIBLE);
                 pastEvents.setVisibility(View.VISIBLE);

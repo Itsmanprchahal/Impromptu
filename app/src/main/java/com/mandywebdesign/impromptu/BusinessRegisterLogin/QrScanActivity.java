@@ -222,7 +222,7 @@ public class QrScanActivity extends AppCompatActivity {
                     progressDialog.dismiss();
 
                     if (response.body().getStatus().equals("200")) {
-                        Toast.makeText(QrScanActivity.this, "Checked In ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(QrScanActivity.this, ""+response.body().getMessage() , Toast.LENGTH_SHORT).show();
 
                         ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
                         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,150);
