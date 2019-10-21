@@ -43,6 +43,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mandywebdesign.impromptu.Adapters.Normal_user_profile_QA_adapter;
 import com.mandywebdesign.impromptu.Adapters.QuestionAdapter;
@@ -50,6 +51,7 @@ import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.Models.PojoQuestion;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
+import com.mandywebdesign.impromptu.ui.Join_us;
 import com.mandywebdesign.impromptu.ui.NoInternet;
 import com.mandywebdesign.impromptu.ui.NoInternetScreen;
 import com.mandywebdesign.impromptu.ui.ProgressBarClass;
@@ -251,7 +253,20 @@ public class NormalPublishProfile extends AppCompatActivity {
             });
         }else {
             username.setText(Socai_user);
-            Glide.with(NormalPublishProfile.this).load(userimage).into(userImage);
+           /* if (userimage!=null){
+                Glide.with(NormalPublishProfile.this).load(userimage).error(R.drawable.profile).placeholder(R.drawable.profile).into(userImage);
+             }else {
+                Glide.with(NormalPublishProfile.this).load(R.drawable.iconprofile)
+                        .into(userImage);
+             }*/
+
+            Glide.with(NormalPublishProfile.this)
+
+                    .load(userimage)
+                    .placeholder(R.drawable.profile).dontAnimate()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .skipMemoryCache(true)
+                    .into(userImage);
             new getImagefromURL(userImage).execute(userimage);
             progressDialog.dismiss();
         }

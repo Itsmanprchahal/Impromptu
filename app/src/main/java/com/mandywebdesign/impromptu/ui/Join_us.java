@@ -341,7 +341,6 @@ public class Join_us extends AppCompatActivity {
                 });
             }
         }
-
     }
 
     public void normalLogin(String email, final String username, final String image, String token,String device_token) {

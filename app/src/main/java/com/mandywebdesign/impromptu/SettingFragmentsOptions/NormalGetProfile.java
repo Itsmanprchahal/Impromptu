@@ -279,6 +279,7 @@ public class NormalGetProfile extends AppCompatActivity {
                             getNormalUserImage =response.body().getData().get(0).getImage();
                             getgender = response.body().getData().get(0).getGender();
                             editor.putString("UserImage",getNormalUserImage);
+                            Log.d("image",getNormalUserImage);
 
 
                             if (getS_username != null) {
@@ -306,7 +307,7 @@ public class NormalGetProfile extends AppCompatActivity {
                                 totalpoints.setText(response.body().getData().get(0).getRating_points()+" Points");
                             }
 
-                            Glide.with(NormalGetProfile.this).load(response.body().getData().get(0).getImage().toString()).into(userImage);
+                            Glide.with(NormalGetProfile.this).load(getNormalUserImage).into(userImage);
                             com.mandywebdesign.impromptu.Retrofit.NormalGetProfile normalGetProfile = response.body();
                             List<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile.Question> datum = normalGetProfile.getData().get(0).getQuestion();
 

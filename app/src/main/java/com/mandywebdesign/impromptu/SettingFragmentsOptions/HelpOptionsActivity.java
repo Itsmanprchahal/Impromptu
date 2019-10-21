@@ -76,11 +76,11 @@ public class HelpOptionsActivity extends AppCompatActivity {
     deleteAccount.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if (!token.equalsIgnoreCase(""))
+        if (!socialtoken.equals("Bearer "))
         {
-          ConfirmationDialog(token);
-        }else {
           ConfirmationDialog(socialtoken);
+        }else {
+          ConfirmationDialog(token);
         }
       }
     });
