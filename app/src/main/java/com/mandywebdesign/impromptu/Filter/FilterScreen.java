@@ -101,10 +101,10 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
     GoogleMap Gmap;
     RadioButton male, female, all;
     RadioGroup radioGroup;
-    String lat = "51.5074";
+    String lat = "0.0";
     static String eventMax_Price, formattedDate, gender;
     static String value;
-    String lng = "0.1278";
+    String lng = "0.0";
     LatLng latLng;
     Dialog progressDialog;
     String city = "";
@@ -486,7 +486,7 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
 
                                     if (address != null) {
                                         city = address.get(0).getAdminArea();
-                                        cityname.setText(address.get(0).toString());
+                                        cityname.setText(address.get(0).getLocality());
                                     } else {
                                         cityname.setText("Address not found");
                                     }

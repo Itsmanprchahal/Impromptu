@@ -44,6 +44,8 @@ import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.RetroChat;
 import com.mandywebdesign.impromptu.Retrofit.RetroGetMessages;
 import com.mandywebdesign.impromptu.ui.BookEventActivity;
+import com.mandywebdesign.impromptu.ui.Home_Screen;
+import com.mandywebdesign.impromptu.ui.MainActivity;
 import com.mandywebdesign.impromptu.ui.NoInternet;
 import com.mandywebdesign.impromptu.ui.NoInternetScreen;
 import com.mandywebdesign.impromptu.ui.ProgressBarClass;
@@ -146,6 +148,10 @@ public class ChatBoxActivity extends AppCompatActivity {
             public void onClick(View v) {
                 onBackPressed();
                 finish();
+//                Intent intent = new Intent(ChatBoxActivity.this, Home_Screen.class);
+//                intent.putExtra("")
+//                startActivity(intent);
+//                finish();
             }
         });
 

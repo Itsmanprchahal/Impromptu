@@ -563,7 +563,6 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
                             cate.add(normalGetEvent.getCategory());
                             Address.add(normalGetEvent.getAddressline1().toString());
                             Log.d("11212121", "  " + normalGetEvent.getAddressline1());
-//                            Time.add(normalGetEvent.getTimeFrom());
                             cate_id.add(normalGetEvent.getCategoryId().toString());
                             Image.add(normalGetEvent.getFile());
                             date.add(normalGetEvent.getDate());

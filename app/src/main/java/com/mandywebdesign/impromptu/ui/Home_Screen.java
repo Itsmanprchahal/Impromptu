@@ -71,9 +71,9 @@ public class Home_Screen extends AppCompatActivity {
     Intent intent;
     Dialog progressDialog;
     String accept = "application/json";
-    public static String BprofileStatus, data,profilestatus;
+    public static String BprofileStatus, data;
     public static int countt = 0, newCount = 0;
-    String refreshvalue, checkgender, socailtoken, itemPos;
+    String refreshvalue, checkgender, socailtoken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +101,7 @@ public class Home_Screen extends AppCompatActivity {
 
         account = GoogleSignIn.getLastSignedInAccount(this);
 
+        getProfile(socailtoken);
 
         //facebook check
         loggedOut = AccessToken.getCurrentAccessToken() == null;
@@ -120,6 +121,9 @@ public class Home_Screen extends AppCompatActivity {
         init();
         listeners();
 
+        intent = getIntent();
+        String backvalue = intent.getStringExtra("backonmessg");
+
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
         final View iconView = menuView.getChildAt(2).findViewById(com.google.android.material.R.id.icon);
         final ViewGroup.LayoutParams layoutParams = iconView.getLayoutParams();
@@ -133,48 +137,39 @@ public class Home_Screen extends AppCompatActivity {
 
 
     private void getProfile(String socailtoken) {
-
-        Call<NormalGetProfile> call = WebAPI.getInstance().getApi().normalGetPRofile(socailtoken, "application/json","");
-        call.enqueue(new Callback<NormalGetProfile>() {
+        progressDialog.show();
+        Call<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> call = WebAPI.getInstance().getApi().normalGetPRofile(socailtoken, "application/json","");
+        call.enqueue(new Callback<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile>() {
             @Override
-            public void onResponse(Call<NormalGetProfile> call, Response<NormalGetProfile> response) {
+            public void onResponse(Call<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> call, Response<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> response) {
                 if (response.body() != null) {
-                    if (response.body().getData().get(0).getGender() == null) {
-                        final Dialog dialog = new Dialog(Home_Screen.this);
-                        dialog.setContentView(R.layout.welcomedialog);
-                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        dialog.setCancelable(true);
-                        dialog.show();
+                    progressDialog.dismiss();
+                    editor = sharedPreferences.edit();
+                    editor.putString("profilegender",response.body().getData().get(0).getGender());
+                    editor.apply();
 
-                        Button continue_bt = dialog.findViewById(R.id.continue_bt);
-                        continue_bt.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                    } else {
-                        editor = sharedPreferences.edit();
-                        editor.putString("profilegender", "" + response.body().getData().get(0).getGender());
-                        editor.apply();
-                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<NormalGetProfile> call, Throwable t) {
+            public void onFailure(Call<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> call, Throwable t) {
 
             }
         });
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkgender = sharedPreferences.getString("profilegender", "");
+    }
+
     private void setHomeScreen() {
 
         if (!loggedOut || account != null) {
-            getProfile(socailtoken);
-
+            //getProfile(socailtoken);
+            //updateProfiledialog();
             Intent intent1 = getIntent();
             String value = intent1.getStringExtra("bookevent");
 
@@ -252,6 +247,28 @@ public class Home_Screen extends AppCompatActivity {
         }
     }
 
+    public void updateProfiledialog()
+    {
+        final Dialog dialog = new Dialog(Home_Screen.this);
+        dialog.setContentView(R.layout.welcomedialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+
+        Button continue_bt = dialog.findViewById(R.id.continue_bt);
+        continue_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Intent intent = new Intent(Home_Screen.this, NormalPublishProfile.class);
+                intent.putExtra("normal_edit", "0");
+                intent.putExtra("backongendercheck", "0");
+                startActivity(intent);
+            }
+        });
+    }
+
     private void init() {
         Intent intent = getIntent();
         refresh = intent.getStringExtra("refresh");
@@ -298,7 +315,7 @@ public class Home_Screen extends AppCompatActivity {
                         case R.id.myeventstab:
                             checkgender = sharedPreferences.getString("profilegender", "");
                             if (checkgender.equals("")) {
-                                dialog();
+                                updateProfiledialog();
                             } else {
                                 Intent intent = new Intent(Home_Screen.this, Add_Event_Activity.class);
                                 startActivity(intent);

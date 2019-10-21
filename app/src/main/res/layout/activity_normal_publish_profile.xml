@@ -161,7 +161,7 @@
                     android:layout_height="120dp"
                     android:layout_alignParentRight="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/screen1" />
+                    android:src="@drawable/screen1"/>
 
 
                 <androidx.recyclerview.widget.RecyclerView

@@ -127,6 +127,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     AlertDialog.Builder builder;
     Intent intent;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,8 +142,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         editorItemPos = itemPositionPref.edit();
         S_token = sharedPreferences.getString("Socailtoken", "");
         loginUserId = sharedPreferences.getString("userID", "");
-        checkgender = sharedPreferences.getString("profilegender", "");
-        itemPos = itemPositionPref.getString("itemPosition", "");
+         itemPos = itemPositionPref.getString("itemPosition", "");
 
         progressDialog = ProgressBarClass.showProgressDialog(this);
         progressDialog.dismiss();
@@ -150,7 +150,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         drawable.setColorFilter(ContextCompat.getColor(BookEventActivity.this, R.color.colorTheme),
                 PorterDuff.Mode.SRC_IN);
 
-
+        getProfile("Bearer "+S_token);
         if (!S_token.equalsIgnoreCase(""))
         {
             FirebaseDynamicLinks.getInstance()
@@ -196,8 +196,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             startActivity(intent);
         }
 
-
-
         init();
         listeners();
 
@@ -238,6 +236,12 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             }
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkgender = sharedPreferences.getString("profilegender", "");
 
     }
 
@@ -246,36 +250,43 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             @Override
             public void onClick(View v) {
 
-                final Intent intent = new Intent(BookEventActivity.this, ChatBoxActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                intent.putExtra("event_title", title);
-                intent.putExtra("event_image", image.get(0));
-                intent.putExtra("eventID", value);
-                intent.putExtra("event_host_user", hostUserID);
+                if (checkgender.equals("")) {
+//                    dialogUpdate();
+                    updateProfiledialog();
+
+                }else {
+                    final Intent intent = new Intent(BookEventActivity.this, ChatBoxActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    intent.putExtra("event_title", title);
+                    intent.putExtra("event_image", image.get(0));
+                    intent.putExtra("eventID", value);
+                    intent.putExtra("event_host_user", hostUserID);
 
 
-                Call<EventMessageClick> call = WebAPI.getInstance().getApi().eventMEsgClick("Bearer " + S_token, id);
-                call.enqueue(new Callback<EventMessageClick>() {
-                    @Override
-                    public void onResponse(Call<EventMessageClick> call, Response<EventMessageClick> response) {
-                        if (response.body() != null) {
-                            if (response.body().getStatus().equals("200")) {
+                    Call<EventMessageClick> call = WebAPI.getInstance().getApi().eventMEsgClick("Bearer " + S_token, id);
+                    call.enqueue(new Callback<EventMessageClick>() {
+                        @Override
+                        public void onResponse(Call<EventMessageClick> call, Response<EventMessageClick> response) {
+                            if (response.body() != null) {
+                                if (response.body().getStatus().equals("200")) {
+                                    startActivity(intent);
+                                }
+
+                            } else {
+                                Intent intent = new Intent(BookEventActivity.this, NoInternetScreen.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
                             }
 
-                        } else {
-                            Intent intent = new Intent(BookEventActivity.this, NoInternetScreen.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
                         }
 
-                    }
+                        @Override
+                        public void onFailure(Call<EventMessageClick> call, Throwable t) {
+                            Toast.makeText(BookEventActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
 
-                    @Override
-                    public void onFailure(Call<EventMessageClick> call, Throwable t) {
-                        Toast.makeText(BookEventActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
             }
         });
     }
@@ -286,10 +297,56 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             public void onClick(View v) {
 
                 if (checkgender.equals("")) {
-                    dialogUpdate();
+                    //dialogUpdate();
+                    updateProfiledialog();
                 } else {
                     dialog(value);
                 }
+            }
+        });
+
+    }
+
+    private void getProfile(String socailtoken) {
+    progressDialog.show();
+        Call<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> call = WebAPI.getInstance().getApi().normalGetPRofile(socailtoken, "application/json","");
+        call.enqueue(new Callback<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile>() {
+            @Override
+            public void onResponse(Call<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> call, Response<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> response) {
+                if (response.body() != null) {
+                    progressDialog.dismiss();
+                        editor = sharedPreferences.edit();
+                        editor.putString("profilegender",response.body().getData().get(0).getGender());
+                        editor.apply();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void updateProfiledialog()
+    {
+        final Dialog dialog = new Dialog(BookEventActivity.this);
+        dialog.setContentView(R.layout.welcomedialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+
+        Button continue_bt = dialog.findViewById(R.id.continue_bt);
+        continue_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Intent intent = new Intent(BookEventActivity.this, NormalPublishProfile.class);
+                intent.putExtra("normal_edit", "0");
+                intent.putExtra("backongendercheck", "0");
+                startActivity(intent);
             }
         });
     }

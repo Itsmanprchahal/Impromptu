@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
+import com.mandywebdesign.impromptu.Retrofit.RetroDelete;
 import com.mandywebdesign.impromptu.ui.Join_us;
 import com.mandywebdesign.impromptu.ui.ProgressBarClass;
 
@@ -69,14 +70,18 @@ public class HelpOptionsActivity extends AppCompatActivity {
       public void onClick(View v) {
         Intent intent = new Intent(HelpOptionsActivity.this, HelpActivity.class);
         startActivity(intent);
-//                    manager.beginTransaction().replace(R.id.home_frame_layout, new Help()).addToBackStack(null).commit();
       }
     });
 
     deleteAccount.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        ConfirmationDialog(socialtoken);
+        if (!token.equalsIgnoreCase(""))
+        {
+          ConfirmationDialog(token);
+        }else {
+          ConfirmationDialog(socialtoken);
+        }
       }
     });
 
@@ -128,10 +133,10 @@ public class HelpOptionsActivity extends AppCompatActivity {
 
           progressDialog.show();
 
-          Call call = WebAPI.getInstance().getApi().delete(usrToken, "application/json");
-          call.enqueue(new Callback() {
+          Call<RetroDelete> call = WebAPI.getInstance().getApi().delete(usrToken,"application/json");
+          call.enqueue(new Callback<RetroDelete>() {
             @Override
-            public void onResponse(Call call, Response response) {
+            public void onResponse(Call<RetroDelete> call, Response<RetroDelete> response) {
               if (response.body() != null) {
                 progressDialog.dismiss();
                 dialog.dismiss();
@@ -150,13 +155,11 @@ public class HelpOptionsActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 Toast.makeText(HelpOptionsActivity.this, "" + response.message(), Toast.LENGTH_SHORT).show();
               }
-
             }
 
             @Override
-            public void onFailure(Call call, Throwable t) {
-              progressDialog.dismiss();
-              Toast.makeText(HelpOptionsActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<RetroDelete> call, Throwable t) {
+
             }
           });
         } else {
