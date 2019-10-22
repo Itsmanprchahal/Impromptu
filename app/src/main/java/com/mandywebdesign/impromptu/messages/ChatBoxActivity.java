@@ -268,8 +268,9 @@ public class ChatBoxActivity extends AppCompatActivity {
         chatCall.enqueue(new Callback<RetroGetMessages>() {
             @Override
             public void onResponse(Call<RetroGetMessages> call, Response<RetroGetMessages> response) {
+                arrayList.clear();
                 if (response.body() != null) {
-                    arrayList.clear();
+
                     progressDialog.dismiss();
                     if (response.body().getStatus().equals("200")) {
 

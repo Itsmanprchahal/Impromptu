@@ -142,13 +142,12 @@ public class QrScanActivity extends AppCompatActivity {
 
                 final SparseArray<Barcode> qrcode = detections.getDetectedItems();
 
-
                 if (qrcode.size() != 0) {
-
                     textView.post(new Runnable() {
                         @Override
                         public void run() {
 
+                            Log.d("qrcode",qrcode.valueAt(0).displayValue);
                             textView.setText(qrcode.valueAt(0).displayValue);
                             String bar_values = qrcode.valueAt(0).displayValue;
 
@@ -196,7 +195,6 @@ public class QrScanActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                onBackPressed();
                 Intent intent = new Intent(QrScanActivity.this,CheckGuestActivity.class);
                 intent.putExtra("value",id);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);

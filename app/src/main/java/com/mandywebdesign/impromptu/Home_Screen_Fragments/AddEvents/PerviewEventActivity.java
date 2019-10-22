@@ -35,6 +35,7 @@ import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.RetroAddEvent;
 import com.mandywebdesign.impromptu.Retrofit.RetroUsernameiMage;
 import com.mandywebdesign.impromptu.Retrofit.UpdateDraft;
+import com.mandywebdesign.impromptu.Utils.Util;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.Join_us;
 import com.mandywebdesign.impromptu.ui.NoInternetScreen;
@@ -274,11 +275,17 @@ public class PerviewEventActivity extends AppCompatActivity {
 
 //===================================================================================================//
         //change date format and time format
-        String s1 = date;
-        String[] str = s1.split("/");
-        String str1 = str[0];
-        String str2 = str[1];
-        String str3 = str[2];
+        String start_date = Util.convertTimeStampDate(Long.parseLong(frommilles));
+        String end_date = Util.convertTimeStampDate(Long.parseLong(tomilles));
+
+        if (start_date.matches(end_date))
+        {
+            perview_date.setText(start_date);
+        }else {
+            perview_date.setText(start_date+ " - " + end_date);
+        }
+
+        Log.d("date",start_date+"   "+end_date);
 
 
         //get Time to in AM PM
@@ -307,34 +314,28 @@ public class PerviewEventActivity extends AppCompatActivity {
                 timeFrom = time_t.substring(1);
                 timeTo = time_to.substring(1);
                 perview_time.setText( timeFrom + " - " + timeTo);
-                perview_date.setText(str1 + "/" + str2 + "/" + str3);
             } else if (time_t.startsWith("0")) {
                 timeFrom = time_t.substring(1);
                 if (time_to.startsWith("0")) {
                     timeTo = time_to.substring(1);
                     perview_time.setText( timeFrom + " - " + timeTo);
-                    perview_date.setText(str1 + "/" + str2+ "/" + str3);
                 } else {
                     timeTo = time_to.substring(0);
                     perview_time.setText( timeFrom + " - " + timeTo);
-                    perview_date.setText(str1 + "/" + str2 + "/" + str3);
                 }
             } else if (time_to.startsWith("0")) {
                 timeTo = time_to.substring(1);
                 if (time_t.startsWith("0")) {
                     timeFrom = time_t.substring(1);
                     perview_time.setText( timeFrom + " - " + timeTo);
-                    perview_date.setText(str1 + "/" + str2 + "/" + str3);
                 } else {
                     timeFrom = time_t.substring(0);
                     perview_time.setText( timeFrom + " - " + timeTo);
-                    perview_date.setText(str1 + "/" + str2 + "/" + str3);
                 }
             } else if (!time_t.startsWith("0") && !time_to.startsWith("0")) {
                 timeFrom = time_t.substring(0);
                 timeTo = time_to.substring(0);
                 perview_time.setText( timeFrom + " - " + timeTo);
-                perview_date.setText(str1 + "/" + str2 + "/" + str3);
             }
 
 

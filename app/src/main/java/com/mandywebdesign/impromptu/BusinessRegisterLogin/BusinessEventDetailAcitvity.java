@@ -7,15 +7,19 @@ import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -85,7 +89,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
     RecyclerView users;
     TextView category, event_price, datetime, loc, BusinessEvent_detailsFragment_book_time, ticketPrice, numberofTickets, totalPrice, freetext, event_title, see_all,
             BusinessEvent_detailsFragment_book_link1, BusinessEvent_detailsFragment_book_link2, BusinessEvent_detailsFragment_book_link3;
-    public TextView peoplecoming,revenue;
+    public TextView peoplecoming, revenue;
     ReadMoreTextView descri;
     FragmentManager manager;
     Button checkInGuest, publish, edit;
@@ -104,7 +108,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
     public static ArrayList<String> userName = new ArrayList<>();
     String BToken, S_Token, attendess, ticktprice, link1, link2, link3;
     ArrayList<String> image = new ArrayList<>();
-    static String id, cate, hostImage, hostUserID, decs, postcode, ticktType, timefrom, timeto, title, location, location2, city, gender, andendeenumber,bookedtickets, numberoftickts, freeEvent, username, timeFrom, timeTo;
+    static String id, cate, hostImage, hostUserID, decs, postcode, ticktType, timefrom, timeto, title, location, location2, city, gender, andendeenumber, bookedtickets, numberoftickts, freeEvent, username, timeFrom, timeTo;
     int CurrentPage = 0;
     CheckBox eventdetail_favbt;
     TextView ticketview;
@@ -207,13 +211,13 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                 if (!BToken.equalsIgnoreCase("")) {
                     getEventdata(BToken, value);
                     getUsers(BToken, value);
-                    getRaminingEvents(BToken,value);
+                    getRaminingEvents(BToken, value);
                 } else if (!S_Token.equalsIgnoreCase("")) {
                     getEventdata(S_Token, value);
                     getUsers(S_Token, value);
                     addFav(value);
                     eventdetail_favbt.setVisibility(View.GONE);
-                    getRaminingEvents(S_Token,value);
+                    getRaminingEvents(S_Token, value);
                 }
             } else if (event_type.equals("history")) {
 
@@ -252,8 +256,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                     linearLayout.setVisibility(View.GONE);
                     checkInGuest.setVisibility(View.GONE);
                 }
-            }else if (event_type.equals("CheckGuest"))
-            {
+            } else if (event_type.equals("CheckGuest")) {
                 if (!BToken.equalsIgnoreCase("")) {
                     getEventdata(BToken, value);
                     getUsers(BToken, value);
@@ -262,19 +265,18 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                     getUsers(S_Token, value);
                     addFav(value);
                 }
-            }else {
+            } else {
             }
 
             editevent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (event_type.equals("draft"))
-                    {
+                    if (event_type.equals("draft")) {
                         Intent intent = new Intent(BusinessEventDetailAcitvity.this, Add_Event_Activity.class);
                         intent.putExtra("editevent", "edit");
                         intent.putExtra("value", value);
                         startActivity(intent);
-                    }else {
+                    } else {
                         String message = "https://play.google.com/store";
                         Intent share = new Intent(Intent.ACTION_SEND);
                         share.setType("text/plain");
@@ -372,34 +374,35 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                             Log.d("userImage", "" + response.body().getData().get(i).getFile());
 
                         }
-                    if(event_type.equals("past"))
-                    {
-                        if (bookedUsersList.size()==1)
-                        {
-                            peoplecoming.setText("1 Person was come");
-                        }else {
-                            peoplecoming.setText(bookedUsersList.size() + " People was come");
+                        if (event_type.equals("past")) {
+                            if (bookedUsersList.size() == 1) {
+                                peoplecoming.setText("1 Person was come");
+                            } else if (bookedUsersList.size() >= 2) {
+                                peoplecoming.setText(bookedUsersList.size() + " People was come");
+
+                            } else {
+                                peoplecoming.setText("No one booked this event yet");
+                            }
+                            Toast.makeText(BusinessEventDetailAcitvity.this, "HERE", Toast.LENGTH_SHORT).show();
+                        } else {
+                            if (bookedUsersList.size() == 1) {
+                                peoplecoming.setText("1 Person is coming");
+                            } else if (bookedUsersList.size() >= 2) {
+                                peoplecoming.setText(bookedUsersList.size() + " People are coming");
+
+                            } else {
+                                peoplecoming.setText("No one booked this event yet");
+                            }
                         }
-                    }else {
-                        if (bookedUsersList.size()==1)
-                        {
-                            peoplecoming.setText("1 Person is coming");
-                        }else {
-                            peoplecoming.setText(bookedUsersList.size() + " People are coming");
-                        }
-                    }
+                        Booked_users adapter = new Booked_users(BusinessEventDetailAcitvity.this, userImage);
+                        users.setAdapter(adapter);
 
-
-
-                    } else {
+                    } else if (response.body().getStatus().equals("400")) {
                         peoplecoming.setText("0 People coming");
                         users.setVisibility(View.GONE);
-                        see_all.setVisibility(View.GONE);
+                        see_all.setVisibility(View.VISIBLE);
+                        see_all.setClickable(false);
                     }
-
-
-                    Booked_users adapter = new Booked_users(BusinessEventDetailAcitvity.this, userImage);
-                    users.setAdapter(adapter);
                 } else {
                     progressDialog.dismiss();
                     Intent intent = new Intent(BusinessEventDetailAcitvity.this, NoInternetScreen.class);
@@ -458,15 +461,14 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                             fav_id = datum.getFavourite().toString();
 
                             //get Time to in AM PM
-                            String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM","am").replaceFirst("PM","pm");
-                            String time_to = Util.convertTimeStampToTime(Long.parseLong(datum.getEventEndDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM","am").replaceFirst("PM","pm");
+                            String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
+                            String time_to = Util.convertTimeStampToTime(Long.parseLong(datum.getEventEndDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
                             String start_date = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
                             String end_date = Util.convertTimeStampDate(Long.parseLong(datum.getEventEndDt()));
-                            if (start_date.matches(end_date))
-                            {
+                            if (start_date.matches(end_date)) {
                                 datetime.setText(start_date);
-                            }else {
-                                datetime.setText(start_date+ " - " + end_date);
+                            } else {
+                                datetime.setText(start_date + " - " + end_date);
                             }
 
 
@@ -474,34 +476,28 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                                 timeFrom = time_t.substring(1);
                                 timeTo = time_to.substring(1);
                                 BusinessEvent_detailsFragment_book_time.setText(timeFrom + " - " + timeTo);
-//                                datetime.setText(start_date+" - " + end_date );
                             } else if (time_t.startsWith("0")) {
                                 timeFrom = time_t.substring(1);
                                 if (time_to.startsWith("0")) {
                                     timeTo = time_to.substring(1);
                                     BusinessEvent_detailsFragment_book_time.setText(timeFrom + " - " + timeTo);
-//                                    datetime.setText(start_date+ " - " + end_date );
                                 } else {
                                     timeTo = time_to.substring(0);
                                     BusinessEvent_detailsFragment_book_time.setText(timeFrom + " - " + timeTo);
-//                                    datetime.setText(start_date+ " - " + end_date );
                                 }
                             } else if (time_to.startsWith("0")) {
                                 timeTo = time_to.substring(1);
                                 if (time_t.startsWith("0")) {
                                     timeFrom = time_t.substring(1);
                                     BusinessEvent_detailsFragment_book_time.setText(timeFrom + " - " + timeTo);
-//                                    datetime.setText(start_date+ " - " + end_date );
                                 } else {
                                     timeFrom = time_t.substring(0);
                                     BusinessEvent_detailsFragment_book_time.setText(timeFrom + " - " + timeTo);
-//                                    datetime.setText(start_date+ " - " + end_date );
                                 }
                             } else if (!time_t.startsWith("0") && !time_to.startsWith("0")) {
                                 timeFrom = time_t.substring(0);
                                 timeTo = time_to.substring(0);
                                 BusinessEvent_detailsFragment_book_time.setText(timeFrom + " - " + timeTo);
-//                                datetime.setText(start_date+ " - " + end_date );
                             }
 
 
@@ -641,8 +637,8 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
         backon_b_eventdetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BusinessEventDetailAcitvity.this,Home_Screen.class);
-                intent.putExtra("eventType",event_type);
+                Intent intent = new Intent(BusinessEventDetailAcitvity.this, Home_Screen.class);
+                intent.putExtra("eventType", event_type);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
@@ -653,10 +649,10 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(BusinessEventDetailAcitvity.this,CheckGuestActivity.class);
+                Intent intent = new Intent(BusinessEventDetailAcitvity.this, CheckGuestActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                intent.putExtra("value",value);
-                intent.putExtra("eventType",event_type);
+                intent.putExtra("value", value);
+                intent.putExtra("eventType", event_type);
                 startActivity(intent);
             }
         });
@@ -665,9 +661,9 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(BusinessEventDetailAcitvity.this,SeeAll_activity.class);
+                Intent intent = new Intent(BusinessEventDetailAcitvity.this, SeeAll_activity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                intent.putExtra("value",id);
+                intent.putExtra("value", id);
                 startActivity(intent);
 
             }
@@ -725,10 +721,10 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
     private void OpenEventChat(String s, String id) {
 
         final Intent intent = new Intent(BusinessEventDetailAcitvity.this, ChatBoxActivity.class);
-        intent.putExtra("event_title",title);
-        intent.putExtra("event_image",image.get(0));
-        intent.putExtra("eventID",id);
-        intent.putExtra("event_host_user",hostUserID);
+        intent.putExtra("event_title", title);
+        intent.putExtra("event_image", image.get(0));
+        intent.putExtra("eventID", id);
+        intent.putExtra("event_host_user", hostUserID);
 
 
         Call<EventMessageClick> call = WebAPI.getInstance().getApi().eventMEsgClick("Bearer " + s, id);
@@ -869,12 +865,11 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                 if (response.body() != null) {
                     String totalticket = String.valueOf(response.body().getData().getTotal());
                     String bookedtciket = String.valueOf(response.body().getData().getBooked());
-                    if (bookedtciket.equals("null"))
-                    {
+                    if (bookedtciket.equals("null")) {
                         bookedtciket = "0";
-                        ticketview.setText(" "+"("+"0"+"/"+totalticket+")");
-                    }else {
-                        ticketview.setText(" "+"("+bookedtciket+"/"+totalticket+")");
+                        ticketview.setText(" " + "(" + "0" + "/" + totalticket + ")");
+                    } else {
+                        ticketview.setText(" " + "(" + bookedtciket + "/" + totalticket + ")");
                     }
 
 

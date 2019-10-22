@@ -332,15 +332,16 @@
 
 
 
-                        <LinearLayout
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/defaultmargin"
-                            android:orientation="horizontal">
+                            android:layout_marginTop="@dimen/defaultmargin">
 
                             <TextView
+                                android:id="@+id/textone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
                                 android:fontFamily="@font/circularstdbold"
                                 android:text="Attendees"
                                 android:textColor="@color/colortextBlack"
@@ -351,20 +352,23 @@
                                 android:id="@+id/book_attendess_people"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_toLeftOf="@id/book_seeAll"
+                                android:layout_toRightOf="@id/textone"
                                 android:layout_marginLeft="@dimen/defaultmargin"
                                 android:fontFamily="@font/sfuitextlight"
                                 android:text="4 people are going" />
 
                             <TextView
                                 android:id="@+id/book_seeAll"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="end"
                                 android:text="+ See All"
+                                android:layout_alignParentEnd="true"
                                 android:fontFamily="@font/sfuitextlight"
                                 android:textColor="@color/colorTheme"
                                 android:textStyle="bold" />
-                        </LinearLayout>
+                        </RelativeLayout>
 
 
                         <androidx.recyclerview.widget.RecyclerView

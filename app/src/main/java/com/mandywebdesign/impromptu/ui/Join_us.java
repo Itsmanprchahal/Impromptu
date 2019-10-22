@@ -166,6 +166,7 @@ public class Join_us extends AppCompatActivity {
                                         String id = object.getString("id");
 
                                         fbUsername = first_name + " " + last_name;
+                                        Log.d("fbUsername",fbUsername);
 
                                         final String fbToken1 = AccessToken.getCurrentAccessToken().getToken();
                                         fbEmail = email;

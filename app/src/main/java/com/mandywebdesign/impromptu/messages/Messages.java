@@ -94,11 +94,6 @@ public class Messages extends Fragment {
 
         init();
 
-        if (!BToken.equals("")) {
-            getAllChats("Bearer " + BToken);
-        } else if (!S_Token.equals("")) {
-            getAllChats("Bearer " + S_Token);
-        }
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -112,6 +107,16 @@ public class Messages extends Fragment {
         });
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorTheme));
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!BToken.equals("")) {
+            getAllChats("Bearer " + BToken);
+        } else if (!S_Token.equals("")) {
+            getAllChats("Bearer " + S_Token);
+        }
     }
 
     private void init() {
@@ -257,8 +262,6 @@ public class Messages extends Fragment {
                 }
             }
         });
-
-
     }
 
     private void getChat(String token, String message) {

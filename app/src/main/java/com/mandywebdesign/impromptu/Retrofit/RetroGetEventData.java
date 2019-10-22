@@ -103,6 +103,18 @@ public class RetroGetEventData {
         @SerializedName("free_event")
         @Expose
         private String freeEvent;
+
+        public String getTotal_event_bookings() {
+            return total_event_bookings;
+        }
+
+        public void setTotal_event_bookings(String total_event_bookings) {
+            this.total_event_bookings = total_event_bookings;
+        }
+
+        @SerializedName("total_event_bookings")
+        @Expose
+        private String total_event_bookings;
         @SerializedName("ticket_type")
         @Expose
         private String ticketType;
@@ -145,6 +157,18 @@ public class RetroGetEventData {
         @SerializedName("follow_status")
         @Expose
         private String follow_status;
+
+        public String getEvent_book() {
+            return event_book;
+        }
+
+        public void setEvent_book(String event_book) {
+            this.event_book = event_book;
+        }
+
+        @SerializedName("event_book")
+        @Expose
+        private String event_book;
 
         public String getTotal_book_tickets() {
             return total_book_tickets;

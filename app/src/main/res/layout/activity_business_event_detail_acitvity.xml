@@ -342,15 +342,17 @@
                             android:textStyle="bold" />
 
 
-                        <LinearLayout
+
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/defaultmargin"
-                            android:orientation="horizontal">
+                            android:layout_marginTop="@dimen/defaultmargin">
 
                             <TextView
+                                android:id="@+id/textone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
                                 android:fontFamily="@font/circularstdbold"
                                 android:text="Attendees"
                                 android:textColor="@color/colortextBlack"
@@ -360,27 +362,31 @@
                             <TextView
                                 android:id="@+id/BusinessEvent_detailsFragment_book_attendess_people"
                                 android:layout_width="wrap_content"
-                                android:fontFamily="@font/sfuitextlight"
                                 android:layout_height="wrap_content"
+                                android:layout_toLeftOf="@id/ticketview"
+                                android:layout_toRightOf="@id/textone"
                                 android:layout_marginLeft="@dimen/defaultmargin"
+                                android:fontFamily="@font/sfuitextlight"
                                 android:text="4 people are going" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_toLeftOf="@+id/BusinessEvent_detailsFragment_book_seeAll"
                                 android:fontFamily="@font/circularstdblack"
                                 android:id="@+id/ticketview"></TextView>
 
                             <TextView
                                 android:id="@+id/BusinessEvent_detailsFragment_book_seeAll"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="end"
-                                android:fontFamily="@font/circularstdblack"
                                 android:text="+ See All"
+                                android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/sfuitextlight"
                                 android:textColor="@color/colorTheme"
                                 android:textStyle="bold" />
-                        </LinearLayout>
+                        </RelativeLayout>
 
 
                         <androidx.recyclerview.widget.RecyclerView

@@ -118,7 +118,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     static String hostUserID;
     static String remaini_tickets;
     static String timeFrom;
-    static String timeTo,usertype,eventType;
+    String timeTo,usertype,eventType,event_book;
     String itemPos;
     static String value, S_token, fav_id, hostname, payvalue, spinnerposition;
     public static ArrayList<String> image = new ArrayList<>();
@@ -251,40 +251,45 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             public void onClick(View v) {
 
                 if (checkgender.equals("")) {
-//                    dialogUpdate();
                     updateProfiledialog();
 
                 }else {
-                    final Intent intent = new Intent(BookEventActivity.this, ChatBoxActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    intent.putExtra("event_title", title);
-                    intent.putExtra("event_image", image.get(0));
-                    intent.putExtra("eventID", value);
-                    intent.putExtra("event_host_user", hostUserID);
+                    if (event_book.equals("0"))
+                    {
+                        Toast.makeText(BookEventActivity.this, "Book event to send message.", Toast.LENGTH_SHORT).show();
+                    }else {
+                        final Intent intent = new Intent(BookEventActivity.this, ChatBoxActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        intent.putExtra("event_title", title);
+                        intent.putExtra("event_image", image.get(0));
+                        intent.putExtra("eventID", value);
+                        intent.putExtra("event_host_user", hostUserID);
 
 
-                    Call<EventMessageClick> call = WebAPI.getInstance().getApi().eventMEsgClick("Bearer " + S_token, id);
-                    call.enqueue(new Callback<EventMessageClick>() {
-                        @Override
-                        public void onResponse(Call<EventMessageClick> call, Response<EventMessageClick> response) {
-                            if (response.body() != null) {
-                                if (response.body().getStatus().equals("200")) {
+                        Call<EventMessageClick> call = WebAPI.getInstance().getApi().eventMEsgClick("Bearer " + S_token, id);
+                        call.enqueue(new Callback<EventMessageClick>() {
+                            @Override
+                            public void onResponse(Call<EventMessageClick> call, Response<EventMessageClick> response) {
+                                if (response.body() != null) {
+                                    if (response.body().getStatus().equals("200")) {
+                                        startActivity(intent);
+                                    }
+
+                                } else {
+                                    Intent intent = new Intent(BookEventActivity.this, NoInternetScreen.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(intent);
                                 }
 
-                            } else {
-                                Intent intent = new Intent(BookEventActivity.this, NoInternetScreen.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
                             }
 
-                        }
+                            @Override
+                            public void onFailure(Call<EventMessageClick> call, Throwable t) {
+                                Toast.makeText(BookEventActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
 
-                        @Override
-                        public void onFailure(Call<EventMessageClick> call, Throwable t) {
-                            Toast.makeText(BookEventActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
                 }
 
             }
@@ -418,7 +423,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                 Intent share = new Intent(Intent.ACTION_SEND);
                 share.setType("text/plain");
                 share.putExtra(Intent.EXTRA_TEXT, message);
-                startActivity(Intent.createChooser(share, "Testing Impromptu"));
+                startActivity(Intent.createChooser(share, "Share Impromptu"));
             }
         });
 
@@ -466,9 +471,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                     Intent share = new Intent(Intent.ACTION_SEND);
                                     share.setType("text/plain");
                                     share.putExtra(Intent.EXTRA_TEXT, shortLink.toString());
-                                    startActivity(Intent.createChooser(share, "Testing Impromptu"));
-
-
+                                    startActivity(Intent.createChooser(share, "Share Event"));
                                 } else {
 
                                 }
@@ -761,21 +764,14 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                     List<Booked_User.Datum> bookedUsersList = booked_users.getData();
                     userImage.clear();
 
-                    if (response.body().getStatus().equals("200")) {
+                     if (response.body().getStatus().equals("200")) {
                         for (int i = 0; i < bookedUsersList.size(); i++) {
                             userImage.add(response.body().getData().get(i).getFile());
-                            if (bookedUsersList.size()==1)
-                            {
-                                peoplegoing.setText(bookedUsersList.size() + " Person is going");
-                            }else {
-                                peoplegoing.setText(bookedUsersList.size()+" People are going");
-                            }
-
                             Log.d("userImage", "" + response.body().getData().get(i).toString());
 
                         }
                     } else {
-                        peoplegoing.setText("0 People are going");
+                        peoplegoing.setText("no one booked yet");
                         seeAll.setClickable(false);
                         seeAll.setVisibility(View.GONE);
                         users.setVisibility(View.GONE);
@@ -827,6 +823,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             usertype = datum.getUser_type();
                             ticktprice = datum.getPrice();
                             follow_status = datum.getFollow_status();
+                            event_book = datum.getEvent_book().toString();
                             if (follow_status.equals("1"))
                             {
                                 follow_button.setText("Unfollow");
@@ -914,17 +911,32 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                 } else {
                                     timeFrom = time_t.substring(0);
                                     book_time.setText(timeFrom + " - " + timeTo);
-//                                    book_date.setText(start_date + " - " + end_date);
                                 }
                             } else if (!time_t.startsWith("0") && !time_to.startsWith("0")) {
                                 timeFrom = time_t.substring(0);
                                 timeTo = time_to.substring(0);
                                 book_time.setText(timeFrom + " - " + timeTo);
-//                                book_date.setText(start_date + " - " + end_date);
                             }
 
+                            int count = Integer.parseInt(datum.getTotal_event_bookings());
+                            int lesscount = count-1;
+                            if (event_book.equals("1") && count==1)
+                            {
+                                peoplegoing.setText("You are going");
+                            }else if (event_book.equals("1") && count==2)
+                            {
+                                peoplegoing.setText("You and "+ lesscount+" another person is going");
+                            }else if (event_book.equals("1") && count>2)
+                            {
+                                peoplegoing.setText("You and "+lesscount+" another person are going");
+                            }else if (event_book.equals("0") && count==1)
+                            {
+                                peoplegoing.setText("1 person is going");
+                            }else if (event_book.equals("0") && count>1)
+                            {
+                                peoplegoing.setText(count+ " person are going");
+                            }
 
-                            Log.d("hostImage", "" + host_image);
 
                             //Check Event Fav Status
                             if (fav_id.equals("1")) {

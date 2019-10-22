@@ -253,13 +253,6 @@ public class NormalPublishProfile extends AppCompatActivity {
             });
         }else {
             username.setText(Socai_user);
-           /* if (userimage!=null){
-                Glide.with(NormalPublishProfile.this).load(userimage).error(R.drawable.profile).placeholder(R.drawable.profile).into(userImage);
-             }else {
-                Glide.with(NormalPublishProfile.this).load(R.drawable.iconprofile)
-                        .into(userImage);
-             }*/
-
             Glide.with(NormalPublishProfile.this)
 
                     .load(userimage)

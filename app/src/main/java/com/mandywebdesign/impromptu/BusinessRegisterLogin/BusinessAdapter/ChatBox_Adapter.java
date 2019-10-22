@@ -94,7 +94,7 @@ public class ChatBox_Adapter extends RecyclerView.Adapter<ChatBox_Adapter.ViewHo
         TextView message_text,messageUser;
         TextView leftUsername, rightUserName,left,right,righttime,lefttime;
         LinearLayout  leftLayout;
-        LinearLayout rightLayout;
+        RelativeLayout rightLayout;
         ImageView leftUserImage, rightUserImage;
         RelativeLayout layout;
 
