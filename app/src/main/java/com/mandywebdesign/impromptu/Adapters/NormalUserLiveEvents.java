@@ -16,10 +16,12 @@ import com.bumptech.glide.Glide;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEventDetailAcitvity;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalGetProfile;
+import com.mandywebdesign.impromptu.ui.BookEventActivity;
 
 public class NormalUserLiveEvents extends RecyclerView.Adapter<NormalUserLiveEvents.ViewHolder> {
 
     Context context;
+    String other;
 
     public NormalUserLiveEvents(Context context) {
         this.context = context;
@@ -42,10 +44,14 @@ public class NormalUserLiveEvents extends RecyclerView.Adapter<NormalUserLiveEve
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, BusinessEventDetailAcitvity.class);
-                intent.putExtra("event_id", NormalGetProfile.liveevent_id.get(i));
-                intent.putExtra("eventType","live");
-                context.startActivity(intent);
+
+
+                    Intent intent = new Intent(context, BusinessEventDetailAcitvity.class);
+                    intent.putExtra("event_id", NormalGetProfile.liveevent_id.get(i));
+                    intent.putExtra("eventType","live");
+                    context.startActivity(intent);
+
+
             }
         });
     }

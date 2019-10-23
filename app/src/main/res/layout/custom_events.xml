@@ -91,7 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:background="@drawable/main_header_selector"
+                android:background="#4F000000"
                 android:orientation="vertical">
 
 

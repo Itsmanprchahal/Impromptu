@@ -294,19 +294,20 @@ public class NormalPublishProfile extends AppCompatActivity {
         backonnormalpublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent  = getIntent();
-                if (intent!=null)
-                {
-                    Intent intent1 = new Intent(NormalPublishProfile.this, Home_Screen.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    startActivity(intent1);
-                    finish();
-                }else {
-                    Intent intent1 = new Intent(NormalPublishProfile.this,NormalGetProfile.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    startActivity(intent1);
-                    finish();
-                }
+//                Intent intent  = getIntent();
+//                if (intent!=null)
+//                {
+//                    Intent intent1 = new Intent(NormalPublishProfile.this, Home_Screen.class);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                    startActivity(intent1);
+//                    finish();
+//                }else {
+//                    Intent intent1 = new Intent(NormalPublishProfile.this,NormalGetProfile.class);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                    startActivity(intent1);
+//                    finish();
+//                }
+                onBackPressed();
             }
         });
 

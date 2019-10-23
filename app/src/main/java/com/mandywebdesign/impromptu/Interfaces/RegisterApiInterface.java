@@ -55,6 +55,8 @@ import com.mandywebdesign.impromptu.Retrofit.RetroUsernameiMage;
 import com.mandywebdesign.impromptu.Retrofit.SearchMessages;
 import com.mandywebdesign.impromptu.Retrofit.TotalTickets;
 import com.mandywebdesign.impromptu.Retrofit.UpdateDraft;
+import com.mandywebdesign.impromptu.Retrofit.UsersLiveEvent;
+import com.mandywebdesign.impromptu.Retrofit.UsersPastEvent;
 
 import java.util.ArrayList;
 
@@ -209,6 +211,16 @@ public interface RegisterApiInterface {
             @Header("Authorization") String token
             , @Header("Accept") String accept
 
+    );
+
+    @GET("user-past-events")
+    Call<UsersPastEvent> userspastevents(
+            @Query("user_id") String user_id
+    );
+
+    @GET("user-publish")
+    Call<UsersLiveEvent> userliveevents(
+            @Query("user_id") String user_id
     );
 
     @POST("help")

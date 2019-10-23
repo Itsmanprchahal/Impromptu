@@ -25,6 +25,7 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -86,6 +87,7 @@ import retrofit2.Response;
 
 public class BookEventActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    boolean doubleBackToExitPressedOnce = false;
     private LinearLayout dotsLayout;
     ImageView sharevent, screenshot;
     private TextView[] dots;
@@ -93,7 +95,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     LinearLayout organiser_layout;
     RelativeLayout messagelayout, invite_layouit;
     FragmentManager fragmentManager;
-    Button mBookEvent,follow_button;
+    Button mBookEvent, follow_button;
     TextView organiserName, book_time, book_categry, peoplegoing, seeAll, remainingTicketTV, invitefriends, dialogtickttype, link1, link2, link3;
     ViewPager viewPager;
     RecyclerView users;
@@ -111,6 +113,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     SharedPreferences sharedPreferences, itemPositionPref;
     Bundle bundle;
     ArrayList<String> userImage = new ArrayList<>();
+    ArrayList<String> user_id = new ArrayList<>();
     static String tot;
     static String InviteFriend;
     static String total_ticket;
@@ -118,11 +121,11 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     static String hostUserID;
     static String remaini_tickets;
     static String timeFrom;
-    String timeTo,usertype,eventType,event_book;
+    String timeTo, usertype, eventType, event_book;
     String itemPos;
     static String value, S_token, fav_id, hostname, payvalue, spinnerposition;
     public static ArrayList<String> image = new ArrayList<>();
-    public static String id, cate, host_image, date, decs,follow_status, postcode, ticktType, ticktprice, timefrom, hostimage, timeto, title, location, location2, city, gender, andendeenumber, numberoftickts, freeEvent, username;
+    public static String id, cate, host_image, date, decs, follow_status, postcode, ticktType, ticktprice, timefrom, hostimage, timeto, title, location, location2, city, gender, andendeenumber, numberoftickts, freeEvent, username;
     int CurrentPage = 0;
     AlertDialog.Builder builder;
     Intent intent;
@@ -142,7 +145,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         editorItemPos = itemPositionPref.edit();
         S_token = sharedPreferences.getString("Socailtoken", "");
         loginUserId = sharedPreferences.getString("userID", "");
-         itemPos = itemPositionPref.getString("itemPosition", "");
+        itemPos = itemPositionPref.getString("itemPosition", "");
 
         progressDialog = ProgressBarClass.showProgressDialog(this);
         progressDialog.dismiss();
@@ -150,9 +153,57 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         drawable.setColorFilter(ContextCompat.getColor(BookEventActivity.this, R.color.colorTheme),
                 PorterDuff.Mode.SRC_IN);
 
-        getProfile("Bearer "+S_token);
-        if (!S_token.equalsIgnoreCase(""))
-        {
+        getProfile("Bearer " + S_token);
+
+        init();
+        listeners();
+
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(BookEventActivity.this);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        users.setLayoutManager(layoutManager);
+        users.setNestedScrollingEnabled(false);
+
+        intent = getIntent();
+        if (intent != null) {
+            value = intent.getStringExtra("event_id");
+            payvalue = intent.getStringExtra("back_pay");
+            eventType = intent.getStringExtra("eventType");
+            //  fav_id = bundle.getString("fav_id");
+            hostname = intent.getStringExtra("hostname");
+            hostimage = intent.getStringExtra("hostImage");
+            if (hostname != null) {
+                String[] name = hostname.split(" ");
+                if (name.length == 1) {
+                    String Fname = name[0];
+                    organiserName.setText(Fname + " ");
+                } else {
+                    String Fname = name[0];
+                    String Lname = name[1];
+                    organiserName.setText(Fname + " " + Lname.subSequence(0, 1));
+                }
+            } else {
+                organiserName.setText(hostname);
+            }
+            book_message.setVisibility(View.VISIBLE);
+
+            if (eventType != null) {
+
+                if (eventType.equals("live"))
+                {
+                    mBookEvent.setVisibility(View.VISIBLE);
+                    invite_layouit.setVisibility(View.VISIBLE);
+                }else {
+                    mBookEvent.setVisibility(View.GONE);
+                    invite_layouit.setVisibility(View.GONE);
+                }
+
+            } else {
+                mBookEvent.setVisibility(View.VISIBLE);
+                invite_layouit.setVisibility(View.VISIBLE);
+            }
+        }
+
+        if (!S_token.equalsIgnoreCase("")) {
             FirebaseDynamicLinks.getInstance()
                     .getDynamicLink(getIntent())
                     .addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
@@ -191,49 +242,9 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             Log.w("dynamiclink", "getDynamicLink:onFailure", e);
                         }
                     });
-        }else {
-            Intent intent = new Intent(this,Join_us.class);
+        } else {
+            Intent intent = new Intent(this, Join_us.class);
             startActivity(intent);
-        }
-
-        init();
-        listeners();
-
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(BookEventActivity.this);
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        users.setLayoutManager(layoutManager);
-        users.setNestedScrollingEnabled(false);
-
-        intent = getIntent();
-        if (intent != null) {
-            value = intent.getStringExtra("event_id");
-            payvalue = intent.getStringExtra("back_pay");
-            eventType = intent.getStringExtra("eventType");
-            //  fav_id = bundle.getString("fav_id");
-            hostname = intent.getStringExtra("hostname");
-            hostimage = intent.getStringExtra("hostImage");
-            if (hostname != null) {
-                String[] name = hostname.split(" ");
-                if (name.length == 1) {
-                    String Fname = name[0];
-                    organiserName.setText(Fname + " ");
-                } else {
-                    String Fname = name[0];
-                    String Lname = name[1];
-                    organiserName.setText(Fname + " " + Lname.subSequence(0, 1));
-                }
-            } else {
-                organiserName.setText(hostname);
-            }
-            book_message.setVisibility(View.VISIBLE);
-            if (eventType!=null)
-            {
-                mBookEvent.setVisibility(View.GONE);
-                invite_layouit.setVisibility(View.GONE);
-            }else {
-                mBookEvent.setVisibility(View.VISIBLE);
-                invite_layouit.setVisibility(View.VISIBLE);
-            }
         }
 
     }
@@ -253,11 +264,10 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                 if (checkgender.equals("")) {
                     updateProfiledialog();
 
-                }else {
-                    if (event_book.equals("0"))
-                    {
+                } else {
+                    if (event_book.equals("0")) {
                         Toast.makeText(BookEventActivity.this, "Book event to send message.", Toast.LENGTH_SHORT).show();
-                    }else {
+                    } else {
                         final Intent intent = new Intent(BookEventActivity.this, ChatBoxActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         intent.putExtra("event_title", title);
@@ -313,16 +323,16 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     }
 
     private void getProfile(String socailtoken) {
-    progressDialog.show();
-        Call<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> call = WebAPI.getInstance().getApi().normalGetPRofile(socailtoken, "application/json","");
+        progressDialog.show();
+        Call<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> call = WebAPI.getInstance().getApi().normalGetPRofile(socailtoken, "application/json", "");
         call.enqueue(new Callback<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile>() {
             @Override
             public void onResponse(Call<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> call, Response<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> response) {
                 if (response.body() != null) {
                     progressDialog.dismiss();
-                        editor = sharedPreferences.edit();
-                        editor.putString("profilegender",response.body().getData().get(0).getGender());
-                        editor.apply();
+                    editor = sharedPreferences.edit();
+                    editor.putString("profilegender", response.body().getData().get(0).getGender());
+                    editor.apply();
 
                 }
             }
@@ -334,8 +344,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         });
     }
 
-    public void updateProfiledialog()
-    {
+    public void updateProfiledialog() {
         final Dialog dialog = new Dialog(BookEventActivity.this);
         dialog.setContentView(R.layout.welcomedialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -445,7 +454,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             public void onClick(View view) {
 
                 DynamicLink dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink()
-                        .setLink(Uri.parse("https://www.amit.com/" +"event_id/"+ value))
+                        .setLink(Uri.parse("https://www.amit.com/" + "event_id/" + value))
                         .setDomainUriPrefix("impromptusocial.page.link")
                         // Open links with this app on Android  amitpandey12.page.link
                         .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build())
@@ -550,16 +559,14 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         follow_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Call<FollowUnfollow> call = WebAPI.getInstance().getApi().followunfollow("Bearer " + S_token,hostUserID);
+                Call<FollowUnfollow> call = WebAPI.getInstance().getApi().followunfollow("Bearer " + S_token, hostUserID);
                 call.enqueue(new Callback<FollowUnfollow>() {
                     @Override
                     public void onResponse(Call<FollowUnfollow> call, Response<FollowUnfollow> response) {
-                        if (response.isSuccessful())
-                        {
-                            if (response.body().getMessage().equals("Follow successfully."))
-                            {
+                        if (response.isSuccessful()) {
+                            if (response.body().getMessage().equals("Follow successfully.")) {
                                 follow_button.setText("Unfollow");
-                            }else {
+                            } else {
                                 follow_button.setText("Follow");
                             }
                         }
@@ -577,14 +584,13 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             @Override
             public void onClick(View v) {
 
-                if (usertype.equals("business"))
-                {
+                if (usertype.equals("business")) {
                     Intent intent = new Intent(BookEventActivity.this, BusinessUserPRofileActivity.class);
-                    intent.putExtra("user_id",hostUserID);
+                    intent.putExtra("user_id", hostUserID);
                     startActivity(intent);
-                }else {
+                } else {
                     Intent intent = new Intent(BookEventActivity.this, NormalGetProfile.class);
-                    intent.putExtra("user_id",hostUserID);
+                    intent.putExtra("user_id", hostUserID);
                     startActivity(intent);
                 }
 
@@ -763,10 +769,13 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                     Booked_User booked_users = response.body();
                     List<Booked_User.Datum> bookedUsersList = booked_users.getData();
                     userImage.clear();
+                    user_id.clear();
+                    ;
 
-                     if (response.body().getStatus().equals("200")) {
+                    if (response.body().getStatus().equals("200")) {
                         for (int i = 0; i < bookedUsersList.size(); i++) {
                             userImage.add(response.body().getData().get(i).getFile());
+                            user_id.add(response.body().getData().get(i).getUserid().toString());
                             Log.d("userImage", "" + response.body().getData().get(i).toString());
 
                         }
@@ -777,7 +786,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                         users.setVisibility(View.GONE);
                     }
 
-                    Booked_users adapter = new Booked_users(BookEventActivity.this, userImage);
+                    Booked_users adapter = new Booked_users(BookEventActivity.this, userImage, user_id);
                     users.setAdapter(adapter);
                 } else {
                     Intent intent = new Intent(BookEventActivity.this, NoInternetScreen.class);
@@ -824,8 +833,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             ticktprice = datum.getPrice();
                             follow_status = datum.getFollow_status();
                             event_book = datum.getEvent_book().toString();
-                            if (follow_status.equals("1"))
-                            {
+                            if (follow_status.equals("1")) {
                                 follow_button.setText("Unfollow");
                             }
 
@@ -876,14 +884,13 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
                             String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
                             String time_to = Util.convertTimeStampToTime(Long.parseLong(datum.getEventEndDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
-                            String start_date =Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
+                            String start_date = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
                             String end_date = Util.convertTimeStampDate(Long.parseLong(datum.getEventEndDt()));
 
-                            if (start_date.matches(end_date))
-                            {
+                            if (start_date.matches(end_date)) {
                                 book_date.setText(start_date);
-                            }else {
-                                book_date.setText(start_date+ " - " + end_date);
+                            } else {
+                                book_date.setText(start_date + " - " + end_date);
                             }
                             if (time_t.startsWith("0") && time_to.startsWith("0")) {
                                 timeFrom = time_t.substring(1);
@@ -919,22 +926,17 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             }
 
                             int count = Integer.parseInt(datum.getTotal_event_bookings());
-                            int lesscount = count-1;
-                            if (event_book.equals("1") && count==1)
-                            {
+                            int lesscount = count - 1;
+                            if (event_book.equals("1") && count == 1) {
                                 peoplegoing.setText("You are going");
-                            }else if (event_book.equals("1") && count==2)
-                            {
-                                peoplegoing.setText("You and "+ lesscount+" another person is going");
-                            }else if (event_book.equals("1") && count>2)
-                            {
-                                peoplegoing.setText("You and "+lesscount+" another person are going");
-                            }else if (event_book.equals("0") && count==1)
-                            {
+                            } else if (event_book.equals("1") && count == 2) {
+                                peoplegoing.setText("You and " + lesscount + " another person is going");
+                            } else if (event_book.equals("1") && count > 2) {
+                                peoplegoing.setText("You and " + lesscount + " another person are going");
+                            } else if (event_book.equals("0") && count == 1) {
                                 peoplegoing.setText("1 person is going");
-                            }else if (event_book.equals("0") && count>1)
-                            {
-                                peoplegoing.setText(count+ " person are going");
+                            } else if (event_book.equals("0") && count > 1) {
+                                peoplegoing.setText(count + " person are going");
                             }
 
 
@@ -1090,5 +1092,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         }
 
     }
+
 
 }

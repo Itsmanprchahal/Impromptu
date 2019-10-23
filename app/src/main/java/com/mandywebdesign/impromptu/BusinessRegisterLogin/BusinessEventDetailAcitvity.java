@@ -20,6 +20,7 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -82,6 +83,7 @@ import retrofit2.Response;
 
 public class BusinessEventDetailAcitvity extends AppCompatActivity {
 
+    boolean doubleBackToExitPressedOnce = false;
     private LinearLayout dotsLayout;
     private TextView[] dots;
     ImageButton backon_b_eventdetail;
@@ -105,6 +107,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
     ImageView editevent;
     PagerAdapter pagerAdapter;
     public static ArrayList<String> userImage = new ArrayList<>();
+    public static ArrayList<String> user_id = new ArrayList<>();
     public static ArrayList<String> userName = new ArrayList<>();
     String BToken, S_Token, attendess, ticktprice, link1, link2, link3;
     ArrayList<String> image = new ArrayList<>();
@@ -113,6 +116,9 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
     CheckBox eventdetail_favbt;
     TextView ticketview;
     Button seemessagesforthisevent;
+    Intent intent;
+    String from;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +141,12 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                 PorterDuff.Mode.SRC_IN);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
+
+        intent = getIntent();
+        if (intent !=null)
+        {
+            from = intent.getStringExtra("from");
+        }
 
         init();
         listerners();
@@ -201,8 +213,6 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                         } else if (!S_Token.equalsIgnoreCase("")) {
                             postDraft("Bearer " + S_Token);
                         }
-
-
                     }
                 });
 
@@ -365,10 +375,12 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                     Booked_User booked_users = response.body();
                     List<Booked_User.Datum> bookedUsersList = booked_users.getData();
                     userImage.clear();
+                    user_id.clear();
 
                     if (response.body().getStatus().equals("200")) {
                         for (int i = 0; i < bookedUsersList.size(); i++) {
                             userImage.add(response.body().getData().get(i).getFile());
+                            user_id.add(response.body().getData().get(i).getUserid().toString());
                             userName.add(response.body().getData().get(i).getUsername());
 
                             Log.d("userImage", "" + response.body().getData().get(i).getFile());
@@ -383,7 +395,6 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                             } else {
                                 peoplecoming.setText("No one booked this event yet");
                             }
-                            Toast.makeText(BusinessEventDetailAcitvity.this, "HERE", Toast.LENGTH_SHORT).show();
                         } else {
                             if (bookedUsersList.size() == 1) {
                                 peoplecoming.setText("1 Person is coming");
@@ -394,7 +405,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                                 peoplecoming.setText("No one booked this event yet");
                             }
                         }
-                        Booked_users adapter = new Booked_users(BusinessEventDetailAcitvity.this, userImage);
+                        Booked_users adapter = new Booked_users(BusinessEventDetailAcitvity.this, userImage,user_id);
                         users.setAdapter(adapter);
 
                     } else if (response.body().getStatus().equals("400")) {
@@ -637,11 +648,13 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
         backon_b_eventdetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BusinessEventDetailAcitvity.this, Home_Screen.class);
-                intent.putExtra("eventType", event_type);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(intent);
-                finish();
+
+
+//                Intent intent = new Intent(BusinessEventDetailAcitvity.this, Home_Screen.class);
+//                intent.putExtra("eventType", event_type);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                startActivity(intent);
+                onBackPressed();
             }
         });
 

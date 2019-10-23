@@ -286,7 +286,8 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
                         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
                         recyclerView.setLayoutManager(layoutManager);
 
-                        BusinessuserProfileLiveEvents adapter = new BusinessuserProfileLiveEvents(getContext());
+                        //ToDo: comment
+                        BusinessuserProfileLiveEvents adapter = new BusinessuserProfileLiveEvents(getContext(),datumArrayList);
                         recyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                         reverseLive();
@@ -344,7 +345,7 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
                         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
                         pasteventsrecyles.setLayoutManager(layoutManager);
 
-                        BusinessUserPastAdapter adapter = new BusinessUserPastAdapter(getContext());
+                        BusinessUserPastAdapter adapter = new BusinessUserPastAdapter(getContext(),datumArrayList);
                         pasteventsrecyles.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                     }

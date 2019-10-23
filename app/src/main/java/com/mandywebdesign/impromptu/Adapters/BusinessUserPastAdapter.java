@@ -15,16 +15,23 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEventDetailAcitvity;
+import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessUserPRofileActivity;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessUserProfile;
 import com.mandywebdesign.impromptu.R;
+import com.mandywebdesign.impromptu.Retrofit.RetroHistoryEvents;
+
+import java.util.List;
 
 public class BusinessUserPastAdapter extends RecyclerView.Adapter<BusinessUserPastAdapter.ViewHolder> {
     Context context;
     FragmentManager manager;
+    List<RetroHistoryEvents.Datum> datumArrayList;
 
-    public BusinessUserPastAdapter(Context context) {
+    public BusinessUserPastAdapter(Context context, List<RetroHistoryEvents.Datum> datumArrayList) {
         this.context = context;
+        this.datumArrayList = datumArrayList;
     }
+
 
     @NonNull
     @Override
@@ -37,8 +44,8 @@ public class BusinessUserPastAdapter extends RecyclerView.Adapter<BusinessUserPa
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
-        viewHolder.category.setText(BusinessUserProfile.profilePastEvents.get(i));
-        Glide.with(context).load(BusinessUserProfile.pastImages.get(i)).apply(new RequestOptions().override(200,200)).into(viewHolder.imageView);
+        viewHolder.category.setText(datumArrayList.get(i).getTitle());
+        Glide.with(context).load(datumArrayList.get(i).getFile()).apply(new RequestOptions().override(200,200)).into(viewHolder.imageView);
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +62,7 @@ public class BusinessUserPastAdapter extends RecyclerView.Adapter<BusinessUserPa
 
     @Override
     public int getItemCount() {
-        return BusinessUserProfile.pastImages.size();
+        return datumArrayList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder
