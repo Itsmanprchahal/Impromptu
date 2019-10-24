@@ -53,6 +53,7 @@ import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mandywebdesign.impromptu.Adapters.B_EventDetailImageAdapter;
 import com.mandywebdesign.impromptu.Adapters.Booked_users;
+import com.mandywebdesign.impromptu.Home_Screen_Fragments.HostingTabs.History;
 import com.mandywebdesign.impromptu.messages.ChatBoxActivity;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.AddEvents.Add_Event_Activity;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
@@ -237,6 +238,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                 } else if (!S_Token.equalsIgnoreCase("")) {
                     getEventdata(S_Token, value);
                     getUsers(S_Token, value);
+                    checkInGuest.setText("Relist");
 
                 }
             } else if (event_type.equals("fav")) {
@@ -662,11 +664,21 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(BusinessEventDetailAcitvity.this, CheckGuestActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                intent.putExtra("value", value);
-                intent.putExtra("eventType", event_type);
-                startActivity(intent);
+               if (event_type.equals("live"))
+               {
+                   Intent intent = new Intent(BusinessEventDetailAcitvity.this, CheckGuestActivity.class);
+                   intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                   intent.putExtra("value", value);
+                   intent.putExtra("eventType", event_type);
+                   startActivity(intent);
+               }else if (event_type.equals("history")){
+
+                   Intent intent = new Intent(BusinessEventDetailAcitvity.this, Add_Event_Activity.class);
+                   intent.putExtra("editevent", "republish");
+                   intent.putExtra("value", value);
+                   startActivity(intent);
+               }
+
             }
         });
 

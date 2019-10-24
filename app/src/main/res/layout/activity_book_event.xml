@@ -356,7 +356,7 @@
                                 android:layout_toRightOf="@id/textone"
                                 android:layout_marginLeft="@dimen/defaultmargin"
                                 android:fontFamily="@font/sfuitextlight"
-                                android:text="4 people are going" />
+                                android:text="" />
 
                             <TextView
                                 android:id="@+id/book_seeAll"

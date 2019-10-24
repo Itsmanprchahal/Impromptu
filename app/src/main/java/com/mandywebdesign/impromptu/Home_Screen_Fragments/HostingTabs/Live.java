@@ -91,14 +91,7 @@ public class Live extends Fragment implements DiscreteScrollView.OnItemChangedLi
         init();
 
 
-        if (!BToken.equalsIgnoreCase("")) {
 
-            liveEvnts(BToken);
-        } else if (!S_Token.equalsIgnoreCase("")) {
-            liveEvnts(S_Token);
-        } else {
-            progressDialog.dismiss();
-        }
 
 
         recyclerView = (DiscreteScrollView) view.findViewById(R.id.business_events__recyclerview);
@@ -123,6 +116,18 @@ public class Live extends Fragment implements DiscreteScrollView.OnItemChangedLi
         noEvnets = view.findViewById(R.id.noevents_live);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!BToken.equalsIgnoreCase("")) {
+
+            liveEvnts(BToken);
+        } else if (!S_Token.equalsIgnoreCase("")) {
+            liveEvnts(S_Token);
+        } else {
+            progressDialog.dismiss();
+        }
+    }
 
     public void liveEvnts(final String token) {
         name1.clear();

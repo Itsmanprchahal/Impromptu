@@ -49,13 +49,9 @@ public class Hosting extends Fragment {
         if (!BToken.equalsIgnoreCase("")) {
             title.setVisibility(View.VISIBLE);
             attending();
-            //  manager.beginTransaction().replace(R.id.hosting_event_frame_layout, new Live()).commit();
-
         } else {
             title.setVisibility(View.GONE);
-
             attending();
-           // manager.beginTransaction().replace(R.id.hosting_event_frame_layout, new Live()).commit();
         }
 
 

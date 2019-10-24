@@ -21,6 +21,9 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -36,12 +39,14 @@ import com.mandywebdesign.impromptu.Adapters.NormalUSerSetQues_answer;
 import com.mandywebdesign.impromptu.Adapters.NormalUserAttendingEvents;
 import com.mandywebdesign.impromptu.Adapters.NormalUserLiveEvents;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessAdapter.UsersLiveEventsAdapter;
+import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessAdapter.UsersPastBookedEventsAdapter;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessAdapter.UsersPastEventsAdapter;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessUserPRofileActivity;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.Normal_past_booked;
 import com.mandywebdesign.impromptu.Retrofit.RetroLiveEvents;
+import com.mandywebdesign.impromptu.Retrofit.UsersBookedPastEvent;
 import com.mandywebdesign.impromptu.Retrofit.UsersLiveEvent;
 import com.mandywebdesign.impromptu.Retrofit.UsersPastEvent;
 import com.mandywebdesign.impromptu.ui.NoInternet;
@@ -58,7 +63,7 @@ import retrofit2.Response;
 
 public class NormalGetProfile extends AppCompatActivity {
 
-    public static TextView user_profile_age, username, status;
+    TextView user_profile_age, username, status;
     RoundedImageView userImage;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -172,28 +177,28 @@ public class NormalGetProfile extends AppCompatActivity {
     }
 
     private void getUsersattendingEvents(String userid) {
-        Call<UsersPastEvent> call2 = WebAPI.getInstance().getApi().userspastevents(userid);
-        call2.enqueue(new Callback<UsersPastEvent>() {
+        Call<UsersBookedPastEvent> call2 = WebAPI.getInstance().getApi().userbookedPast_event(userid);
+        call2.enqueue(new Callback<UsersBookedPastEvent>() {
             @Override
-            public void onResponse(Call<UsersPastEvent> call, Response<UsersPastEvent> response) {
+            public void onResponse(Call<UsersBookedPastEvent> call, Response<UsersBookedPastEvent> response) {
 
                 if (response.body()!=null)
                 {
                     progressDialog.dismiss();
                     if (response.body().getStatus().equals("200")) {
 
-                        UsersPastEvent data = response.body();
-                        List<UsersPastEvent.Datum> datumArrayList = data.getData();
+                        UsersBookedPastEvent data = response.body();
+                        List<UsersBookedPastEvent.Datum> datumArrayList = data.getData();
 
                         attentingTietle.clear();
                         attendingimage.clear();
                         attentingevent_id.clear();
 
-                        for (UsersPastEvent.Datum datum : datumArrayList) {
+                        for (UsersBookedPastEvent.Datum datum : datumArrayList) {
 
                             Log.d("cates", "" + datum.getCategory());
 
-                            attendingimage.add(datum.getFile().get(0));
+                            attendingimage.add(datum.getFile().toString());
                             attentingTietle.add(datum.getTitle().toString());
                             attentingevent_id.add(String.valueOf(datum.getEventId()));
                             pastEvents.setText("( " + attentingTietle.size() + " )");
@@ -203,7 +208,7 @@ public class NormalGetProfile extends AppCompatActivity {
                             eventsAttendingRecycler.setLayoutManager(layoutManager);
 
 
-                            UsersPastEventsAdapter adapter = new UsersPastEventsAdapter(NormalGetProfile.this,datumArrayList);
+                            UsersPastBookedEventsAdapter adapter = new UsersPastBookedEventsAdapter(NormalGetProfile.this,datumArrayList);
                             eventsAttendingRecycler.setAdapter(adapter);
                         }
                     } else if (response.body().getStatus().equals("400")) {
@@ -220,7 +225,7 @@ public class NormalGetProfile extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<UsersPastEvent> call, Throwable t) {
+            public void onFailure(Call<UsersBookedPastEvent> call, Throwable t) {
                 if (isOnline() == false) {
                     progressDialog.dismiss();
                     NoInternetdialog();
@@ -436,9 +441,21 @@ public class NormalGetProfile extends AppCompatActivity {
                                 username.setText(getS_username);
                             }
 
-//                            username.setText(getS_username);
-                            normal_user_gender.setText(response.body().getData().get(0).getGender());
-                            user_profile_age.setText("," + response.body().getData().get(0).getAge() + "yo");
+//                            String gender = response.body().getData().get(0).getGender().trim();
+//                            String age = response.body().getData().get(0).getAge()+"yo";
+//                            SpannableString ss1=  new SpannableString(gender);
+//                            SpannableString ss2 = new SpannableString(age);
+//                            ss1.setSpan(new RelativeSizeSpan(1f), 0, ss1.length(), 0);
+//                            ss2.setSpan(new RelativeSizeSpan(0.6f), 0, ss2.length(), 0);
+//                            normal_user_gender.append(ss1+",");
+//                            normal_user_gender.append(ss2);
+//                            normal_user_gender.append(age);
+
+//                            normal_user_gender.setText(response.body().getData().get(0).getGender().trim());
+//                            user_profile_age.setText("," + response.body().getData().get(0).getAge() + "yo");
+                            normal_user_gender.setText("Male");
+                            user_profile_age.setText("," + "25" + "yo");
+
                             status.setText(getProfileStatus);
                             if (response.body().getData().get(0).getRating_points() != null) {
                                 totalpoints.setText(response.body().getData().get(0).getRating_points() + " Points");

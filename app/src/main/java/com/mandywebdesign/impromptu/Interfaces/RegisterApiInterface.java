@@ -55,6 +55,7 @@ import com.mandywebdesign.impromptu.Retrofit.RetroUsernameiMage;
 import com.mandywebdesign.impromptu.Retrofit.SearchMessages;
 import com.mandywebdesign.impromptu.Retrofit.TotalTickets;
 import com.mandywebdesign.impromptu.Retrofit.UpdateDraft;
+import com.mandywebdesign.impromptu.Retrofit.UsersBookedPastEvent;
 import com.mandywebdesign.impromptu.Retrofit.UsersLiveEvent;
 import com.mandywebdesign.impromptu.Retrofit.UsersPastEvent;
 
@@ -213,8 +214,13 @@ public interface RegisterApiInterface {
 
     );
 
-    @GET("user-past-events")
+    @GET("user-history-events")
     Call<UsersPastEvent> userspastevents(
+            @Query("user_id") String user_id
+    );
+
+    @GET("user-past-booked-events")
+    Call<UsersBookedPastEvent> userbookedPast_event(
             @Query("user_id") String user_id
     );
 

@@ -14,19 +14,18 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEventDetailAcitvity;
 import com.mandywebdesign.impromptu.R;
-import com.mandywebdesign.impromptu.Retrofit.UsersPastEvent;
+import com.mandywebdesign.impromptu.Retrofit.UsersBookedPastEvent;
 
 import java.util.List;
 
-public class UsersPastEventsAdapter extends RecyclerView.Adapter<UsersPastEventsAdapter.ViewHolder> {
+public class UsersPastBookedEventsAdapter extends RecyclerView.Adapter<UsersPastBookedEventsAdapter.ViewHolder> {
     Context context;
     FragmentManager manager;
-    List<UsersPastEvent.Datum> datumArrayList;
+    List<UsersBookedPastEvent.Datum> datumArrayList;
 
-    public UsersPastEventsAdapter(Context context, List<UsersPastEvent.Datum> datumArrayList) {
+    public UsersPastBookedEventsAdapter(Context context, List<UsersBookedPastEvent.Datum> datumArrayList) {
         this.context = context;
         this.datumArrayList = datumArrayList;
     }
@@ -34,20 +33,20 @@ public class UsersPastEventsAdapter extends RecyclerView.Adapter<UsersPastEvents
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public UsersPastBookedEventsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
         View view = layoutInflater.inflate(R.layout.business_vustom_event_thumbs, viewGroup, false);
 
-        return new ViewHolder(view);
+        return new UsersPastBookedEventsAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull UsersPastBookedEventsAdapter.ViewHolder holder, final int position) {
         holder.category.setText(datumArrayList.get(position).getTitle());
-        Log.d("imgUrl+++", "" + datumArrayList.get(position).getFile().toString());
+        Log.d("imgUrl+++", "" + datumArrayList.get(position).getFile().get(0));
 
         Glide.with(context)
-                .load(datumArrayList.get(position).getFile().toString())
+                .load(datumArrayList.get(position).getFile().get(0))
                 .centerCrop()
                 .into(holder.business_event_thumb);
 
@@ -57,7 +56,7 @@ public class UsersPastEventsAdapter extends RecyclerView.Adapter<UsersPastEvents
                 Intent intent = new Intent(context, BusinessEventDetailAcitvity.class);
                 intent.putExtra("event_id", datumArrayList.get(position).getEventId().toString());
                 intent.putExtra("eventType", "past");
-                 context.startActivity(intent);
+                context.startActivity(intent);
                 Log.d("image+++++++", datumArrayList.get(position).getFile().toString());
             }
         });

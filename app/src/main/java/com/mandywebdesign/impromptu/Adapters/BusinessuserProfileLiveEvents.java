@@ -71,8 +71,6 @@ public class BusinessuserProfileLiveEvents extends RecyclerView.Adapter<Business
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
-
-
         TextView category;
         ImageView imageView;
 
@@ -84,7 +82,6 @@ public class BusinessuserProfileLiveEvents extends RecyclerView.Adapter<Business
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //manager.beginTransaction().replace(R.id.home_frame_layout,new BusinessEvent_detailsFragment()).addToBackStack("Live").commit();
                 }
             });
         }

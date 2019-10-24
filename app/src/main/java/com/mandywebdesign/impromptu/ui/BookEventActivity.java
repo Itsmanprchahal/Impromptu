@@ -600,7 +600,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
 
     public void dialog(final String value) {
-        String ticketNum[] = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+        String ticketNum[] = new String[]{"1", "2"};
 
         final Dialog dialog = new Dialog(BookEventActivity.this);
         dialog.setContentView(R.layout.custom_dialog_book_ticket);
@@ -780,7 +780,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
                         }
                     } else {
-                        peoplegoing.setText("no one booked yet");
+                        peoplegoing.setText("no one has booked yet");
                         seeAll.setClickable(false);
                         seeAll.setVisibility(View.GONE);
                         users.setVisibility(View.GONE);

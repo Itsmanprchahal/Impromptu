@@ -5,62 +5,68 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class UsersPastEvent {
+public class UsersBookedPastEvent {
 
-    @SerializedName("status")
-    @Expose
-    private String status;
-    @SerializedName("message")
-    @Expose
-    private String message;
-    @SerializedName("data")
-    @Expose
-    private List<Datum> data = null;
+@SerializedName("status")
+@Expose
+private String status;
+@SerializedName("message")
+@Expose
+private String message;
+@SerializedName("data")
+@Expose
+private List<Datum> data = null;
 
-    public String getStatus() {
-        return status;
-    }
+public String getStatus() {
+return status;
+}
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+public void setStatus(String status) {
+this.status = status;
+}
 
-    public String getMessage() {
-        return message;
-    }
+public String getMessage() {
+return message;
+}
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+public void setMessage(String message) {
+this.message = message;
+}
 
-    public List<Datum> getData() {
-        return data;
-    }
+public List<Datum> getData() {
+return data;
+}
 
-    public void setData(List<Datum> data) {
-        this.data = data;
-    }
+public void setData(List<Datum> data) {
+this.data = data;
+}
 
     public class Datum {
 
-        @SerializedName("event_id")
-        @Expose
-        private Integer eventId;
         @SerializedName("rating")
         @Expose
         private String rating;
         @SerializedName("total_rating")
         @Expose
         private String totalRating;
+        @SerializedName("event_id")
+        @Expose
+        private Integer eventId;
         @SerializedName("title")
         @Expose
         private String title;
+        @SerializedName("favourite")
+        @Expose
+        private Integer favourite;
         @SerializedName("description")
         @Expose
         private String description;
         @SerializedName("category")
         @Expose
         private String category;
+        @SerializedName("category_id")
+        @Expose
+        private Integer categoryId;
         @SerializedName("b_event_hostname")
         @Expose
         private String bEventHostname;
@@ -85,22 +91,22 @@ public class UsersPastEvent {
         @SerializedName("time_to")
         @Expose
         private String timeTo;
-        @SerializedName("attendees_gender")
+        @SerializedName("attendees-gender")
         @Expose
         private String attendeesGender;
-        @SerializedName("attendees_no")
+        @SerializedName("attendees-no")
         @Expose
         private String attendeesNo;
-        @SerializedName("free_event")
+        @SerializedName("free-event")
         @Expose
         private String freeEvent;
-        @SerializedName("ticket_type")
+        @SerializedName("ticket-type")
         @Expose
         private String ticketType;
         @SerializedName("price")
         @Expose
         private String price;
-        @SerializedName("no_of_tickets")
+        @SerializedName("no-of-tickets")
         @Expose
         private String noOfTickets;
         @SerializedName("status")
@@ -123,15 +129,7 @@ public class UsersPastEvent {
         private String timezone;
         @SerializedName("file")
         @Expose
-        private String file;
-
-        public Integer getEventId() {
-            return eventId;
-        }
-
-        public void setEventId(Integer eventId) {
-            this.eventId = eventId;
-        }
+        private List<String> file = null;
 
         public String getRating() {
             return rating;
@@ -149,12 +147,28 @@ public class UsersPastEvent {
             this.totalRating = totalRating;
         }
 
+        public Integer getEventId() {
+            return eventId;
+        }
+
+        public void setEventId(Integer eventId) {
+            this.eventId = eventId;
+        }
+
         public String getTitle() {
             return title;
         }
 
         public void setTitle(String title) {
             this.title = title;
+        }
+
+        public Integer getFavourite() {
+            return favourite;
+        }
+
+        public void setFavourite(Integer favourite) {
+            this.favourite = favourite;
         }
 
         public String getDescription() {
@@ -171,6 +185,14 @@ public class UsersPastEvent {
 
         public void setCategory(String category) {
             this.category = category;
+        }
+
+        public Integer getCategoryId() {
+            return categoryId;
+        }
+
+        public void setCategoryId(Integer categoryId) {
+            this.categoryId = categoryId;
         }
 
         public String getBEventHostname() {
@@ -333,11 +355,11 @@ public class UsersPastEvent {
             this.timezone = timezone;
         }
 
-        public String getFile() {
+        public List<String> getFile() {
             return file;
         }
 
-        public void setFile(String file) {
+        public void setFile(List<String> file) {
             this.file = file;
         }
 

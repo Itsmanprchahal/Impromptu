@@ -114,7 +114,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:hint="Gender"
+                            android:text="Gender"
                             android:textColor="@color/black"
                             android:fontFamily="@font/sfuitextlight"
                             android:id="@+id/normal_user_gender"/>
@@ -132,7 +132,6 @@
                             android:textStyle="bold"
                             tools:ignore="RtlCompat" />
                     </LinearLayout>
-
 
                     <LinearLayout
                         android:layout_width="wrap_content"

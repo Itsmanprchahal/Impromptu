@@ -240,65 +240,6 @@ public class BusinessUserPRofileActivity extends AppCompatActivity implements Vi
 
 
         //getPastEvents
-
-        Call<UsersPastEvent> call2 = WebAPI.getInstance().getApi().userspastevents(userid);
-        call2.enqueue(new Callback<UsersPastEvent>() {
-            @Override
-            public void onResponse(Call<UsersPastEvent> call, Response<UsersPastEvent> response) {
-
-                if (response.body()!=null)
-                {
-                    progressDialog.dismiss();
-                    if (response.body().getStatus().equals("200")) {
-                        UsersPastEvent data = response.body();
-
-                        List<UsersPastEvent.Datum> datumArrayList = data.getData();
-                        profilePastEvents.clear();
-                        pastImages.clear();
-                        for (UsersPastEvent.Datum datum : datumArrayList) {
-                            profilePastEvents.add(datum.getCategory());
-                            Collections.reverse(profilePastEvents);
-                            pastImages.add(String.valueOf(datum.getFile()));
-                            Collections.reverse(profilePastEvents);
-                            Collections.reverse(pastImages);
-                            profilePastEvents_id.add(String.valueOf(datum.getEventId()));
-                            Collections.reverse(profilePastEvents_id);
-
-                            String total = String.valueOf(profilePastEvents.size());
-                            pastevnets.setText("(" + String.valueOf(profilePastEvents.size()) + ")");
-                        }
-
-
-                        LinearLayoutManager layoutManager = new LinearLayoutManager(BusinessUserPRofileActivity.this, LinearLayoutManager.HORIZONTAL, false);
-                        pasteventsrecyles.setLayoutManager(layoutManager);
-
-                        UsersPastEventsAdapter adapter = new UsersPastEventsAdapter(BusinessUserPRofileActivity.this,datumArrayList);
-                        pasteventsrecyles.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
-                    }
-                }else {
-                    Intent intent = new Intent(BusinessUserPRofileActivity.this, NoInternetScreen.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                }
-
-                progressDialog.dismiss();
-            }
-
-            @Override
-            public void onFailure(Call<UsersPastEvent> call, Throwable t) {
-                if (isOnline() == false) {
-                    progressDialog.dismiss();
-                    NoInternetdialog();
-                } else if (isOnline() == true) {
-                    progressDialog.dismiss();
-                    // NoInternetdialog();
-                }else {
-                    progressDialog.dismiss();
-                    Toast.makeText(BusinessUserPRofileActivity.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 
     private void reverseLive() {
@@ -403,6 +344,72 @@ public class BusinessUserPRofileActivity extends AppCompatActivity implements Vi
         super.onResume();
         getUserPRofileData(userid);
         getLiveEvents(userid);
+        getpastevents(userid);
+    }
+
+    private void getpastevents(String userid) {
+        Call<UsersPastEvent> call2 = WebAPI.getInstance().getApi().userspastevents(userid);
+        call2.enqueue(new Callback<UsersPastEvent>() {
+            @Override
+            public void onResponse(Call<UsersPastEvent> call, Response<UsersPastEvent> response) {
+
+                if (response.body()!=null)
+                {
+                    progressDialog.dismiss();
+                    if (response.body().getStatus().equals("200")) {
+                        UsersPastEvent data = response.body();
+
+                        List<UsersPastEvent.Datum> datumArrayList = data.getData();
+
+                        profilePastEvents.clear();
+                        pastImages.clear();
+                        for (UsersPastEvent.Datum datum : datumArrayList) {
+                            profilePastEvents.add(datum.getCategory());
+                            Collections.reverse(profilePastEvents);
+                            pastImages.add(String.valueOf(datum.getFile()));
+                            Collections.reverse(profilePastEvents);
+                            Collections.reverse(pastImages);
+                            profilePastEvents_id.add(String.valueOf(datum.getEventId()));
+                            Collections.reverse(profilePastEvents_id);
+
+                            String total = String.valueOf(profilePastEvents.size());
+                            pastevnets.setText("(" + String.valueOf(profilePastEvents.size()) + ")");
+                        }
+
+
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(BusinessUserPRofileActivity.this, LinearLayoutManager.HORIZONTAL, false);
+                        pasteventsrecyles.setLayoutManager(layoutManager);
+
+                        UsersPastEventsAdapter adapter = new UsersPastEventsAdapter(BusinessUserPRofileActivity.this,datumArrayList);
+                        pasteventsrecyles.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                    }else if (response.body().getStatus().equals("400"))
+                    {
+                        Toast.makeText(BusinessUserPRofileActivity.this, "HERE 400", Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Intent intent = new Intent(BusinessUserPRofileActivity.this, NoInternetScreen.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<UsersPastEvent> call, Throwable t) {
+                if (isOnline() == false) {
+                    progressDialog.dismiss();
+                    NoInternetdialog();
+                } else if (isOnline() == true) {
+                    progressDialog.dismiss();
+                    // NoInternetdialog();
+                }else {
+                    progressDialog.dismiss();
+                    Toast.makeText(BusinessUserPRofileActivity.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void getLiveEvents(String userid) {
