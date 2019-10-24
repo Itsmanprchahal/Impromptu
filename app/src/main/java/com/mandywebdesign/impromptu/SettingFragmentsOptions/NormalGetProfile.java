@@ -435,24 +435,10 @@ public class NormalGetProfile extends AppCompatActivity {
                                     String Lname = name[1];
                                     username.setText(Fname + " " + Lname.subSequence(0, 1));
                                 }
-
-
                             } else {
                                 username.setText(getS_username);
                             }
 
-//                            String gender = response.body().getData().get(0).getGender().trim();
-//                            String age = response.body().getData().get(0).getAge()+"yo";
-//                            SpannableString ss1=  new SpannableString(gender);
-//                            SpannableString ss2 = new SpannableString(age);
-//                            ss1.setSpan(new RelativeSizeSpan(1f), 0, ss1.length(), 0);
-//                            ss2.setSpan(new RelativeSizeSpan(0.6f), 0, ss2.length(), 0);
-//                            normal_user_gender.append(ss1+",");
-//                            normal_user_gender.append(ss2);
-//                            normal_user_gender.append(age);
-
-//                            normal_user_gender.setText(response.body().getData().get(0).getGender().trim());
-//                            user_profile_age.setText("," + response.body().getData().get(0).getAge() + "yo");
                             normal_user_gender.setText("Male");
                             user_profile_age.setText("," + "25" + "yo");
 
