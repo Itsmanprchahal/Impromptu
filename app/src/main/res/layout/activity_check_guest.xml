@@ -21,11 +21,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/check_guest_qrcode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_qrcode" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -94,7 +89,29 @@
             android:layout_marginTop="@dimen/_55sdp"
             android:textSize="@dimen/_20sdp"
             android:id="@+id/QRData"/>
+
     </RelativeLayout>
 
+    <View
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#C9C5C5"
+        android:layout_margin="@dimen/defaultmargin"
+        app:layout_constraintBottom_toTopOf="@id/check_guest_qrcode"/>
+
+    <ImageView
+        android:id="@+id/check_guest_qrcode"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/defaultmargin"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:src="@drawable/ic_qrcode"
+        tools:ignore="MissingConstraints"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

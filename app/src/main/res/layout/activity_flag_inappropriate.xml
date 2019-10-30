@@ -63,7 +63,7 @@
                 android:layout_margin="@dimen/defaultmargin"
                 android:text="Have you had a bad experience with a host/attendee or at an event you have attended?"
                 android:textColor="@color/black"
-                android:fontFamily="@font/circularstdbold"
+                android:fontFamily="@font/circularstdblack"
                 android:textSize="@dimen/normalText">
             </TextView>
 
@@ -72,16 +72,17 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/defaultmargin"
                 android:textSize="@dimen/normalText"
-                android:textColor="@color/black"
-                android:fontFamily="@font/circularstdbold"
-                android:text="If so, please input unique event ID (found at the bottom right corner of the event details)"></TextView>
+                android:textColor="@color/colorTheme"
+                android:fontFamily="@font/circularstdblack"
+                android:text="@string/uniqueid"></TextView>
 
             <EditText
                 android:id="@+id/event_id"
-                android:layout_width="120dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_edittext"
                 android:layout_marginLeft="@dimen/defaultmargin"
+                android:layout_marginRight="@dimen/defaultmargin"
                 android:textColor="@color/black"
                 android:fontFamily="@font/circularstdbold"
                 android:inputType="number"
@@ -95,7 +96,7 @@
                 android:text="Which of the following did you find inappropriate?"
                 android:textColor="@color/black"
                 android:textSize="@dimen/normalText"
-                android:fontFamily="@font/circularstdbold"></TextView>
+                android:fontFamily="@font/circularstdblack"></TextView>
 
             <RadioGroup
                 android:id="@+id/radiogroup"
@@ -112,6 +113,7 @@
                     android:fontFamily="@font/circularstdbold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/colorTheme"
                     android:buttonTint="@color/colorTheme"></RadioButton>
 
 
@@ -119,6 +121,7 @@
                     android:id="@+id/AttendeeRB"
                     android:text="Attendee"
                     android:layout_weight="1"
+                    android:textColor="@color/colorTheme"
                     android:fontFamily="@font/circularstdbold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -129,6 +132,7 @@
                     android:id="@+id/OtherRB"
                     android:text="Other"
                     android:layout_weight="1"
+                    android:textColor="@color/colorTheme"
                     android:fontFamily="@font/circularstdbold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -142,7 +146,7 @@
                 android:textSize="@dimen/normalText"
                 android:textColor="@color/black"
                 android:layout_margin="@dimen/defaultmargin"
-                android:fontFamily="@font/circularstdbold"></TextView>
+                android:fontFamily="@font/circularstdblack"></TextView>
 
             <EditText
                 android:layout_width="match_parent"
@@ -163,7 +167,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/defaultmargin"
                 android:background="@drawable/button_color_theme"
-                android:text="Send"
+                android:text="Report"
                 android:textColor="@color/white"
                 android:textAllCaps="false"></Button>
         </LinearLayout>

@@ -58,7 +58,19 @@ public class CheckInGuest {
         @SerializedName("ticket_type")
         @Expose
         private String ticketType;
+
+        public String getTotal_tickets_by_user() {
+            return total_tickets_by_user;
+        }
+
+        public void setTotal_tickets_by_user(String total_tickets_by_user) {
+            this.total_tickets_by_user = total_tickets_by_user;
+        }
+
         @SerializedName("total_tickets")
+        @Expose
+        private String total_tickets_by_user;
+        @SerializedName("total_tickets_by_user")
         @Expose
         private Integer totalTickets;
         @SerializedName("checkin")

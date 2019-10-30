@@ -13,30 +13,32 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorTheme">
+                android:background="@color/white">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <ImageButton
+                        android:id="@+id/contactus_back"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="#00000000"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/ic_arrow_back_white_24dp"
-                        android:id="@+id/contactus_back"/>
+                        android:background="#00000000"
+                        android:src="@drawable/back" />
 
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/logo" />
+                        android:src="@drawable/logoblack" />
                 </RelativeLayout>
 
 
@@ -45,35 +47,30 @@
             <LinearLayout
                 android:id="@+id/layoutone"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:background="@color/colorTheme"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:orientation="vertical">
-
-
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/defaultmargin"
                     android:layout_marginTop="20dp"
-                    android:gravity="center_horizontal"
-                    android:text="GET IN TOUCH"
-                    android:textColor="@color/white"
+                    android:gravity="start"
+                    android:text="Contact Us"
+                    android:textColor="@color/black"
                     android:textSize="25dp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="Always within your reach"
-                    android:textColor="@color/white" />
+                    android:layout_marginLeft="@dimen/defaultmargin"
+                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:gravity="start"
+                    android:text="@string/contactuscomment"
+                    android:textColor="@color/black" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="15dp"
-                    android:src="@drawable/ic_message" />
 
             </LinearLayout>
 
@@ -87,7 +84,8 @@
                 android:layout_marginRight="@dimen/margin_large"
                 android:text="Email"
                 android:textColor="@color/colorTheme"
-                android:textSize="@dimen/mediumtext" />
+                android:textSize="@dimen/mediumtext"
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/contactus_emialet"
@@ -100,29 +98,38 @@
                 android:editable="false"
                 android:focusable="false"
                 android:textColor="@color/colorTheme"
-                android:textSize="@dimen/mediumtext" />
+                android:textSize="@dimen/mediumtext"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/contactus_messagetv"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/contactus_emialet"
+                android:layout_gravity="end"
                 android:layout_marginLeft="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_large"
                 android:layout_marginRight="@dimen/margin_large"
-                android:text="Message"
-                android:textColor="@color/colorTheme"
-                android:textSize="@dimen/mediumtext" />
+                android:fontFamily="@font/sfuitextlight"
+                android:text="max 500 characters"
+                android:textColor="@color/black" />
+
 
             <EditText
                 android:id="@+id/contactus_messageet"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_150sdp"
                 android:layout_below="@id/contactus_messagetv"
+                android:layout_gravity="start"
                 android:layout_marginLeft="@dimen/margin_large"
+                android:layout_marginTop="@dimen/defaultmargin"
                 android:layout_marginRight="@dimen/margin_large"
-                android:backgroundTint="@color/colorTheme"
-                android:textColor="@color/colorTheme"
+                android:background="@drawable/custom_edittext"
+                android:gravity="start"
+                android:maxLength="500"
+                android:padding="@dimen/_7sdp"
+                android:textAlignment="viewStart"
+                android:textColor="@color/black"
                 android:textSize="@dimen/mediumtext" />
 
 

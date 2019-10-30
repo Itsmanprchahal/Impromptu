@@ -65,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Help Guide"
-                android:drawableLeft="@drawable/ic_delete"
+                android:drawableLeft="@drawable/ic_enqury"
                 android:gravity="center_vertical"
                 android:padding="@dimen/_8sdp"
                 android:drawablePadding="15dp"
@@ -100,13 +100,11 @@
             </View>
 
 
-
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Flag Inappropriate Behaviour"
-                android:drawableLeft="@drawable/ic_delete"
+                android:drawableLeft="@drawable/ic_flag"
                 android:gravity="center_vertical"
                 android:padding="@dimen/_8sdp"
                 android:drawablePadding="15dp"

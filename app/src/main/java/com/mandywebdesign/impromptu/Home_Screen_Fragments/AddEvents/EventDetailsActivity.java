@@ -229,7 +229,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+               event_details_date_etto.setText(mDate.getText().toString());
             }
 
             @Override
@@ -430,11 +430,15 @@ public class EventDetailsActivity extends AppCompatActivity {
                         } else {
                             eventTime_from.setText(hourOfDay + ":" + minute);
                         }
+
+
                     }
                 }, hour, minute, true);
                 timePickerDialog.show();
             }
         });
+
+        Log.d("timestamp", String.valueOf(Util.calender_time_to_timestamp(eventTime_from.getText().toString())));
 
         eventTime_to.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)

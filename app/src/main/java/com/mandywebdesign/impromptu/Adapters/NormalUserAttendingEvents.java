@@ -35,6 +35,7 @@ public class NormalUserAttendingEvents extends RecyclerView.Adapter<NormalUserAt
 
     @Override
     public void onBindViewHolder(@NonNull NormalUserAttendingEvents.VeiewHolder veiewHolder, final int i) {
+
         veiewHolder.category.setText(NormalGetProfile.attentingTietle.get(i));
         Glide.with(context).load(NormalGetProfile.attendingimage.get(i)).into(veiewHolder.imageView);
 

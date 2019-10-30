@@ -36,6 +36,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -95,7 +96,8 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     LinearLayout organiser_layout;
     RelativeLayout messagelayout, invite_layouit;
     FragmentManager fragmentManager;
-    Button mBookEvent, follow_button;
+    Button mBookEvent;
+    ImageButton follow_button;
     TextView organiserName, book_time, book_categry, peoplegoing, seeAll, remainingTicketTV, invitefriends, dialogtickttype, link1, link2, link3;
     ViewPager viewPager;
     RecyclerView users;
@@ -565,9 +567,9 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                     public void onResponse(Call<FollowUnfollow> call, Response<FollowUnfollow> response) {
                         if (response.isSuccessful()) {
                             if (response.body().getMessage().equals("Follow successfully.")) {
-                                follow_button.setText("Unfollow");
+                                follow_button.setImageDrawable(getResources().getDrawable(R.drawable.ic_star));
                             } else {
-                                follow_button.setText("Follow");
+                                follow_button.setImageDrawable(getResources().getDrawable(R.drawable.ic_staractive));
                             }
                         }
                     }
@@ -834,7 +836,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             follow_status = datum.getFollow_status();
                             event_book = datum.getEvent_book().toString();
                             if (follow_status.equals("1")) {
-                                follow_button.setText("Unfollow");
+                                follow_button.setImageDrawable(getResources().getDrawable(R.drawable.ic_star));
                             }
 
                             numberoftickts = datum.getNoOfTickets();
@@ -879,7 +881,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             fav_id = datum.getFavourite().toString();
                             Glide.with(BookEventActivity.this).load(host_image).into(host_pic);
 
-                            Collections.reverse(image);
                             //get Time to in AM PM
 
                             String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
@@ -1093,5 +1094,22 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure to exit app ");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+               // saveResult();
+                BookEventActivity.super.onBackPressed();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+               dialog.dismiss();
+            }
+        });
+        builder.show();
+    }
 }

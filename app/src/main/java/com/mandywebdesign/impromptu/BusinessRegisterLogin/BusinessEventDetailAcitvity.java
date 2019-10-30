@@ -1,7 +1,9 @@
 package com.mandywebdesign.impromptu.BusinessRegisterLogin;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
@@ -390,9 +392,9 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                         }
                         if (event_type.equals("past")) {
                             if (bookedUsersList.size() == 1) {
-                                peoplecoming.setText("1 Person was come");
+                                peoplecoming.setText("1 person attended");
                             } else if (bookedUsersList.size() >= 2) {
-                                peoplecoming.setText(bookedUsersList.size() + " People was come");
+                                peoplecoming.setText(bookedUsersList.size() + " person attended");
 
                             } else {
                                 peoplecoming.setText("No one booked this event yet");
@@ -876,7 +878,6 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     //check remainig tickets

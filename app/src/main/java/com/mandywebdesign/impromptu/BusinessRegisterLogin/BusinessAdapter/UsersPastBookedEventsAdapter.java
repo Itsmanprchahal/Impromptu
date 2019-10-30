@@ -18,6 +18,7 @@ import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEventDetailAci
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.UsersBookedPastEvent;
 
+import java.util.Collections;
 import java.util.List;
 
 public class UsersPastBookedEventsAdapter extends RecyclerView.Adapter<UsersPastBookedEventsAdapter.ViewHolder> {
@@ -42,6 +43,8 @@ public class UsersPastBookedEventsAdapter extends RecyclerView.Adapter<UsersPast
 
     @Override
     public void onBindViewHolder(@NonNull UsersPastBookedEventsAdapter.ViewHolder holder, final int position) {
+
+        Collections.reverse(datumArrayList);
         holder.category.setText(datumArrayList.get(position).getTitle());
         Log.d("imgUrl+++", "" + datumArrayList.get(position).getFile().get(0));
 

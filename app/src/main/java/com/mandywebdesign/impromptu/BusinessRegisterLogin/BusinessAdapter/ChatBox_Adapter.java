@@ -54,23 +54,56 @@ public class ChatBox_Adapter extends RecyclerView.Adapter<ChatBox_Adapter.ViewHo
         if (!id.equals(userID)) {
             viewHolder.right.setText(arrayList.get(i).getMessage());
             Glide.with(context).load(arrayList.get(i).getUserAvatar()).into(viewHolder.rightUserImage);
-            viewHolder.rightUserName.setText(arrayList.get(i).getUsername() );
+//            viewHolder.rightUserName.setText(arrayList.get(i).getUsername() );
             viewHolder.righttime.setVisibility(View.GONE);
             viewHolder.righttime.setText(Util.convertTimeStampDateTime(Long.parseLong(arrayList.get(i).getMessageDatetime())) );
             viewHolder.leftUsername.setVisibility(View.GONE);
             viewHolder.leftUserImage.setVisibility(View.GONE);
             viewHolder.left.setVisibility(View.GONE);
             viewHolder.leftLayout.setVisibility(View.GONE);
+
+            String userName = arrayList.get(i).getUsername();
+            if (userName != null) {
+                String[] name = userName.split(" ");
+                if (name.length == 1) {
+                    String Fname = name[0];
+                    viewHolder.rightUserName.setText(Fname + " ");
+                } else {
+                    String Fname = name[0];
+                    String Lname = name[1];
+                    viewHolder.rightUserName.setText(Fname + " " + Lname.subSequence(0, 1));
+                }
+
+
+            } else {
+                viewHolder.rightUserName.setText(userName);
+            }
         } else {
             viewHolder.left.setText(arrayList.get(i).getMessage());
             Glide.with(context).load(arrayList.get(i).getUserAvatar()).into(viewHolder.leftUserImage);
-            viewHolder.leftUsername.setText(arrayList.get(i).getUsername());
             viewHolder.lefttime.setVisibility(View.GONE);
             viewHolder.lefttime.setText(Util.convertTimeStampDateTime(Long.parseLong(arrayList.get(i).getMessageDatetime())));
             viewHolder.rightUserName.setVisibility(View.GONE);
             viewHolder.rightUserImage.setVisibility(View.GONE);
             viewHolder.right.setVisibility(View.GONE);
             viewHolder.rightLayout.setVisibility(View.GONE);
+            String userName = arrayList.get(i).getUsername();
+
+            if (userName != null) {
+                String[] name = userName.split(" ");
+                if (name.length == 1) {
+                    String Fname = name[0];
+                    viewHolder.leftUsername.setText(Fname + " ");
+                } else {
+                    String Fname = name[0];
+                    String Lname = name[1];
+                    viewHolder.leftUsername.setText(Fname + " " + Lname.subSequence(0, 1));
+                }
+
+
+            } else {
+                viewHolder.rightUserName.setText(userName);
+            }
         }
     }
 

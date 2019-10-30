@@ -45,4 +45,6 @@
     <string name="msg_subscribed">Impromptu Notify</string>
     <string name="msg_subscribe_failed">Notify failed</string>
     <string name="feedback"><u>Leave Feedback</u></string>
+    <string name="uniqueid"><b>Unique Event ID </b>(found in event listing)</string>
+    <string name="contactuscomment">Any feedback? Any comments? "\n" Don’t be shy, give us a shout...</string>
 </resources>

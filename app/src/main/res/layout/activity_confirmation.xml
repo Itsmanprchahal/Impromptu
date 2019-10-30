@@ -19,6 +19,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_centerHorizontal="true"
                 android:textSize="18sp"
                 android:layout_toLeftOf="@id/confirm_close"
                 android:textStyle="bold"
@@ -38,8 +40,18 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/confirm_toolbar"
+        android:layout_marginLeft="@dimen/defaultmargin"
+        android:text="You are going to"
+        android:textColor="@color/colorTheme"
+        android:textSize="@dimen/normalText"
+        android:fontFamily="@font/circularstdblack"></TextView>
+
     <RelativeLayout
-        android:layout_marginTop="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_30sdp"
         android:layout_below="@id/confirm_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

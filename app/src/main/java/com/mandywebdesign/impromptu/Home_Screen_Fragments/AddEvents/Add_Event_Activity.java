@@ -232,7 +232,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
                 public void onClick(View view) {
                     link_layoutone.setVisibility(View.VISIBLE);
                     hyperlinkone.setVisibility(View.VISIBLE);
-                    createvent_addlink.setVisibility(View.GONE);
+                    createvent_addlink.setVisibility(View.VISIBLE);
                     deleteimage1.setVisibility(View.VISIBLE);
                 }
             });
@@ -243,7 +243,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
                 public void onClick(View view) {
                     link_layoutone.setVisibility(View.VISIBLE);
                     hyperlinkone.setVisibility(View.VISIBLE);
-                    createvent_addlink.setVisibility(View.GONE);
+                    createvent_addlink.setVisibility(View.VISIBLE);
                     deleteimage1.setVisibility(View.VISIBLE);
                 }
             });

@@ -172,8 +172,6 @@ public class NormalGetProfile extends AppCompatActivity {
             eventsAttendingRecycler.setVisibility(View.VISIBLE);
             totlaEvents.setVisibility(View.VISIBLE);
         }
-
-
     }
 
     private void getUsersattendingEvents(String userid) {
@@ -182,8 +180,7 @@ public class NormalGetProfile extends AppCompatActivity {
             @Override
             public void onResponse(Call<UsersBookedPastEvent> call, Response<UsersBookedPastEvent> response) {
 
-                if (response.body()!=null)
-                {
+                if (response.body() != null) {
                     progressDialog.dismiss();
                     if (response.body().getStatus().equals("200")) {
 
@@ -197,7 +194,6 @@ public class NormalGetProfile extends AppCompatActivity {
                         for (UsersBookedPastEvent.Datum datum : datumArrayList) {
 
                             Log.d("cates", "" + datum.getCategory());
-
                             attendingimage.add(datum.getFile().toString());
                             attentingTietle.add(datum.getTitle().toString());
                             attentingevent_id.add(String.valueOf(datum.getEventId()));
@@ -207,15 +203,14 @@ public class NormalGetProfile extends AppCompatActivity {
                             LinearLayoutManager layoutManager = new LinearLayoutManager(NormalGetProfile.this, LinearLayoutManager.HORIZONTAL, false);
                             eventsAttendingRecycler.setLayoutManager(layoutManager);
 
-
-                            UsersPastBookedEventsAdapter adapter = new UsersPastBookedEventsAdapter(NormalGetProfile.this,datumArrayList);
+                            UsersPastBookedEventsAdapter adapter = new UsersPastBookedEventsAdapter(NormalGetProfile.this, datumArrayList);
                             eventsAttendingRecycler.setAdapter(adapter);
                         }
                     } else if (response.body().getStatus().equals("400")) {
                         pastEvents.setText("( " + attentingTietle.size() + " )");
                     }
                     progressDialog.dismiss();
-                }else {
+                } else {
                     Intent intent = new Intent(NormalGetProfile.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
@@ -232,9 +227,9 @@ public class NormalGetProfile extends AppCompatActivity {
                 } else if (isOnline() == true) {
                     progressDialog.dismiss();
                     // NoInternetdialog();
-                }else {
+                } else {
                     progressDialog.dismiss();
-                    Toast.makeText(NormalGetProfile.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NormalGetProfile.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -254,11 +249,15 @@ public class NormalGetProfile extends AppCompatActivity {
                         images.clear();
                         eventTitle.clear();
                         liveevent_id.clear();
-
                         for (RetroLiveEvents.Datum datum : datumList) {
                             eventTitle.add(datum.getTitle());
                             images.add(datum.getFile());
                             liveevent_id.add(String.valueOf(datum.getEventId()));
+
+                            Collections.reverse(eventTitle);
+                            Collections.reverse(images);
+                            Collections.reverse(liveevent_id);
+
                             totlaEvents.setText("( " + String.valueOf(images.size()) + " )");
 
                             LinearLayoutManager layoutManager = new LinearLayoutManager(NormalGetProfile.this, LinearLayoutManager.HORIZONTAL, false);
@@ -295,8 +294,7 @@ public class NormalGetProfile extends AppCompatActivity {
             @Override
             public void onResponse(Call<UsersLiveEvent> call, Response<UsersLiveEvent> response) {
 
-                if (response.body() != null)
-                {
+                if (response.body() != null) {
                     progressDialog.dismiss();
                     if (response.body().getStatus().equals("200")) {
                         UsersLiveEvent retroLiveEvents = response.body();
@@ -314,13 +312,13 @@ public class NormalGetProfile extends AppCompatActivity {
                             LinearLayoutManager layoutManager = new LinearLayoutManager(NormalGetProfile.this, LinearLayoutManager.HORIZONTAL, false);
                             hostRecycler.setLayoutManager(layoutManager);
 
-                            UsersLiveEventsAdapter adapter = new UsersLiveEventsAdapter(NormalGetProfile.this,datumList);
+                            UsersLiveEventsAdapter adapter = new UsersLiveEventsAdapter(NormalGetProfile.this, datumList);
                             hostRecycler.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         }
 
                     }
-                }else {
+                } else {
                     Intent intent = new Intent(NormalGetProfile.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
@@ -366,12 +364,14 @@ public class NormalGetProfile extends AppCompatActivity {
                             attendingimage.add(datum.getFile().get(0));
                             attentingTietle.add(datum.getTitle().toString());
                             attentingevent_id.add(String.valueOf(datum.getEventId()));
-                            pastEvents.setText("( " + attentingTietle.size() + " )");
 
+                            Collections.reverse(attendingimage);
+                            Collections.reverse(attentingTietle);
+                            Collections.reverse(attentingevent_id);
+                            pastEvents.setText("( " + attentingTietle.size() + " )");
 
                             LinearLayoutManager layoutManager = new LinearLayoutManager(NormalGetProfile.this, LinearLayoutManager.HORIZONTAL, false);
                             eventsAttendingRecycler.setLayoutManager(layoutManager);
-
 
                             NormalUserAttendingEvents adapter = new NormalUserAttendingEvents(NormalGetProfile.this);
                             eventsAttendingRecycler.setAdapter(adapter);
@@ -439,12 +439,12 @@ public class NormalGetProfile extends AppCompatActivity {
                                 username.setText(getS_username);
                             }
 
-                            normal_user_gender.setText("Male");
-                            user_profile_age.setText("," + "25" + "yo");
+                            normal_user_gender.setText(response.body().getData().get(0).getGender());
+                            user_profile_age.setText(", " + response.body().getData().get(0).getAge() + "yo");
 
                             status.setText(getProfileStatus);
                             if (response.body().getData().get(0).getRating_points() != null) {
-                                totalpoints.setText(response.body().getData().get(0).getRating_points() + " Points");
+                                totalpoints.setText(response.body().getData().get(0).getRating_points());
                             }
 
                             Glide.with(NormalGetProfile.this).load(getNormalUserImage).into(userImage);

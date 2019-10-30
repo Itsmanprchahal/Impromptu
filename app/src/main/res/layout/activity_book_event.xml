@@ -399,7 +399,6 @@
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/screen1"
                                 app:riv_corner_radius="10dp" />
 
                             <LinearLayout
@@ -427,16 +426,6 @@
                                     android:fontFamily="@font/sfuitextlight"
                                     android:textSize="12sp" />
 
-                                <Button
-                                    android:id="@+id/follow_button"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="35dp"
-                                    android:background="@drawable/button_color_theme"
-                                    android:text="Follow"
-                                    android:layout_marginTop="5dp"
-                                    android:textAllCaps="false"
-                                    android:textColor="@color/white"></Button>
-
                             </LinearLayout>
 
 
@@ -444,6 +433,20 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:id="@+id/messagelayout">
+
+                                <ImageButton
+                                    android:id="@+id/follow_button"
+                                    android:layout_width="wrap_content"
+                                    android:src="@drawable/ic_staractive"
+                                    android:background="@drawable/transperent"
+                                    android:layout_centerVertical="true"
+                                    android:layout_toLeftOf="@id/book_message"
+                                    android:layout_height="35dp"
+                                    android:text="Follow"
+                                    android:layout_marginTop="5dp"
+                                    android:textAllCaps="false"
+                                    android:layout_marginRight="@dimen/_10sdp"
+                                    android:textColor="@color/white"></ImageButton>
 
                                 <ImageView
                                     android:id="@+id/book_message"

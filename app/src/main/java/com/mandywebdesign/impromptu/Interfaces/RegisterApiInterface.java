@@ -491,11 +491,11 @@ public interface RegisterApiInterface {
 
     @POST("guest-check-in")
     Call<CheckInGuest> checkinguest(
-            @Header("Authorization") String token,
-            @Query("eventid") String evenID,
-            @Query("checkin") String checkin,
-            @Query("userid") String userId
-    );
+                    @Header("Authorization") String token,
+                    @Query("eventid") String evenID,
+                    @Query("checkin") String checkin,
+                    @Query("userid") String userId
+            );
 
   /*  @GET("total-check-in")
     Call<TotalCheckIn> totleTickets(

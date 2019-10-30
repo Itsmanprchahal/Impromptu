@@ -83,12 +83,11 @@ public class CheckGuestActivity extends AppCompatActivity {
         scanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent1 = new Intent(CheckGuestActivity.this,QrScanActivity.class);
                 intent1.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 intent1.putExtra("value",id);
                 startActivity(intent1);
-finish();
+                finish();
             }
         });
 
@@ -100,11 +99,9 @@ finish();
                 onBackPressed();
             }
         });
-
     }
 
     private void getBookedUSers(String Token) {
-
         Call<CheckInGuest> checkInGuestCall = WebAPI.getInstance().getApi().checkinguest("Bearer " + Token, BusinessEventDetailAcitvity.value, "", "");
         checkInGuestCall.enqueue(new Callback<CheckInGuest>() {
             @Override
@@ -118,9 +115,7 @@ finish();
                             checkinguset.add(response.body().getData().get(i));
                             userID.add(String.valueOf(response.body().getData().get(i).getUserid()));
                             setDat(checkinguset);
-
                         }
-
                     }
                     Log.d("Hello1234", "1" + response.message());
                 } else
@@ -129,7 +124,6 @@ finish();
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
-
             }
 
             @Override
@@ -137,7 +131,6 @@ finish();
                 Toast.makeText(CheckGuestActivity.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     private void getTotalCheckin(String s, String eventID) {

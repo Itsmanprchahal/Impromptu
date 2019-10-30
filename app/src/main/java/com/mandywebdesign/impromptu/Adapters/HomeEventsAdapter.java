@@ -91,7 +91,7 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Vi
             viewHolder.eventPrice.setText("£ "+Home.Cost.get(i));
         }
 
-        Glide.with(context).load(Home.Image.get(i)).apply(new RequestOptions().override(250,250)).into(viewHolder.eventImage);
+        Glide.with(context).load(Home.Image.get(i)).into(viewHolder.eventImage);
         viewHolder.eventCategoryname.setVisibility(View.VISIBLE);
         viewHolder.addtoFavCheck_box.setVisibility(View.VISIBLE);
 

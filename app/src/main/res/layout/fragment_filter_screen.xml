@@ -108,7 +108,6 @@
                    android:layout_height="@dimen/_35sdp"
                    app:layout_constraintTop_toBottomOf="@id/loc"
                    android:layout_marginTop="@dimen/_10sdp"
-
                    android:layout_marginLeft="@dimen/defaultmargin"
                    android:layout_marginRight="@dimen/defaultmargin"
                    android:fontFamily="@font/circularstdblack"
@@ -278,7 +277,7 @@
                    android:layout_marginRight="@dimen/defaultmargin"
                    android:textStyle="bold"
                    android:textColor="@color/colortextwhite"
-                   android:fontFamily="@font/sfuitextlight"
+                   android:fontFamily="@font/circularstdblack"
                    app:layout_constraintTop_toBottomOf="@id/radiogroup_filter"
                    android:layout_marginTop="@dimen/_10sdp"
                    android:layout_marginBottom="@dimen/_5sdp"

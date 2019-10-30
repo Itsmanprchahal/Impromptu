@@ -45,9 +45,10 @@
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorTheme"
                 android:text="Type of ticket"
                 android:fontFamily="@font/sfuitextlight"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:layout_below="@id/custom_guest_name"
                 android:layout_toRightOf="@id/custom_guest_image"/>
 
@@ -97,9 +98,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="0"
-        android:textColor="@color/colortextBlack"
+        android:textColor="@color/white"
         android:textStyle="bold"
         android:textSize="@dimen/_15sdp"
+        android:textAlignment="center"
+        android:background="@drawable/circle_background"
         android:layout_alignParentRight="true"
         android:gravity="center_vertical"
         android:layout_marginTop="35dp"
@@ -114,8 +117,5 @@
         android:layout_height="2dp"
         android:background="#C9C5C5"
         android:layout_below="@id/layout"/>
-
-
-
 
 </RelativeLayout>

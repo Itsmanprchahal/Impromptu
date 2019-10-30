@@ -24,6 +24,7 @@ import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalGetProfile;
 import com.mandywebdesign.impromptu.ui.BookEventActivity;
 import com.squareup.picasso.Picasso;
 
+import java.util.Collections;
 import java.util.List;
 
 public class UsersLiveEventsAdapter extends RecyclerView.Adapter<UsersLiveEventsAdapter.ViewHolder> {
@@ -47,6 +48,7 @@ public class UsersLiveEventsAdapter extends RecyclerView.Adapter<UsersLiveEvents
 
     @Override
     public void onBindViewHolder(@NonNull UsersLiveEventsAdapter.ViewHolder holder, final int position) {
+        Collections.reverse(datumArrayList);
         holder.category.setText(datumArrayList.get(position).getTitle());
         Glide.with(context).load(datumArrayList.get(position).getFile()).apply(new RequestOptions().override(200,200)).into(holder.imageView);
         holder.itemView.setOnClickListener(new View.OnClickListener() {

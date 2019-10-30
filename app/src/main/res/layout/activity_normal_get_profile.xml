@@ -143,10 +143,19 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorGold"
                             android:layout_marginLeft="2dp"
                             android:textSize="12sp"
                             android:id="@+id/totalpoints"></TextView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:layout_marginLeft="5dp"
+                            android:text="Points"
+                            android:textSize="12sp"
+                            android:id="@+id/points"></TextView>
                     </LinearLayout>
 
                     <TextView

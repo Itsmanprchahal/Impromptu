@@ -88,7 +88,6 @@ public class HelpOptionsActivity extends AppCompatActivity {
     FAQ.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-//                    manager.beginTransaction().replace(R.id.home_frame_layout, new FAQ()).addToBackStack(null).commit();
         Intent intent = new Intent(HelpOptionsActivity.this, FAQs.class);
         startActivity(intent);
       }

@@ -49,13 +49,11 @@ public class CheckGuestAdapter extends RecyclerView.Adapter<CheckGuestAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
 
         final CheckInGuest.Datum datum = categoryArrayList.get(i);
-
-
         Glide.with(context).load(datum.getFile()).into(viewHolder.imageView);
 
 
         viewHolder.name.setText(datum.getUsername());
-        viewHolder.ticket.setText(datum.getTicketType());
+        viewHolder.ticket.setText(datum.getTotal_tickets_by_user()+" tickets");
         if (datum.getCheckin().equals("1")) {
             viewHolder.custom_guest_check.setImageResource(R.drawable.ic_checked);
             viewHolder.custom_guest_check.setColorFilter(ContextCompat.getColor(context, R.color.colorTheme), android.graphics.PorterDuff.Mode.MULTIPLY);
@@ -73,7 +71,6 @@ public class CheckGuestAdapter extends RecyclerView.Adapter<CheckGuestAdapter.Vi
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 intent.putExtra("user_id", CheckGuestActivity.userID.get(i));
                 context.startActivity(intent);
-//                Toast.makeText(context, ""+datum.getUserid(), Toast.LENGTH_SHORT).show();
             }
         });
 
