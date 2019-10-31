@@ -52,7 +52,25 @@ public class CheckGuestAdapter extends RecyclerView.Adapter<CheckGuestAdapter.Vi
         Glide.with(context).load(datum.getFile()).into(viewHolder.imageView);
 
 
-        viewHolder.name.setText(datum.getUsername());
+//        viewHolder.name.setText(datum.getUsername());
+        String userName = datum.getUsername();
+
+        if (userName != null) {
+            String[] name = userName.split(" ");
+            if (name.length == 1) {
+                String Fname = name[0];
+                viewHolder.name.setText(Fname + " ");
+            } else {
+                String Fname = name[0];
+                String Lname = name[1];
+                viewHolder.name.setText(Fname + " " + Lname.subSequence(0, 1));
+            }
+
+
+        } else {
+            viewHolder.name.setText(userName);
+        }
+
         viewHolder.ticket.setText(datum.getTotal_tickets_by_user()+" tickets");
         if (datum.getCheckin().equals("1")) {
             viewHolder.custom_guest_check.setImageResource(R.drawable.ic_checked);

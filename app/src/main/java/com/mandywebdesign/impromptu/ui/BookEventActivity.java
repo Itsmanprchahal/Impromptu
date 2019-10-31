@@ -779,7 +779,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             userImage.add(response.body().getData().get(i).getFile());
                             user_id.add(response.body().getData().get(i).getUserid().toString());
                             Log.d("userImage", "" + response.body().getData().get(i).toString());
-
                         }
                     } else {
                         peoplegoing.setText("no one has booked yet");

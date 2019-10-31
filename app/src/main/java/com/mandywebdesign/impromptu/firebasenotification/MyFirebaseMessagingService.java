@@ -45,6 +45,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String count = String.valueOf(remoteMessage.getData().size());
         ShortcutBadger.applyCount(this, Integer.parseInt(count));
         Log.d("count", count);
+
         try {
             jsonObject1 = new JSONObject(data);
             title = jsonObject1.getString("title");
@@ -56,7 +57,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -94,5 +94,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setOnlyAlertOnce(true)
                 .setContentIntent(pendingIntent);
         notificationManager.notify(0, notificationBuilder.build());
+
     }
 }

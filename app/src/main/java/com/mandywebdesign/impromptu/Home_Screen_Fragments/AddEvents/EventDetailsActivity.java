@@ -431,14 +431,30 @@ public class EventDetailsActivity extends AppCompatActivity {
                             eventTime_from.setText(hourOfDay + ":" + minute);
                         }
 
+                        String myTime = eventTime_from.getText().toString();
+                        SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+                        Date d = null;
+                        try {
+                            d = df.parse(myTime);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTime(d);
+                        cal.add(Calendar.MINUTE, 60);
+                        String newTime = df.format(cal.getTime());
+                        eventTime_to.setText(newTime);
+
+                        to_time_milles = eventTime_to.getText().toString();
 
                     }
                 }, hour, minute, true);
                 timePickerDialog.show();
+
+                calendar.add(Calendar.HOUR,1);
             }
         });
 
-        Log.d("timestamp", String.valueOf(Util.calender_time_to_timestamp(eventTime_from.getText().toString())));
 
         eventTime_to.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
