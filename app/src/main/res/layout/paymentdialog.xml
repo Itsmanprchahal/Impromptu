@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/defaultmargin"
+    android:layout_gravity="center">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="15dp"
+        android:visibility="visible"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Card number"
+            android:fontFamily="@font/circularstdbold"
+            android:textStyle="bold"
+            android:textSize="@dimen/normalText"
+            android:textColor="@color/colortextBlack"/>
+
+        <EditText
+            android:id="@+id/pay_card_number"
+            android:layout_marginTop="7dp"
+            android:layout_width="match_parent"
+            android:inputType="number"
+            android:textSize="18sp"
+            android:padding="12dp"
+            android:fontFamily="@font/sfuitextlight"
+            android:maxLength="16"
+            android:gravity="start"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_edittext"
+            android:hint="Card Number"/>
+
+        <TextView
+            android:layout_marginTop="7dp"
+            android:fontFamily="@font/circularstdbold"
+            android:textStyle="bold"
+            android:textSize="@dimen/normalText"
+            android:textColor="@color/colortextBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name on card"/>
+
+        <EditText
+            android:id="@+id/pay_card_name"
+            android:layout_marginTop="7dp"
+            android:padding="12dp"
+            android:gravity="start"
+            android:textSize="18sp"
+            android:fontFamily="@font/sfuitextlight"
+            android:inputType="textPersonName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_edittext"
+            android:hint="Card Holder"/>
+
+        <LinearLayout
+            android:layout_marginTop="7dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:fontFamily="@font/circularstdbold"
+                android:textStyle="bold"
+                android:textSize="@dimen/normalText"
+                android:textColor="@color/colortextBlack"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Expiry Date"/>
+
+            <TextView
+                android:fontFamily="@font/circularstdbold"
+                android:textStyle="bold"
+                android:textSize="@dimen/normalText"
+                android:textColor="@color/colortextBlack"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_marginLeft="26dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CSV"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginTop="7dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/pay_expiry_date"
+                android:padding="12dp"
+                android:textSize="18sp"
+                android:gravity="start"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_edittext"
+                android:text="00/00"
+                android:textAlignment="center"
+                android:fontFamily="@font/sfuitextlight"
+                android:clickable="true"
+                android:focusable="false"
+                android:layout_marginRight="35dp"/>
+
+            <EditText
+                android:id="@+id/pay_csv"
+                android:padding="12dp"
+                android:textSize="18sp"
+                android:layout_marginLeft="35dp"
+                android:layout_weight="1"
+                android:inputType="number"
+                android:gravity="start"
+                android:textAlignment="center"
+                android:fontFamily="@font/sfuitextlight"
+                android:background="@drawable/custom_edittext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLength="3"
+                android:hint="000"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/payment_paybt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pay"
+            android:layout_marginTop="@dimen/defaultmargin"
+            android:layout_marginBottom="@dimen/defaultmargin"
+            android:background="@drawable/custom_next_bt"
+            android:textColor="@color/white"
+            android:fontFamily="@font/circularstdblack"
+            android:textAllCaps="false"></Button>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

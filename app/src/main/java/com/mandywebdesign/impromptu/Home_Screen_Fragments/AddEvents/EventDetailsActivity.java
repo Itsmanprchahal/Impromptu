@@ -87,6 +87,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     int month1;
     int date1;
     SharedPreferences sharedPreferences;
+    TextView addtickettype,addtickettype1,addtickettype2,tickettypename_et,tickettypename_et1,tickettypename_et2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -507,10 +508,17 @@ public class EventDetailsActivity extends AppCompatActivity {
         addTicket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog();
-                price_et.setText(prceET);
-                tickettype_et.setText(tickettype);
-                numbersTicketET.setText(event_attendees_no.getText().toString());
+
+                if (!BToken.equalsIgnoreCase(""))
+                {
+                    tikettypedialog();
+                }else {
+                    dialog();
+                    price_et.setText(prceET);
+                    tickettype_et.setText(tickettype);
+                    numbersTicketET.setText(event_attendees_no.getText().toString());
+                }
+
             }
         });
 
@@ -551,6 +559,49 @@ public class EventDetailsActivity extends AppCompatActivity {
             }
         }
         return ret;
+    }
+
+    public void tikettypedialog()
+    {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.tickettypedialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+
+        /*addtickettype = dialog.findViewById(R.id.addtickettype);
+        addtickettype1 = dialog.findViewById(R.id.addtickettype1);
+        addtickettype2 = dialog.findViewById(R.id.addtickettype2);
+        tickettypename_et = dialog.findViewById(R.id.tickettypename_et);
+        tickettypename_et1 = dialog.findViewById(R.id.tickettypename_et1);
+        tickettypename_et2 = dialog.findViewById(R.id.tickettypename_et2);
+
+        addtickettype.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tickettypename_et.setVisibility(View.VISIBLE);
+                addtickettype.setVisibility(View.GONE);
+                addtickettype1.setVisibility(View.VISIBLE);
+            }
+        });
+
+        addtickettype1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                tickettypename_et1.setVisibility(View.VISIBLE);
+                addtickettype1.setVisibility(View.GONE);
+                addtickettype2.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        addtickettype2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tickettypename_et2.setVisibility(View.VISIBLE);
+                addtickettype2.setVisibility(View.GONE);
+            }
+        });*/
     }
 
     public void dialog() {

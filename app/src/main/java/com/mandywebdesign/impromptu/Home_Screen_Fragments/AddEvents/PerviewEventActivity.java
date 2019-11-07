@@ -4,12 +4,15 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Html;
@@ -17,8 +20,10 @@ import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -56,6 +61,7 @@ import retrofit2.Response;
 public class PerviewEventActivity extends AppCompatActivity {
 
     private static int CurrentPage = 0;
+    Dialog paymentpopup;
     int REQUEST_CODE = 141;
     private ProgressBar progressBar;
     ViewPager viewPager;
@@ -81,6 +87,8 @@ public class PerviewEventActivity extends AppCompatActivity {
     String id, title, desc, cate, address1, address2, date, To_date, FromTime, Username, frommilles, tomilles, sex, freeevent, attendeesNo, link1, link2, link3, postcode, city, ticketType, numbersTickets;
     String userToken = "", Socai_user, formattedDate, getFormattedDate, timeto, timeFrom, timeTo, editvalue, username;
     ArrayList<MultipartBody.Part> parts = new ArrayList<>();
+    EditText payment_cardnumber,payment_holdername,payment_expirydate,payment_csv;
+    Button payment_paybt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,6 +187,8 @@ public class PerviewEventActivity extends AppCompatActivity {
 
                 if (!B_token.equalsIgnoreCase("")) {
                     Log.d("B_token", B_token);
+
+//                    payment(B_token);
                     Add_Event_Activity.image_uris.clear();
                     progressDialog.show();
                     if (editvalue!=null)
@@ -192,7 +202,8 @@ public class PerviewEventActivity extends AppCompatActivity {
                         }
 
                     }else {
-                    PublishEvent("Bearer " + B_token);}
+                        PublishEvent("Bearer " + B_token);
+                    }
                 } else {
                     Log.d("S_token", S_Token);
                     Add_Event_Activity.image_uris.clear();
@@ -375,6 +386,43 @@ public class PerviewEventActivity extends AppCompatActivity {
 
         listeners();
 
+    }
+
+    private void payment(String b_token) {
+        paymentpopup = new Dialog(this);
+        Window window = paymentpopup.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        paymentpopup.setContentView(R.layout.paymentdialog);
+        paymentpopup.setCancelable(true);
+        paymentpopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        paymentpopup.show() ;
+
+
+        payment_cardnumber = paymentpopup.findViewById(R.id.pay_card_number);
+        payment_holdername = paymentpopup.findViewById(R.id.pay_card_name);
+        payment_expirydate = paymentpopup.findViewById(R.id.pay_expiry_date);
+        payment_csv = paymentpopup.findViewById(R.id.pay_csv);
+        payment_paybt = paymentpopup.findViewById(R.id.payment_paybt);
+
+        payment_paybt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Add_Event_Activity.image_uris.clear();
+                progressDialog.show();
+                if (editvalue!=null)
+                {
+                    if (edit.equalsIgnoreCase("edit"))
+                    {
+                        publishdraft("Bearer "+B_token,editvalue);
+                    }else if (edit.equalsIgnoreCase("republish"))
+                    {
+                        PublishEvent("Bearer " + B_token);
+                    }
+
+                }else {
+                    PublishEvent("Bearer " + B_token);}
+            }
+        });
     }
 
 

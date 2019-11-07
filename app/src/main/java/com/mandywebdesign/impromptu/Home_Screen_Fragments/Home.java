@@ -611,7 +611,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                         progressDialog.dismiss();
                         HomeEventsSetAdapter(social_token);
-                        reverse();
+                        //reverse();
                     } else if (response.body().getStatus().equals("400")) {
                         noevents.setVisibility(View.VISIBLE);
                         see_related.setVisibility(View.GONE);

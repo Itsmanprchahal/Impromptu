@@ -94,7 +94,6 @@ public class PayActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
-
             }
         });
 

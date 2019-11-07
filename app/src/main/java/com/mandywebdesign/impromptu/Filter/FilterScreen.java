@@ -523,8 +523,6 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
         Gmap.getUiSettings().setMyLocationButtonEnabled(true);
         Gmap.getUiSettings().setZoomControlsEnabled(true);
 
-
-
         CameraPosition cameraPosition = CameraPosition.builder().target(new LatLng(Double.parseDouble(lat), Double.parseDouble(lng))).zoom(15).bearing(0).tilt(40).build();
         Gmap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
@@ -580,7 +578,6 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
                 }
             });
         }
-
     }
 
     private void getCityName(String lat, String lng) {
@@ -677,7 +674,7 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
 
                 Status status = Autocomplete.getStatusFromIntent(data);
-                Log.i("Helloamit", status.getStatusMessage());
+                Log.i("Hello", status.getStatusMessage());
             } else if (resultCode == RESULT_CANCELED) {
                 // The user canceled the operation.
             }

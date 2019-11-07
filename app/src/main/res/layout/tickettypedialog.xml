@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/_280sdp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/_15sdp"
+    android:layout_gravity="center"
+    android:background="@drawable/ticketboxround">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ticket Types"
+        android:textColor="@color/colortextBlack"
+        android:fontFamily="@font/circularstdbold"
+        android:textSize="@dimen/_12sdp"
+        android:id="@+id/tickettext1"
+        tools:ignore="MissingConstraints" />
+
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_edittextwhite"
+        app:layout_constraintTop_toBottomOf="@id/tickettext1"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:singleLine="true"
+        android:visibility="gone"
+        android:fontFamily="@font/sfuitextlight"
+        android:padding="@dimen/_6sdp"
+        android:hint="Ticket Type Name"
+        android:id="@+id/tickettypename_et"/>
+
+    <TextView
+        android:id="@+id/addtickettype1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="+Add ticket types"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/colorTheme"
+        android:fontFamily="@font/circularstdbold"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/tickettypename_et"></TextView>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_edittextwhite"
+        app:layout_constraintTop_toBottomOf="@id/addtickettype1"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:singleLine="true"
+        android:visibility="gone"
+        android:fontFamily="@font/sfuitextlight"
+        android:padding="@dimen/_6sdp"
+        android:hint="Ticket Type Name"
+        android:id="@+id/tickettypename_et1"/>
+
+    <TextView
+        android:id="@+id/addtickettype2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="+Add ticket types"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/colorTheme"
+        android:fontFamily="@font/circularstdbold"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/tickettypename_et1"></TextView>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_edittextwhite"
+        app:layout_constraintTop_toBottomOf="@id/tickettypename_et1"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:singleLine="true"
+        android:visibility="gone"
+        android:fontFamily="@font/sfuitextlight"
+        android:padding="@dimen/_6sdp"
+        android:hint="Ticket Type Name"
+        android:id="@+id/tickettypename_et2"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tickettypename_et2"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:id="@+id/layoutone"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Price"
+                android:textSize="@dimen/_12sdp"
+                android:textColor="@color/colortextBlack"
+                android:fontFamily="@font/circularstdbold"
+                />
+
+            <EditText
+                android:id="@+id/price_et_ticketdialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_edittextwhite"
+                android:drawableLeft="@drawable/ic_poundsterling"
+                android:textColor="@color/colortextBlack"
+                android:hint="Price"
+                android:fontFamily="@font/sfuitextlight"
+                android:inputType="numberDecimal"
+                android:drawablePadding="10dp"
+                android:textSize="@dimen/_12sdp"
+                android:padding="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_10sdp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Number of Tickets"
+                android:textSize="@dimen/_12sdp"
+                android:textColor="@color/colortextBlack"
+                android:fontFamily="@font/circularstdbold"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_edittextwhite"
+                android:hint="Number of tickets"
+                android:fontFamily="@font/sfuitextlight"
+                android:padding="@dimen/_6sdp"
+                android:textColor="@color/colortextBlack"
+                android:textSize="@dimen/_12sdp"
+                android:inputType="number"
+                android:id="@+id/numbers_of_tickets_et"
+                android:layout_marginTop="@dimen/_10sdp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/okaydialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        android:textAllCaps="false"
+        android:background="@drawable/custom_next_bt"
+        android:textColor="@color/colortextwhite"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:fontFamily="@font/circularstdblack"
+        app:layout_constraintTop_toBottomOf="@id/layoutone"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

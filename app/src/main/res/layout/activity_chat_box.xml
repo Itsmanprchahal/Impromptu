@@ -104,6 +104,8 @@
             android:inputType="text"
             android:fontFamily="@font/sfuitextlight"
             android:maxEms="100"
+            android:singleLine="false"
+            android:maxLines="3"
             android:background="#00000000"
             android:hint="Type here"
             android:padding="10dp"

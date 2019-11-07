@@ -99,7 +99,6 @@ public class ChatBoxActivity extends AppCompatActivity {
         userId = sharedPreferences.getString("userID", "");
         intent = getIntent();
 
-
         init();
         listerners();
 
