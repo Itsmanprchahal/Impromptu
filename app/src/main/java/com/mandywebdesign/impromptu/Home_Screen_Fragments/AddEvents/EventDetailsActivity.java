@@ -33,6 +33,7 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -41,6 +42,7 @@ import android.widget.Toast;
 
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.Models.RetroPostcode;
+import com.mandywebdesign.impromptu.Models.TicketTypeModel;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.RetroGetEventData;
 import com.mandywebdesign.impromptu.Utils.Util;
@@ -51,6 +53,7 @@ import com.mandywebdesign.impromptu.ui.ProgressBarClass;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -85,9 +88,19 @@ public class EventDetailsActivity extends AppCompatActivity {
     String tomilles;
     int year1;
     int month1;
-    int date1;
+    int date1,totalTicket;
     SharedPreferences sharedPreferences;
-    TextView addtickettype,addtickettype1,addtickettype2,tickettypename_et,tickettypename_et1,tickettypename_et2;
+    Dialog dialog1;
+
+
+    EditText edt_tiketType;
+    EditText edt_price;
+    EditText edt_numbersOfTicket;
+    Button btn_done;
+    static TicketTypeModel ticketTypeModel;
+    static ArrayList<TicketTypeModel> arryList;
+    ArrayList<TicketTypeModel> ticketsdata = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -230,7 +243,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-               event_details_date_etto.setText(mDate.getText().toString());
+                event_details_date_etto.setText(mDate.getText().toString());
             }
 
             @Override
@@ -452,7 +465,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                 }, hour, minute, true);
                 timePickerDialog.show();
 
-                calendar.add(Calendar.HOUR,1);
+                calendar.add(Calendar.HOUR, 1);
             }
         });
 
@@ -509,10 +522,15 @@ public class EventDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (!BToken.equalsIgnoreCase(""))
-                {
-                    tikettypedialog();
-                }else {
+
+                if (!BToken.equalsIgnoreCase("")) {
+                    if (!TextUtils.isEmpty(event_attendees_no.getText().toString())) {
+                        tikettypedialog();
+                    } else {
+                        event_attendees_no.setError("Enter attendees");
+                    }
+
+                } else {
                     dialog();
                     price_et.setText(prceET);
                     tickettype_et.setText(tickettype);
@@ -561,47 +579,73 @@ public class EventDetailsActivity extends AppCompatActivity {
         return ret;
     }
 
-    public void tikettypedialog()
-    {
-        Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.tickettypedialog);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.show();
-
-        /*addtickettype = dialog.findViewById(R.id.addtickettype);
-        addtickettype1 = dialog.findViewById(R.id.addtickettype1);
-        addtickettype2 = dialog.findViewById(R.id.addtickettype2);
-        tickettypename_et = dialog.findViewById(R.id.tickettypename_et);
-        tickettypename_et1 = dialog.findViewById(R.id.tickettypename_et1);
-        tickettypename_et2 = dialog.findViewById(R.id.tickettypename_et2);
-
-        addtickettype.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tickettypename_et.setVisibility(View.VISIBLE);
-                addtickettype.setVisibility(View.GONE);
-                addtickettype1.setVisibility(View.VISIBLE);
-            }
-        });
-
-        addtickettype1.setOnClickListener(new View.OnClickListener() {
+    public void tikettypedialog() {
+        dialog1 = new Dialog(this);
+        dialog1.setContentView(R.layout.tickettypedialog);
+        dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog1.show();
+        arryList = new ArrayList<>();
+        edt_tiketType = (EditText) dialog1.findViewById(R.id.edt_tiketType);
+        edt_price = (EditText) dialog1.findViewById(R.id.edt_price);
+        edt_numbersOfTicket = (EditText) dialog1.findViewById(R.id.edt_numbersOfTicket);
+        btn_done = (Button) dialog1.findViewById(R.id.btn_done);
+        ticketET = event_attendees_no.getText().toString();
+         totalTicket = Integer.parseInt(ticketET);
+        btn_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                tickettypename_et1.setVisibility(View.VISIBLE);
-                addtickettype1.setVisibility(View.GONE);
-                addtickettype2.setVisibility(View.VISIBLE);
+                //ToDo Validation
+                validationOnDialogfrom();
 
             }
         });
 
-        addtickettype2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tickettypename_et2.setVisibility(View.VISIBLE);
-                addtickettype2.setVisibility(View.GONE);
+
+    }
+
+    private void validationOnDialogfrom() {
+        if (edt_tiketType.getText().toString().trim().isEmpty() && edt_price.getText().toString().trim().isEmpty() && edt_numbersOfTicket.getText().toString().trim().isEmpty()) {
+            edt_tiketType.setError("Enter ticket type");
+            edt_price.setError("Enter ticket price");
+            edt_numbersOfTicket.setError("Enter number of ticket");
+        } else if (edt_tiketType.getText().toString().trim().isEmpty()) {
+            edt_tiketType.setError("Enter ticket type");
+        } else if (edt_price.getText().toString().trim().isEmpty()) {
+            edt_price.setError("Enter ticket price");
+        } else if (edt_numbersOfTicket.getText().toString().trim().isEmpty()) {
+            edt_numbersOfTicket.setError("Enter number of ticket");
+        } else {
+            int numofTicker1 = Integer.parseInt(edt_numbersOfTicket.getText().toString());
+
+
+            if (totalTicket > numofTicker1) {
+                String ticket_Type = edt_tiketType.getText().toString();
+                String ticket_Price = edt_price.getText().toString();
+                String number_of_Type = edt_numbersOfTicket.getText().toString();
+                ticketTypeModel = new TicketTypeModel(ticket_Type, ticket_Price, number_of_Type);
+
+                arryList.add(ticketTypeModel);
+
+                for (int i=0;i<arryList.size();i++)
+                {
+                    Log.d("type",arryList.get(i).getTikcettype()+"  "+arryList.size());
+                }
+
+
+                edt_tiketType.setText("");
+                edt_price.setText("");
+                edt_numbersOfTicket.setText("");
+
+                int pendingTicker = totalTicket - numofTicker1;
+                totalTicket = pendingTicker;
+                Toast.makeText(this, ""+pendingTicker, Toast.LENGTH_SHORT).show();
+            }else {
+                dialog1.dismiss();
             }
-        });*/
+        }
+
+
     }
 
     public void dialog() {
@@ -613,7 +657,6 @@ public class EventDetailsActivity extends AppCompatActivity {
         numbersTicketET = (TextView) dialog.findViewById(R.id.numbers_of_tickets_et);
         price_et = (EditText) dialog.findViewById(R.id.price_et_ticketdialog);
         okayDialog = (Button) dialog.findViewById(R.id.okaydialog);
-        tickettype_et = (EditText) dialog.findViewById(R.id.tickettypename_et);
         dialog.show();
 
 
@@ -657,15 +700,14 @@ public class EventDetailsActivity extends AppCompatActivity {
                     event_city.setText(response.body().getData().get(0).getCity());
 
 
-                    if (edit.equalsIgnoreCase("republish"))
-                    {
+                    if (edit.equalsIgnoreCase("republish")) {
                         Calendar c = Calendar.getInstance();
 
                         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
                         mDate.setText(df.format(c.getTime()));
-                    }else {
-                        mDate.setText( Util.convertTimeStampDate(Long.parseLong(response.body().getData().get(0).getEventStartDt())));
+                    } else {
+                        mDate.setText(Util.convertTimeStampDate(Long.parseLong(response.body().getData().get(0).getEventStartDt())));
                     }
 
 
@@ -677,14 +719,13 @@ public class EventDetailsActivity extends AppCompatActivity {
                     to_date = Util.convertTimeStampDate(Long.parseLong(response.body().getData().get(0).getEventEndDt()));
 
 
-                    if (edit.equalsIgnoreCase("republish"))
-                    {
+                    if (edit.equalsIgnoreCase("republish")) {
                         Calendar c = Calendar.getInstance();
 
                         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
                         event_details_date_etto.setText(df.format(c.getTime()));
-                    }else {
+                    } else {
                         event_details_date_etto.setText(to_date);
                     }
 
