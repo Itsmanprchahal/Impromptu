@@ -103,18 +103,6 @@ public class RetroGetEventData {
         @SerializedName("free_event")
         @Expose
         private String freeEvent;
-
-        public String getTotal_event_bookings() {
-            return total_event_bookings;
-        }
-
-        public void setTotal_event_bookings(String total_event_bookings) {
-            this.total_event_bookings = total_event_bookings;
-        }
-
-        @SerializedName("total_event_bookings")
-        @Expose
-        private String total_event_bookings;
         @SerializedName("ticket_type")
         @Expose
         private String ticketType;
@@ -156,59 +144,28 @@ public class RetroGetEventData {
         private String timezone;
         @SerializedName("follow_status")
         @Expose
-        private String follow_status;
-
-        public String getEvent_book() {
-            return event_book;
-        }
-
-        public void setEvent_book(String event_book) {
-            this.event_book = event_book;
-        }
-
-        @SerializedName("event_book")
-        @Expose
-        private String event_book;
-
-        public String getTotal_book_tickets() {
-            return total_book_tickets;
-        }
-
-        public void setTotal_book_tickets(String total_book_tickets) {
-            this.total_book_tickets = total_book_tickets;
-        }
-
-        @SerializedName("total_book_tickets")
-        @Expose
-        private String total_book_tickets;
-
-        public String getUser_type() {
-            return user_type;
-        }
-
-        public void setUser_type(String user_type) {
-            this.user_type = user_type;
-        }
-
+        private Integer followStatus;
         @SerializedName("user_type")
         @Expose
-        private String user_type;
-
-        public String getbEventHostname() {
-            return bEventHostname;
-        }
-
-        public void setbEventHostname(String bEventHostname) {
-            this.bEventHostname = bEventHostname;
-        }
-
-        public String getFollow_status() {
-            return follow_status;
-        }
-
-        public void setFollow_status(String follow_status) {
-            this.follow_status = follow_status;
-        }
+        private String userType;
+        @SerializedName("event_book")
+        @Expose
+        private Integer eventBook;
+        @SerializedName("total_event_bookings")
+        @Expose
+        private Integer totalEventBookings;
+        @SerializedName("transaction_id")
+        @Expose
+        private String transactionId;
+        @SerializedName("amount")
+        @Expose
+        private String amount;
+        @SerializedName("payment_status")
+        @Expose
+        private String paymentStatus;
+        @SerializedName("tickets_type")
+        @Expose
+        private List<TicketsType> ticketsType = null;
 
         public Integer getEventId() {
             return eventId;
@@ -474,20 +431,123 @@ public class RetroGetEventData {
             this.timezone = timezone;
         }
 
-        public class File {
-
-            @SerializedName("img")
-            @Expose
-            private List<String> img = null;
-
-            public List<String> getImg() {
-                return img;
-            }
-
-            public void setImg(List<String> img) {
-                this.img = img;
-            }
-
+        public Integer getFollowStatus() {
+            return followStatus;
         }
+
+        public void setFollowStatus(Integer followStatus) {
+            this.followStatus = followStatus;
+        }
+
+        public String getUserType() {
+            return userType;
+        }
+
+        public void setUserType(String userType) {
+            this.userType = userType;
+        }
+
+        public Integer getEventBook() {
+            return eventBook;
+        }
+
+        public void setEventBook(Integer eventBook) {
+            this.eventBook = eventBook;
+        }
+
+        public Integer getTotalEventBookings() {
+            return totalEventBookings;
+        }
+
+        public void setTotalEventBookings(Integer totalEventBookings) {
+            this.totalEventBookings = totalEventBookings;
+        }
+
+        public String getTransactionId() {
+            return transactionId;
+        }
+
+        public void setTransactionId(String transactionId) {
+            this.transactionId = transactionId;
+        }
+
+        public String getAmount() {
+            return amount;
+        }
+
+        public void setAmount(String amount) {
+            this.amount = amount;
+        }
+
+        public String getPaymentStatus() {
+            return paymentStatus;
+        }
+
+        public void setPaymentStatus(String paymentStatus) {
+            this.paymentStatus = paymentStatus;
+        }
+
+        public List<TicketsType> getTicketsType() {
+            return ticketsType;
+        }
+
+        public void setTicketsType(List<TicketsType> ticketsType) {
+            this.ticketsType = ticketsType;
+        }
+
+    }
+
+    public class File {
+
+        @SerializedName("img")
+        @Expose
+        private List<String> img = null;
+
+        public List<String> getImg() {
+            return img;
+        }
+
+        public void setImg(List<String> img) {
+            this.img = img;
+        }
+
+    }
+
+    public class TicketsType {
+
+        @SerializedName("ticket_type")
+        @Expose
+        private String ticketType;
+        @SerializedName("value")
+        @Expose
+        private String value;
+        @SerializedName("no_of_tickets")
+        @Expose
+        private Integer noOfTickets;
+
+        public String getTicketType() {
+            return ticketType;
+        }
+
+        public void setTicketType(String ticketType) {
+            this.ticketType = ticketType;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+        public Integer getNoOfTickets() {
+            return noOfTickets;
+        }
+
+        public void setNoOfTickets(Integer noOfTickets) {
+            this.noOfTickets = noOfTickets;
+        }
+
     }
 }

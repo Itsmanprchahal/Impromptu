@@ -156,12 +156,17 @@ public class Live extends Fragment implements DiscreteScrollView.OnItemChangedLi
                             name1.add(datum.getBEventHostname());
                             title.add(datum.getTitle());
                             addres.add(datum.getAddressline1());
-                            if (datum.getPrice().equals("")) {
 
-                                prices.add("Free");
-                            } else {
-                                prices.add(datum.getPrice());
+                            if(datum.getPrice()!=null)
+                            {
+                                if (datum.getPrice().equals("")) {
+
+                                    prices.add("Free");
+                                } else {
+                                    prices.add(datum.getPrice());
+                                }
                             }
+
                             Log.d("cates", "" + datum.getCategory());
 
                             String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.","am").replaceFirst("p.m.","pm").replaceFirst("AM","am").replaceFirst("PM","pm");

@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +42,7 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Vi
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     int row = -1;
-    String token,value1;
+    String token, value1;
     CardAdapterHelper cardAdapterHelper = new CardAdapterHelper();
 
     private OnItemClickListener itemClickListener;
@@ -55,7 +57,7 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Vi
     }
 
 
-    public HomeEventsAdapter(Context context, FragmentManager fragmentManager,String social_token) {
+    public HomeEventsAdapter(Context context, FragmentManager fragmentManager, String social_token) {
         this.context = context;
         this.fragmentManager = fragmentManager;
         this.token = social_token;
@@ -83,13 +85,15 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Vi
         viewHolder.eventAddress.setText(Home.Address.get(i).toString());
 
 
-
-        if (Home.Cost.get(i).equals("0"))
-        {
+        if (Home.Cost.get(i).equals("0")) {
             viewHolder.eventPrice.setText("Free");
-        }else {
+        } else if (!Home.Cost.get(i).equals("0") && !Home.Cost.get(i).equals("Paid"))
+        {
             viewHolder.eventPrice.setText("£ "+Home.Cost.get(i));
+        }else {
+            viewHolder.eventPrice.setText(Home.Cost.get(i));
         }
+
 
         Glide.with(context).load(Home.Image.get(i)).into(viewHolder.eventImage);
         viewHolder.eventCategoryname.setVisibility(View.VISIBLE);
@@ -104,16 +108,16 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Vi
                 String hostname = Home.event_host_username.get(i);
                 Intent intent = new Intent(context, BookEventActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                intent.putExtra("event_id",value);
-                intent.putExtra("fav_id",value1);
-                intent.putExtra("hostname",hostname);
+                intent.putExtra("event_id", value);
+                intent.putExtra("fav_id", value1);
+                intent.putExtra("hostname", hostname);
                 editor.putString(Constants.itemPosition, String.valueOf(i));
-                editor.putString(Constants.eventType,"");
+                editor.putString(Constants.eventType, "");
                 editor.commit();
                 context.startActivity(intent);
-                ((Activity)context).finish();
+                ((Activity) context).finish();
 
-        }
+            }
         });
 
         if (Home.fav_id.get(i).equals("1")) {
@@ -149,8 +153,7 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Vi
                         @Override
                         public void onResponse(Call<NormalRetrodeleteFav> call, Response<NormalRetrodeleteFav> response) {
 
-                            if (response.body()!=null)
-                            {
+                            if (response.body() != null) {
 
                             }
                             //  Toast.makeText(getContext(), "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -173,9 +176,9 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Vi
     }
 
 
-    public  class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView eventImage;
-        TextView eventName,date, eventCategoryname, relatedeventstext,eventAddress,eventPrice;
+        TextView eventName, date, eventCategoryname, relatedeventstext, eventAddress, eventPrice;
         CheckBox addtoFavCheck_box;
 
         public ViewHolder(final View itemView) {
@@ -185,8 +188,8 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Vi
             eventName = itemView.findViewById(R.id.event_name);
             eventCategoryname = itemView.findViewById(R.id.custom_category_name);
             relatedeventstext = itemView.findViewById(R.id.related_events_text);
-            eventAddress=itemView.findViewById(R.id.custom_text1);
-            eventPrice=itemView.findViewById(R.id.event_price);
+            eventAddress = itemView.findViewById(R.id.custom_text1);
+            eventPrice = itemView.findViewById(R.id.event_price);
             date = itemView.findViewById(R.id.date);
             addtoFavCheck_box = itemView.findViewById(R.id.book_event_favourite_checkBox);
         }

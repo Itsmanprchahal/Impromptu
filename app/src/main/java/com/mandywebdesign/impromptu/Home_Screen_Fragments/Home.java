@@ -558,7 +558,14 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
                         for (NormalGetEvent.Datum normalGetEvent : datumArrayList) {
 
                             event_count.add(normalGetEvent.getCategoriesCount());
-                            Cost.add(normalGetEvent.getPrice().toString());
+                            if(normalGetEvent.getPrice()!=null )
+                            {
+                                Cost.add(normalGetEvent.getPrice().toString());
+                            }else {
+                                Cost.add("Paid");
+                            }
+
+
                             Title.add(normalGetEvent.getTitle());
                             cate.add(normalGetEvent.getCategory());
                             Address.add(normalGetEvent.getAddressline1().toString());
@@ -670,7 +677,13 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
                         clear();
                         for (NormalGetEvent.Datum normalGetEvent : datumArrayList) {
 
-                            Cost.add(normalGetEvent.getPrice().toString());
+                            if (normalGetEvent.getPrice()!=null )
+                            {
+                                Cost.add(normalGetEvent.getPrice().toString());
+                            }else {
+                                Cost.add("");
+                            }
+
                             Title.add(normalGetEvent.getTitle());
                             cate.add(normalGetEvent.getCategory());
                             Address.add(normalGetEvent.getAddressline1());

@@ -47,13 +47,13 @@ public class RetroAllChats {
 
         @SerializedName("sender_id")
         @Expose
-        private Integer senderId;
+        private String senderId;
         @SerializedName("receiver_id")
         @Expose
-        private Integer receiverId;
+        private String receiverId;
         @SerializedName("event_id")
         @Expose
-        private Integer eventId;
+        private String eventId;
         @SerializedName("title")
         @Expose
         private String title;
@@ -65,7 +65,7 @@ public class RetroAllChats {
         private String file;
         @SerializedName("count")
         @Expose
-        private Integer count;
+        private String count;
         @SerializedName("last_message_show")
         @Expose
         private String lastMessageShow;
@@ -74,35 +74,41 @@ public class RetroAllChats {
         private String lastMessageDatetime;
         @SerializedName("rating_status")
         @Expose
-        private Integer ratingStatus;
+        private String ratingStatus;
         @SerializedName("booking_status")
         @Expose
         private String bookingStatus;
         @SerializedName("event_status")
         @Expose
         private String eventStatus;
+        @SerializedName("event_name")
+        @Expose
+        private String eventName;
+        @SerializedName("booked_by")
+        @Expose
+        private String bookedBy;
 
-        public Integer getSenderId() {
+        public String getSenderId() {
             return senderId;
         }
 
-        public void setSenderId(Integer senderId) {
+        public void setSenderId(String senderId) {
             this.senderId = senderId;
         }
 
-        public Integer getReceiverId() {
+        public String getReceiverId() {
             return receiverId;
         }
 
-        public void setReceiverId(Integer receiverId) {
+        public void setReceiverId(String receiverId) {
             this.receiverId = receiverId;
         }
 
-        public Integer getEventId() {
+        public String getEventId() {
             return eventId;
         }
 
-        public void setEventId(Integer eventId) {
+        public void setEventId(String eventId) {
             this.eventId = eventId;
         }
 
@@ -130,11 +136,11 @@ public class RetroAllChats {
             this.file = file;
         }
 
-        public Integer getCount() {
+        public String getCount() {
             return count;
         }
 
-        public void setCount(Integer count) {
+        public void setCount(String count) {
             this.count = count;
         }
 
@@ -154,11 +160,11 @@ public class RetroAllChats {
             this.lastMessageDatetime = lastMessageDatetime;
         }
 
-        public Integer getRatingStatus() {
+        public String getRatingStatus() {
             return ratingStatus;
         }
 
-        public void setRatingStatus(Integer ratingStatus) {
+        public void setRatingStatus(String ratingStatus) {
             this.ratingStatus = ratingStatus;
         }
 
@@ -178,6 +184,21 @@ public class RetroAllChats {
             this.eventStatus = eventStatus;
         }
 
-    }
+        public String getEventName() {
+            return eventName;
+        }
 
+        public void setEventName(String eventName) {
+            this.eventName = eventName;
+        }
+
+        public String getBookedBy() {
+            return bookedBy;
+        }
+
+        public void setBookedBy(String bookedBy) {
+            this.bookedBy = bookedBy;
+        }
+
+    }
 }

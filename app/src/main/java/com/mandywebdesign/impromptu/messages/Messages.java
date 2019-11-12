@@ -73,6 +73,8 @@ public class Messages extends Fragment {
     public static ArrayList<String> event_status = new ArrayList<>();
     public static ArrayList<Integer> rating_status = new ArrayList<>();
     public static ArrayList<String> lastmesgtime = new ArrayList<>();
+    public static ArrayList<String> attendeename = new ArrayList<>();
+    public static ArrayList<String> bookedeventname = new ArrayList<>();
 
 
     @Override
@@ -142,16 +144,22 @@ public class Messages extends Fragment {
                         clear();
 
                         for (RetroAllChats.Datum datum : datumList) {
-                            eventTitle.add(datum.getTitle());
-                            eventTicketType.add(datum.getTicketType());
-                            eventImage.add(datum.getFile());
-                            eventID.add(datum.getEventId().toString());
-                            hostUserID.add(datum.getSenderId().toString());
-                            MesgCount.add(datum.getCount().toString());
-                            lastMEsg.add(datum.getLastMessageShow());
-                            rating_status.add(datum.getRatingStatus());
-                            bookingstatus.add(datum.getBookingStatus());
-                            event_status.add(datum.getEventStatus());
+                            eventTitle.add(datum.getTitle().toString());
+                            eventTicketType.add(datum.getTicketType().toString());
+                            eventImage.add(datum.getFile().toString());
+                            eventID.add(datum.getEventId().toString().toString());
+                            hostUserID.add(datum.getSenderId().toString().toString());
+                            MesgCount.add(datum.getCount().toString().toString());
+                            lastMEsg.add(datum.getLastMessageShow().toString());
+                            if (!datum.getRatingStatus().equals(""))
+                            {
+                                rating_status.add(Integer.valueOf(datum.getRatingStatus()));
+                            }
+
+                            bookingstatus.add(datum.getBookingStatus().toString());
+                            event_status.add(datum.getEventStatus().toString());
+                            attendeename.add(datum.getBookedBy().toString());
+                            bookedeventname.add(datum.getEventName().toString());
 
                             lastmesgtime.add(datum.getLastMessageDatetime().toString());
                             setData();
@@ -217,6 +225,8 @@ public class Messages extends Fragment {
         hostUserID.clear();
         MesgCount.clear();
         lastMEsg.clear();
+        bookedeventname.clear();
+        attendeename.clear();
     }
 
     @SuppressLint("WrongConstant")

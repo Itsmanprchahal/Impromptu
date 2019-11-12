@@ -61,6 +61,7 @@ import com.mandywebdesign.impromptu.Adapters.Booked_users;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessUserPRofileActivity;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessUserProfile;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.SeeAll_activity;
+import com.mandywebdesign.impromptu.Home_Screen_Fragments.Home;
 import com.mandywebdesign.impromptu.Retrofit.FollowUnfollow;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalGetProfile;
 import com.mandywebdesign.impromptu.Utils.Constants;
@@ -106,7 +107,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     PagerAdapter pagerAdapter;
     Dialog progressDialog;
     TextView ticketPrice, book_location, book_date, totalPrice, event_title, eventprice;
-    Spinner spinner;
+    Spinner spinner,ticketype_spinner;
     Button dialogButoon;
     public static CheckBox addtoFavCheck_box;
     View view;
@@ -125,12 +126,13 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     static String timeFrom;
     String timeTo, usertype, eventType, event_book;
     String itemPos;
-    static String value, S_token, fav_id, hostname, payvalue, spinnerposition;
+    static String value, S_token, fav_id, hostname, payvalue, spinnerposition,tickettypespinnerposintion;
     public static ArrayList<String> image = new ArrayList<>();
     public static String id, cate, host_image, date, decs, follow_status, postcode, ticktType, ticktprice, timefrom, hostimage, timeto, title, location, location2, city, gender, andendeenumber, numberoftickts, freeEvent, username;
     int CurrentPage = 0;
     AlertDialog.Builder builder;
     Intent intent;
+    ArrayList<String> tickettypes = new ArrayList<>();
 
 
     @Override
@@ -190,11 +192,10 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
             if (eventType != null) {
 
-                if (eventType.equals("live"))
-                {
+                if (eventType.equals("live")) {
                     mBookEvent.setVisibility(View.VISIBLE);
                     invite_layouit.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     mBookEvent.setVisibility(View.GONE);
                     invite_layouit.setVisibility(View.GONE);
                 }
@@ -448,6 +449,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                 startActivity(intent);
                 finish();
                 spinnerposition = "0";
+                tickettypespinnerposintion = "0";
             }
         });
 
@@ -611,7 +613,48 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
         FindId(dialog);
 
-        ticketPrice.setText(ticktprice);
+        if (ticktprice.equals("Paid"))
+        {
+            ticketPrice.setText("0");
+            ticketype_spinner.setVisibility(View.VISIBLE);
+            dialogtickttype.setVisibility(View.GONE);
+
+            //Todo: ticket type spinner
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(BookEventActivity.this,android.R.layout.simple_spinner_item,tickettypes);
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            ticketype_spinner.setAdapter(arrayAdapter);
+            ticketype_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    tickettypespinnerposintion = parent.getItemAtPosition(position).toString();
+
+        
+                    /*Float a = Float.valueOf((tickettypespinnerposintion));
+                    total_ticket = String.valueOf(a);
+
+                    String tickt = ticketPrice.getText().toString();
+                    Float b = Float.valueOf((tickt));
+
+                    Float total = a * b;
+
+                    tot = String.valueOf(total);
+
+                    totalPrice.setText(tot);*/
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+            if (tickettypespinnerposintion != null) {
+                ticketype_spinner.setSelection(Integer.parseInt(tickettypespinnerposintion) - 1);
+            }
+
+        }else {
+            ticketPrice.setText(ticktprice);
+        }
+
         dialogtickttype.setText(ticktType);
 
 
@@ -623,6 +666,8 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         if (spinnerposition != null) {
             spinner.setSelection(Integer.parseInt(spinnerposition) - 1);
         }
+
+
 
 
         if (ticktprice.equals("0")) {
@@ -698,6 +743,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         ticketPrice = dialog.findViewById(R.id.dailog_ticket_price);
         totalPrice = dialog.findViewById(R.id.dailog_total_price);
         spinner = dialog.findViewById(R.id.dailog_spinner);
+        ticketype_spinner = dialog.findViewById(R.id.ticketype_spinner);
         dialogButoon = dialog.findViewById(R.id.dailog_button);
         dialogtickttype = dialog.findViewById(R.id.dailog_ticket_type);
     }
@@ -830,10 +876,23 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             andendeenumber = datum.getAttendeesNo();
                             freeEvent = datum.getFreeEvent();
                             ticktType = datum.getTicketType();
-                            usertype = datum.getUser_type();
-                            ticktprice = datum.getPrice();
-                            follow_status = datum.getFollow_status();
-                            event_book = datum.getEvent_book().toString();
+                            usertype = datum.getUserType();
+
+                            //Todo: get tickets types
+
+                            for (int i=0;i<datum.getTicketsType().size();i++)
+                            {
+                                tickettypes.add(datum.getTicketsType().get(i).getTicketType());
+                            }
+
+                            if (datum.getPrice() != null) {
+                                ticktprice = datum.getPrice();
+                            } else if (datum.getTicketsType().size() > 0) {
+                                ticktprice = "Paid";
+                            }
+
+                            follow_status = String.valueOf(datum.getFollowStatus());
+                            event_book = datum.getEventBook().toString();
                             if (follow_status.equals("1")) {
                                 follow_button.setImageDrawable(getResources().getDrawable(R.drawable.ic_star));
                             }
@@ -853,10 +912,13 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             image = (ArrayList<String>) datum.getFile().get(0).getImg();
 //                            Collections.reverse(image);
 
+
                             if (ticktprice.equals("0")) {
                                 eventprice.setText("Free");
-                            } else {
+                            } else if (!ticktprice.equals("0") && !ticktprice.equals("Paid")) {
                                 eventprice.setText("£ " + ticktprice);
+                            } else {
+                                eventprice.setText(ticktprice);
                             }
                             if (!datum.getLink1().isEmpty()) {
                                 SpannableString content = new SpannableString(datum.getLink1().toString());
@@ -897,17 +959,14 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                 timeTo = time_to.substring(1);
                                 book_time.setText(timeFrom + " - " + timeTo);
 
-//                                book_date.setText(start_date+ " - " + end_date);
                             } else if (time_t.startsWith("0")) {
                                 timeFrom = time_t.substring(1);
                                 if (time_to.startsWith("0")) {
                                     timeTo = time_to.substring(1);
                                     book_time.setText(timeFrom + " - " + timeTo);
-//                                    book_date.setText(start_date + " - " + end_date);
                                 } else {
                                     timeTo = time_to.substring(0);
                                     book_time.setText(timeFrom + " - " + timeTo);
-//                                    book_date.setText(start_date + " - " + end_date);
                                 }
                             } else if (time_to.startsWith("0")) {
                                 timeTo = time_to.substring(1);
@@ -925,7 +984,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                 book_time.setText(timeFrom + " - " + timeTo);
                             }
 
-                            int count = Integer.parseInt(datum.getTotal_event_bookings());
+                            int count = Integer.parseInt(String.valueOf(datum.getTotalEventBookings()));
                             int lesscount = count - 1;
                             if (event_book.equals("1") && count == 1) {
                                 peoplegoing.setText("You are going");
@@ -1100,13 +1159,13 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         builder.setMessage("Are you sure to exit app ");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-               // saveResult();
+                // saveResult();
                 BookEventActivity.super.onBackPressed();
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-               dialog.dismiss();
+                dialog.dismiss();
             }
         });
         builder.show();

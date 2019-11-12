@@ -146,7 +146,10 @@ public interface RegisterApiInterface {
             @Query("link2") String link2,
             @Query("link3") String link3,
             @Query("start_datetime") String start_datetime,
-            @Query("end_datetime") String end_datetime
+            @Query("end_datetime") String end_datetime,
+            @Query("type") String tickettype,
+            @Query("value") String value,
+            @Query("numberoftickets") String numberoftickets
     );
 
     //edit draft and post

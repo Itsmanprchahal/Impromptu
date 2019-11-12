@@ -89,6 +89,7 @@ public class PerviewEventActivity extends AppCompatActivity {
     ArrayList<MultipartBody.Part> parts = new ArrayList<>();
     EditText payment_cardnumber,payment_holdername,payment_expirydate,payment_csv;
     Button payment_paybt;
+    String type,getTic_Price,getNumbersTickets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +97,7 @@ public class PerviewEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_perview_event);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         manager = getSupportFragmentManager();
+        init();
 
         sharedPreferences1 = getSharedPreferences("BusinessProfile1", Context.MODE_PRIVATE);
         profileupdatedPref = getSharedPreferences("profileupdated", Context.MODE_PRIVATE);
@@ -113,6 +115,28 @@ public class PerviewEventActivity extends AppCompatActivity {
         tomilles = intent.getStringExtra("totimeinmilles");
         To_date = intent.getStringExtra("To_Date");
         editvalue = intent.getStringExtra("value");
+        city = intent.getStringExtra("city");
+        Tic_Price = intent.getStringExtra("Price");
+        ticketType = intent.getStringExtra("ticketType");
+        numbersTickets = intent.getStringExtra("numbersTickets");
+        freeevent = intent.getStringExtra("freeevent");
+        id = preferences.getString("id", "");
+        link1 = intent.getStringExtra("link1");
+        link2 = intent.getStringExtra("link2");
+        link3 = intent.getStringExtra("link3");
+        if (!intent.getStringExtra("type").equalsIgnoreCase(""))
+        {
+            type = intent.getStringExtra("type");
+            getTic_Price = intent.getStringExtra("ticketprice");
+            getNumbersTickets = intent.getStringExtra("numbertickets");
+        }else
+        {
+            if (Tic_Price.equals("0")) {
+                event_price.setText("Free");
+            } else {
+                event_price.setText("£ " + Tic_Price);
+            }
+        }
 
         Log.d("TimeCheck", frommilles + "  " + tomilles);
 
@@ -138,15 +162,6 @@ public class PerviewEventActivity extends AppCompatActivity {
             postcode = intent.getStringExtra("postcode");
         }
 
-        city = intent.getStringExtra("city");
-        Tic_Price = intent.getStringExtra("Price");
-        ticketType = intent.getStringExtra("ticketType");
-        numbersTickets = intent.getStringExtra("numbersTickets");
-        freeevent = intent.getStringExtra("freeevent");
-        id = preferences.getString("id", "");
-        link1 = intent.getStringExtra("link1");
-        link2 = intent.getStringExtra("link2");
-        link3 = intent.getStringExtra("link3");
 
 
         Username = preferences.getString("Username", "");
@@ -159,7 +174,6 @@ public class PerviewEventActivity extends AppCompatActivity {
             address2 = "No Address line";
         }
 
-        init();
 
         if (!B_token.equalsIgnoreCase("")) {
 
@@ -168,11 +182,7 @@ public class PerviewEventActivity extends AppCompatActivity {
             getUSerData("Bearer " + S_Token);
         }
 
-        if (Tic_Price.equals("0")) {
-            event_price.setText("Free");
-        } else {
-            event_price.setText("£ " + Tic_Price);
-        }
+
 
         if (editvalue!=null)
         {
@@ -522,11 +532,11 @@ public class PerviewEventActivity extends AppCompatActivity {
     public void PublishEvent(String token) {
         System.gc();
 
-        Call<RetroAddEvent> call = WebAPI.getInstance().getApi().addEvent(token, Add_Event_Activity.count + "", title, desc, cate, Add_Event_Activity.part, address1, address2, postcode, city, date, FromTime, EventDetailsActivity.to_time_milles, sex, attendeesNo, freeevent, ticketType, Tic_Price, numbersTickets, username, publish, link1, link2, link3, frommilles, tomilles);
+        Call<RetroAddEvent> call = WebAPI.getInstance().getApi().addEvent(token, Add_Event_Activity.count + "", title, desc, cate, Add_Event_Activity.part, address1, address2, postcode, city, date, FromTime, EventDetailsActivity.to_time_milles, sex, attendeesNo, freeevent, ticketType, Tic_Price, numbersTickets, username, publish, link1, link2, link3, frommilles, tomilles,type,getTic_Price,getNumbersTickets);
         call.enqueue(new Callback<RetroAddEvent>() {
             @Override
             public void onResponse(Call<RetroAddEvent> call, Response<RetroAddEvent> response) {
-
+            progressDialog.dismiss();
 
                 if (response.body() != null) {
                     if (response.body().getStatus().equals("200")) {
@@ -585,7 +595,7 @@ public class PerviewEventActivity extends AppCompatActivity {
         String no_of_tic = numbersTickets;
 
         Log.e("Ticket_val", no_of_tic);
-        Call<RetroAddEvent> call = WebAPI.getInstance().getApi().addEvent(token, Add_Event_Activity.count + "", title, desc, cate, Add_Event_Activity.part, address1, address2, postcode, city, date, FromTime, EventDetailsActivity.to_time_milles, sex, attendeesNo, freeevent, ticketType, Tic_Price, numbersTickets, username, publish, link1, link2, link3, frommilles, tomilles);
+        Call<RetroAddEvent> call = WebAPI.getInstance().getApi().addEvent(token, Add_Event_Activity.count + "", title, desc, cate, Add_Event_Activity.part, address1, address2, postcode, city, date, FromTime, EventDetailsActivity.to_time_milles, sex, attendeesNo, freeevent, ticketType, Tic_Price, numbersTickets, username, publish, link1, link2, link3, frommilles, tomilles,type,getTic_Price,getNumbersTickets);
         Log.e("Ticket_val", call + " ");
 
         call.enqueue(new Callback<RetroAddEvent>() {
@@ -647,7 +657,7 @@ public class PerviewEventActivity extends AppCompatActivity {
         Log.d("draftresponse", "" + Add_Event_Activity.part.get(0));
         Log.d("draftresponse", "" + userToken);
 
-        Call<RetroAddEvent> call = WebAPI.getInstance().getApi().addEvent(token, Add_Event_Activity.count + "", title, desc, cate, Add_Event_Activity.part, address1, address2, postcode, city, date, FromTime, EventDetailsActivity.to_time_milles, sex, attendeesNo, freeevent, ticketType, Tic_Price, numbersTickets, BusinessUserProfile.userName, draft, link1, link2, link3, frommilles, tomilles);
+        Call<RetroAddEvent> call = WebAPI.getInstance().getApi().addEvent(token, Add_Event_Activity.count + "", title, desc, cate, Add_Event_Activity.part, address1, address2, postcode, city, date, FromTime, EventDetailsActivity.to_time_milles, sex, attendeesNo, freeevent, ticketType, Tic_Price, numbersTickets, BusinessUserProfile.userName, draft, link1, link2, link3, frommilles, tomilles,type,getTic_Price,getNumbersTickets);
         call.enqueue(new Callback<RetroAddEvent>() {
             @Override
             public void onResponse(Call<RetroAddEvent> call, Response<RetroAddEvent> response) {
@@ -708,7 +718,7 @@ public class PerviewEventActivity extends AppCompatActivity {
         Log.d("profileresponse", "" + Add_Event_Activity.part.get(0));
         Log.d("profileresponse", "" + token);
 
-        Call<RetroAddEvent> call = WebAPI.getInstance().getApi().addEvent(token, Add_Event_Activity.count + "", title, desc, cate, Add_Event_Activity.part, address1, address2, postcode, city, date, FromTime, EventDetailsActivity.to_time_milles, sex, attendeesNo, freeevent, ticketType, Tic_Price, numbersTickets, username, draft, link1, link2, link3, frommilles, tomilles);
+        Call<RetroAddEvent> call = WebAPI.getInstance().getApi().addEvent(token, Add_Event_Activity.count + "", title, desc, cate, Add_Event_Activity.part, address1, address2, postcode, city, date, FromTime, EventDetailsActivity.to_time_milles, sex, attendeesNo, freeevent, ticketType, Tic_Price, numbersTickets, username, draft, link1, link2, link3, frommilles, tomilles,type,getTic_Price,getNumbersTickets);
         call.enqueue(new Callback<RetroAddEvent>() {
             @Override
             public void onResponse(Call<RetroAddEvent> call, Response<RetroAddEvent> response) {

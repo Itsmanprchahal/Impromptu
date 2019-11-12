@@ -40,6 +40,7 @@ public class NormalGetEvent {
     public void setData(List<Datum> data) {
         this.data = data;
     }
+
     public class Datum {
 
         @SerializedName("event_id")
@@ -138,6 +139,9 @@ public class NormalGetEvent {
         @SerializedName("file")
         @Expose
         private String file;
+        @SerializedName("tickets_type")
+        @Expose
+        private List<TicketsType> ticketsType = null;
 
         public Integer getEventId() {
             return eventId;
@@ -395,6 +399,52 @@ public class NormalGetEvent {
             this.file = file;
         }
 
+        public List<TicketsType> getTicketsType() {
+            return ticketsType;
+        }
+
+        public void setTicketsType(List<TicketsType> ticketsType) {
+            this.ticketsType = ticketsType;
+        }
+
+        public class TicketsType {
+
+            @SerializedName("ticket_type")
+            @Expose
+            private String ticketType;
+            @SerializedName("value")
+            @Expose
+            private String value;
+            @SerializedName("no_of_tickets")
+            @Expose
+            private Integer noOfTickets;
+
+            public String getTicketType() {
+                return ticketType;
+            }
+
+            public void setTicketType(String ticketType) {
+                this.ticketType = ticketType;
+            }
+
+            public String getValue() {
+                return value;
+            }
+
+            public void setValue(String value) {
+                this.value = value;
+            }
+
+            public Integer getNoOfTickets() {
+                return noOfTickets;
+            }
+
+            public void setNoOfTickets(Integer noOfTickets) {
+                this.noOfTickets = noOfTickets;
+            }
+
+        }
     }
+
 
 }

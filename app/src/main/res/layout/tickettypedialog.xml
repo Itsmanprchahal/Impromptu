@@ -20,6 +20,39 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
+        android:id="@+id/type1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/circularstdbold"
+        android:text="Ticket Type1"
+        android:visibility="gone"
+        android:textColor="@color/colortextBlack"
+        android:textSize="@dimen/_12sdp"
+        tools:ignore="MissingConstraints"></TextView>
+
+    <TextView
+        android:id="@+id/type2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/circularstdbold"
+        android:text="Ticket Type2"
+        android:textColor="@color/colortextBlack"
+        android:textSize="@dimen/_12sdp"
+        android:visibility="gone"
+        tools:ignore="MissingConstraints"></TextView>
+
+    <TextView
+        android:id="@+id/type3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/circularstdbold"
+        android:text="Ticket Type3"
+        android:textColor="@color/colortextBlack"
+        android:textSize="@dimen/_12sdp"
+        android:visibility="gone"
+        tools:ignore="MissingConstraints"></TextView>
+
+    <TextView
         android:id="@+id/tickettypetext1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

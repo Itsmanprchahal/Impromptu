@@ -458,8 +458,14 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                             andendeenumber = datum.getAttendeesNo();
                             freeEvent = datum.getFreeEvent();
                             ticktType = datum.getTicketType();
-                            ticktprice = datum.getPrice();
-                            bookedtickets = datum.getTotal_book_tickets();
+                            if (datum.getPrice()!=null)
+                            {
+                                ticktprice = datum.getPrice();
+                            }else {
+                                ticktprice="";
+                            }
+
+                            bookedtickets = String.valueOf(datum.getTotalEventBookings());
                             numberoftickts = datum.getNoOfTickets();
                             username = datum.getBEventHostname();
                             link1 = datum.getLink1();
@@ -562,13 +568,15 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                                 }
                             });
 
-                            if (ticktprice.equals("0")) {
-                                event_price.setText("Free");
-                                priceLayput.setVisibility(View.GONE);
-                                revenue.setVisibility(View.GONE);
-                            } else {
-                                event_price.setText("£ " + ticktprice);
-                            }
+                                if (ticktprice.equals("0")) {
+                                    event_price.setText("Free");
+                                    priceLayput.setVisibility(View.GONE);
+                                    revenue.setVisibility(View.GONE);
+                                } else {
+                                    event_price.setText("£ " + ticktprice);
+                                }
+
+
                             category.setText(cate);
                             descri.setText(decs);
                             event_title.setText(title);

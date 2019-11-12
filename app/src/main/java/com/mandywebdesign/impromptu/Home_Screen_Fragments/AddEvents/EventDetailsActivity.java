@@ -50,6 +50,10 @@ import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.NoInternetScreen;
 import com.mandywebdesign.impromptu.ui.ProgressBarClass;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -88,7 +92,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     String tomilles;
     int year1;
     int month1;
-    int date1,totalTicket;
+    int date1, totalTicket;
     SharedPreferences sharedPreferences;
     Dialog dialog1;
 
@@ -96,10 +100,15 @@ public class EventDetailsActivity extends AppCompatActivity {
     EditText edt_tiketType;
     EditText edt_price;
     EditText edt_numbersOfTicket;
+    TextView type1, type2, type3;
     Button btn_done;
     static TicketTypeModel ticketTypeModel;
     static ArrayList<TicketTypeModel> arryList;
-    ArrayList<TicketTypeModel> ticketsdata = new ArrayList<>();
+    static int pendingTicker;
+    ArrayList<String> tickettyp = new ArrayList<>();
+    ArrayList<String> ticketprice = new ArrayList<>();
+    ArrayList<String> ticketnumber = new ArrayList<>();
+     String type,typetwo,typethree,values,valuetwo,valuethree,numbertickets,numebertickettwo,numberticketthree;
 
 
     @Override
@@ -375,6 +384,9 @@ public class EventDetailsActivity extends AppCompatActivity {
                     intent.putExtra("link3", link3);
                     intent.putExtra("fromtimeinmilles", frommilles);
                     intent.putExtra("totimeinmilles", tomilles);
+                    intent.putExtra("type",type);
+                    intent.putExtra("ticketprice",values);
+                    intent.putExtra("numbertickets",numbertickets);
                     to_date = event_details_date_etto.getText().toString();
                     intent.putExtra("to_Date", to_date);
                     startActivity(intent);
@@ -515,6 +527,9 @@ public class EventDetailsActivity extends AppCompatActivity {
                 } else {
                     addTicket.setVisibility(View.VISIBLE);
                 }
+                type="";
+                values ="";
+                numbertickets = "";
             }
         });
 
@@ -535,6 +550,10 @@ public class EventDetailsActivity extends AppCompatActivity {
                     price_et.setText(prceET);
                     tickettype_et.setText(tickettype);
                     numbersTicketET.setText(event_attendees_no.getText().toString());
+
+                    type="";
+                    values ="";
+                    numbertickets = "";
                 }
 
             }
@@ -588,9 +607,12 @@ public class EventDetailsActivity extends AppCompatActivity {
         edt_tiketType = (EditText) dialog1.findViewById(R.id.edt_tiketType);
         edt_price = (EditText) dialog1.findViewById(R.id.edt_price);
         edt_numbersOfTicket = (EditText) dialog1.findViewById(R.id.edt_numbersOfTicket);
+        type1 = dialog1.findViewById(R.id.type1);
+        type2 = dialog1.findViewById(R.id.type2);
+        type3 = dialog1.findViewById(R.id.type3);
         btn_done = (Button) dialog1.findViewById(R.id.btn_done);
         ticketET = event_attendees_no.getText().toString();
-         totalTicket = Integer.parseInt(ticketET);
+        totalTicket = Integer.parseInt(ticketET);
         btn_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -618,31 +640,80 @@ public class EventDetailsActivity extends AppCompatActivity {
         } else {
             int numofTicker1 = Integer.parseInt(edt_numbersOfTicket.getText().toString());
 
-
-            if (totalTicket > numofTicker1) {
+            if (totalTicket >= numofTicker1) {
                 String ticket_Type = edt_tiketType.getText().toString();
                 String ticket_Price = edt_price.getText().toString();
                 String number_of_Type = edt_numbersOfTicket.getText().toString();
                 ticketTypeModel = new TicketTypeModel(ticket_Type, ticket_Price, number_of_Type);
 
+
                 arryList.add(ticketTypeModel);
 
-                for (int i=0;i<arryList.size();i++)
-                {
-                    Log.d("type",arryList.get(i).getTikcettype()+"  "+arryList.size());
+                for (int i = 0; i < arryList.size(); i++) {
+                    Log.d("type", arryList.get(i) + "  " + arryList.size());
+                    tickettyp.add(arryList.get(i).getTikcettype());
+                    ticketprice.add(String.valueOf(arryList.get(i).getPrice()));
+                    ticketnumber.add(String.valueOf(arryList.get(i).getNumberofticket()));
+
+                    if (arryList.size() == 1) {
+                        type1.setVisibility(View.VISIBLE);
+                        type1.setText(arryList.get(0).getTikcettype() + "£ " + arryList.get(0).getPrice() + " (" + arryList.get(0).getNumberofticket() + ") ");
+
+
+                        edt_tiketType.setText("");
+                        edt_price.setText("");
+                        edt_numbersOfTicket.setText("");
+
+
+                    } else if (arryList.size() == 2) {
+                        type1.setVisibility(View.VISIBLE);
+                        type1.setText(arryList.get(0).getTikcettype() + "£ " + arryList.get(0).getPrice() + " (" + arryList.get(0).getNumberofticket() + ") ");
+
+                        type2.setVisibility(View.VISIBLE);
+                        type2.setText(arryList.get(1).getTikcettype() + "£ " + arryList.get(1).getPrice() + " (" + arryList.get(1).getNumberofticket() + ") ");
+
+                        edt_tiketType.setText("");
+                        edt_price.setText("");
+                        edt_numbersOfTicket.setText("");
+
+
+                    }else {
+                        if (arryList.size() == 3) {
+                            type1.setVisibility(View.VISIBLE);
+                            type1.setText(arryList.get(0).getTikcettype() + "£ " + arryList.get(0).getPrice() + " (" + arryList.get(0).getNumberofticket() + ") ");
+
+                            type2.setVisibility(View.VISIBLE);
+                            type2.setText(arryList.get(1).getTikcettype() + "£ " + arryList.get(1).getPrice() + " (" + arryList.get(1).getNumberofticket() + ") ");
+
+                            type3.setVisibility(View.VISIBLE);
+                            type3.setText(arryList.get(2).getTikcettype() + "£ " + arryList.get(2).getPrice() + " (" + arryList.get(2).getNumberofticket() + ") ");
+
+
+                            edt_tiketType.setText("");
+                            edt_price.setText("");
+                            edt_numbersOfTicket.setText("");
+                            getPrceET = "";
+                            getTickettype = "";
+
+                            Log.d("type1",arryList.get(0).getTikcettype()+" "+arryList.get(1).getTikcettype()+" "+arryList.get(2).getTikcettype());
+                            type = arryList.get(0).getTikcettype()+","+arryList.get(1).getTikcettype()+","+arryList.get(2).getTikcettype();
+                            values = arryList.get(0).getPrice()+","+arryList.get(1).getPrice()+","+arryList.get(2).getPrice();
+                            numbertickets = arryList.get(0).getNumberofticket()+","+arryList.get(1).getNumberofticket()+","+arryList.get(2).getNumberofticket();
+                            addTicket.setText("edit or delete ticket type");
+                            dialog1.dismiss();
+
+
+                        }
+                    }
                 }
-
-
-                edt_tiketType.setText("");
-                edt_price.setText("");
-                edt_numbersOfTicket.setText("");
-
-                int pendingTicker = totalTicket - numofTicker1;
+                pendingTicker = totalTicket - numofTicker1;
                 totalTicket = pendingTicker;
-                Toast.makeText(this, ""+pendingTicker, Toast.LENGTH_SHORT).show();
-            }else {
+
+
+            } else {
                 dialog1.dismiss();
             }
+
         }
 
 
@@ -655,6 +726,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.ticket_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         numbersTicketET = (TextView) dialog.findViewById(R.id.numbers_of_tickets_et);
+        tickettype_et = dialog.findViewById(R.id.tickettypename_et);
         price_et = (EditText) dialog.findViewById(R.id.price_et_ticketdialog);
         okayDialog = (Button) dialog.findViewById(R.id.okaydialog);
         dialog.show();
