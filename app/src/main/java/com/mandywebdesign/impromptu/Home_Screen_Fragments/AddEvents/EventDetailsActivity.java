@@ -108,8 +108,9 @@ public class EventDetailsActivity extends AppCompatActivity {
     ArrayList<String> tickettyp = new ArrayList<>();
     ArrayList<String> ticketprice = new ArrayList<>();
     ArrayList<String> ticketnumber = new ArrayList<>();
-    String type, typetwo, typethree, values, valuetwo, valuethree, numbertickets, numebertickettwo, numberticketthree;
 
+    String type, typetwo, typethree, values, valuetwo, valuethree, numbertickets, numebertickettwo, numberticketthree;
+    int pendingtickets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -544,7 +545,9 @@ public class EventDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+                ticketprice.clear();
+                ticketnumber.clear();
+                tickettyp.clear();
                 if (!BToken.equalsIgnoreCase("")) {
                     if (!TextUtils.isEmpty(event_attendees_no.getText().toString())) {
                         tikettypedialog();
@@ -647,12 +650,11 @@ public class EventDetailsActivity extends AppCompatActivity {
         } else {
             int numofTicker1 = Integer.parseInt(edt_numbersOfTicket.getText().toString());
 
-            if (totalTicket >= numofTicker1) {
+            /*if (totalTicket >= numofTicker1) {
                 String ticket_Type = edt_tiketType.getText().toString();
                 String ticket_Price = edt_price.getText().toString();
                 String number_of_Type = edt_numbersOfTicket.getText().toString();
                 ticketTypeModel = new TicketTypeModel(ticket_Type, ticket_Price, number_of_Type);
-
 
                 arryList.add(ticketTypeModel);
 
@@ -718,6 +720,67 @@ public class EventDetailsActivity extends AppCompatActivity {
 
             } else {
                 dialog1.dismiss();
+            }*/
+
+            if (totalTicket > numofTicker1) {
+                String ticket_Type = edt_tiketType.getText().toString();
+                String ticket_Price = edt_price.getText().toString();
+                String number_of_Type = edt_numbersOfTicket.getText().toString();
+                pendingtickets = totalTicket - numofTicker1;
+
+                totalTicket = pendingtickets;
+                type = ticket_Type;
+
+                tickettyp.add(type);
+                value = ticket_Price;
+
+                ticketprice.add(value);
+                numbertickets = number_of_Type;
+                ticketnumber.add(numbertickets);
+                for (int i=0;i<tickettyp.size();i++)
+                {
+
+                }
+
+                if (tickettyp.size()==1)
+                {
+
+                }else if (tickettyp.size()==2)
+                {
+
+                }else if (tickettyp.size()==3)
+                {
+
+                }
+
+                edt_numbersOfTicket.setText("");
+                edt_price.setText("");
+                edt_tiketType.setText("");
+
+            } else if (totalTicket < numofTicker1) {
+
+                pendingtickets = numofTicker1 - totalTicket;
+                edt_numbersOfTicket.setError("Ticket limit exceed");
+                Toast.makeText(this, "Here " + pendingtickets, Toast.LENGTH_SHORT).show();
+            } else if (totalTicket == numofTicker1) {
+                String ticket_Type = edt_tiketType.getText().toString();
+                String ticket_Price = edt_price.getText().toString();
+                String number_of_Type = edt_numbersOfTicket.getText().toString();
+
+                type = ticket_Type;
+
+                tickettyp.add(type);
+                value = ticket_Price;
+
+                ticketprice.add(value);
+                numbertickets = number_of_Type;
+                ticketnumber.add(numbertickets);
+                for (int i = 0; i < tickettyp.size(); i++) {
+
+                    Log.d("type", tickettyp.get(i) + "  " + ticketprice.get(i) + "  " + ticketnumber.get(i));
+                }
+                dialog1.dismiss();
+
             }
 
         }
@@ -831,11 +894,9 @@ public class EventDetailsActivity extends AppCompatActivity {
 //                    if (response.body().getData().get(0).getFreeEvent().equals("1")) {
 //                        addTicket.setText("edit or delete ticket type");
 //                    }else
-                        if (response.body().getData().get(0).getFreeEvent().equals("1") && response.body().getData().get(0).getTicketsType().size()>0)
-                    {
+                    if (response.body().getData().get(0).getFreeEvent().equals("1") && response.body().getData().get(0).getTicketsType().size() > 0) {
                         addTicket.setText("+Add ticket type");
-                    }else
-                    if (response.body().getData().get(0).getFreeEvent().equals("1")) {
+                    } else if (response.body().getData().get(0).getFreeEvent().equals("1")) {
                         addTicket.setText("edit or delete ticket type");
                     }
                 } else {

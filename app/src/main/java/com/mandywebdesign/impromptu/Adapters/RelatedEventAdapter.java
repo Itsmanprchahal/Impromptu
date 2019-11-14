@@ -19,6 +19,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
@@ -81,9 +82,18 @@ public class RelatedEventAdapter extends RecyclerView.Adapter<RelatedEventAdapte
 
         if (Home.rel_cost.get(i).equals("0")) {
             viewHolder.event_price.setText("Free");
-        } else {
-            viewHolder.event_price.setText("£ " + Home.rel_cost.get(i));
+        } else if (!Home.rel_cost.get(i).equals("0") && !Home.rel_cost.get(i).equals("Paid"))
+        {
+            viewHolder.event_price.setText("£ "+Home.rel_cost.get(i));
+        }else {
+            viewHolder.event_price.setText(Home.rel_cost.get(i));
         }
+
+//        if (Home.rel_cost.get(i).equals("0")) {
+//            viewHolder.event_price.setText("Free");
+//        } else {
+//            viewHolder.event_price.setText("£ " + Home.rel_cost.get(i));
+//        }
 
 
         viewHolder.relatedText.setVisibility(View.GONE);

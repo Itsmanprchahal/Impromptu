@@ -362,10 +362,15 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                         for (NormalrelatedEvents.Datum datum : datumArrayList) {
 
-                            rel_cost.add(datum.getPrice());
                             rel_Title.add(datum.getTitle());
                             rel_address1.add(datum.getAddressline1());
-                            rel_cost.add(datum.getPrice());
+                            if(datum.getPrice()!=null )
+                            {
+                                rel_cost.add(datum.getPrice().toString());
+                            }else {
+                                rel_cost.add("Paid");
+                            }
+
                             rel_hostname.add(datum.getBEventHostname());
 
 
