@@ -165,6 +165,8 @@ public class Live extends Fragment implements DiscreteScrollView.OnItemChangedLi
                                 } else {
                                     prices.add(datum.getPrice());
                                 }
+                            }else {
+                                prices.add("Paid");
                             }
 
                             Log.d("cates", "" + datum.getCategory());

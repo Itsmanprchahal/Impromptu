@@ -54,8 +54,11 @@ public class Business_LiveEventAdapter extends RecyclerView.Adapter<Business_Liv
         if (Live.prices.get(i).equals("0"))
         {
             viewHolder.evetPrice.setText("Free");
-        }else {
+        } else if (!Live.prices.get(i).equals("0") && !Live.prices.get(i).equals("Paid"))
+        {
             viewHolder.evetPrice.setText("£ "+Live.prices.get(i));
+        }else {
+            viewHolder.evetPrice.setText(Live.prices.get(i));
         }
 
 

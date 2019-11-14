@@ -339,6 +339,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                     if (response.body().getStatus().equals("200")) {
                         attendess = response.body().getData().get(0).getTotalTickets().toString();
                         numberofTickets.setText(attendess);
+                        ticktprice = response.body().getData().get(0).getAmount();
 
                         Float TicketPrice = Float.valueOf((ticktprice));
                         Float TotalAttendess = Float.valueOf((attendess));
@@ -462,7 +463,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                             {
                                 ticktprice = datum.getPrice();
                             }else {
-                                ticktprice="";
+                                ticktprice="Paid";
                             }
 
                             bookedtickets = String.valueOf(datum.getTotalEventBookings());
@@ -572,7 +573,11 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                                     event_price.setText("Free");
                                     priceLayput.setVisibility(View.GONE);
                                     revenue.setVisibility(View.GONE);
-                                } else {
+                                }else if (ticktprice.equals("Paid"))
+                                {
+                                    event_price.setText(ticktprice);
+
+                                }else {
                                     event_price.setText("£ " + ticktprice);
                                 }
 

@@ -76,8 +76,11 @@ public class Business_History_adapter extends RecyclerView.Adapter<Business_Hist
 
         if (History.prices.get(i).equals("0")) {
             viewHolder.evetPrice.setText("Free");
-        } else {
-            viewHolder.evetPrice.setText("£ " + History.prices.get(i));
+        }  else if (!History.prices.get(i).equals("0") && !History.prices.get(i).equals("Paid"))
+        {
+            viewHolder.evetPrice.setText("£ "+History.prices.get(i));
+        }else {
+            viewHolder.evetPrice.setText( History.prices.get(i));
         }
 
 
@@ -124,6 +127,7 @@ public class Business_History_adapter extends RecyclerView.Adapter<Business_Hist
                 Intent intent = new Intent(context, Add_Event_Activity.class);
                 intent.putExtra("editevent", "republish");
                 intent.putExtra("value", value);
+                intent.putExtra("type","");
                 context.startActivity(intent);
             }
         });

@@ -88,12 +88,18 @@ public class ConfirmationActivity extends AppCompatActivity {
                         Log.d("events", "" + response.code() + " " + datumList.size());
                         for (RetroGetEventData.Datum datum : datumList) {
                             location = datum.getAddressline1();
-                            if (datum.getPrice().equals("0"))
+                            if (datum.getPrice()!=null)
                             {
-                                ticktprice = "Free";
+                                if (datum.getPrice().equals("0"))
+                                {
+                                    ticktprice = "Free";
+                                }else {
+                                    ticktprice ="$ "+datum.getPrice();
+                                }
                             }else {
-                                ticktprice ="$ "+datum.getPrice();
+                                ticktprice = "Paid";
                             }
+
                             title = datum.getTitle();
                             timeto = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt()));
                             image = String.valueOf(datum.getFile().get(0).getImg().toString());

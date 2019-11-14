@@ -143,12 +143,18 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
                             book_tickets.add(datum.getBook_tickets().toString());
                             total_book_tickets.add(datum.getTotal_book_tickets().toString());
                             usertype.add(datum.getUser_type().toString());
-                            if (datum.getPrice().equals("")) {
+                            if (datum.getPrice()!=null)
+                            {
+                                if (datum.getPrice().equals("")) {
 
-                                prices.add("Free");
-                            } else {
-                                prices.add(datum.getPrice());
+                                    prices.add("Free");
+                                } else {
+                                    prices.add(datum.getPrice());
+                                }
+                            }else {
+                                prices.add("Paid");
                             }
+
                             Log.d("cates", "" + datum.getCategory());
 
                             String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.","am").replaceFirst("p.m.","pm").replaceFirst("AM","am").replaceFirst("PM","pm");

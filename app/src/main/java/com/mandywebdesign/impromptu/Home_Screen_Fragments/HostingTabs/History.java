@@ -152,12 +152,18 @@ public class History extends Fragment  implements  DiscreteScrollView.OnItemChan
                                 rating_overall.add(datum.getTotalRating().toString());
                             }
 
-                            if (datum.getPrice().equals("")) {
+                            if (datum.getPrice()!=null)
+                            {
+                                if (datum.getPrice().equals("")) {
 
-                                prices.add("Free");
-                            } else {
-                                prices.add(datum.getPrice());
+                                    prices.add("Free");
+                                } else {
+                                    prices.add(datum.getPrice());
+                                }
+                            }else {
+                                prices.add("Paid");
                             }
+
 
                             String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.","am").replaceFirst("p.m.","pm").replaceFirst("AM","am").replaceFirst("PM","pm");
 

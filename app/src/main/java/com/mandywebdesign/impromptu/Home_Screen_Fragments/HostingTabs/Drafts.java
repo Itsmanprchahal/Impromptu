@@ -139,7 +139,18 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
                             name1.add(datum.getBEventHostname());
                             title.add(datum.getTitle());
                             draftsimages.add(datum.getFile().toString());
-                            prices.add(datum.getPrice());
+                            if(datum.getPrice()!=null)
+                            {
+                                if (datum.getPrice().equals("")) {
+
+                                    prices.add("Free");
+                                } else {
+                                    prices.add(datum.getPrice());
+                                }
+                            }else {
+                                prices.add("Paid");
+                            }
+
                             addres.add(datum.getAddressline1());
 
                             String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");

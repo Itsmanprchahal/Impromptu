@@ -108,7 +108,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     ArrayList<String> tickettyp = new ArrayList<>();
     ArrayList<String> ticketprice = new ArrayList<>();
     ArrayList<String> ticketnumber = new ArrayList<>();
-     String type,typetwo,typethree,values,valuetwo,valuethree,numbertickets,numebertickettwo,numberticketthree;
+    String type, typetwo, typethree, values, valuetwo, valuethree, numbertickets, numebertickettwo, numberticketthree;
 
 
     @Override
@@ -161,8 +161,11 @@ public class EventDetailsActivity extends AppCompatActivity {
         if (value != null) {
             if (!BToken.equalsIgnoreCase("")) {
                 editEVnet("Bearer " + BToken, value);
+                type = "";
             } else if (!S_Token.equalsIgnoreCase("")) {
                 editEVnet("Bearer " + S_Token, value);
+
+                type = "";
             }
         }
 
@@ -172,6 +175,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     }
 
     private void init() {
+
         progressBar = (ProgressBar) findViewById(R.id.event_progress_bar);
         perviewButoon = (Button) findViewById(R.id.event_preview);
         toolbar = (Toolbar) findViewById(R.id.event_toolbar);
@@ -192,6 +196,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         freeevent_checkbox = (CheckBox) findViewById(R.id.freeevent_checkbox);
         close = (ImageView) findViewById(R.id.event_close);
         setSupportActionBar(toolbar);
+
 
         event_postcode.addTextChangedListener(new TextWatcher() {
             @Override
@@ -384,9 +389,9 @@ public class EventDetailsActivity extends AppCompatActivity {
                     intent.putExtra("link3", link3);
                     intent.putExtra("fromtimeinmilles", frommilles);
                     intent.putExtra("totimeinmilles", tomilles);
-                    intent.putExtra("type",type);
-                    intent.putExtra("ticketprice",values);
-                    intent.putExtra("numbertickets",numbertickets);
+                    intent.putExtra("type", type);
+                    intent.putExtra("ticketprice", values);
+                    intent.putExtra("numbertickets", numbertickets);
                     to_date = event_details_date_etto.getText().toString();
                     intent.putExtra("to_Date", to_date);
                     startActivity(intent);
@@ -524,12 +529,14 @@ public class EventDetailsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (freeevent_checkbox.isChecked()) {
                     addTicket.setVisibility(View.INVISIBLE);
+                    type = "";
+                    values = "";
+                    numbertickets = "";
                 } else {
                     addTicket.setVisibility(View.VISIBLE);
+
                 }
-                type="";
-                values ="";
-                numbertickets = "";
+
             }
         });
 
@@ -551,8 +558,8 @@ public class EventDetailsActivity extends AppCompatActivity {
                     tickettype_et.setText(tickettype);
                     numbersTicketET.setText(event_attendees_no.getText().toString());
 
-                    type="";
-                    values ="";
+                    type = "";
+                    values = "";
                     numbertickets = "";
                 }
 
@@ -677,7 +684,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                         edt_numbersOfTicket.setText("");
 
 
-                    }else {
+                    } else {
                         if (arryList.size() == 3) {
                             type1.setVisibility(View.VISIBLE);
                             type1.setText(arryList.get(0).getTikcettype() + "£ " + arryList.get(0).getPrice() + " (" + arryList.get(0).getNumberofticket() + ") ");
@@ -695,19 +702,18 @@ public class EventDetailsActivity extends AppCompatActivity {
                             getPrceET = "";
                             getTickettype = "";
 
-                            Log.d("type1",arryList.get(0).getTikcettype()+" "+arryList.get(1).getTikcettype()+" "+arryList.get(2).getTikcettype());
-                            type = arryList.get(0).getTikcettype()+","+arryList.get(1).getTikcettype()+","+arryList.get(2).getTikcettype();
-                            values = arryList.get(0).getPrice()+","+arryList.get(1).getPrice()+","+arryList.get(2).getPrice();
-                            numbertickets = arryList.get(0).getNumberofticket()+","+arryList.get(1).getNumberofticket()+","+arryList.get(2).getNumberofticket();
+                            Log.d("type1", arryList.get(0).getTikcettype() + " " + arryList.get(1).getTikcettype() + " " + arryList.get(2).getTikcettype());
+                            type = arryList.get(0).getTikcettype() + "," + arryList.get(1).getTikcettype() + "," + arryList.get(2).getTikcettype();
+                            values = arryList.get(0).getPrice() + "," + arryList.get(1).getPrice() + "," + arryList.get(2).getPrice();
+                            numbertickets = arryList.get(0).getNumberofticket() + "," + arryList.get(1).getNumberofticket() + "," + arryList.get(2).getNumberofticket();
                             addTicket.setText("edit or delete ticket type");
                             dialog1.dismiss();
-
-
                         }
                     }
                 }
                 pendingTicker = totalTicket - numofTicker1;
                 totalTicket = pendingTicker;
+                Toast.makeText(this, ""+totalTicket, Toast.LENGTH_SHORT).show();
 
 
             } else {
@@ -814,9 +820,21 @@ public class EventDetailsActivity extends AppCompatActivity {
                     } else if (gender.equals("Male")) {
                         event_radiobutton_male.setChecked(true);
                     }
-                    if (getPrceET.equals("0")) {
-                        freeevent_checkbox.setChecked(true);
+
+                    if (getPrceET != null) {
+                        if (getPrceET.equals("0")) {
+                            freeevent_checkbox.setChecked(true);
+                        }
+
                     }
+
+//                    if (response.body().getData().get(0).getFreeEvent().equals("1")) {
+//                        addTicket.setText("edit or delete ticket type");
+//                    }else
+                        if (response.body().getData().get(0).getFreeEvent().equals("1") && response.body().getData().get(0).getTicketsType().size()>0)
+                    {
+                        addTicket.setText("+Add ticket type");
+                    }else
                     if (response.body().getData().get(0).getFreeEvent().equals("1")) {
                         addTicket.setText("edit or delete ticket type");
                     }

@@ -110,10 +110,9 @@
         android:textAlignment="center"
         android:background="@drawable/circle_background"
         android:layout_alignParentRight="true"
-        android:gravity="center_vertical"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="30dp"
         android:layout_marginRight="10dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:id="@+id/count"
         android:foregroundGravity="center_horizontal"/>
 

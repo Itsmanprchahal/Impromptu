@@ -54,9 +54,12 @@ public class Business_DraftsEventAdapter extends RecyclerView.Adapter<Business_D
         if (Drafts.prices.get(i).equals("0"))
         {
             viewHolder.evetPrice.setText("Free");
-        }else
+        } else if (!Drafts.prices.get(i).equals("0") && !Drafts.prices.get(i).equals("Paid"))
         {
             viewHolder.evetPrice.setText("£ "+Drafts.prices.get(i));
+        }else
+        {
+            viewHolder.evetPrice.setText(Drafts.prices.get(i));
         }
 
         String s = Drafts.addres.get(i);

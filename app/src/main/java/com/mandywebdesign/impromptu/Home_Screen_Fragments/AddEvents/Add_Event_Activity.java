@@ -672,7 +672,6 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
     public void onPickResult(PickResult r) {
         if (r.getError() == null) {
             try {
-
                 part.add(sendImageFileToserver(r.getBitmap()));
                 image_uris.add(r.getPath());
                 SetImage();

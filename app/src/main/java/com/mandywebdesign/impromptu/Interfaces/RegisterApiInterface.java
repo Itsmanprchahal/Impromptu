@@ -179,7 +179,10 @@ public interface RegisterApiInterface {
             @Query("b_event_hostname") String b_event_hostname,
             @Query("status") String type,
             @Query("start_datetime") String start_datetime,
-            @Query("end_datetime") String end_datetime
+            @Query("end_datetime") String end_datetime,
+            @Query("type") String tickettype,
+            @Query("value") String value,
+            @Query("numberoftickets") String numberoftickets
 
     );
 
@@ -402,7 +405,8 @@ public interface RegisterApiInterface {
             @Field("event_id") String event_id,
             @Field("amount") String amount,
             @Field("token") String stripe_token,
-            @Field("total_tickets") String total_tickets
+            @Field("total_tickets") String total_tickets,
+            @Field("tickettype") String tickettype
     );
 
     @GET("past-events")

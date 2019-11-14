@@ -63,11 +63,15 @@ public class Normal_upcoming_events_adpater extends RecyclerView.Adapter<Normal_
         viewHolder.eventName.setText(Upcoming.title.get(i));
         viewHolder.date.setText(Upcoming.time.get(i));
 
+
         if (Upcoming.prices.get(i).equals("0"))
         {
             viewHolder.evetPrice.setText("Free");
-        }else {
+        } else if (!Upcoming.prices.get(i).equals("0") && !Upcoming.prices.get(i).equals("Paid"))
+        {
             viewHolder.evetPrice.setText("£ "+Upcoming.prices.get(i));
+        }else {
+            viewHolder.evetPrice.setText(Upcoming.prices.get(i));
         }
 
         String s = Upcoming.addres.get(i);

@@ -133,6 +133,8 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     AlertDialog.Builder builder;
     Intent intent;
     ArrayList<String> tickettypes = new ArrayList<>();
+    ArrayList<String> ticketprice = new ArrayList<>();
+   static   String tickettypeposition,getSpinnerposition="1";
 
 
     @Override
@@ -167,6 +169,13 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         users.setLayoutManager(layoutManager);
         users.setNestedScrollingEnabled(false);
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkgender = sharedPreferences.getString("profilegender", "");
         intent = getIntent();
         if (intent != null) {
             value = intent.getStringExtra("event_id");
@@ -249,13 +258,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             Intent intent = new Intent(this, Join_us.class);
             startActivity(intent);
         }
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        checkgender = sharedPreferences.getString("profilegender", "");
 
     }
 
@@ -627,19 +629,22 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     tickettypespinnerposintion = parent.getItemAtPosition(position).toString();
+                    tickettypeposition = String.valueOf(position);
 
-        
-                    /*Float a = Float.valueOf((tickettypespinnerposintion));
+                    ticktprice = ticketprice.get(Integer.parseInt(tickettypeposition)).toString();
+
+                    Float a = Float.valueOf((getSpinnerposition));
                     total_ticket = String.valueOf(a);
 
-                    String tickt = ticketPrice.getText().toString();
+                    String tickt = ticktprice;
                     Float b = Float.valueOf((tickt));
 
                     Float total = a * b;
 
                     tot = String.valueOf(total);
 
-                    totalPrice.setText(tot);*/
+                    ticketPrice.setText(ticktprice);
+                    totalPrice.setText(tot);
                 }
 
                 @Override
@@ -647,12 +652,11 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
                 }
             });
-            if (tickettypespinnerposintion != null) {
-                ticketype_spinner.setSelection(Integer.parseInt(tickettypespinnerposintion) - 1);
-            }
+
 
         }else {
             ticketPrice.setText(ticktprice);
+            tickettypespinnerposintion = "";
         }
 
         dialogtickttype.setText(ticktType);
@@ -666,8 +670,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         if (spinnerposition != null) {
             spinner.setSelection(Integer.parseInt(spinnerposition) - 1);
         }
-
-
 
 
         if (ticktprice.equals("0")) {
@@ -728,6 +730,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                     intent.putExtra("event_Title", title);
                     intent.putExtra("total_tickets", total_ticket);
                     intent.putExtra("ticket_Price", ticktprice);
+                    intent.putExtra("tickettype",tickettypespinnerposintion);
                     startActivity(intent);
                     dialog.dismiss();
                 }
@@ -783,6 +786,8 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
         spinnerposition = parent.getItemAtPosition(position).toString();
+
+        getSpinnerposition = spinnerposition;
 
 
         Float a = Float.valueOf((spinnerposition));
@@ -883,7 +888,9 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             for (int i=0;i<datum.getTicketsType().size();i++)
                             {
                                 tickettypes.add(datum.getTicketsType().get(i).getTicketType());
+                                ticketprice.add(datum.getTicketsType().get(i).getValue());
                             }
+
 
                             if (datum.getPrice() != null) {
                                 ticktprice = datum.getPrice();

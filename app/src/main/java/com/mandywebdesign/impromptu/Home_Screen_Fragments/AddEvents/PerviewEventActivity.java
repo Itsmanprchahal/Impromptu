@@ -124,7 +124,7 @@ public class PerviewEventActivity extends AppCompatActivity {
         link1 = intent.getStringExtra("link1");
         link2 = intent.getStringExtra("link2");
         link3 = intent.getStringExtra("link3");
-        if (!intent.getStringExtra("type").equalsIgnoreCase(""))
+        if (!intent.getStringExtra("type").equalsIgnoreCase("") || !intent.getStringExtra("type").equals(""))
         {
             type = intent.getStringExtra("type");
             getTic_Price = intent.getStringExtra("ticketprice");
@@ -133,7 +133,10 @@ public class PerviewEventActivity extends AppCompatActivity {
         {
             if (Tic_Price.equals("0")) {
                 event_price.setText("Free");
-            } else {
+            }else if (Tic_Price.equals("Paid"))
+            {
+                event_price.setText("Paid");
+            }else {
                 event_price.setText("£ " + Tic_Price);
             }
         }
@@ -774,7 +777,7 @@ public class PerviewEventActivity extends AppCompatActivity {
     public void publishdraft(String token, String eventId) {
         Log.d("jkjkjkj", "" + Add_Event_Activity.part);
 
-        Call<UpdateDraft> call = WebAPI.getInstance().getApi().updateDraft(token, eventId, Add_Event_Activity.count + "", title, desc, cate, Add_Event_Activity.part, address1, address2, postcode, city, date, FromTime, EventDetailsActivity.to_time_milles, sex, attendeesNo, freeevent, ticketType, Tic_Price, numbersTickets, username, publish, frommilles, tomilles);
+        Call<UpdateDraft> call = WebAPI.getInstance().getApi().updateDraft(token, eventId, Add_Event_Activity.count + "", title, desc, cate, Add_Event_Activity.part, address1, address2, postcode, city, date, FromTime, EventDetailsActivity.to_time_milles, sex, attendeesNo, freeevent, ticketType, Tic_Price, numbersTickets, username, publish, frommilles, tomilles,type,getTic_Price,getNumbersTickets);
         call.enqueue(new Callback<UpdateDraft>() {
             @Override
             public void onResponse(Call<UpdateDraft> call, Response<UpdateDraft> response) {
