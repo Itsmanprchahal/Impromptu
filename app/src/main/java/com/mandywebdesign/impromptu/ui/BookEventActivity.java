@@ -124,7 +124,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     static String hostUserID;
     static String remaini_tickets;
     static String timeFrom;
-    String timeTo, usertype, eventType, event_book;
+    String timeTo, usertype, eventType, event_book,tickettypedialog;
     String itemPos;
     static String value, S_token, fav_id, hostname, payvalue, spinnerposition,tickettypespinnerposintion;
     public static ArrayList<String> image = new ArrayList<>();
@@ -543,7 +543,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri1);
                     startActivity(intent);
                 }
-
             }
         });
 
@@ -615,12 +614,11 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
         FindId(dialog);
 
-        if (ticktprice.equals("Paid"))
+        if (tickettypedialog.equals("Paid"))
         {
             ticketPrice.setText("0");
             ticketype_spinner.setVisibility(View.VISIBLE);
             dialogtickttype.setVisibility(View.GONE);
-
             //Todo: ticket type spinner
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(BookEventActivity.this,android.R.layout.simple_spinner_item,tickettypes);
             arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -657,6 +655,9 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         }else {
             ticketPrice.setText(ticktprice);
             tickettypespinnerposintion = "";
+            ticketype_spinner.setVisibility(View.GONE);
+            dialogtickttype.setVisibility(View.VISIBLE);
+
         }
 
         dialogtickttype.setText(ticktType);
@@ -670,6 +671,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         if (spinnerposition != null) {
             spinner.setSelection(Integer.parseInt(spinnerposition) - 1);
         }
+
 
 
         if (ticktprice.equals("0")) {
@@ -922,10 +924,13 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
                             if (ticktprice.equals("0")) {
                                 eventprice.setText("Free");
+                                tickettypedialog = eventprice.getText().toString();
                             } else if (!ticktprice.equals("0") && !ticktprice.equals("Paid")) {
                                 eventprice.setText("£ " + ticktprice);
+                                tickettypedialog = eventprice.getText().toString();
                             } else {
                                 eventprice.setText(ticktprice);
+                                tickettypedialog = eventprice.getText().toString();
                             }
                             if (!datum.getLink1().isEmpty()) {
                                 SpannableString content = new SpannableString(datum.getLink1().toString());

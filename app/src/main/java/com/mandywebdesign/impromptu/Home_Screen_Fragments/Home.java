@@ -850,6 +850,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
                             public void onSuccess(Location location) {
                                 if (location == null) {
                                     Toast.makeText(getContext(), "Unable to get Location", Toast.LENGTH_SHORT).show();
+
 //                                    progressDialog.show();
                                 } else {
                                     lat = String.valueOf(location.getLatitude());
