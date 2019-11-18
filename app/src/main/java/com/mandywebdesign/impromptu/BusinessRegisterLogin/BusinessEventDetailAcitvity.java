@@ -237,6 +237,8 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                 if (!BToken.equalsIgnoreCase("")) {
                     getEventdata(BToken, value);
                     getUsers(BToken, value);
+                    checkInGuest.setText("Relist");
+
                 } else if (!S_Token.equalsIgnoreCase("")) {
                     getEventdata(S_Token, value);
                     getUsers(S_Token, value);

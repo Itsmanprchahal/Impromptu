@@ -89,12 +89,6 @@ public class RelatedEventAdapter extends RecyclerView.Adapter<RelatedEventAdapte
             viewHolder.event_price.setText(Home.rel_cost.get(i));
         }
 
-//        if (Home.rel_cost.get(i).equals("0")) {
-//            viewHolder.event_price.setText("Free");
-//        } else {
-//            viewHolder.event_price.setText("£ " + Home.rel_cost.get(i));
-//        }
-
 
         viewHolder.relatedText.setVisibility(View.GONE);
         viewHolder.event_category.setVisibility(View.VISIBLE);

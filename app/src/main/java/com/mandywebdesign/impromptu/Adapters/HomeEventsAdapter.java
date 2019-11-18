@@ -115,7 +115,6 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Vi
                 editor.putString(Constants.eventType, "");
                 editor.commit();
                 context.startActivity(intent);
-                ((Activity) context).finish();
 
             }
         });

@@ -524,6 +524,19 @@
                         android:textAllCaps="false"
                         android:textColor="@color/colortextwhite"
                         android:textSize="20dp" />
+
+                    <Button
+                        android:visibility="gone"
+                        android:id="@+id/askforrefund"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/defaultmargin"
+                        android:background="@drawable/custom_next_bt"
+                        android:fontFamily="@font/circularstdbold"
+                        android:text="Ask for refund"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colortextwhite"
+                        android:textSize="20dp"></Button>
                 </LinearLayout>
 
 

@@ -97,7 +97,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     LinearLayout organiser_layout;
     RelativeLayout messagelayout, invite_layouit;
     FragmentManager fragmentManager;
-    Button mBookEvent;
+    Button mBookEvent,askforrefund;
     ImageButton follow_button;
     TextView organiserName, book_time, book_categry, peoplegoing, seeAll, remainingTicketTV, invitefriends, dialogtickttype, link1, link2, link3;
     ViewPager viewPager;
@@ -134,7 +134,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     Intent intent;
     ArrayList<String> tickettypes = new ArrayList<>();
     ArrayList<String> ticketprice = new ArrayList<>();
-   static   String tickettypeposition,getSpinnerposition="1";
+   static String tickettypeposition,getSpinnerposition="1";
 
 
     @Override
@@ -207,6 +207,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                 } else {
                     mBookEvent.setVisibility(View.GONE);
                     invite_layouit.setVisibility(View.GONE);
+                    askforrefund.setVisibility(View.VISIBLE);
                 }
 
             } else {
@@ -426,6 +427,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         link2 = findViewById(R.id.book_link2);
         link3 = findViewById(R.id.book_link3);
         sharevent = findViewById(R.id.sharevent);
+        askforrefund = findViewById(R.id.askforrefund);
     }
 
     private void listeners() {
@@ -1164,7 +1166,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
     }
 
-    @Override
+    /*@Override
     public void onBackPressed() {
         //super.onBackPressed();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -1181,5 +1183,5 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             }
         });
         builder.show();
-    }
+    }*/
 }

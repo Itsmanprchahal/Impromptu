@@ -132,7 +132,19 @@ public class Past extends Fragment implements DiscreteScrollView.OnItemChangedLi
                             name1.add(datum.getBEventHostname());
                             title.add(datum.getTitle());
                             addres.add(datum.getAddressline1());
-                            prices.add(datum.getPrice());
+
+                            if (datum.getPrice()!=null)
+                            {
+                                if (datum.getPrice().equals("")) {
+
+                                    prices.add("Free");
+                                } else {
+                                    prices.add(datum.getPrice());
+                                }
+                            }else {
+                                prices.add("Paid");
+                            }
+
                             rating.add(datum.getRating());
                             overall_rating.add(datum.getTotalRating());
 

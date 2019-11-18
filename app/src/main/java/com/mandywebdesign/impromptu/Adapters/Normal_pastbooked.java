@@ -83,10 +83,15 @@ public class Normal_pastbooked extends RecyclerView.Adapter<Normal_pastbooked.Vi
         viewHolder.eventName.setText(Past.title.get(i));
         viewHolder.eventAddress.setText(Past.addres.get(i));
         viewHolder.ratenow_bt.setVisibility(View.GONE);
+
+
         if (Past.prices.get(i).equals("0")) {
             viewHolder.evetPrice.setText("Free");
+        } else if (!Past.prices.get(i).equals("0") && !Past.prices.get(i).equals("Paid"))
+        {
+            viewHolder.evetPrice.setText("£ "+Past.prices.get(i));
         } else {
-            viewHolder.evetPrice.setText("£ " + Past.prices.get(i));
+            viewHolder.evetPrice.setText( Past.prices.get(i));
         }
 
 
