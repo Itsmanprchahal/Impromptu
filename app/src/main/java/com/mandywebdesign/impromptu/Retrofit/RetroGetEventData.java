@@ -85,6 +85,16 @@ public class RetroGetEventData {
         @SerializedName("city")
         @Expose
         private String city;
+
+        public String getbEventHostname() {
+            return bEventHostname;
+        }
+
+        public void setbEventHostname(String bEventHostname) {
+            this.bEventHostname = bEventHostname;
+        }
+
+
         @SerializedName("date")
         @Expose
         private String date;
@@ -112,6 +122,11 @@ public class RetroGetEventData {
         @SerializedName("no_of_tickets")
         @Expose
         private String noOfTickets;
+
+        @SerializedName("transaction_id")
+        @Expose
+        private String transactionId;
+
         @SerializedName("status")
         @Expose
         private String status;
@@ -136,6 +151,18 @@ public class RetroGetEventData {
         @SerializedName("event_start_gmt")
         @Expose
         private String eventStartGmt;
+
+        public String getTickets_booked_by_user() {
+            return tickets_booked_by_user;
+        }
+
+        public void setTickets_booked_by_user(String tickets_booked_by_user) {
+            this.tickets_booked_by_user = tickets_booked_by_user;
+        }
+
+        @SerializedName("tickets_booked_by_user")
+        @Expose
+        private String tickets_booked_by_user;
         @SerializedName("event_end_gmt")
         @Expose
         private String eventEndGmt;
@@ -154,9 +181,6 @@ public class RetroGetEventData {
         @SerializedName("total_event_bookings")
         @Expose
         private Integer totalEventBookings;
-        @SerializedName("transaction_id")
-        @Expose
-        private String transactionId;
         @SerializedName("amount")
         @Expose
         private String amount;

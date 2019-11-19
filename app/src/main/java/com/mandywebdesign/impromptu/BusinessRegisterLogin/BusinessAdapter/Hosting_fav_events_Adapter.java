@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.mandywebdesign.impromptu.Adapters.CardAdapterHelper;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEventDetailAcitvity;
+import com.mandywebdesign.impromptu.Home_Screen_Fragments.AttendingTab.Upcoming;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.favouriteTab.Hosts;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Utils.Constants;
@@ -58,10 +59,15 @@ public class Hosting_fav_events_Adapter extends RecyclerView.Adapter<Hosting_fav
         if (Hosts.prices_fav.get(i).equals("0"))
         {
             viewHolder.evetPrice.setText("Free");
-        }else
+        } else if (!Hosts.prices_fav.get(i).equals("0") && !Hosts.prices_fav.get(i).equals("Paid"))
         {
             viewHolder.evetPrice.setText("£ "+Hosts.prices_fav.get(i));
+        }else
+        {
+            viewHolder.evetPrice.setText(Hosts.prices_fav.get(i));
         }
+
+
 
         String s = Hosts.addres_fav.get(i);
         Log.e("addre",s );

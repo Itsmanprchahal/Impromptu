@@ -682,11 +682,11 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
                         clear();
                         for (NormalGetEvent.Datum normalGetEvent : datumArrayList) {
 
-                            if (normalGetEvent.getPrice()!=null )
+                            if(normalGetEvent.getPrice()!=null )
                             {
                                 Cost.add(normalGetEvent.getPrice().toString());
                             }else {
-                                Cost.add("");
+                                Cost.add("Paid");
                             }
 
                             Title.add(normalGetEvent.getTitle());
@@ -697,7 +697,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
                             Image.add(normalGetEvent.getFile());
                             date.add(normalGetEvent.getDate());
 
-                            String time_t = normalGetEvent.getTimeFrom().toString();
+                            String time_t = Util.convertTimeStampToTime(Long.parseLong(normalGetEvent.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM","am").replaceFirst("PM","pm");
 
                             try {
                                 final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
@@ -748,6 +748,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                         }
                         progressDialog.dismiss();
+                        reverse();
                         HomeEventsSetAdapter(social_token);
                     } else if (response.body().getStatus().equals("401")) {
                         SharedPreferences.Editor editor = sharedPreferences.edit();

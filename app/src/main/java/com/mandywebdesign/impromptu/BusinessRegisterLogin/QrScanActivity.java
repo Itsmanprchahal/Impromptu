@@ -15,9 +15,11 @@ import android.media.ToneGenerator;
 import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
@@ -57,7 +59,7 @@ public class QrScanActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     String BToken, S_Token, id;
     Dialog progressDialog;
-    Intent intent ;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +77,7 @@ public class QrScanActivity extends AppCompatActivity {
         S_Token = sharedPreferences.getString("Socailtoken", "");
 
         intent = getIntent();
-        if (intent!=null)
-        {
+        if (intent != null) {
             id = intent.getStringExtra("value");
         }
 
@@ -147,8 +148,7 @@ public class QrScanActivity extends AppCompatActivity {
                         @Override
                         public void run() {
 
-                            Log.d("qrcode",qrcode.valueAt(0).displayValue);
-                            textView.setText(qrcode.valueAt(0).displayValue);
+                            Log.d("qrcode", qrcode.valueAt(0).displayValue);
                             String bar_values = qrcode.valueAt(0).displayValue;
 
                             String s = bar_values;
@@ -170,13 +170,13 @@ public class QrScanActivity extends AppCompatActivity {
                                 if (id.equals(event_id)) {
 
                                     //QR event ID
-                                    guestCheckIn(BToken, event_id, "1", booked_user_id);
+                                    guestCheckIn(BToken, event_id, "1", booked_user_id, qrcode.valueAt(0).displayValue);
                                 } else {
                                     Toast.makeText(QrScanActivity.this, "Not Valid QR Code", Toast.LENGTH_SHORT).show();
                                 }
                             } else if (!S_Token.equals("")) {
                                 if (id.equals(event_id)) {
-                                    guestCheckIn(S_Token, event_id, "1", booked_user_id);
+                                    guestCheckIn(S_Token, event_id, "1", booked_user_id, qrcode.valueAt(0).displayValue);
                                 } else {
                                     Toast.makeText(QrScanActivity.this, "Not Valid QR Code", Toast.LENGTH_SHORT).show();
                                 }
@@ -191,12 +191,11 @@ public class QrScanActivity extends AppCompatActivity {
             }
         });
 
-
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(QrScanActivity.this,CheckGuestActivity.class);
-                intent.putExtra("value",id);
+                Intent intent = new Intent(QrScanActivity.this, CheckGuestActivity.class);
+                intent.putExtra("value", id);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
@@ -204,7 +203,7 @@ public class QrScanActivity extends AppCompatActivity {
         });
     }
 
-    private void guestCheckIn(String s_token, String event_id, String s, String booked_user_id) {
+    private void guestCheckIn(String s_token, String event_id, String s, String booked_user_id, final String data) {
 
         progressDialog.show();
         source.stop();
@@ -216,14 +215,14 @@ public class QrScanActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<GusetCheckIns> call, Response<GusetCheckIns> response) {
 
-                if (response.body()!=null) {
+                if (response.body() != null) {
                     progressDialog.dismiss();
 
                     if (response.body().getStatus().equals("200")) {
-                        Toast.makeText(QrScanActivity.this, ""+response.body().getMessage() , Toast.LENGTH_SHORT).show();
-
+                        Toast.makeText(QrScanActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        textView.setText(data);
                         ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
-                        toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,150);
+                        toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
 
                         Vibrator v = null;
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {

@@ -50,7 +50,7 @@ public class CheckGuestAdapter extends RecyclerView.Adapter<CheckGuestAdapter.Vi
 
         final CheckInGuest.Datum datum = categoryArrayList.get(i);
         Glide.with(context).load(datum.getFile()).into(viewHolder.imageView);
-
+        viewHolder.count.setVisibility(View.GONE);
 
 //        viewHolder.name.setText(datum.getUsername());
         String userName = datum.getUsername();
@@ -102,7 +102,7 @@ public class CheckGuestAdapter extends RecyclerView.Adapter<CheckGuestAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView imageView;
         ImageView custom_guest_check;
-        TextView name, ticket;
+        TextView name, ticket,count;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -111,6 +111,7 @@ public class CheckGuestAdapter extends RecyclerView.Adapter<CheckGuestAdapter.Vi
             name = itemView.findViewById(R.id.custom_guest_name);
             ticket = itemView.findViewById(R.id.custom_guest_ticket);
             custom_guest_check = itemView.findViewById(R.id.custom_guest_check);
+            count = itemView.findViewById(R.id.count);
         }
     }
 }

@@ -133,8 +133,18 @@ public class Hosts extends Fragment implements DiscreteScrollView.OnItemChangedL
                             name1_fav.add(datum.getBEventHostname());
                             title_fav.add(datum.getTitle());
                             addres_fav.add(datum.getAddressline1());
-                            prices_fav.add(datum.getPrice());
-                            Log.d("cates", "" + datum.getEventId());
+
+                            if (datum.getPrice()!=null)
+                            {
+                                if (datum.getPrice().equals("")) {
+
+                                    prices_fav.add("Free");
+                                } else {
+                                    prices_fav.add(datum.getPrice());
+                                }
+                            }else {
+                                prices_fav.add("Paid");
+                            }
 
                             String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
 

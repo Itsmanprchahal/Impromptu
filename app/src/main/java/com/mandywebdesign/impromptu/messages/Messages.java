@@ -145,7 +145,13 @@ public class Messages extends Fragment {
 
                         for (RetroAllChats.Datum datum : datumList) {
                             eventTitle.add(datum.getTitle().toString());
-                            eventTicketType.add(datum.getTicketType().toString());
+                            if (datum.getTicketType()==null )
+                            {
+                                eventTicketType.add("");
+                            }else {
+                                eventTicketType.add(datum.getTicketType().toString());
+                            }
+
                             eventImage.add(datum.getFile().toString());
                             eventID.add(datum.getEventId().toString().toString());
                             hostUserID.add(datum.getSenderId().toString().toString());

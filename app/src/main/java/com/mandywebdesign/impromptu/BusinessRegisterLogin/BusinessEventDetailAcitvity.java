@@ -114,7 +114,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
     public static ArrayList<String> userName = new ArrayList<>();
     String BToken, S_Token, attendess, ticktprice, link1, link2, link3;
     ArrayList<String> image = new ArrayList<>();
-    static String id, cate, hostImage, hostUserID, decs, postcode, ticktType, timefrom, timeto, title, location, location2, city, gender, andendeenumber, bookedtickets, numberoftickts, freeEvent, username, timeFrom, timeTo;
+    static String id, cate, hostImage, hostUserID, tickets_booked_by_user,decs, postcode, ticktType, timefrom, timeto, title, location, location2, city, gender, andendeenumber, bookedtickets, numberoftickts, freeEvent, username, timeFrom, timeTo;
     int CurrentPage = 0;
     CheckBox eventdetail_favbt;
     TextView ticketview;
