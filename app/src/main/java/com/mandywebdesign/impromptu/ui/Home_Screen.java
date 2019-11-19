@@ -46,6 +46,7 @@ import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessUserProfile;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.Home;
 import com.mandywebdesign.impromptu.Retrofit.NormalGetProfile;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalPublishProfile;
+import com.mandywebdesign.impromptu.firebasenotification.MyFirebaseMessagingService;
 import com.mandywebdesign.impromptu.messages.Messages;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.Setting;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.Events;
@@ -88,6 +89,7 @@ public class Home_Screen extends AppCompatActivity {
                 PorterDuff.Mode.SRC_IN);
 
         progressDialog.show();
+
 
         sharedPreferences1 = getSharedPreferences("BusinessProfile1", Context.MODE_PRIVATE);
         sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);

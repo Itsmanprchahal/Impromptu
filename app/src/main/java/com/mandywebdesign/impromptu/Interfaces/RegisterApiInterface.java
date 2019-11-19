@@ -28,6 +28,7 @@ import com.mandywebdesign.impromptu.Retrofit.Normal_past_booked;
 import com.mandywebdesign.impromptu.Retrofit.NormalrelatedEvents;
 import com.mandywebdesign.impromptu.Retrofit.NormalretroHosting_fav_evnts;
 import com.mandywebdesign.impromptu.Retrofit.Rating;
+import com.mandywebdesign.impromptu.Retrofit.RefundAPI;
 import com.mandywebdesign.impromptu.Retrofit.RemainingTickets;
 import com.mandywebdesign.impromptu.Retrofit.RetroAddEvent;
 import com.mandywebdesign.impromptu.Retrofit.RetroAllChats;
@@ -185,7 +186,6 @@ public interface RegisterApiInterface {
             @Query("numberoftickets") String numberoftickets
 
     );
-
 
 
     @POST("postal-code")
@@ -493,16 +493,16 @@ public interface RegisterApiInterface {
     @POST("search")
     Call<SearchMessages> search(
             @Header("Authorization") String token,
-            @Query("event_title")String tittel
+            @Query("event_title") String tittel
     );
 
     @POST("guest-check-in")
     Call<CheckInGuest> checkinguest(
-                    @Header("Authorization") String token,
-                    @Query("eventid") String evenID,
-                    @Query("checkin") String checkin,
-                    @Query("userid") String userId
-            );
+            @Header("Authorization") String token,
+            @Query("eventid") String evenID,
+            @Query("checkin") String checkin,
+            @Query("userid") String userId
+    );
 
   /*  @GET("total-check-in")
     Call<TotalCheckIn> totleTickets(
@@ -558,5 +558,11 @@ public interface RegisterApiInterface {
             @Query("event_id") String event_id,
             @Query("user_type") String user_type,
             @Query("description") String description
+    );
+
+    @POST("payment-refund")
+    Call<RefundAPI> refundapi(
+            @Header("Authorization") String token,
+            @Query("event_id") String event_id
     );
 }

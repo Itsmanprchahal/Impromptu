@@ -63,6 +63,7 @@ import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessUserProfile;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.SeeAll_activity;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.Home;
 import com.mandywebdesign.impromptu.Retrofit.FollowUnfollow;
+import com.mandywebdesign.impromptu.Retrofit.RefundAPI;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalGetProfile;
 import com.mandywebdesign.impromptu.Utils.Constants;
 import com.mandywebdesign.impromptu.messages.ChatBoxActivity;
@@ -238,6 +239,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                 getUsers(S_token, eventID);
                                 bookevent(eventID);
                                 gotoEventMesg(eventID);
+                                askforrefund("Bearer "+S_token,eventID);
                             } else {
                                 getEventData(value);
                                 addFav(value);
@@ -245,6 +247,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                 getUsers(S_token, value);
                                 bookevent(value);
                                 gotoEventMesg(value);
+                                askforrefund("Bearer "+S_token,value);
                             }
 
                         }
@@ -262,6 +265,37 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
     }
 
+    private void askforrefund(final String s_token, final String value) {
+        askforrefund.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog.show();
+                Call<RefundAPI> refundAPICall = WebAPI.getInstance().getApi().refundapi(s_token,value);
+                refundAPICall.enqueue(new Callback<RefundAPI>() {
+                    @Override
+                    public void onResponse(Call<RefundAPI> call, Response<RefundAPI> response) {
+                        progressDialog.dismiss();
+                        if (response!=null)
+                        {
+                            if (response.body().getStatus().equals("200"))
+                            {
+                                Toast.makeText(BookEventActivity.this, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(BookEventActivity.this, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<RefundAPI> call, Throwable t) {
+                        progressDialog.dismiss();
+                        Toast.makeText(BookEventActivity.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+    }
+
     private void gotoEventMesg(final String value) {
         book_message.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -270,7 +304,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                 if (checkgender.equals("")) {
                     updateProfiledialog();
 
-                } else {
+                }else {
                     if (event_book.equals("0")) {
                         Toast.makeText(BookEventActivity.this, "Book event to send message.", Toast.LENGTH_SHORT).show();
                     } else {
@@ -305,9 +339,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             }
                         });
                     }
-
                 }
-
             }
         });
     }

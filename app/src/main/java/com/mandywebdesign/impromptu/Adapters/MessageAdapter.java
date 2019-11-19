@@ -117,33 +117,59 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         } else {
             viewHolder.leavefeedback.setVisibility(View.GONE);
             viewHolder.time.setVisibility(View.VISIBLE);
-            setMessagedata(viewHolder,i);
+
+            if (Messages.bookingstatus.get(i).equals("No")) {
+                viewHolder.leavefeedback.setVisibility(View.GONE);
+                viewHolder.time.setVisibility(View.VISIBLE);
+                getTime(viewHolder, i);
+            } else {
+                if (Messages.event_status.get(i).equals("live")) {
+                    viewHolder.leavefeedback.setVisibility(View.GONE);
+                    viewHolder.time.setVisibility(View.VISIBLE);
+                    getTime(viewHolder, i);
+                } else {
+                    if (Messages.rating_status.get(i).equals(0)) {
+                        viewHolder.linearLayout.setVisibility(View.GONE);
+                        viewHolder.linearLayout1.setVisibility(View.VISIBLE);
+                        viewHolder.leavefeedback.setVisibility(View.GONE);
+                        viewHolder.time.setVisibility(View.VISIBLE);
+                        viewHolder.mesgCount.setVisibility(View.GONE);
+                        viewHolder.attendeename.setText(Messages.attendeename.get(i));
+                        viewHolder.bookedeventname.setText("'" + Messages.bookedeventname.get(i) + "'");
+
+                    }
+                }
+            }
         }
 
         Glide.with(context).load(Messages.eventImage.get(i)).apply(new RequestOptions().override(200, 200)).into(viewHolder.eventImage);
 
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pos = viewHolder.getAdapterPosition();
-                Intent intent = new Intent(context, ChatBoxActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                intent.putExtra("event_title", Messages.eventTitle.get(pos));
-                intent.putExtra("event_image", Messages.eventImage.get(pos));
-                intent.putExtra("eventID", Messages.eventID.get(pos));
-                intent.putExtra("event_host_user", Messages.hostUserID.get(pos));
+        if (!Messages.eventTitle.get(i).equals(""))
+        {
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    pos = viewHolder.getAdapterPosition();
+                    Intent intent = new Intent(context, ChatBoxActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    intent.putExtra("event_title", Messages.eventTitle.get(pos));
+                    intent.putExtra("event_image", Messages.eventImage.get(pos));
+                    intent.putExtra("eventID", Messages.eventID.get(pos));
+                    intent.putExtra("event_host_user", Messages.hostUserID.get(pos));
 
 
-                if (Messages.MesgCount.get(i).equals("0")) {
-                    intent.putExtra("seen_status", "0");
-                } else {
-                    intent.putExtra("seen_status", "1");
+                    if (Messages.MesgCount.get(i).equals("0")) {
+                        intent.putExtra("seen_status", "0");
+                    } else {
+                        intent.putExtra("seen_status", "1");
+                    }
+
+                    context.startActivity(intent);
+
                 }
+            });
+        }
 
-                context.startActivity(intent);
-
-            }
-        });
     }
 
     private void setMessagedata(final ViewHolder viewHolder, final int i) {

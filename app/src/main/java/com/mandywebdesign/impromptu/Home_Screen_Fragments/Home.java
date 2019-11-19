@@ -49,6 +49,7 @@ import com.mandywebdesign.impromptu.Retrofit.NormalGetEvent;
 import com.mandywebdesign.impromptu.Retrofit.NormalrelatedEvents;
 import com.mandywebdesign.impromptu.Utils.Constants;
 import com.mandywebdesign.impromptu.Utils.Util;
+import com.mandywebdesign.impromptu.firebasenotification.MyFirebaseMessagingService;
 import com.mandywebdesign.impromptu.ui.DiscreteScrollViewOptions;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.Join_us;
@@ -141,7 +142,6 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
         recyclerView = view.findViewById(R.id.home_feed_recyclerview);
         relatedEventsRecyclerView = view.findViewById(R.id.home_frag_related_items);
 
-
         init();
         shuffle = (CheckBox) view.findViewById(R.id.home_shuffle);
 
@@ -193,10 +193,8 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
                 } else if (!shuffle.isChecked()) {
                     getAllEvent(lat, lng);
                 }
-
             }
         });
-
     }
 
 

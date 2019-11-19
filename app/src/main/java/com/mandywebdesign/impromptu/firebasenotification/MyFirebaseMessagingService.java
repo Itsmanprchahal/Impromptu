@@ -34,6 +34,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     String title, message, click_action, invoiceId, get_userID;
     JSONObject jsonObject1;
+    public static String count;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -42,7 +43,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Log.d("remotedata", data);
         Log.d("remotedata1", "" + remoteMessage.getData());
 
-        String count = String.valueOf(remoteMessage.getData().size());
+         count = String.valueOf(remoteMessage.getData().size());
         ShortcutBadger.applyCount(this, Integer.parseInt(count));
         Log.d("count", count);
 
