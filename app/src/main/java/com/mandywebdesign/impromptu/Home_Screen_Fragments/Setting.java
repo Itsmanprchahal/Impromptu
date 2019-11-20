@@ -55,6 +55,7 @@ import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalGetProfile;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.PrivancyActivity;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.TandCOptions;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.TermsAndConditionsActivityy;
+import com.mandywebdesign.impromptu.firebasenotification.MyFirebaseMessagingService;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.Join_us;
 import com.mandywebdesign.impromptu.R;
@@ -400,10 +401,18 @@ public class Setting extends Fragment {
 
         }
 
-
         return view;
     }
 
+    private void setMesgIcon() {
+        if (MyFirebaseMessagingService.counter != null) {
+            String counter = MyFirebaseMessagingService.counter.toString();
+            if (!counter.equals("0")) {
+                Home_Screen.count = "1";
+            }
+        }
+
+    }
 
     private void changepassswordpopup() {
         changepasswordpopup = new Dialog(getContext());

@@ -47,6 +47,7 @@ import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.RetroEventCategory;
 import com.mandywebdesign.impromptu.Retrofit.RetroGetEventData;
+import com.mandywebdesign.impromptu.firebasenotification.MyFirebaseMessagingService;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.NoInternetScreen;
 import com.mandywebdesign.impromptu.ui.ProgressBarClass;
@@ -176,6 +177,17 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
         });
 
         helper.attachToRecyclerView(recyclerView);
+
+    }
+
+    private void setMesgIcon() {
+        if (MyFirebaseMessagingService.counter != null) {
+            String counter = MyFirebaseMessagingService.counter.toString();
+            if (!counter.equals("0")) {
+                Home_Screen.count = "1";
+            }
+        }
+
     }
 
     private void getCategories(String userToken) {

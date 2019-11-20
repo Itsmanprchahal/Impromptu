@@ -183,7 +183,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                 viewHolder.time.setVisibility(View.VISIBLE);
                 getTime(viewHolder, i);
             } else {
-
                 if (Messages.rating_status.get(i).equals(0)) {
                     viewHolder.leavefeedback.setVisibility(View.VISIBLE);
                     viewHolder.leavefeedback.setOnClickListener(new View.OnClickListener() {
@@ -249,7 +248,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
                     String yesterday = df.format(c.getTime());
 
-
                     if (formattedDate.matches(Util.convertTimeStampDate(Long.parseLong(Messages.lastmesgtime.get(i))))) {
                         viewHolder.time.setText("Today at " + Util.convertTimeStampToTime(Long.parseLong(Messages.lastmesgtime.get(i))));
                     } else if (yesterday.matches(Util.convertTimeStampToTime(Long.parseLong(Messages.lastmesgtime.get(i))))) {
@@ -307,6 +305,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public void filterList(ArrayList<String> filterdNames) {
         Messages.eventTitle = filterdNames;
         notifyDataSetChanged();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
 

@@ -11,6 +11,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
+import android.view.Menu;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -34,7 +35,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     String title, message, click_action, invoiceId, get_userID;
     JSONObject jsonObject1;
-    public static String count;
+    public static String count,counter;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -50,6 +51,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         try {
             jsonObject1 = new JSONObject(data);
             title = jsonObject1.getString("title");
+            counter = jsonObject1.getString("booking_counter");
             get_userID = jsonObject1.getString("user_id");
             Log.d("remotedata", get_userID);
             message = jsonObject1.getString("body");

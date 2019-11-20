@@ -9,22 +9,29 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.cardview.widget.CardView;
+
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -74,7 +81,8 @@ public class Home_Screen extends AppCompatActivity {
     String accept = "application/json";
     public static String BprofileStatus, data;
     public static int countt = 0, newCount = 0;
-    String refreshvalue, checkgender, socailtoken;
+    String refreshvalue, checkgender, socailtoken, counter;
+    public static String  count = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,19 +143,20 @@ public class Home_Screen extends AppCompatActivity {
         iconView.setLayoutParams(layoutParams);
 
         setHomeScreen();
+        setMesgIcon();
     }
 
 
     private void getProfile(String socailtoken) {
         progressDialog.show();
-        Call<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> call = WebAPI.getInstance().getApi().normalGetPRofile(socailtoken, "application/json","");
+        Call<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> call = WebAPI.getInstance().getApi().normalGetPRofile(socailtoken, "application/json", "");
         call.enqueue(new Callback<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile>() {
             @Override
             public void onResponse(Call<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> call, Response<com.mandywebdesign.impromptu.Retrofit.NormalGetProfile> response) {
                 if (response.body() != null) {
                     progressDialog.dismiss();
                     editor = sharedPreferences.edit();
-                    editor.putString("profilegender",response.body().getData().get(0).getGender());
+                    editor.putString("profilegender", response.body().getData().get(0).getGender());
                     editor.apply();
 
                 }
@@ -175,16 +184,18 @@ public class Home_Screen extends AppCompatActivity {
             Intent intent1 = getIntent();
             String value = intent1.getStringExtra("bookevent");
 
-            if (value == null)
-            {
+            if (value == null) {
                 FragmentTransaction transaction = manager.beginTransaction();
                 transaction.replace(R.id.home_frame_layout, new Home());
                 transaction.commit();
+                setMesgIcon();
 
-            }else {
+
+            } else {
                 FragmentTransaction transaction = manager.beginTransaction();
                 transaction.replace(R.id.home_frame_layout, new Events());
                 transaction.commit();
+                setMesgIcon();
             }
 
 
@@ -195,7 +206,7 @@ public class Home_Screen extends AppCompatActivity {
 
 
         } else {
-            Call<RetroGetProfile> call = WebAPI.getInstance().getApi().getProfile(userToken, accept,"");
+            Call<RetroGetProfile> call = WebAPI.getInstance().getApi().getProfile(userToken, accept, "");
             call.enqueue(new Callback<RetroGetProfile>() {
                 @Override
                 public void onResponse(Call<RetroGetProfile> call, Response<RetroGetProfile> response) {
@@ -213,7 +224,7 @@ public class Home_Screen extends AppCompatActivity {
 
                             } else {
                                 Intent intent = new Intent(Home_Screen.this, BussinessProfileAcitivity1.class);
-                                intent.putExtra("value","0");
+                                intent.putExtra("value", "0");
                                 startActivity(intent);
                                 finish();
 
@@ -249,8 +260,24 @@ public class Home_Screen extends AppCompatActivity {
         }
     }
 
-    public void updateProfiledialog()
-    {
+    public void setMesgIcon() {
+        if (MyFirebaseMessagingService.counter != null) {
+            counter = MyFirebaseMessagingService.counter.toString();
+
+                if (!counter.equals("0") && count.equals("0")) {
+                    Menu menu = bottomNavigationView.getMenu();
+                    menu.findItem(R.id.messagetab).setIcon(R.drawable.mesgnotify);
+
+                } else if (!counter.equals("0") && count.equals("1")) {
+                    Menu menu = bottomNavigationView.getMenu();
+                    menu.findItem(R.id.messagetab).setIcon(R.drawable.messageinactive);
+                }
+
+        }
+
+    }
+
+    public void updateProfiledialog() {
         final Dialog dialog = new Dialog(Home_Screen.this);
         dialog.setContentView(R.layout.welcomedialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -300,7 +327,7 @@ public class Home_Screen extends AppCompatActivity {
                             transaction.replace(R.id.home_frame_layout, new Home());
                             transaction.commit();
 
-
+                            setMesgIcon();
                             return true;
 
                         case R.id.wallettab:
@@ -311,7 +338,7 @@ public class Home_Screen extends AppCompatActivity {
                             FragmentTransaction transaction1 = manager.beginTransaction();
                             transaction1.replace(R.id.home_frame_layout, new Events());
                             transaction1.commit();
-
+                            setMesgIcon();
                             return true;
 
                         case R.id.myeventstab:
@@ -322,7 +349,7 @@ public class Home_Screen extends AppCompatActivity {
                                 Intent intent = new Intent(Home_Screen.this, Add_Event_Activity.class);
                                 startActivity(intent);
                             }
-
+                            setMesgIcon();
                             return true;
 
                         case R.id.messagetab:
@@ -333,12 +360,12 @@ public class Home_Screen extends AppCompatActivity {
                             FragmentTransaction transaction2 = manager.beginTransaction();
                             transaction2.replace(R.id.home_frame_layout, new Messages());
                             transaction2.commit();
-
-
+                            Menu menu = bottomNavigationView.getMenu();
+                            menu.findItem(R.id.messagetab).setIcon(R.drawable.messageinactive);
+                            count = "1";
                             return true;
 
                         case R.id.profiletab:
-
 
                             editor = sharedPreferences.edit();
                             editor.putString("tab1", "4");
@@ -346,7 +373,7 @@ public class Home_Screen extends AppCompatActivity {
                             FragmentTransaction transaction3 = manager.beginTransaction();
                             transaction3.replace(R.id.home_frame_layout, new Setting());
                             transaction3.commit();
-
+                            setMesgIcon();
                             return true;
                     }
 
@@ -366,7 +393,7 @@ public class Home_Screen extends AppCompatActivity {
                             FragmentTransaction transaction0 = manager.beginTransaction();
                             transaction0.replace(R.id.home_frame_layout, new BusinessUserProfile());
                             transaction0.commit();
-
+                            setMesgIcon();
                             return true;
 
                         case R.id.wallettab:
@@ -375,7 +402,7 @@ public class Home_Screen extends AppCompatActivity {
                             transaction.replace(R.id.home_frame_layout, new Hosting());
                             transaction.commit();
 
-
+                            setMesgIcon();
                             return true;
 
                         case R.id.myeventstab:
@@ -397,7 +424,7 @@ public class Home_Screen extends AppCompatActivity {
                                 Toast.makeText(Home_Screen.this, "Publish Profile first to create event", Toast.LENGTH_SHORT).show();
                             }
 
-
+                            setMesgIcon();
                             return true;
 
 
@@ -405,14 +432,16 @@ public class Home_Screen extends AppCompatActivity {
                             FragmentTransaction transaction1 = manager.beginTransaction();
                             transaction1.replace(R.id.home_frame_layout, new Messages());
                             transaction1.commit();
-
+                            Menu menu = bottomNavigationView.getMenu();
+                            menu.findItem(R.id.messagetab).setIcon(R.drawable.messageinactive);
+                            count = "1";
                             return true;
 
                         case R.id.profiletab:
                             FragmentTransaction transaction2 = manager.beginTransaction();
                             transaction2.replace(R.id.home_frame_layout, new Setting());
                             transaction2.commit();
-
+                            setMesgIcon();
                             return true;
                     }
                     return false;

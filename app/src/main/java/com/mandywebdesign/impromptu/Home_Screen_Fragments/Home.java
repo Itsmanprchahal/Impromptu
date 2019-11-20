@@ -15,6 +15,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -26,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -158,7 +160,18 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
             }
         });
 
+
         return view;
+    }
+
+    private void setMesgIcon() {
+        if (MyFirebaseMessagingService.counter != null) {
+            String counter = MyFirebaseMessagingService.counter.toString();
+            if (!counter.equals("0")) {
+                Home_Screen.count = "1";
+            }
+        }
+
     }
 
     @Override
@@ -311,11 +324,9 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                 .build());
         recyclerView.setAdapter(adapter);
-        if (itemPosition.equals(""))
-        {
+        if (itemPosition.equals("")) {
             itemPosition = String.valueOf(0);
-        }else
-        {
+        } else {
             recyclerView.scrollToPosition(Integer.parseInt(itemPosition));
         }
 
@@ -362,10 +373,9 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                             rel_Title.add(datum.getTitle());
                             rel_address1.add(datum.getAddressline1());
-                            if(datum.getPrice()!=null )
-                            {
+                            if (datum.getPrice() != null) {
                                 rel_cost.add(datum.getPrice().toString());
-                            }else {
+                            } else {
                                 rel_cost.add("Paid");
                             }
 
@@ -391,7 +401,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
                             rel_fav_id.add(datum.getFavourite().toString());
                             Log.d("123456789", "");
 
-                            String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM","am").replaceFirst("PM","pm");
+                            String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
 
 
                             if (time_t.startsWith("0")) {
@@ -561,10 +571,9 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
                         for (NormalGetEvent.Datum normalGetEvent : datumArrayList) {
 
                             event_count.add(normalGetEvent.getCategoriesCount());
-                            if(normalGetEvent.getPrice()!=null )
-                            {
+                            if (normalGetEvent.getPrice() != null) {
                                 Cost.add(normalGetEvent.getPrice().toString());
-                            }else {
+                            } else {
                                 Cost.add("Paid");
                             }
 
@@ -580,9 +589,9 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
                             fav_id.add(normalGetEvent.getFavourite().toString());
                             event_host_username.add(normalGetEvent.getUsername().toString());
 
-                            String time_t = Util.convertTimeStampToTime(Long.parseLong(normalGetEvent.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM","am").replaceFirst("PM","pm");
+                            String time_t = Util.convertTimeStampToTime(Long.parseLong(normalGetEvent.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
 
-                            Log.d("eventTIme",time_t);
+                            Log.d("eventTIme", time_t);
 
                             if (time_t.startsWith("0")) {
                                 timeFrom = time_t.substring(1);
@@ -680,10 +689,9 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
                         clear();
                         for (NormalGetEvent.Datum normalGetEvent : datumArrayList) {
 
-                            if(normalGetEvent.getPrice()!=null )
-                            {
+                            if (normalGetEvent.getPrice() != null) {
                                 Cost.add(normalGetEvent.getPrice().toString());
-                            }else {
+                            } else {
                                 Cost.add("Paid");
                             }
 
@@ -695,7 +703,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
                             Image.add(normalGetEvent.getFile());
                             date.add(normalGetEvent.getDate());
 
-                            String time_t = Util.convertTimeStampToTime(Long.parseLong(normalGetEvent.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM","am").replaceFirst("PM","pm");
+                            String time_t = Util.convertTimeStampToTime(Long.parseLong(normalGetEvent.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
 
                             try {
                                 final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");

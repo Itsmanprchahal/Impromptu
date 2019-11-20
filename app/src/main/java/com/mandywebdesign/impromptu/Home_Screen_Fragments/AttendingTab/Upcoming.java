@@ -90,7 +90,6 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
         itemPosition = itemPositionPref.getString(Constants.itemPosition, String.valueOf(0));
         init();
 
-        upcoming_events(S_Token);
 
         recyclerView = (DiscreteScrollView) view.findViewById(R.id.upcoming_booked_recycler_view);
         recyclerView.setOrientation(DSVOrientation.HORIZONTAL);
@@ -103,8 +102,13 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
 
                 .build());
 
-
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        upcoming_events(S_Token);
     }
 
     private void upcoming_events(String s_token) {

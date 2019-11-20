@@ -17,6 +17,7 @@ import com.mandywebdesign.impromptu.MyEventsFragments.Favourite;
 import com.mandywebdesign.impromptu.MyEventsFragments.Attending;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Utils.Constants;
+import com.mandywebdesign.impromptu.firebasenotification.MyFirebaseMessagingService;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
 
 /**
@@ -104,6 +105,16 @@ public class Events extends Fragment {
 
 
         return view;
+    }
+
+    private void setMesgIcon() {
+        if (MyFirebaseMessagingService.counter != null) {
+            String counter = MyFirebaseMessagingService.counter.toString();
+            if (!counter.equals("0")) {
+                Home_Screen.count = "1";
+            }
+        }
+
     }
 
     private void favouritesData() {

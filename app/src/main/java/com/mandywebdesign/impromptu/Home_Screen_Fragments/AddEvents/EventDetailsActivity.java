@@ -611,6 +611,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         dialog1.setContentView(R.layout.tickettypedialog);
         dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog1.show();
+        addTicket.setText("+Add ticket type");
         arryList = new ArrayList<>();
         edt_tiketType = (EditText) dialog1.findViewById(R.id.edt_tiketType);
         edt_price = (EditText) dialog1.findViewById(R.id.edt_price);
@@ -684,10 +685,12 @@ public class EventDetailsActivity extends AppCompatActivity {
                         edt_numbersOfTicket.setText("");
                         addTicket.setText("edit or delete ticket type");
                     } else {
-                        Toast.makeText(this, "" + totalTicket + "  " + numofTicker1, Toast.LENGTH_SHORT).show();
                         if (totalTicket > numofTicker1) {
                             edt_numbersOfTicket.setError(totalTicket + " remaining tickets");
-                        } else {
+                        }else if (totalTicket<numofTicker1)
+                        {
+                            edt_numbersOfTicket.setError("limit exceed. "+totalTicket +" are remaining tickets.");
+                        }else {
                             if (arryList.size() == 3) {
                                 type1.setVisibility(View.VISIBLE);
                                 type1.setText(arryList.get(0).getTikcettype() + "£ " + arryList.get(0).getPrice() + " (" + arryList.get(0).getNumberofticket() + ") ");
@@ -711,7 +714,6 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 numbertickets = arryList.get(0).getNumberofticket() + "," + arryList.get(1).getNumberofticket() + "," + arryList.get(2).getNumberofticket();
                                 addTicket.setText("edit or delete ticket type");
                                 dialog1.dismiss();
-
                             }
                         }
                     }
@@ -723,7 +725,10 @@ public class EventDetailsActivity extends AppCompatActivity {
                     dialog1.dismiss();
                 }
 
-            } else {
+            }
+            else if (totalTicket<numofTicker1){
+                edt_numbersOfTicket.setError("limit exceed. "+totalTicket +" are remaining tickets.");
+            }else {
                 dialog1.dismiss();
             }
         }

@@ -205,10 +205,16 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                 if (eventType.equals("live")) {
                     mBookEvent.setVisibility(View.VISIBLE);
                     invite_layouit.setVisibility(View.VISIBLE);
-                } else {
+                }else if (eventType.equals("upcoming"))
+                {
                     mBookEvent.setVisibility(View.GONE);
                     invite_layouit.setVisibility(View.GONE);
                     askforrefund.setVisibility(View.VISIBLE);
+
+                }else {
+                    mBookEvent.setVisibility(View.GONE);
+                    invite_layouit.setVisibility(View.GONE);
+                    askforrefund.setVisibility(View.GONE);
                 }
 
             } else {
@@ -269,29 +275,8 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         askforrefund.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog.show();
-                Call<RefundAPI> refundAPICall = WebAPI.getInstance().getApi().refundapi(s_token,value);
-                refundAPICall.enqueue(new Callback<RefundAPI>() {
-                    @Override
-                    public void onResponse(Call<RefundAPI> call, Response<RefundAPI> response) {
-                        progressDialog.dismiss();
-                        if (response!=null)
-                        {
-                            if (response.body().getStatus().equals("200"))
-                            {
-                                Toast.makeText(BookEventActivity.this, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                            }else {
-                                Toast.makeText(BookEventActivity.this, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
 
-                    @Override
-                    public void onFailure(Call<RefundAPI> call, Throwable t) {
-                        progressDialog.dismiss();
-                        Toast.makeText(BookEventActivity.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                ConfirmationDialog(s_token,value);
             }
         });
     }
@@ -342,6 +327,57 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                 }
             }
         });
+    }
+
+    public void ConfirmationDialog(final String s_token, final String usrToken) {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.refunddialog);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        Button yes = dialog.findViewById(R.id.yesdialog);
+        Button no = dialog.findViewById(R.id.nodialog);
+        yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog.show();
+                Call<RefundAPI> refundAPICall = WebAPI.getInstance().getApi().refundapi(s_token,value);
+                refundAPICall.enqueue(new Callback<RefundAPI>() {
+                    @Override
+                    public void onResponse(Call<RefundAPI> call, Response<RefundAPI> response) {
+                        progressDialog.dismiss();
+                        if (response!=null)
+                        {
+                            if (response.body().getStatus().equals("200"))
+                            {
+                                Toast.makeText(BookEventActivity.this, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(BookEventActivity.this,Home_Screen.class);
+                                startActivity(intent);
+                                finish();
+                            }else {
+                                Toast.makeText(BookEventActivity.this, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<RefundAPI> call, Throwable t) {
+                        progressDialog.dismiss();
+                        Toast.makeText(BookEventActivity.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        });
+
+        no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
     private void bookevent(final String value) {
@@ -951,6 +987,18 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             hostUserID = datum.getUserid().toString();// host id
                             andendeenumber = datum.getAttendeesNo();
                             freeEvent = datum.getFreeEvent();
+                            if (eventType!=null)
+                            {
+                                if (eventType.equals("upcoming"))
+                                {
+                                    if (freeEvent.equals("0"))
+                                    {
+                                        askforrefund.setVisibility(View.GONE);
+                                    }else {
+                                        askforrefund.setVisibility(View.VISIBLE);
+                                    }
+                                }
+                            }
                             ticktType = datum.getTicketType();
                             transaction_id = datum.getTransactionId().toString();
 
