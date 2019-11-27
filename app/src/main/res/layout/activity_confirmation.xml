@@ -79,7 +79,6 @@
                     android:id="@+id/confirm_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/event"
                     android:scaleType="centerCrop"></ImageView>
 
 

@@ -35,6 +35,7 @@ import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.mandywebdesign.impromptu.Adapters.Business_History_adapter;
 import com.mandywebdesign.impromptu.Adapters.NormalUSerSetQues_answer;
 import com.mandywebdesign.impromptu.Adapters.NormalUserAttendingEvents;
 import com.mandywebdesign.impromptu.Adapters.NormalUserLiveEvents;
@@ -45,6 +46,7 @@ import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessUserPRofileAct
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.Normal_past_booked;
+import com.mandywebdesign.impromptu.Retrofit.RetroHistoryEvents;
 import com.mandywebdesign.impromptu.Retrofit.RetroLiveEvents;
 import com.mandywebdesign.impromptu.Retrofit.UsersBookedPastEvent;
 import com.mandywebdesign.impromptu.Retrofit.UsersLiveEvent;
@@ -149,11 +151,13 @@ public class NormalGetProfile extends AppCompatActivity {
                 if (!userToken.equals("")) {
                     getProfile(userToken, userid);
                     getLiveEvents(userToken);
-                    getattendingEvents(userToken);
+//                    getattendingEvents(userToken);
+                    getHistoryEvents(userToken);
                 } else {
                     getProfile(BToken, userid);
                     getLiveEvents(userToken);
-                    getattendingEvents(userToken);
+                    getHistoryEvents(userToken);
+//                    getattendingEvents(userToken);
                 }
                 editprofile.setVisibility(View.VISIBLE);
                 user_profile_Event.setVisibility(View.VISIBLE);
@@ -172,6 +176,50 @@ public class NormalGetProfile extends AppCompatActivity {
             eventsAttendingRecycler.setVisibility(View.VISIBLE);
             totlaEvents.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void getHistoryEvents(final String userToken) {
+        Call<RetroHistoryEvents> call = WebAPI.getInstance().getApi().history("Bearer "+userToken,"application/json");
+        call.enqueue(new Callback<RetroHistoryEvents>() {
+            @Override
+            public void onResponse(Call<RetroHistoryEvents> call, Response<RetroHistoryEvents> response) {
+                RetroHistoryEvents historyEvents = response.body();
+                List<RetroHistoryEvents.Datum> datumList = historyEvents.getData();
+
+                if (response.isSuccessful()) {
+                    if (response.body().getStatus().equals("200")) {
+                        attentingTietle.clear();
+                        attendingimage.clear();
+                        attentingevent_id.clear();
+
+                        for (RetroHistoryEvents.Datum datum : datumList) {
+
+                            Log.d("cates", "" + datum.getCategory());
+
+                            attendingimage.add(datum.getFile());
+                            attentingTietle.add(datum.getTitle().toString());
+                            attentingevent_id.add(String.valueOf(datum.getEventId()));
+
+                            Collections.reverse(attendingimage);
+                            Collections.reverse(attentingTietle);
+                            Collections.reverse(attentingevent_id);
+                            pastEvents.setText("( " + attentingTietle.size() + " )");
+
+                            LinearLayoutManager layoutManager = new LinearLayoutManager(NormalGetProfile.this, LinearLayoutManager.HORIZONTAL, false);
+                            eventsAttendingRecycler.setLayoutManager(layoutManager);
+
+                            NormalUserAttendingEvents adapter = new NormalUserAttendingEvents(NormalGetProfile.this);
+                            eventsAttendingRecycler.setAdapter(adapter);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RetroHistoryEvents> call, Throwable t) {
+
+            }
+        });
     }
 
     private void getUsersattendingEvents(String userid) {

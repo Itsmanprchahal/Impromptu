@@ -99,6 +99,7 @@ public class Hosting_fav_events_Adapter extends RecyclerView.Adapter<Hosting_fav
                 intent.putExtra("event_id",value);
                 intent.putExtra("eventType","fav");
                 intent.putExtra("other_events","");
+                intent.putExtra("hostname", Hosts.name1_fav.get(i));
                 editor.putString(Constants.itemPosition, String.valueOf(i));
                 editor.commit();
                 context.startActivity(intent);

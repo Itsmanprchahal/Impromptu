@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -63,11 +64,16 @@ public class Contact_Us extends AppCompatActivity {
                 dialog.show();
 
                 messg = contactus_messageet.getText().toString();
-                if (!BToken.equalsIgnoreCase("")) {
+                if (!TextUtils.isEmpty(messg))
+                {
+                    if (!BToken.equalsIgnoreCase("")) {
 
-                    sendmesg("Bearer "+BToken,messg);
-                } else if (!S_Token.equalsIgnoreCase("")) {
-                    sendmesg("Bearer "+S_Token,messg);
+                        sendmesg("Bearer "+BToken,messg);
+                    } else if (!S_Token.equalsIgnoreCase("")) {
+                        sendmesg("Bearer "+S_Token,messg);
+                    }
+                }else {
+                    contactus_messageet.setError("");
                 }
 
             }
@@ -87,11 +93,18 @@ public class Contact_Us extends AppCompatActivity {
         contactUSmesgCall.enqueue(new Callback<SendContactUSmesg>() {
             @Override
             public void onResponse(Call<SendContactUSmesg> call, Response<SendContactUSmesg> response) {
+                dialog.dismiss();
                 if (response.body()!=null)
                 {
-                    dialog.dismiss();
-                    Toast.makeText(Contact_Us.this, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    contactus_messageet.setText("");
+
+                    if (response.body().getStatus().equals("200"))
+                    {
+                        Toast.makeText(Contact_Us.this, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        contactus_messageet.setText("");
+                    }else {
+
+                    }
+
                 }
             }
 

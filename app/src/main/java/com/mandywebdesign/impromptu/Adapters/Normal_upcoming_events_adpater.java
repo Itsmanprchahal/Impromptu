@@ -28,6 +28,7 @@ import com.google.zxing.common.BitMatrix;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEventDetailAcitvity;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.AttendingTab.Upcoming;
+import com.mandywebdesign.impromptu.Home_Screen_Fragments.Home;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Utils.Constants;
 import com.mandywebdesign.impromptu.ui.BarcodeEncoder;
@@ -154,6 +155,7 @@ public class Normal_upcoming_events_adpater extends RecyclerView.Adapter<Normal_
                 Intent intent = new Intent(context, BookEventActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 intent.putExtra("event_id",value);
+                intent.putExtra("hostname", Home.event_host_username.get(i));
                 intent.putExtra("eventType","upcoming");
                 editor.putString(Constants.itemPosition, String.valueOf(i));
                 editor.commit();

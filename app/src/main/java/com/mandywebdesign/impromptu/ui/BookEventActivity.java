@@ -90,7 +90,6 @@ import retrofit2.Response;
 
 public class BookEventActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    boolean doubleBackToExitPressedOnce = false;
     private LinearLayout dotsLayout;
     ImageView sharevent, screenshot;
     private TextView[] dots;
@@ -758,12 +757,14 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                         Toast.makeText(BookEventActivity.this, "Not Available", Toast.LENGTH_SHORT).show();
                     } else {
 
+
                         if (ticket.equals(total_ticket)) {
                             freebookevent(dialog);
                         }else if (ticket.equals("0.0"))
                         {
                             freebookevent(dialog);
                         }else {
+
                             Toast.makeText(BookEventActivity.this, "You can buy one more ticket only", Toast.LENGTH_SHORT).show();
                         }
 
@@ -785,6 +786,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                         intent.putExtra("event_Title", title);
                         intent.putExtra("total_tickets", total_ticket);
                         intent.putExtra("ticket_Price", ticktprice);
+                        intent.putExtra("imagesend","BEA");
                         intent.putExtra("tickettype", tickettypespinnerposintion);
                         startActivity(intent);
                         dialog.dismiss();
@@ -797,6 +799,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                         intent.putExtra("event_Title", title);
                         intent.putExtra("total_tickets", total_ticket);
                         intent.putExtra("ticket_Price", ticktprice);
+                        intent.putExtra("imagesend","BEA");
                         intent.putExtra("tickettype", tickettypespinnerposintion);
                         startActivity(intent);
                         dialog.dismiss();
@@ -1280,23 +1283,4 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         }
 
     }
-
-    /*@Override
-    public void onBackPressed() {
-        //super.onBackPressed();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure to exit app ");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // saveResult();
-                BookEventActivity.super.onBackPressed();
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-            }
-        });
-        builder.show();
-    }*/
 }

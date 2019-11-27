@@ -58,9 +58,13 @@ public class FavouriteEventAdapter extends RecyclerView.Adapter<FavouriteEventAd
         if (EventsFrag.prices_fav.get(i).equals("0"))
         {
             viewHolder.evetPrice.setText("Free");
+        } else if (!EventsFrag.prices_fav.get(i).equals("0") && !EventsFrag.prices_fav.get(i).equals("Paid"))
+        {
+            viewHolder.evetPrice.setText("£"+EventsFrag.prices_fav.get(i));
         }else {
-            viewHolder.evetPrice.setText("£ "+EventsFrag.prices_fav.get(i));
+            viewHolder.evetPrice.setText(EventsFrag.prices_fav.get(i));
         }
+
 
         String s = EventsFrag.addres_fav.get(i);
         Log.e("addre",s );
@@ -88,6 +92,7 @@ public class FavouriteEventAdapter extends RecyclerView.Adapter<FavouriteEventAd
                 Intent intent = new Intent(context, BusinessEventDetailAcitvity.class);
                 intent.putExtra("event_id",value);
                 intent.putExtra("eventType","fav");
+                intent.putExtra("hostname", EventsFrag.name1_fav.get(i));
                 intent.putExtra("other_events","other_events");
                 editor.putString(Constants.itemPosition, String.valueOf(i));
                 editor.commit();

@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 
@@ -28,6 +30,8 @@ import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -35,6 +39,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +61,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.mandywebdesign.impromptu.Adapters.B_EventDetailImageAdapter;
 import com.mandywebdesign.impromptu.Adapters.Booked_users;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.HostingTabs.History;
+import com.mandywebdesign.impromptu.Retrofit.BookFreeEvents;
 import com.mandywebdesign.impromptu.messages.ChatBoxActivity;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.AddEvents.Add_Event_Activity;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
@@ -70,10 +76,12 @@ import com.mandywebdesign.impromptu.Retrofit.RetroPostDraft;
 import com.mandywebdesign.impromptu.Retrofit.TotalTickets;
 import com.mandywebdesign.impromptu.Utils.Util;
 import com.mandywebdesign.impromptu.ui.BookEventActivity;
+import com.mandywebdesign.impromptu.ui.ConfirmationActivity;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.Join_us;
 import com.mandywebdesign.impromptu.ui.NoInternet;
 import com.mandywebdesign.impromptu.ui.NoInternetScreen;
+import com.mandywebdesign.impromptu.ui.PayActivity;
 import com.mandywebdesign.impromptu.ui.ProgressBarClass;
 
 import java.util.ArrayList;
@@ -84,7 +92,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BusinessEventDetailAcitvity extends AppCompatActivity {
+public class BusinessEventDetailAcitvity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     boolean doubleBackToExitPressedOnce = false;
     private LinearLayout dotsLayout;
@@ -92,19 +100,20 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
     ImageButton backon_b_eventdetail;
     View view;
     RecyclerView users;
-    TextView category, event_price, datetime, loc, BusinessEvent_detailsFragment_book_time, ticketPrice, numberofTickets, totalPrice, freetext, event_title, see_all,
+    TextView category, event_price, datetime, loc, BusinessEvent_detailsFragment_book_time, ticketPrice,dtotalPrice,dticketPrice, numberofTickets, totalPrice, freetext, event_title, see_all,
             BusinessEvent_detailsFragment_book_link1, BusinessEvent_detailsFragment_book_link2, BusinessEvent_detailsFragment_book_link3;
     public TextView peoplecoming, revenue;
     ReadMoreTextView descri;
     FragmentManager manager;
-    Button checkInGuest, publish, edit;
+    Button checkInGuest, publish, BusinessEvent_detailsFragment_book_button;
     GoogleSignInAccount account;
     LinearLayout linearLayout, priceLayput;
     boolean loggedOut;
+    SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences, sharedPreferences1, profileupdatedPref;
     String user, fav_id;
     RoundedImageView bannerImage;
-    public static String value, event_type, otherEvnts, formattedDate, getFormattedDate;
+    public static String value, event_type, otherEvnts, formattedDate, getFormattedDate,bookstatus;
     Dialog progressDialog;
     ViewPager viewPager;
     ImageView editevent;
@@ -112,16 +121,22 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
     public static ArrayList<String> userImage = new ArrayList<>();
     public static ArrayList<String> user_id = new ArrayList<>();
     public static ArrayList<String> userName = new ArrayList<>();
-    String BToken, S_Token, attendess, ticktprice, link1, link2, link3;
-    ArrayList<String> image = new ArrayList<>();
-    static String id, cate, hostImage, hostUserID, tickets_booked_by_user,decs, postcode, ticktType, timefrom, timeto, title, location, location2, city, gender, andendeenumber, bookedtickets, numberoftickts, freeEvent, username, timeFrom, timeTo;
+    String BToken, S_Token, attendess,  link1, link2, link3;
+    public static ArrayList<String> image = new ArrayList<>();
+    static String id, cate, ticktprice,hostImage, hostUserID, tickets_booked_by_user,decs, postcode, ticktType, timefrom, timeto, title, location, location2, city, gender, andendeenumber, bookedtickets, numberoftickts, freeEvent, username, timeFrom, timeTo;
     int CurrentPage = 0;
     CheckBox eventdetail_favbt;
     TextView ticketview;
     Button seemessagesforthisevent;
     Intent intent;
-    String from;
-
+    String from,getTickets_booked_by_user,bookedticket;
+    static String tickettypeposition,spinnerposition,total_ticket,tot,remaini_tickets,getSpinnerposition = "1";
+    Spinner spinner, ticketype_spinner;
+    Button dialogButoon;
+    TextView dialogtickttype;
+    String tickettypedialog,tickettypespinnerposintion;
+    ArrayList<String> tickettypes = new ArrayList<>();
+    ArrayList<String> ticketprice = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +146,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
         account = GoogleSignIn.getLastSignedInAccount(this);
         loggedOut = AccessToken.getCurrentAccessToken() == null;
         sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         user = "Bearer " + sharedPreferences.getString("Usertoken", "");
         BToken = sharedPreferences.getString("Usertoken", "");
         S_Token = sharedPreferences.getString("Socailtoken", "");
@@ -250,10 +266,12 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                 if (!S_Token.equalsIgnoreCase("")) {
                     getEventdata(S_Token, value);
                     getUsers(S_Token, value);
+                    getRaminingEvents(S_Token, value);
                     checkInGuest.setVisibility(View.GONE);
                     if (!otherEvnts.equalsIgnoreCase("")) {
                         linearLayout.setVisibility(View.GONE);
                     }
+
 
                 }
             } else if (event_type.equals("upcoming")) {
@@ -352,8 +370,9 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                     } else if (response.body().getStatus().equals("400")) {
                         numberofTickets.setText("0");
                         attendess = String.valueOf(0);
-                        totalPrice.setText("£ 0");
+                        totalPrice.setText("£0");
                     }
+
                 } else {
                     progressDialog.dismiss();
                     Intent intent = new Intent(BusinessEventDetailAcitvity.this, NoInternetScreen.class);
@@ -400,7 +419,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                                 peoplecoming.setText(bookedUsersList.size() + " person attended");
 
                             } else {
-                                peoplecoming.setText("No one booked this event yet");
+                                peoplecoming.setText("0 people attended");
                             }
                         } else {
                             if (bookedUsersList.size() == 1) {
@@ -460,15 +479,37 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                             gender = datum.getAttendeesGender();
                             andendeenumber = datum.getAttendeesNo();
                             freeEvent = datum.getFreeEvent();
+                            tickets_booked_by_user = datum.getTickets_booked_by_user().toString();
                             ticktType = datum.getTicketType();
-                            if (datum.getPrice()!=null)
-                            {
+                            bookstatus = datum.getEventBook().toString();
+                            getTickets_booked_by_user = datum.getTickets_booked_by_user();
+
+                            //Todo: get tickets types
+                            for (int i = 0; i < datum.getTicketsType().size(); i++) {
+                                tickettypes.add(datum.getTicketsType().get(i).getTicketType());
+                                ticketprice.add(datum.getTicketsType().get(i).getValue());
+                            }
+
+
+                            if (datum.getPrice() != null) {
                                 ticktprice = datum.getPrice();
-                            }else {
-                                ticktprice="Paid";
+                            } else if (datum.getTicketsType().size() > 0) {
+                                ticktprice = "Paid";
+                            }
+
+                            if (ticktprice.equals("0")) {
+                                event_price.setText("Free");
+                                tickettypedialog = event_price.getText().toString();
+                            } else if (!ticktprice.equals("0") && !ticktprice.equals("Paid")) {
+                                event_price.setText("£ " + ticktprice);
+                                tickettypedialog = event_price.getText().toString();
+                            } else {
+                                event_price.setText(ticktprice);
+                                tickettypedialog = event_price.getText().toString();
                             }
 
                             bookedtickets = String.valueOf(datum.getTotalEventBookings());
+
                             numberoftickts = datum.getNoOfTickets();
                             username = datum.getBEventHostname();
                             link1 = datum.getLink1();
@@ -616,6 +657,19 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                             loc.setText(location + " , " + postcode);
 
                             getTotalTickets(token, value);
+                            if (event_type.equals("fav"))
+                            {
+                                if (getTickets_booked_by_user.equals("0") || getTickets_booked_by_user.equals("1"))
+                                {
+                                    BusinessEvent_detailsFragment_book_button.setVisibility(View.VISIBLE);
+                                    BusinessEvent_detailsFragment_book_button.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            dialog(value);
+                                        }
+                                    });
+                                }
+                            }
 
                         }
                     } else if (response.body().getStatus().equals("401")) {
@@ -661,6 +715,190 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
         });
     }
 
+    public void dialog(final String value) {
+        String ticketNum[] = new String[]{"1", "2"};
+
+        final Dialog dialog = new Dialog(BusinessEventDetailAcitvity.this);
+        dialog.setContentView(R.layout.custom_dialog_book_ticket);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        FindId(dialog);
+
+        if (tickettypedialog.equals("Paid")) {
+            dticketPrice.setText("0");
+            ticketype_spinner.setVisibility(View.VISIBLE);
+            dialogtickttype.setVisibility(View.GONE);
+            //Todo: ticket type spinner
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(BusinessEventDetailAcitvity.this, android.R.layout.simple_spinner_item, tickettypes);
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            ticketype_spinner.setAdapter(arrayAdapter);
+            ticketype_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    tickettypespinnerposintion = parent.getItemAtPosition(position).toString();
+                    tickettypeposition = String.valueOf(position);
+
+                    ticktprice = ticketprice.get(Integer.parseInt(tickettypeposition)).toString();
+
+                    Float a = Float.valueOf((getSpinnerposition));
+                    total_ticket = String.valueOf(a);
+
+                    String tickt = ticktprice;
+                    Float b = Float.valueOf((tickt));
+
+                    Float total = a * b;
+
+                    tot = String.valueOf(total);
+
+                    dticketPrice.setText(ticktprice);
+                    dtotalPrice.setText(tot);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+
+        } else {
+            dticketPrice.setText(ticktprice);
+            tickettypespinnerposintion = "";
+            ticketype_spinner.setVisibility(View.GONE);
+            dialogtickttype.setVisibility(View.VISIBLE);
+
+        }
+
+        dialogtickttype.setText(ticktType);
+
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(BusinessEventDetailAcitvity.this,
+                android.R.layout.simple_spinner_item, ticketNum);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+        if (spinnerposition != null) {
+            spinner.setSelection(Integer.parseInt(spinnerposition) - 1);
+        }
+
+
+        if (ticktprice.equals("0")) {
+
+            dialogButoon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Float TotalTIcket = Float.valueOf(((total_ticket)));
+
+                    Float RemainingTIckets = Float.valueOf((remaini_tickets));
+                    String ticket = tickets_booked_by_user + ".0";
+                    String total_ticket = String.valueOf(TotalTIcket);
+
+                    if (TotalTIcket > RemainingTIckets) {
+                        Toast.makeText(BusinessEventDetailAcitvity.this, "Not Available", Toast.LENGTH_SHORT).show();
+                    } else {
+
+                        if (ticket.equals(total_ticket)) {
+                            freebookevent(dialog);
+                        }else if (ticket.equals("0.0"))
+                        {
+                            freebookevent(dialog);
+                        }else {
+                            Toast.makeText(BusinessEventDetailAcitvity.this, "You can buy one more ticket only", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                }
+            });
+
+        } else {
+            dialogButoon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String ticket = tickets_booked_by_user + ".0";
+
+                    if (total_ticket.equals(ticket)) {
+                        Intent intent = new Intent(BusinessEventDetailAcitvity.this, PayActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        intent.putExtra("total_price", tot);
+                        intent.putExtra("event_id", value);
+                        intent.putExtra("event_Title", title);
+                        intent.putExtra("total_tickets", total_ticket);
+                        intent.putExtra("ticket_Price", ticktprice);
+                        intent.putExtra("imagesend","BUA");
+                        intent.putExtra("tickettype", tickettypespinnerposintion);
+                        startActivity(intent);
+                        dialog.dismiss();
+                    }else if (ticket.equals("0.0"))
+                    {
+                        Intent intent = new Intent(BusinessEventDetailAcitvity.this, PayActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        intent.putExtra("total_price", tot);
+                        intent.putExtra("event_id", value);
+                        intent.putExtra("event_Title", title);
+                        intent.putExtra("total_tickets", total_ticket);
+                        intent.putExtra("imagesend","BUA");
+                        intent.putExtra("ticket_Price", ticktprice);
+                        intent.putExtra("tickettype", tickettypespinnerposintion);
+                        startActivity(intent);
+                        dialog.dismiss();
+                    }else {
+                        Toast.makeText(BusinessEventDetailAcitvity.this, "You can buy one more ticket only", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                }
+            });
+        }
+
+        dialog.show();
+    }
+
+
+    private void freebookevent(final Dialog dialog) {
+        progressDialog.show();
+        Call<BookFreeEvents> call = WebAPI.getInstance().getApi().freebookevent("Bearer " + S_Token, value, total_ticket);
+        call.enqueue(new Callback<BookFreeEvents>() {
+            @Override
+            public void onResponse(Call<BookFreeEvents> call, Response<BookFreeEvents> response) {
+
+                if (response.body() != null) {
+                    progressDialog.dismiss();
+                    dialog.dismiss();
+
+                    Intent intent = new Intent(BusinessEventDetailAcitvity.this, ConfirmationActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    intent.putExtra("eventID", value);
+                    intent.putExtra("paid", value);
+                    editor.putString("eventImage", image.get(0));
+                    editor.apply();
+                    startActivity(intent);
+
+                } else {
+                    Intent intent = new Intent(BusinessEventDetailAcitvity.this, NoInternetScreen.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BookFreeEvents> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(BusinessEventDetailAcitvity.this, "Book Error=> " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void FindId(Dialog dialog) {
+        Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
+        dticketPrice = dialog.findViewById(R.id.dailog_ticket_price);
+        dtotalPrice = dialog.findViewById(R.id.dailog_total_price);
+        spinner = dialog.findViewById(R.id.dailog_spinner);
+        ticketype_spinner = dialog.findViewById(R.id.ticketype_spinner);
+        dialogButoon = dialog.findViewById(R.id.dailog_button);
+        dialogtickttype = dialog.findViewById(R.id.dailog_ticket_type);
+    }
 
     private void listerners() {
 
@@ -668,11 +906,6 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
-//                Intent intent = new Intent(BusinessEventDetailAcitvity.this, Home_Screen.class);
-//                intent.putExtra("eventType", event_type);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//                startActivity(intent);
                 onBackPressed();
             }
         });
@@ -795,7 +1028,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
     }
 
     private void init() {
-
+        BusinessEvent_detailsFragment_book_button = findViewById(R.id.BusinessEvent_detailsFragment_book_button);
         ticketview = findViewById(R.id.ticketview);
         revenue = findViewById(R.id.revenue);
         event_price = findViewById(R.id.event_price);
@@ -906,6 +1139,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                 if (response.body() != null) {
                     String totalticket = String.valueOf(response.body().getData().getTotal());
                     String bookedtciket = String.valueOf(response.body().getData().getBooked());
+                    remaini_tickets = String.valueOf(response.body().getData().getRemaining());
                     if (bookedtciket.equals("null")) {
                         bookedtciket = "0";
                         ticketview.setText(" " + "(" + "0" + "/" + totalticket + ")");
@@ -927,5 +1161,30 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity {
                 Toast.makeText(BusinessEventDetailAcitvity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        spinnerposition = parent.getItemAtPosition(position).toString();
+
+        getSpinnerposition = spinnerposition;
+
+
+        Float a = Float.valueOf((spinnerposition));
+        total_ticket = String.valueOf(a);
+
+        String tickt = dticketPrice.getText().toString();
+        Float b = Float.valueOf((tickt));
+
+        Float total = a * b;
+
+        tot = String.valueOf(total);
+
+        dtotalPrice.setText(tot);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

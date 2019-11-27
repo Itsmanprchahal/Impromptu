@@ -644,10 +644,11 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
                 String loc = String.valueOf(place);
                 Geocoder geocoder = new Geocoder(getContext());
                 try {
-                    List<Address> addresses = geocoder.getFromLocationName(loc, 5);
+                    List<Address> addresses = geocoder.getFromLocationName(loc, 10);
                     List<LatLng> latLngs = new ArrayList<LatLng>(addresses.size());
 
-                    if (addresses != null) {
+                    Log.d("latLngs", String.valueOf(latLngs));
+                    if (addresses != null && addresses.size()!=0) {
                         city = addresses.get(0).getAddressLine(0);
                         cityname.setText(addresses.get(0).getAddressLine(0).toString());
                     } else {

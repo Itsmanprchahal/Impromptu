@@ -529,7 +529,7 @@ public interface RegisterApiInterface {
 
     @POST("contact")
     Call<SendContactUSmesg> sendcontactmesg(
-            @Header("faq") String token,
+            @Header("Authorization") String token,
             @Query("message") String message
     );
 

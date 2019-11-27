@@ -29,6 +29,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEventDetailAcitvity;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.NormalPayment;
@@ -64,7 +65,7 @@ public class PayActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     String userToken;
     String tokenPay, eventId, tot;
-    static String total_tickets, ticketprice, totalprice, paid, eventID,event_Title,tickettype;
+    static String total_tickets, ticketprice, totalprice, paid, eventID,event_Title,tickettype,imagerecieve;
     Intent intent;
 
     @Override
@@ -110,6 +111,7 @@ public class PayActivity extends AppCompatActivity {
         total_tickets = intent.getStringExtra("total_tickets");
         event_Title = intent.getStringExtra("event_Title");
         tickettype = intent.getStringExtra("tickettype");
+        imagerecieve = intent.getStringExtra("imagesend");
 
 
         ticket_price.setText("£ " + ticketprice);
@@ -251,7 +253,14 @@ public class PayActivity extends AppCompatActivity {
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     intent.putExtra("eventID",eventID);
                     intent.putExtra("paid","Paid");
-                    editor.putString("eventImage", BookEventActivity.image.get(0));
+
+                    if (imagerecieve.equals("BUA"))
+                    {
+                        editor.putString("eventImage", BusinessEventDetailAcitvity.image.get(0));
+                    }else {
+                        editor.putString("eventImage", BookEventActivity.image.get(0));
+                    }
+
                     editor.apply();
                     startActivity(intent);
 

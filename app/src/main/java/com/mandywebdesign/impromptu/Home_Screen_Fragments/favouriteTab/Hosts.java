@@ -68,6 +68,7 @@ public class Hosts extends Fragment implements DiscreteScrollView.OnItemChangedL
     public static ArrayList<String> categois_fav = new ArrayList<>();
     public static ArrayList<String> images_fav = new ArrayList<>();
     public static ArrayList<String> event_id_fav = new ArrayList<>();
+    public static ArrayList<String> hostname = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

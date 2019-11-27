@@ -72,6 +72,7 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
     public static ArrayList<String> book_tickets = new ArrayList<>();
     public static ArrayList<String> total_book_tickets = new ArrayList<>();
     public static ArrayList<String> usertype = new ArrayList<>();
+    public static ArrayList<String> hostname = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -124,6 +125,7 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
         book_tickets.clear();
         total_book_tickets.clear();
         usertype.clear();
+        hostname.clear();
         progressDialog.show();
         Call<Normal_past_booked> call = WebAPI.getInstance().getApi().upcoming_booked("Bearer " + s_token, "application/json");
         call.enqueue(new Callback<Normal_past_booked>() {
@@ -147,6 +149,7 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
                             book_tickets.add(datum.getBook_tickets().toString());
                             total_book_tickets.add(datum.getTotal_book_tickets().toString());
                             usertype.add(datum.getUser_type().toString());
+                            hostname.add(datum.getBEventHostname());
                             if (datum.getPrice()!=null)
                             {
                                 if (datum.getPrice().equals("")) {

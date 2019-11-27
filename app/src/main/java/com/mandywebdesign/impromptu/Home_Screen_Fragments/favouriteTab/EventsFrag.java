@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,14 +44,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class EventsFrag extends Fragment implements  DiscreteScrollView.OnItemChangedListener{
+public class EventsFrag extends Fragment implements DiscreteScrollView.OnItemChangedListener {
 
     DiscreteScrollView recyclerView;
     FragmentManager fragmentManager;
     View view;
     TextView noEvnets;
-    SharedPreferences sharedPreferences,itemPositionPref;
-    String S_Token,itemPosition,formattedDate,getFormattedDate,timeFrom;
+    SharedPreferences sharedPreferences, itemPositionPref;
+    String S_Token, itemPosition, formattedDate, getFormattedDate, timeFrom;
     Dialog progressDialog;
     FavouriteEventAdapter adapter;
     private InfiniteScrollAdapter infiniteAdapter;
@@ -60,6 +62,7 @@ public class EventsFrag extends Fragment implements  DiscreteScrollView.OnItemCh
     public static ArrayList<String> time_fav = new ArrayList<>();
     public static ArrayList<String> categois_fav = new ArrayList<>();
     public static ArrayList<String> images_fav = new ArrayList<>();
+    public static ArrayList<String> bookstatus = new ArrayList<>();
     public static ArrayList<String> event_id_fav = new ArrayList<>();
 
     @Override
@@ -83,7 +86,7 @@ public class EventsFrag extends Fragment implements  DiscreteScrollView.OnItemCh
         recyclerView = (DiscreteScrollView) view.findViewById(R.id.favourite_event_recycler_view);
         recyclerView.setOrientation(DSVOrientation.HORIZONTAL);
         recyclerView.addOnItemChangedListener(this);
-        infiniteAdapter = InfiniteScrollAdapter.wrap(new FavouriteEventAdapter(getContext(),fragmentManager));
+        infiniteAdapter = InfiniteScrollAdapter.wrap(new FavouriteEventAdapter(getContext(), fragmentManager));
         recyclerView.setAdapter(infiniteAdapter);
         recyclerView.setItemTransitionTimeMillis(DiscreteScrollViewOptions.getTransitionTime());
         recyclerView.setItemTransformer(new ScaleTransformer.Builder()
@@ -92,13 +95,12 @@ public class EventsFrag extends Fragment implements  DiscreteScrollView.OnItemCh
                 .build());
 
 
-
         return view;
     }
 
     private void init() {
         Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
-        recyclerView =  view.findViewById(R.id.favourite_event_recycler_view);
+        recyclerView = view.findViewById(R.id.favourite_event_recycler_view);
         noEvnets = (TextView) view.findViewById(R.id.noEnets);
     }
 
@@ -111,6 +113,7 @@ public class EventsFrag extends Fragment implements  DiscreteScrollView.OnItemCh
         categois_fav.clear();
         images_fav.clear();
         event_id_fav.clear();
+        bookstatus.clear();
         progressDialog.show();
         String token1 = "Bearer " + token;
         Call<NormalGetFavEvents> call = WebAPI.getInstance().getApi().getFavEvents(token1, "application/json");
@@ -118,7 +121,7 @@ public class EventsFrag extends Fragment implements  DiscreteScrollView.OnItemCh
             @Override
             public void onResponse(Call<NormalGetFavEvents> call, Response<NormalGetFavEvents> response) {
 
-                if (response.body()!=null) {
+                if (response.body() != null) {
                     if (response.body().getStatus().equals("200")) {
 
                         NormalGetFavEvents data = response.body();
@@ -130,47 +133,52 @@ public class EventsFrag extends Fragment implements  DiscreteScrollView.OnItemCh
                             name1_fav.add(datum.getBEventHostname());
                             title_fav.add(datum.getTitle());
                             addres_fav.add(datum.getAddressline1());
-                            if (datum.getPrice().equals("")) {
+                            bookstatus.add(datum.getEvent_book());
 
-                                prices_fav.add("Free");
+                            if (datum.getPrice() != null) {
+                                if (datum.getPrice().equals("")) {
+
+                                    prices_fav.add("Free");
+                                } else {
+                                    prices_fav.add(datum.getPrice());
+                                }
                             } else {
-                                prices_fav.add(datum.getPrice());
+                                prices_fav.add("Paid");
                             }
-                            // Log.d("cates", "" + datum.getEventId());
 
-                            String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.","am").replaceFirst("p.m.","pm").replaceFirst("AM","am").replaceFirst("PM","pm");
+                            String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
 
-                                if (time_t.startsWith("0")) {
-                                    timeFrom = time_t.substring(1);
-                                } else {
-                                    timeFrom = time_t.substring(0);
-                                }
+                            if (time_t.startsWith("0")) {
+                                timeFrom = time_t.substring(1);
+                            } else {
+                                timeFrom = time_t.substring(0);
+                            }
 
-                                Calendar c = Calendar.getInstance();
+                            Calendar c = Calendar.getInstance();
 
-                                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                                formattedDate = df.format(c.getTime());
-                                c.add(Calendar.DATE, 1);
+                            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                            formattedDate = df.format(c.getTime());
+                            c.add(Calendar.DATE, 1);
 
-                                getFormattedDate = df.format(c.getTime());
-                                // Toast.makeText(getContext(), "TOMORROW_DATE"+getFormattedDate, Toast.LENGTH_SHORT).show();
+                            getFormattedDate = df.format(c.getTime());
+                            // Toast.makeText(getContext(), "TOMORROW_DATE"+getFormattedDate, Toast.LENGTH_SHORT).show();
 
-                                System.out.println("Current time ==> " + c.getTime());
+                            System.out.println("Current time ==> " + c.getTime());
 
-                                if (formattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
-                                    time_fav.add("Today at " + timeFrom);
-                                } else if (getFormattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
-                                    time_fav.add("Tomorrow at " + timeFrom);
-                                } else {
-                                    String date = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
-                                    /*to change server date formate*/
-                                    String s1 = date;
-                                    String[] str = s1.split("/");
-                                    String str1 = str[0];
-                                    String str2 = str[1];
-                                    String str3 = str[2];
-                                    time_fav.add(str2 + "/" + str1 + "/" + str3 + " at " + timeFrom);
-                                }
+                            if (formattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
+                                time_fav.add("Today at " + timeFrom);
+                            } else if (getFormattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
+                                time_fav.add("Tomorrow at " + timeFrom);
+                            } else {
+                                String date = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
+                                /*to change server date formate*/
+                                String s1 = date;
+                                String[] str = s1.split("/");
+                                String str1 = str[0];
+                                String str2 = str[1];
+                                String str3 = str[2];
+                                time_fav.add(str2 + "/" + str1 + "/" + str3 + " at " + timeFrom);
+                            }
 
                             categois_fav.add(datum.getCategory());
                             images_fav.add(datum.getFile());
@@ -188,7 +196,7 @@ public class EventsFrag extends Fragment implements  DiscreteScrollView.OnItemCh
                         noEvnets.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
                     }
-                }else {
+                } else {
                     Intent intent = new Intent(getContext(), NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
@@ -200,13 +208,12 @@ public class EventsFrag extends Fragment implements  DiscreteScrollView.OnItemCh
 
             @Override
             public void onFailure(Call<NormalGetFavEvents> call, Throwable t) {
-                if (NoInternet.isOnline(getContext())==false)
-                {
+                if (NoInternet.isOnline(getContext()) == false) {
                     progressDialog.dismiss();
 
                     NoInternet.dialog(getContext());
-                }else {
-                    Toast.makeText(getContext(), ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -226,5 +233,6 @@ public class EventsFrag extends Fragment implements  DiscreteScrollView.OnItemCh
         Collections.reverse(categois_fav);
         Collections.reverse(images_fav);
         Collections.reverse(event_id_fav);
+        Collections.reverse(bookstatus);
     }
 }

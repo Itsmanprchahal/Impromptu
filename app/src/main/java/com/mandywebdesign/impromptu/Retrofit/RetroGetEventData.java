@@ -177,7 +177,7 @@ public class RetroGetEventData {
         private String userType;
         @SerializedName("event_book")
         @Expose
-        private Integer eventBook;
+        private String eventBook;
         @SerializedName("total_event_bookings")
         @Expose
         private Integer totalEventBookings;
@@ -471,11 +471,11 @@ public class RetroGetEventData {
             this.userType = userType;
         }
 
-        public Integer getEventBook() {
+        public String getEventBook() {
             return eventBook;
         }
 
-        public void setEventBook(Integer eventBook) {
+        public void setEventBook(String eventBook) {
             this.eventBook = eventBook;
         }
 

@@ -70,7 +70,6 @@ public class ChatBoxActivity extends AppCompatActivity {
     ImageButton add_smuiley;
     SwipeRefreshLayout swipeRefreshLayout;
     RoundedImageView event_image;
-    TextView title;
     FragmentManager manager;
     EmojiconEditText typemess;
     ImageView sendmessg;
@@ -109,8 +108,12 @@ public class ChatBoxActivity extends AppCompatActivity {
             hostUserID = intent.getStringExtra("event_host_user");
             seen_status = intent.getStringExtra("seen_status");
 
-
-            title.setText(titl);
+            if (titl.length() > 13) {
+                chat_title.setText(titl.substring(0, 12) + "...");
+            } else {
+                chat_title.setText(titl);
+            }
+            
             Glide.with(this).load(image).into(event_image);
         }
 
@@ -147,10 +150,6 @@ public class ChatBoxActivity extends AppCompatActivity {
             public void onClick(View v) {
                 onBackPressed();
                 finish();
-//                Intent intent = new Intent(ChatBoxActivity.this, Home_Screen.class);
-//                intent.putExtra("")
-//                startActivity(intent);
-//                finish();
             }
         });
 
@@ -236,7 +235,6 @@ public class ChatBoxActivity extends AppCompatActivity {
         chat_title = findViewById(R.id.chat_title);
         back = findViewById(R.id.chat_back);
         event_image = findViewById(R.id.chat_iamge);
-        title = findViewById(R.id.chat_title);
         add_smuiley = findViewById(R.id.add_smiley);
         typemess = findViewById(R.id.type_messeage);
         sendmessg = findViewById(R.id.send_mesg);

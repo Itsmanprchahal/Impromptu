@@ -119,6 +119,18 @@ public class NormalGetFavEvents {
         @Expose
         private String timezone;
 
+        public String getEvent_book() {
+            return event_book;
+        }
+
+        public void setEvent_book(String event_book) {
+            this.event_book = event_book;
+        }
+
+        @SerializedName("event_book")
+        @Expose
+        private String event_book;
+
         public Integer getEventId() {
             return eventId;
         }
