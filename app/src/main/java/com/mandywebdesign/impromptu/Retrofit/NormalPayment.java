@@ -68,6 +68,18 @@ public class NormalPayment {
         @Expose
         private String totalTickets;
 
+        public String getTicket_type() {
+            return ticket_type;
+        }
+
+        public void setTicket_type(String ticket_type) {
+            this.ticket_type = ticket_type;
+        }
+
+        @SerializedName("ticket_type")
+        @Expose
+        private String ticket_type;
+
         public String getBalanceTransaction() {
             return balanceTransaction;
         }

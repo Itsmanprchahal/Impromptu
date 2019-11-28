@@ -48,6 +48,18 @@ public class TotalTickets {
         @SerializedName("total_tickets")
         @Expose
         private String totalTickets;
+
+        public String getPrice() {
+            return price;
+        }
+
+        public void setPrice(String price) {
+            this.price = price;
+        }
+
+        @SerializedName("price")
+        @Expose
+        private String price;
         @SerializedName("event_id")
         @Expose
         private Integer eventId;

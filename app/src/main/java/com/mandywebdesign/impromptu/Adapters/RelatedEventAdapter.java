@@ -112,8 +112,9 @@ public class RelatedEventAdapter extends RecyclerView.Adapter<RelatedEventAdapte
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 intent.putExtra("event_id",value);
                 intent.putExtra("fav_id",fav_id);
+                intent.putExtra("lat",Home.lat);
+                intent.putExtra("lng",Home.lng);
                 intent.putExtra("hostname",hostname);
-
                 editor.putString(Constants.eventType, String.valueOf(i));
                 editor.putString(Constants.Category,category);
                 editor.commit();

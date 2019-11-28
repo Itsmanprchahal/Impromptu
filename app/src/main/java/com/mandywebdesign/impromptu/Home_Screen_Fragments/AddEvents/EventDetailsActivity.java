@@ -611,7 +611,6 @@ public class EventDetailsActivity extends AppCompatActivity {
         dialog1.setContentView(R.layout.tickettypedialog);
         dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog1.show();
-        addTicket.setText("+Add ticket type");
         arryList = new ArrayList<>();
         edt_tiketType = (EditText) dialog1.findViewById(R.id.edt_tiketType);
         edt_price = (EditText) dialog1.findViewById(R.id.edt_price);
@@ -666,19 +665,23 @@ public class EventDetailsActivity extends AppCompatActivity {
 
                     if (arryList.size() == 1) {
                         type1.setVisibility(View.VISIBLE);
-                        type1.setText(arryList.get(0).getTikcettype() + "£ " + arryList.get(0).getPrice() + " (" + arryList.get(0).getNumberofticket() + ") ");
+                        type1.setText(arryList.get(0).getTikcettype() + " £ " + arryList.get(0).getPrice() + " (" + arryList.get(0).getNumberofticket() + ") ");
 
+                        type = arryList.get(0).getTikcettype() ;
+                        values = String.valueOf(arryList.get(0).getPrice());
+                        numbertickets = String.valueOf(arryList.get(0).getNumberofticket());
 
+                        addTicket.setText("edit or delete ticket type");
                         edt_tiketType.setText("");
                         edt_price.setText("");
                         edt_numbersOfTicket.setText("");
 
                     } else if (arryList.size() == 2) {
                         type1.setVisibility(View.VISIBLE);
-                        type1.setText(arryList.get(0).getTikcettype() + "£ " + arryList.get(0).getPrice() + " (" + arryList.get(0).getNumberofticket() + ") ");
+                        type1.setText(arryList.get(0).getTikcettype() + " £ " + arryList.get(0).getPrice() + " (" + arryList.get(0).getNumberofticket() + ") ");
 
                         type2.setVisibility(View.VISIBLE);
-                        type2.setText(arryList.get(1).getTikcettype() + "£ " + arryList.get(1).getPrice() + " (" + arryList.get(1).getNumberofticket() + ") ");
+                        type2.setText(arryList.get(1).getTikcettype() + " £ " + arryList.get(1).getPrice() + " (" + arryList.get(1).getNumberofticket() + ") ");
 
                         edt_tiketType.setText("");
                         edt_price.setText("");
@@ -693,13 +696,13 @@ public class EventDetailsActivity extends AppCompatActivity {
                         }else {
                             if (arryList.size() == 3) {
                                 type1.setVisibility(View.VISIBLE);
-                                type1.setText(arryList.get(0).getTikcettype() + "£ " + arryList.get(0).getPrice() + " (" + arryList.get(0).getNumberofticket() + ") ");
+                                type1.setText(arryList.get(0).getTikcettype() + " £ " + arryList.get(0).getPrice() + " (" + arryList.get(0).getNumberofticket() + ") ");
 
                                 type2.setVisibility(View.VISIBLE);
-                                type2.setText(arryList.get(1).getTikcettype() + "£ " + arryList.get(1).getPrice() + " (" + arryList.get(1).getNumberofticket() + ") ");
+                                type2.setText(arryList.get(1).getTikcettype() + " £ " + arryList.get(1).getPrice() + " (" + arryList.get(1).getNumberofticket() + ") ");
 
                                 type3.setVisibility(View.VISIBLE);
-                                type3.setText(arryList.get(2).getTikcettype() + "£ " + arryList.get(2).getPrice() + " (" + arryList.get(2).getNumberofticket() + ") ");
+                                type3.setText(arryList.get(2).getTikcettype() + " £ " + arryList.get(2).getPrice() + " (" + arryList.get(2).getNumberofticket() + ") ");
 
 
                                 edt_tiketType.setText("");

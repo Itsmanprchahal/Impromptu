@@ -249,6 +249,7 @@ public class PayActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 if (response.body()!=null) {
 //                    dialog();
+                    Log.d("data+++", String.valueOf(response.body().getData().get(0)));
                     Intent intent = new Intent(PayActivity.this,ConfirmationActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     intent.putExtra("eventID",eventID);
@@ -260,7 +261,6 @@ public class PayActivity extends AppCompatActivity {
                     }else {
                         editor.putString("eventImage", BookEventActivity.image.get(0));
                     }
-
                     editor.apply();
                     startActivity(intent);
 

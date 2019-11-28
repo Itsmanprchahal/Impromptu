@@ -14,12 +14,14 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentManager;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -99,7 +101,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     FragmentManager fragmentManager;
     Button mBookEvent, askforrefund;
     ImageButton follow_button;
-    TextView organiserName, book_time, book_categry, peoplegoing, seeAll, remainingTicketTV, invitefriends, dialogtickttype, link1, link2, link3;
+    TextView organiserName, eventdistance,book_time, book_categry, peoplegoing, seeAll, remainingTicketTV, invitefriends, dialogtickttype, link1, link2, link3;
     ViewPager viewPager;
     RecyclerView users;
     ReadMoreTextView descri;
@@ -135,6 +137,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     ArrayList<String> tickettypes = new ArrayList<>();
     ArrayList<String> ticketprice = new ArrayList<>();
     static String tickettypeposition, getSpinnerposition = "1";
+    static String currentlat,currenlng,eventlat,eventlng;
 
 
     @Override
@@ -178,6 +181,8 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         checkgender = sharedPreferences.getString("profilegender", "");
         intent = getIntent();
         if (intent != null) {
+            currentlat = intent.getStringExtra("lat");
+            currenlng = intent.getStringExtra("lng");
             value = intent.getStringExtra("event_id");
             payvalue = intent.getStringExtra("back_pay");
             eventType = intent.getStringExtra("eventType");
@@ -209,13 +214,11 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                     mBookEvent.setVisibility(View.GONE);
                     invite_layouit.setVisibility(View.GONE);
                     askforrefund.setVisibility(View.VISIBLE);
-
                 }else {
                     mBookEvent.setVisibility(View.GONE);
                     invite_layouit.setVisibility(View.GONE);
                     askforrefund.setVisibility(View.GONE);
                 }
-
             } else {
                 mBookEvent.setVisibility(View.VISIBLE);
                 invite_layouit.setVisibility(View.VISIBLE);
@@ -223,46 +226,54 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         }
 
         if (!S_token.equalsIgnoreCase("")) {
-            FirebaseDynamicLinks.getInstance()
-                    .getDynamicLink(getIntent())
-                    .addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
-                        @Override
-                        public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
-                            // Get deep link from result (may be null if no link is found)
-                            Uri deepLink = null;
-                            if (pendingDynamicLinkData != null) {
-                                deepLink = pendingDynamicLinkData.getLink();
-                                String path = deepLink.getPath();
-                                Log.d("deeplink1", path.toString());
-                                String[] evetdata = path.split("/");
-                                String eventID = evetdata[2];
-                                Log.d("deeplink", eventID);
-                                getEventData(eventID);
 
-                                addFav(eventID);
-                                getRaminingEvents(S_token, eventID);
-                                getUsers(S_token, eventID);
-                                bookevent(eventID);
-                                gotoEventMesg(eventID);
-                                askforrefund("Bearer "+S_token,eventID);
-                            } else {
-                                getEventData(value);
-                                addFav(value);
-                                getRaminingEvents(S_token, value);
-                                getUsers(S_token, value);
-                                bookevent(value);
-                                gotoEventMesg(value);
-                                askforrefund("Bearer "+S_token,value);
+            try{
+                FirebaseDynamicLinks.getInstance()
+                        .getDynamicLink(getIntent())
+                        .addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
+                            @Override
+                            public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
+                                // Get deep link from result (may be null if no link is found)
+                                Uri deepLink = null;
+                                if (pendingDynamicLinkData != null) {
+                                    deepLink = pendingDynamicLinkData.getLink();
+                                    String path = deepLink.getPath();
+                                    Log.d("deeplink1", path.toString());
+                                    String[] evetdata = path.split("/");
+                                    String eventID = evetdata[2];
+                                    Log.d("deeplink", eventID);
+                                    getEventData(eventID);
+
+                                    addFav(eventID);
+                                    getRaminingEvents(S_token, eventID);
+                                    getUsers(S_token, eventID);
+                                    bookevent(eventID);
+                                    gotoEventMesg(eventID);
+                                    askforrefund("Bearer "+S_token,eventID);
+                                } else {
+                                    getEventData(value);
+                                    addFav(value);
+                                    getRaminingEvents(S_token, value);
+                                    getUsers(S_token, value);
+                                    bookevent(value);
+                                    gotoEventMesg(value);
+                                    askforrefund("Bearer "+S_token,value);
+                                }
+
                             }
+                        })
+                        .addOnFailureListener(this, new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w("dynamiclink", "getDynamicLink:onFailure", e);
+                            }
+                        });
+            }catch (android.content.ActivityNotFoundException anfe)
+            {
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://play.google.com/store")));
+            }
 
-                        }
-                    })
-                    .addOnFailureListener(this, new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.w("dynamiclink", "getDynamicLink:onFailure", e);
-                        }
-                    });
         } else {
             Intent intent = new Intent(this, Join_us.class);
             startActivity(intent);
@@ -465,6 +476,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     }
 
     private void init() {
+        eventdistance = findViewById(R.id.eventdistance);
         follow_button = findViewById(R.id.follow_button);
         screenshot = findViewById(R.id.screenshot);
         backonbookevent = findViewById(R.id.backonbookevent);
@@ -495,6 +507,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         link3 = findViewById(R.id.book_link3);
         sharevent = findViewById(R.id.sharevent);
         askforrefund = findViewById(R.id.askforrefund);
+
     }
 
     private void listeners() {
@@ -968,6 +981,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
         Call<RetroGetEventData> call = WebAPI.getInstance().getApi().getEvents("Bearer " + S_token, "application/json", value);
         call.enqueue(new Callback<RetroGetEventData>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(Call<RetroGetEventData> call, Response<RetroGetEventData> response) {
 
@@ -983,6 +997,11 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             decs = datum.getDescription();
                             location = datum.getAddressline1();
                             location2 = datum.getAddressline2();
+                            eventlat = datum.getLattitude();
+                            eventlng = datum.getLongitude();
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                distance(Double.parseDouble(currentlat), Double.parseDouble(currenlng), Double.parseDouble(eventlat), Double.parseDouble(eventlng));
+                            }
                             postcode = datum.getPostcode();
                             city = datum.getCity();
                             tickets_booked_by_user = datum.getTickets_booked_by_user().toString();
@@ -1281,6 +1300,32 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         if (dots.length > 0) {
             dots[currentPage].setTextColor(getResources().getColor(R.color.colorTheme));
         }
+    }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private double distance(double lat1, double lon1, double lat2, double lon2) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1))
+                * Math.sin(deg2rad(lat2))
+                + Math.cos(deg2rad(lat1))
+                * Math.cos(deg2rad(lat2))
+                * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        String distance = String.valueOf(dist);
+        Log.d("distance", String.valueOf(dist));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            eventdistance.setText(Math.toIntExact(Math.round(dist)));
+        }
+        return (dist);
+    }
+
+    private double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    private double rad2deg(double rad) {
+        return (rad * 180.0 / Math.PI);
     }
 }

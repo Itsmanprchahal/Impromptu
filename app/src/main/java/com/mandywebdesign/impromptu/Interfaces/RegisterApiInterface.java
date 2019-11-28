@@ -406,7 +406,7 @@ public interface RegisterApiInterface {
             @Field("amount") String amount,
             @Field("token") String stripe_token,
             @Field("total_tickets") String total_tickets,
-            @Field("tickettype") String tickettype
+            @Field("ticket_type") String tickettype
     );
 
     @GET("past-events")

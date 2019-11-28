@@ -56,7 +56,6 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Vi
         itemClickListener = listener;
     }
 
-
     public HomeEventsAdapter(Context context, FragmentManager fragmentManager, String social_token) {
         this.context = context;
         this.fragmentManager = fragmentManager;
@@ -111,6 +110,8 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Vi
                 intent.putExtra("event_id", value);
                 intent.putExtra("fav_id", value1);
                 intent.putExtra("hostname", hostname);
+                intent.putExtra("lat",Home.lat);
+                intent.putExtra("lng",Home.lng);
                 editor.putString(Constants.itemPosition, String.valueOf(i));
                 editor.putString(Constants.eventType, "");
                 editor.commit();

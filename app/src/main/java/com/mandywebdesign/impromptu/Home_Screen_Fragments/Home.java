@@ -86,7 +86,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
     InfiniteScrollAdapter infiniteAdapter;
     View view;
     TextView noevents;
-    String adapterPositn, lat, lng;
+    public static String adapterPositn, lat, lng;
     public static String social_token, category, itemPosition, releatedposition, getCategory, formattedDate, getFormattedDate, timeFrom;
     CheckBox shuffle;
     Dialog progressDialog;

@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mandywebdesign.impromptu.Filter.FilteredScreen;
+import com.mandywebdesign.impromptu.Home_Screen_Fragments.Home;
 import com.mandywebdesign.impromptu.Utils.Constants;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.ui.BookEventActivity;
@@ -68,6 +69,8 @@ public class FilteredAdapter extends RecyclerView.Adapter<FilteredAdapter.ViewHo
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 intent.putExtra("event_id",value);
                 intent.putExtra("fav_id","0");
+                intent.putExtra("lat", Home.lat);
+                intent.putExtra("lng",Home.lng);
                 intent.putExtra("hostname",FilteredScreen.name1.get(i));
                 context.startActivity(intent);
 

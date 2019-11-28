@@ -670,8 +670,6 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
 
                 Status status = Autocomplete.getStatusFromIntent(data);
