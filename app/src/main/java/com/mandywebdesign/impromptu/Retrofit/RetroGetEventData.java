@@ -572,6 +572,18 @@ public class RetroGetEventData {
         @Expose
         private Integer noOfTickets;
 
+        public Integer getBooked_tickets() {
+            return booked_tickets;
+        }
+
+        public void setBooked_tickets(Integer booked_tickets) {
+            this.booked_tickets = booked_tickets;
+        }
+
+        @SerializedName("booked_tickets")
+        @Expose
+        private Integer booked_tickets;
+
         public String getTicketType() {
             return ticketType;
         }

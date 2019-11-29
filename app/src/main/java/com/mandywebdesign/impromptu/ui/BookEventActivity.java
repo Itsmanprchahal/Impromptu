@@ -801,6 +801,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                         intent.putExtra("ticket_Price", ticktprice);
                         intent.putExtra("imagesend","BEA");
                         intent.putExtra("tickettype", tickettypespinnerposintion);
+
                         startActivity(intent);
                         dialog.dismiss();
                     }else if (ticket.equals("0.0"))
@@ -1314,10 +1315,15 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         dist = rad2deg(dist);
         dist = dist * 60 * 1.1515;
         String distance = String.valueOf(dist);
-        Log.d("distance", String.valueOf(dist));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//            eventdistance.setText(Math.toIntExact(Math.round(dist)));
+        int roundVal= (int) Math.round(dist);
+        Log.d("distance", String.valueOf(roundVal));
+        if (roundVal==1)
+        {
+            eventdistance.setText(roundVal+" mile away");
+        }else {
+            eventdistance.setText(roundVal+" miles away");
         }
+
         return (dist);
     }
 

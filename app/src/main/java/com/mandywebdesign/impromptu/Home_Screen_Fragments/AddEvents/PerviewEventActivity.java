@@ -129,6 +129,7 @@ public class PerviewEventActivity extends AppCompatActivity {
             type = intent.getStringExtra("type");
             getTic_Price = intent.getStringExtra("ticketprice");
             getNumbersTickets = intent.getStringExtra("numbertickets");
+            event_price.setText("Paid");
         }else
         {
             if (Tic_Price.equals("0")) {

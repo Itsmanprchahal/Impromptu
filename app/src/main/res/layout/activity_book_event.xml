@@ -295,10 +295,6 @@
                                 android:id="@+id/eventdistance"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/circularstdbold"
-                                android:textColor="@color/colortextBlack"
-                                android:textSize="15sp"
-                                android:textStyle="bold"
                                 android:layout_marginLeft="@dimen/defaultmargin"
                                 android:text="distance"></TextView>
                         </LinearLayout>

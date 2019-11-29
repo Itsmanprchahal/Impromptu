@@ -118,6 +118,7 @@ public class PayActivity extends AppCompatActivity {
         tickt_num.setText(total_tickets);
         event_Titletv.setText(event_Title);
 
+
     }
 
     private void listeners() {

@@ -155,6 +155,8 @@ public class Normal_upcoming_events_adpater extends RecyclerView.Adapter<Normal_
                 Intent intent = new Intent(context, BookEventActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 intent.putExtra("event_id",value);
+                intent.putExtra("lat",Home.lat);
+                intent.putExtra("lng",Home.lng);
                 intent.putExtra("hostname", Upcoming.hostname.get(i));
                 intent.putExtra("eventType","upcoming");
                 editor.putString(Constants.itemPosition, String.valueOf(i));
