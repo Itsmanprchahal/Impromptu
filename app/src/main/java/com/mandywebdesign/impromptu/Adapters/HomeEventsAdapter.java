@@ -81,7 +81,13 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Vi
         viewHolder.eventCategoryname.setText(Home.cate.get(i));
         viewHolder.eventName.setText(Home.Title.get(i));
         viewHolder.date.setText(Home.Time.get(i));
-        viewHolder.eventAddress.setText(Home.Address.get(i).toString());
+        if (Home.postcode.equals(""))
+        {
+            viewHolder.eventAddress.setText(Home.Address.get(i).toString()+" ");
+        }else {
+            viewHolder.eventAddress.setText(Home.Address.get(i).toString()+" , "+Home.postcode.get(i));
+        }
+
 
 
         if (Home.Cost.get(i).equals("0")) {

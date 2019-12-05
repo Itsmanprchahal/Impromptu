@@ -55,6 +55,18 @@ public class RetroGetMessages {
         @SerializedName("message")
         @Expose
         private String message;
+
+        public String getHost_id() {
+            return host_id;
+        }
+
+        public void setHost_id(String host_id) {
+            this.host_id = host_id;
+        }
+
+        @SerializedName("host_id")
+        @Expose
+        private String host_id;
         @SerializedName("user_id")
         @Expose
         private Integer userId;

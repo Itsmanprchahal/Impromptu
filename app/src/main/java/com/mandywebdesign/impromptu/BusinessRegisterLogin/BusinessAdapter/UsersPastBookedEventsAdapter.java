@@ -44,7 +44,7 @@ public class UsersPastBookedEventsAdapter extends RecyclerView.Adapter<UsersPast
     @Override
     public void onBindViewHolder(@NonNull UsersPastBookedEventsAdapter.ViewHolder holder, final int position) {
 
-        Collections.reverse(datumArrayList);
+//        Collections.reverse(datumArrayList);
         holder.category.setText(datumArrayList.get(position).getTitle());
         Log.d("imgUrl+++", "" + datumArrayList.get(position).getFile().get(0));
 

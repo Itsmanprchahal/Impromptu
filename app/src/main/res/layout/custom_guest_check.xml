@@ -4,12 +4,12 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#C3FFFFFF"
-    android:padding="10dp">
+    android:padding="5dp">
 
     <RelativeLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/layout"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -21,69 +21,70 @@
                 android:id="@+id/custom_guest_image"
                 android:layout_width="@dimen/_70sdp"
                 android:layout_height="@dimen/_70sdp"
-                app:riv_corner_radius="8dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/profile"
-                android:scaleType="centerCrop"/>
+                android:layout_marginBottom="@dimen/_5sdp"
+                app:riv_corner_radius="8dp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/custom_guest_image"
+                android:gravity="center_vertical"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_marginLeft="10dp"
                     android:id="@+id/custom_guest_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Event Name"
-                    android:textStyle="bold"
+                    android:layout_marginLeft="10dp"
                     android:fontFamily="@font/circularstdbold"
+                    android:text="Event Name"
+                    android:textColor="#B7000000"
                     android:textSize="18sp"
-                    android:textColor="#B7000000"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/custom_guest_ticket"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorTheme"
-                    android:text="Type of ticket"
-                    android:fontFamily="@font/sfuitextlight"
-                    android:textSize="14sp"
                     android:layout_below="@id/custom_guest_name"
-                    android:layout_toRightOf="@id/custom_guest_image"/>
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@id/custom_guest_image"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:text="Type of ticket"
+                    android:textColor="@color/colorTheme"
+                    android:textSize="14sp" />
 
 
                 <TextView
                     android:id="@+id/leavefeedback"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/custom_guest_ticket"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@id/custom_guest_image"
+                    android:fontFamily="@font/sfuitextlight"
                     android:text="@string/feedback"
                     android:textColor="@color/colorTheme"
-                    android:visibility="gone"
-                    android:fontFamily="@font/sfuitextlight"
                     android:textSize="18sp"
-                    android:layout_below="@id/custom_guest_ticket"
-                    android:layout_toRightOf="@id/custom_guest_image"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/custom_guest_ticket"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
-                    android:textColor="@color/black"
+                    android:layout_toRightOf="@id/custom_guest_image"
                     android:text=""
-                    android:visibility="gone"
+                    android:textColor="@color/black"
                     android:textSize="18sp"
-                    android:layout_below="@id/custom_guest_ticket"
-                    android:layout_toRightOf="@id/custom_guest_image"></TextView>
+                    android:visibility="gone"></TextView>
 
             </LinearLayout>
         </LinearLayout>
@@ -91,12 +92,12 @@
 
         <ImageView
             android:id="@+id/custom_guest_check"
-            android:layout_marginTop="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_checked"
             android:layout_alignParentRight="true"
-            android:foregroundGravity="center_horizontal"/>
+            android:layout_marginTop="30dp"
+            android:foregroundGravity="center_horizontal"
+            android:src="@drawable/ic_checked" />
     </RelativeLayout>
 
 

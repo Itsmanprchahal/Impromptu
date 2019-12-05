@@ -170,6 +170,19 @@ public class History extends Fragment  implements  DiscreteScrollView.OnItemChan
 
                                 if (time_t.startsWith("0")) {
                                     timeFrom = time_t.substring(1);
+                                    if (time_t.contains(":00"))
+                                    {
+                                        timeFrom = time_t.replace(":00","");
+
+                                        if (timeFrom.startsWith("0"))
+                                        {
+                                            timeFrom = time_t.replace("0","");
+                                            if (timeFrom.contains(":"))
+                                            {
+                                                timeFrom = time_t.replace(":","").replace("0","").replace("00","");
+                                            }
+                                        }
+                                    }
                                 } else {
                                     timeFrom = time_t.substring(0);
                                 }
@@ -198,7 +211,7 @@ public class History extends Fragment  implements  DiscreteScrollView.OnItemChan
                                     String str1 = str[0];
                                     String str2 = str[1];
                                     String str3 = str[2];
-                                    eventTime.add(str2 + "/" + str1 + "/" + str3 + " at " + timeFrom);
+                                    eventTime.add(str1 + "/" + str2 + "/" + str3 + " at " + timeFrom);
                                 }
 
 

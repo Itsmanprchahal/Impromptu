@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.mandywebdesign.impromptu.Adapters.CardAdapterHelper;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEventDetailAcitvity;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.AttendingTab.Upcoming;
+import com.mandywebdesign.impromptu.Home_Screen_Fragments.Home;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.favouriteTab.Hosts;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Utils.Constants;
@@ -99,6 +100,8 @@ public class Hosting_fav_events_Adapter extends RecyclerView.Adapter<Hosting_fav
                 intent.putExtra("event_id",value);
                 intent.putExtra("eventType","fav");
                 intent.putExtra("other_events","");
+                intent.putExtra("lat", Home.lat);
+                intent.putExtra("lng",Home.lng);
                 intent.putExtra("hostname", Hosts.name1_fav.get(i));
                 editor.putString(Constants.itemPosition, String.valueOf(i));
                 editor.commit();

@@ -6,10 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,7 +93,7 @@ public class Past extends Fragment implements DiscreteScrollView.OnItemChangedLi
         recyclerView = (DiscreteScrollView) view.findViewById(R.id.past_booked_recycler_view);
         recyclerView.setOrientation(DSVOrientation.HORIZONTAL);
         recyclerView.addOnItemChangedListener(this);
-        infiniteAdapter = InfiniteScrollAdapter.wrap(new Normal_pastbooked(getContext(), fragmentManager,S_Token));
+        infiniteAdapter = InfiniteScrollAdapter.wrap(new Normal_pastbooked(getContext(), fragmentManager, S_Token));
         recyclerView.setAdapter(infiniteAdapter);
         recyclerView.setItemTransitionTimeMillis(DiscreteScrollViewOptions.getTransitionTime());
         recyclerView.setItemTransformer(new ScaleTransformer.Builder()
@@ -114,13 +116,13 @@ public class Past extends Fragment implements DiscreteScrollView.OnItemChangedLi
         event_id.clear();
         rating.clear();
         overall_rating.clear();
-    progressDialog.show();
+        progressDialog.show();
         Call<Normal_past_booked> call = WebAPI.getInstance().getApi().past_booked("Bearer " + bToken, "application/json");
         call.enqueue(new Callback<Normal_past_booked>() {
             @Override
             public void onResponse(Call<Normal_past_booked> call, Response<Normal_past_booked> response) {
 
-                if (response.body()!=null) {
+                if (response.body() != null) {
                     if (response.body().getStatus().equals("200")) {
 
                         Normal_past_booked data = response.body();
@@ -133,15 +135,14 @@ public class Past extends Fragment implements DiscreteScrollView.OnItemChangedLi
                             title.add(datum.getTitle());
                             addres.add(datum.getAddressline1());
 
-                            if (datum.getPrice()!=null)
-                            {
+                            if (datum.getPrice() != null) {
                                 if (datum.getPrice().equals("")) {
 
                                     prices.add("Free");
                                 } else {
                                     prices.add(datum.getPrice());
                                 }
-                            }else {
+                            } else {
                                 prices.add("Paid");
                             }
 
@@ -150,49 +151,58 @@ public class Past extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                             Log.d("cates", "" + datum.getCategory());
 
-                            String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.","am").replaceFirst("p.m.","pm").replaceFirst("AM","am").replaceFirst("PM","pm");
+                            String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
 
 
+                            if (time_t.startsWith("0")) {
+                                timeFrom = time_t.substring(1);
+                                if (time_t.contains(":00")) {
+                                    timeFrom = time_t.replace(":00", "");
 
-                                if (time_t.startsWith("0")) {
-                                    timeFrom = time_t.substring(1);
-                                } else {
-                                    timeFrom = time_t.substring(0);
+                                    if (timeFrom.startsWith("0")) {
+                                        timeFrom = time_t.replace("0", "");
+                                        if (timeFrom.contains(":")) {
+                                            timeFrom = time_t.replace(":", "").replace("0", "").replace("00", "");
+                                        }
+                                    }
                                 }
+                            } else {
+                                timeFrom = time_t.substring(0);
+                            }
 
-                                Calendar c = Calendar.getInstance();
+                            Calendar c = Calendar.getInstance();
 
-                                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                                formattedDate = df.format(c.getTime());
-                                c.add(Calendar.DATE, 1);
+                            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                            formattedDate = df.format(c.getTime());
+                            c.add(Calendar.DATE, 1);
 
-                                getFormattedDate = df.format(c.getTime());
+                            getFormattedDate = df.format(c.getTime());
 
-                                System.out.println("Current time ==> " + c.getTime());
+                            System.out.println("Current time ==> " + c.getTime());
 
-                                if (formattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
-                                    time.add("Today at " + timeFrom);
-                                } else if (getFormattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
-                                    time.add("Tomorrow at " + timeFrom);
-                                } else {
-                                    String date = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
-                                    /*to change server date formate*/
-                                    String s1 = date;
-                                    String[] str = s1.split("/");
-                                    String str1 = str[0];
-                                    String str2 = str[1];
-                                    String str3 = str[2];
-                                    time.add(str2 + "/" + str1 + "/" + str3 + " at " + timeFrom);
+                            if (formattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
+                                time.add("Today at " + timeFrom);
+                            } else if (getFormattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
+                                time.add("Tomorrow at " + timeFrom);
+                            } else {
+                                String date = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
+                                /*to change server date formate*/
+                                String s1 = date;
+                                String[] str = s1.split("/");
+                                String str1 = str[0];
+                                String str2 = str[1];
+                                String str3 = str[2];
+                                time.add(str1 + "/" + str2 + "/" + str3 + " at " + timeFrom);
 
-                                    //time.add(datum.getDate()+" at "+timeFrom);
-                                }
+                                //time.add(datum.getDate()+" at "+timeFrom);
+                            }
 
                             categois.add(datum.getCategory());
                             images.add(datum.getFile().get(0));
                             event_id.add(datum.getEventId().toString());
 
 
-                            adapter = new Normal_pastbooked(getContext(), fragmentManager,S_Token);
+                            adapter = new Normal_pastbooked(getContext(), fragmentManager, S_Token);
                             recyclerView.setAdapter(adapter);
                             recyclerView.getLayoutManager().scrollToPosition(Integer.parseInt(itemPosition));
 
@@ -220,9 +230,9 @@ public class Past extends Fragment implements DiscreteScrollView.OnItemChangedLi
                     progressDialog.dismiss();
 
                     NoInternet.dialog(getContext());
-                }else {
+                } else {
                     progressDialog.dismiss();
-                    Toast.makeText(getContext(), ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

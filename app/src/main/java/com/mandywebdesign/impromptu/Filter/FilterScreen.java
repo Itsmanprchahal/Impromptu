@@ -638,6 +638,7 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
                 Log.d("checkplace", "" + String.valueOf(place));
                 Log.d("checkplace", "" + String.valueOf(place).subSequence(String.valueOf(place).indexOf("name") + 5, String.valueOf(place).length()));
                 Log.d("checkplace", "" + puni[0]);
+
                 cityname.setText(puni[0]);
                 //Toast.makeText(getContext(), ""+cityname.getText().toString(), Toast.LENGTH_SHORT).show();
 
@@ -652,7 +653,22 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
                         city = addresses.get(0).getAddressLine(0);
                         cityname.setText(addresses.get(0).getAddressLine(0).toString());
                     } else {
-                        cityname.setText("Address not found");
+                        if (puni[0].equals("Stratford"))
+                        {
+                            lat = String.valueOf(51.5472);
+                            lng = String.valueOf(0.0081);
+                            location(lat, lng);
+                            cityname.setText("Stratford");
+                        }else if (puni[0].equals("EE"))
+                        {
+                            lat = String.valueOf(51.5430);
+                            lng = String.valueOf(0.0042);
+                            location(lat, lng);
+                            cityname.setText("Stratford Westfield");
+                        }else {
+                            cityname.setText("Address not found");
+                        }
+
                     }
 
 
@@ -660,10 +676,12 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
                         if (a.hasLatitude() && a.hasLongitude()) {
                             latLngs.add(new LatLng(a.getLatitude(), a.getLongitude()));
 
-                            lat = String.valueOf(a.getLatitude());
-                            lng = String.valueOf(a.getLongitude());
-                            location(lat, lng);
-                            Log.d("checkplace", "" + String.valueOf(a.getLatitude()));
+                                lat = String.valueOf(a.getLatitude());
+                                lng = String.valueOf(a.getLongitude());
+                                location(lat, lng);
+                                Log.d("checkplace", "" + String.valueOf(a.getLatitude()));
+
+
                         }
 
                     }

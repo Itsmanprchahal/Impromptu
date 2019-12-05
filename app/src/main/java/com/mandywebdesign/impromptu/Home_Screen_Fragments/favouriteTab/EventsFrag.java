@@ -58,6 +58,7 @@ public class EventsFrag extends Fragment implements DiscreteScrollView.OnItemCha
     public static ArrayList<String> name1_fav = new ArrayList<>();
     public static ArrayList<String> title_fav = new ArrayList<>();
     public static ArrayList<String> prices_fav = new ArrayList<>();
+    public static ArrayList<String> postcode = new ArrayList<>();
     public static ArrayList<String> addres_fav = new ArrayList<>();
     public static ArrayList<String> time_fav = new ArrayList<>();
     public static ArrayList<String> categois_fav = new ArrayList<>();
@@ -134,6 +135,7 @@ public class EventsFrag extends Fragment implements DiscreteScrollView.OnItemCha
                             title_fav.add(datum.getTitle());
                             addres_fav.add(datum.getAddressline1());
                             bookstatus.add(datum.getEvent_book());
+                            postcode.add(datum.getPostcode());
 
                             if (datum.getPrice() != null) {
                                 if (datum.getPrice().equals("")) {
@@ -150,6 +152,19 @@ public class EventsFrag extends Fragment implements DiscreteScrollView.OnItemCha
 
                             if (time_t.startsWith("0")) {
                                 timeFrom = time_t.substring(1);
+                                if (time_t.contains(":00"))
+                                {
+                                    timeFrom = time_t.replace(":00","");
+
+                                    if (timeFrom.startsWith("0"))
+                                    {
+                                        timeFrom = time_t.replace("0","");
+                                        if (timeFrom.contains(":"))
+                                        {
+                                            timeFrom = time_t.replace(":","").replace("0","").replace("00","");
+                                        }
+                                    }
+                                }
                             } else {
                                 timeFrom = time_t.substring(0);
                             }
@@ -177,7 +192,7 @@ public class EventsFrag extends Fragment implements DiscreteScrollView.OnItemCha
                                 String str1 = str[0];
                                 String str2 = str[1];
                                 String str3 = str[2];
-                                time_fav.add(str2 + "/" + str1 + "/" + str3 + " at " + timeFrom);
+                                time_fav.add(str1 + "/" + str2 + "/" + str3 + " at " + timeFrom);
                             }
 
                             categois_fav.add(datum.getCategory());

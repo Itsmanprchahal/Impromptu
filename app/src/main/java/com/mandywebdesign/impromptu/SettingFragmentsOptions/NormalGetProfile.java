@@ -151,13 +151,13 @@ public class NormalGetProfile extends AppCompatActivity {
                 if (!userToken.equals("")) {
                     getProfile(userToken, userid);
                     getLiveEvents(userToken);
-//                    getattendingEvents(userToken);
-                    getHistoryEvents(userToken);
+                    getattendingEvents(userToken);
+//                    getHistoryEvents(userToken);
                 } else {
                     getProfile(BToken, userid);
                     getLiveEvents(userToken);
-                    getHistoryEvents(userToken);
-//                    getattendingEvents(userToken);
+//                    getHistoryEvents(userToken);
+                    getattendingEvents(userToken);
                 }
                 editprofile.setVisibility(View.VISIBLE);
                 user_profile_Event.setVisibility(View.VISIBLE);
@@ -227,7 +227,9 @@ public class NormalGetProfile extends AppCompatActivity {
         call2.enqueue(new Callback<UsersBookedPastEvent>() {
             @Override
             public void onResponse(Call<UsersBookedPastEvent> call, Response<UsersBookedPastEvent> response) {
-
+                attentingTietle.clear();
+                attendingimage.clear();
+                attentingevent_id.clear();
                 if (response.body() != null) {
                     progressDialog.dismiss();
                     if (response.body().getStatus().equals("200")) {
@@ -235,9 +237,7 @@ public class NormalGetProfile extends AppCompatActivity {
                         UsersBookedPastEvent data = response.body();
                         List<UsersBookedPastEvent.Datum> datumArrayList = data.getData();
 
-                        attentingTietle.clear();
-                        attendingimage.clear();
-                        attentingevent_id.clear();
+
 
                         for (UsersBookedPastEvent.Datum datum : datumArrayList) {
 

@@ -7,9 +7,11 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +52,7 @@ public class Normal_upcoming_events_adpater extends RecyclerView.Adapter<Normal_
     @Override
     public Normal_upcoming_events_adpater.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
-        View view = layoutInflater.inflate(R.layout.custom_barcode_events,viewGroup,false);
+        View view = layoutInflater.inflate(R.layout.custom_barcode_events, viewGroup, false);
 
         return new ViewHolder(view);
     }
@@ -65,45 +67,31 @@ public class Normal_upcoming_events_adpater extends RecyclerView.Adapter<Normal_
         viewHolder.date.setText(Upcoming.time.get(i));
 
 
-        if (Upcoming.prices.get(i).equals("0"))
-        {
+        if (Upcoming.prices.get(i).equals("0")) {
             viewHolder.evetPrice.setText("Free");
-        } else if (!Upcoming.prices.get(i).equals("0") && !Upcoming.prices.get(i).equals("Paid"))
-        {
-            viewHolder.evetPrice.setText("£ "+Upcoming.prices.get(i));
-        }else {
+        } else if (!Upcoming.prices.get(i).equals("0") && !Upcoming.prices.get(i).equals("Paid")) {
+            viewHolder.evetPrice.setText("£ " + Upcoming.prices.get(i));
+        } else {
             viewHolder.evetPrice.setText(Upcoming.prices.get(i));
         }
 
         String s = Upcoming.addres.get(i);
-        Log.e("addre",s );
-
-        if (s.contains(" NearBy "))
-        {
-            String[] arrayString = s.split(" NearBy ");
-
-            String add1 = arrayString[1];
-
-            Log.e("add1",add1);
-            viewHolder.eventAddress.setText("Landmark "+add1);
-
-        }else {
-            viewHolder.eventAddress.setText(Upcoming.addres.get(i));
-        }
+        Log.e("addre", s);
 
 
         viewHolder.eventAddress.setText(Upcoming.addres.get(i));
-        if (Upcoming.usertype.get(i).equals("business"))
-        {
-                int count = Integer.parseInt(Upcoming.total_book_tickets.get(i));
 
-                int count1 = count-1;
-                if (count1==0)
-                {
-                    viewHolder.total_tickettext1.setVisibility(View.GONE);
-                }else {
-                    viewHolder.total_tickettext1.setText("+"+count1);
-                }
+
+        viewHolder.eventAddress.setText(Upcoming.addres.get(i));
+        if (Upcoming.usertype.get(i).equals("business")) {
+            int count = Integer.parseInt(Upcoming.total_book_tickets.get(i));
+
+            int count1 = count - 1;
+            if (count1 == 0) {
+                viewHolder.total_tickettext1.setVisibility(View.GONE);
+            } else {
+                viewHolder.total_tickettext1.setText("+" + count1);
+            }
         }
 
         viewHolder.category.setText(Upcoming.categois.get(i));
@@ -114,7 +102,7 @@ public class Normal_upcoming_events_adpater extends RecyclerView.Adapter<Normal_
 
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
-            BitMatrix bitMatrix = multiFormatWriter.encode("Paid" + "\n" + Upcoming.event_id.get(i)+"\n"+Upcoming.title.get(i)+"\n"+Upcoming.userID.get(i), BarcodeFormat.QR_CODE, 700, 700);
+            BitMatrix bitMatrix = multiFormatWriter.encode("Paid" + "\n" + Upcoming.event_id.get(i) + "\n" + Upcoming.title.get(i) + "\n" + Upcoming.userID.get(i), BarcodeFormat.QR_CODE, 700, 700);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
             viewHolder.QRImage.setImageBitmap(bitmap);
@@ -136,7 +124,7 @@ public class Normal_upcoming_events_adpater extends RecyclerView.Adapter<Normal_
 
                 MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
                 try {
-                    BitMatrix bitMatrix = multiFormatWriter.encode("Paid" + "\n" + Upcoming.event_id.get(i)+"\n"+Upcoming.title.get(i)+"\n"+Upcoming.userID.get(i), BarcodeFormat.QR_CODE, 700, 700);
+                    BitMatrix bitMatrix = multiFormatWriter.encode("Paid" + "\n" + Upcoming.event_id.get(i) + "\n" + Upcoming.title.get(i) + "\n" + Upcoming.userID.get(i), BarcodeFormat.QR_CODE, 700, 700);
                     BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
                     Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
                     QR.setImageBitmap(bitmap);
@@ -154,11 +142,11 @@ public class Normal_upcoming_events_adpater extends RecyclerView.Adapter<Normal_
                 String value = Upcoming.event_id.get(i);
                 Intent intent = new Intent(context, BookEventActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                intent.putExtra("event_id",value);
-                intent.putExtra("lat",Home.lat);
-                intent.putExtra("lng",Home.lng);
+                intent.putExtra("event_id", value);
+                intent.putExtra("lat", Home.lat);
+                intent.putExtra("lng", Home.lng);
                 intent.putExtra("hostname", Upcoming.hostname.get(i));
-                intent.putExtra("eventType","upcoming");
+                intent.putExtra("eventType", "upcoming");
                 editor.putString(Constants.itemPosition, String.valueOf(i));
                 editor.commit();
                 context.startActivity(intent);
@@ -173,8 +161,8 @@ public class Normal_upcoming_events_adpater extends RecyclerView.Adapter<Normal_
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView eventImage;
-        TextView eventName,eventAddress,total_tickettext1;
-        TextView evetPrice,category,date;
+        TextView eventName, eventAddress, total_tickettext1;
+        TextView evetPrice, category, date;
         RoundedImageView QRImage;
 
 
@@ -185,7 +173,7 @@ public class Normal_upcoming_events_adpater extends RecyclerView.Adapter<Normal_
             evetPrice = itemView.findViewById(R.id.event_price);
             eventAddress = itemView.findViewById(R.id.custom_text1);
             category = itemView.findViewById(R.id.custom_category_name);
-            QRImage  = itemView.findViewById(R.id.QR_image);
+            QRImage = itemView.findViewById(R.id.QR_image);
             date = itemView.findViewById(R.id.date);
             total_tickettext1 = itemView.findViewById(R.id.total_tickettext1);
         }

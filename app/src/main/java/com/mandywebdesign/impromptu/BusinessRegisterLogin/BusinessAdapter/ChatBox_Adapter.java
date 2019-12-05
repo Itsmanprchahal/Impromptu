@@ -47,11 +47,12 @@ public class ChatBox_Adapter extends RecyclerView.Adapter<ChatBox_Adapter.ViewHo
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         RetroGetMessages.Datum datum = arrayList.get(i);
         String id = datum.getUserId().toString();
+        String hostid = datum.getHost_id().toString();
         Log.e("USERID", id );
         String mesg = arrayList.get(i).getMessage();
 
 
-        if (!id.equals(userID)) {
+        if (hostid.equals("")) {
             viewHolder.right.setText(arrayList.get(i).getMessage());
             Glide.with(context).load(arrayList.get(i).getUserAvatar()).into(viewHolder.rightUserImage);
 //            viewHolder.rightUserName.setText(arrayList.get(i).getUsername() );
@@ -127,7 +128,7 @@ public class ChatBox_Adapter extends RecyclerView.Adapter<ChatBox_Adapter.ViewHo
         TextView message_text,messageUser;
         TextView leftUsername, rightUserName,left,right,righttime,lefttime;
         LinearLayout  leftLayout;
-        RelativeLayout rightLayout;
+        LinearLayout rightLayout;
         ImageView leftUserImage, rightUserImage;
         RelativeLayout layout;
 

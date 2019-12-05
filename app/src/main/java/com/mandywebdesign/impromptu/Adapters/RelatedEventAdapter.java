@@ -78,7 +78,7 @@ public class RelatedEventAdapter extends RecyclerView.Adapter<RelatedEventAdapte
         Log.e("addre", s);
 
 
-        viewHolder.eventAddress.setText(Home.rel_address1.get(i));
+        viewHolder.eventAddress.setText(Home.rel_address1.get(i)+" , "+Home.rel_postcode.get(i));
 
         if (Home.rel_cost.get(i).equals("0")) {
             viewHolder.event_price.setText("Free");

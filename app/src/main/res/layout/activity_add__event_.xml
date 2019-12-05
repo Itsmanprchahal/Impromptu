@@ -175,6 +175,16 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/circularstdbold"
+                android:text="Links"
+                android:textColor="@color/colortextBlack"
+                android:textSize="@dimen/_13sdp"/>
+
+
+            <TextView
                 android:id="@+id/createvent_addlink"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"

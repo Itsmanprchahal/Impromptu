@@ -105,7 +105,6 @@ public class BussinessProfileAcitivity1 extends AppCompatActivity {
         intent = getIntent();
 
 
-
         if (intent != null) {
             String value = intent.getStringExtra("value");
             if (value.equals("1")) {

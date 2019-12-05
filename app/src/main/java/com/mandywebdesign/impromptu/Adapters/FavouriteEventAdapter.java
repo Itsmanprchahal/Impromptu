@@ -3,9 +3,11 @@ package com.mandywebdesign.impromptu.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +25,7 @@ public class FavouriteEventAdapter extends RecyclerView.Adapter<FavouriteEventAd
 
     Context context;
     FragmentManager manager;
-    CardAdapterHelper cardAdapterHelper= new CardAdapterHelper();
+    CardAdapterHelper cardAdapterHelper = new CardAdapterHelper();
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
@@ -37,8 +39,7 @@ public class FavouriteEventAdapter extends RecyclerView.Adapter<FavouriteEventAd
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
-        View view = layoutInflater.inflate(R.layout.custom_events,viewGroup,false);
-
+        View view = layoutInflater.inflate(R.layout.custom_events, viewGroup, false);
 
 
         return new FavouriteEventAdapter.ViewHolder(view);
@@ -47,7 +48,7 @@ public class FavouriteEventAdapter extends RecyclerView.Adapter<FavouriteEventAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
 
-       // cardAdapterHelper.onBindViewHolder(viewHolder.itemView,i,getItemCount());
+        // cardAdapterHelper.onBindViewHolder(viewHolder.itemView,i,getItemCount());
         sharedPreferences = context.getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
@@ -55,32 +56,21 @@ public class FavouriteEventAdapter extends RecyclerView.Adapter<FavouriteEventAd
         viewHolder.date.setText(EventsFrag.time_fav.get(i));
         viewHolder.eventAddress.setText(EventsFrag.addres_fav.get(i));
 
-        if (EventsFrag.prices_fav.get(i).equals("0"))
-        {
+        if (EventsFrag.prices_fav.get(i).equals("0")) {
             viewHolder.evetPrice.setText("Free");
-        } else if (!EventsFrag.prices_fav.get(i).equals("0") && !EventsFrag.prices_fav.get(i).equals("Paid"))
-        {
-            viewHolder.evetPrice.setText("£"+EventsFrag.prices_fav.get(i));
-        }else {
+        } else if (!EventsFrag.prices_fav.get(i).equals("0") && !EventsFrag.prices_fav.get(i).equals("Paid")) {
+            viewHolder.evetPrice.setText("£" + EventsFrag.prices_fav.get(i));
+        } else {
             viewHolder.evetPrice.setText(EventsFrag.prices_fav.get(i));
         }
 
 
         String s = EventsFrag.addres_fav.get(i);
-        Log.e("addre",s );
+        Log.e("addre", s);
 
-        if (s.contains(" NearBy "))
-        {
-            String[] arrayString = s.split(" NearBy ");
 
-            String add1 = arrayString[1];
+        viewHolder.eventAddress.setText(EventsFrag.addres_fav.get(i) + " , " + EventsFrag.postcode.get(i));
 
-            Log.e("add1",add1);
-            viewHolder.eventAddress.setText("Landmark "+add1);
-
-        }else {
-            viewHolder.eventAddress.setText(EventsFrag.addres_fav.get(i));
-        }
 
         viewHolder.category.setText(EventsFrag.categois_fav.get(i));
         Glide.with(context).load(EventsFrag.images_fav.get(i)).into(viewHolder.eventImage);
@@ -90,15 +80,15 @@ public class FavouriteEventAdapter extends RecyclerView.Adapter<FavouriteEventAd
             public void onClick(View v) {
                 String value = EventsFrag.event_id_fav.get(i);
                 Intent intent = new Intent(context, BusinessEventDetailAcitvity.class);
-                intent.putExtra("event_id",value);
-                intent.putExtra("eventType","fav");
+                intent.putExtra("event_id", value);
+                intent.putExtra("eventType", "fav");
                 intent.putExtra("hostname", EventsFrag.name1_fav.get(i));
-                intent.putExtra("other_events","other_events");
+                intent.putExtra("other_events", "other_events");
                 editor.putString(Constants.itemPosition, String.valueOf(i));
                 editor.commit();
                 context.startActivity(intent);
 
-          }
+            }
         });
     }
 
@@ -108,12 +98,11 @@ public class FavouriteEventAdapter extends RecyclerView.Adapter<FavouriteEventAd
         return EventsFrag.name1_fav.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder
-    {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView eventImage;
-        TextView eventName,eventAddress;
-        TextView evetPrice,category,date;
+        TextView eventName, eventAddress;
+        TextView evetPrice, category, date;
 
         public ViewHolder(final View itemView) {
             super(itemView);

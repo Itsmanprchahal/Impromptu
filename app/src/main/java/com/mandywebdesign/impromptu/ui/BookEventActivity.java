@@ -219,6 +219,11 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                     invite_layouit.setVisibility(View.GONE);
                     askforrefund.setVisibility(View.GONE);
                 }
+
+                if(eventType.equals("fav"))
+                {
+                    eventdistance.setVisibility(View.GONE);
+                }
             } else {
                 mBookEvent.setVisibility(View.VISIBLE);
                 invite_layouit.setVisibility(View.VISIBLE);
@@ -1001,7 +1006,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             eventlat = datum.getLattitude();
                             eventlng = datum.getLongitude();
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                distance(Double.parseDouble(currentlat), Double.parseDouble(currenlng), Double.parseDouble(eventlat), Double.parseDouble(eventlng));
+                               distance(Double.parseDouble(currentlat), Double.parseDouble(currenlng), Double.parseDouble(eventlat), Double.parseDouble(eventlng));
                             }
                             postcode = datum.getPostcode();
                             city = datum.getCity();
@@ -1194,7 +1199,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             });
 
                             descri.setText(decs);
-                            book_location.setText(location);
+                            book_location.setText(location+" , "+postcode);
                             event_title.setText(title);
                             invitefriends.setText("Invite Friends " + "( " + InviteFriend + " )");
 

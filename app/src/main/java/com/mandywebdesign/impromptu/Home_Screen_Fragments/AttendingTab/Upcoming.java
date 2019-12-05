@@ -103,13 +103,13 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
 
                 .build());
 
+        upcoming_events(S_Token);
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        upcoming_events(S_Token);
     }
 
     private void upcoming_events(String s_token) {
@@ -170,6 +170,19 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
 
                                  if (time_t.startsWith("0")) {
                                     timeFrom = time_t.substring(1);
+                                     if (time_t.contains(":00"))
+                                     {
+                                         timeFrom = time_t.replace(":00","");
+
+                                         if (timeFrom.startsWith("0"))
+                                         {
+                                             timeFrom = time_t.replace("0","");
+                                             if (timeFrom.contains(":"))
+                                             {
+                                                 timeFrom = time_t.replace(":","").replace("0","").replace("00","");
+                                             }
+                                         }
+                                     }
                                 } else {
                                     timeFrom = time_t.substring(0);
                                 }
@@ -196,7 +209,7 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
                                     String str1 = str[0];
                                     String str2 = str[1];
                                     String str3 = str[2];
-                                    time.add(str2 + "/" + str1 + "/" + str3 + " at " + timeFrom);
+                                    time.add(str1 + "/" + str2 + "/" + str3 + " at " + timeFrom);
                                 }
 
 

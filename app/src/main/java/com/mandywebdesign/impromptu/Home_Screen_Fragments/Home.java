@@ -99,6 +99,8 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
     public static ArrayList<String> Address = new ArrayList<>();
     public static ArrayList<String> rel_address1 = new ArrayList<>();
     public static ArrayList<String> Time = new ArrayList<>();
+    public static ArrayList<String> postcode = new ArrayList<>();
+    public static ArrayList<String> rel_postcode = new ArrayList<>();
     public static ArrayList<String> rel_date = new ArrayList<>();
     public static ArrayList<String> date = new ArrayList<>();
     public static ArrayList<String> rel_time = new ArrayList<>();
@@ -373,6 +375,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                             rel_Title.add(datum.getTitle());
                             rel_address1.add(datum.getAddressline1());
+                            rel_postcode.add(datum.getPostcode().toString());
                             if (datum.getPrice() != null) {
                                 rel_cost.add(datum.getPrice().toString());
                             } else {
@@ -406,6 +409,19 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                             if (time_t.startsWith("0")) {
                                 timeFrom = time_t.substring(1);
+                                if (time_t.contains(":00"))
+                                {
+                                    timeFrom = time_t.replace(":00","");
+
+                                    if (timeFrom.startsWith("0"))
+                                    {
+                                        timeFrom = time_t.replace("0","");
+                                        if (timeFrom.contains(":"))
+                                        {
+                                            timeFrom = time_t.replace(":","").replace("0","").replace("00","");
+                                        }
+                                    }
+                                }
                             } else {
                                 timeFrom = time_t.substring(0);
                             }
@@ -425,7 +441,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
                             } else if (getFormattedDate.matches(rel_date.get(0))) {
                                 rel_time.add("Tomorrow at " + timeFrom);
                             } else {
-                                rel_time.add(str2 + "/" + str1 + "/" + str3 + " at " + timeFrom);
+                                rel_time.add(str1 + "/" + str2 + "/" + str3 + " at " + timeFrom);
                             }
 
 
@@ -588,14 +604,31 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
                             event_id.add(normalGetEvent.getEventId().toString());
                             fav_id.add(normalGetEvent.getFavourite().toString());
                             event_host_username.add(normalGetEvent.getUsername().toString());
-
+                            if (normalGetEvent.getPostcode() != null) {
+                                postcode.add(normalGetEvent.getPostcode().toString());
+                            }
                             String time_t = Util.convertTimeStampToTime(Long.parseLong(normalGetEvent.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
 
                             Log.d("eventTIme", time_t);
 
+
                             if (time_t.startsWith("0")) {
                                 timeFrom = time_t.substring(1);
-                            } else {
+                                if (time_t.contains(":00"))
+                                {
+                                    timeFrom = time_t.replace(":00","");
+
+                                    if (timeFrom.startsWith("0"))
+                                    {
+                                        timeFrom = time_t.replace("0","");
+                                        if (timeFrom.contains(":"))
+                                        {
+                                            timeFrom = time_t.replace(":","").replace("0","").replace("00","");
+                                        }
+                                    }
+                                }
+
+                            }else {
                                 timeFrom = time_t.substring(0);
                             }
 
@@ -623,7 +656,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
                                 String str2 = str[1];
                                 String str3 = str[2];
 
-                                Time.add(str2 + "/" + str1 + "/" + str3 + " at " + timeFrom);
+                                Time.add(str1 + "/" + str2 + "/" + str3 + " at " + timeFrom);
                             }
 
                         }
@@ -740,7 +773,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
                                     String str2 = str[1];
                                     String str3 = str[2];
 
-                                    Time.add(str2 + "/" + str1 + "/" + str3 + " at " + timeFrom);
+                                    Time.add(str1 + "/" + str2 + "/" + str3 + " at " + timeFrom);
                                 }
 
 

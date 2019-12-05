@@ -43,9 +43,10 @@ public class NormalUserAttendingEvents extends RecyclerView.Adapter<NormalUserAt
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, BusinessEventDetailAcitvity.class);
-                intent.putExtra("eventType","history");
+                intent.putExtra("eventType","past");
                 intent.putExtra("event_id",NormalGetProfile.attentingevent_id.get(i));
                 context.startActivity(intent);
+
             }
         });
     }

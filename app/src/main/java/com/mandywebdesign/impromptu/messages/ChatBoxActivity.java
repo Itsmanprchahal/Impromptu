@@ -39,6 +39,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessAdapter.ChatBox_Adapter;
+import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEventDetailAcitvity;
+import com.mandywebdesign.impromptu.Home_Screen_Fragments.Home;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.RetroChat;
@@ -115,16 +117,17 @@ public class ChatBoxActivity extends AppCompatActivity {
             }
             
             Glide.with(this).load(image).into(event_image);
+            if (!BToken.equals("")) {
+                getChat("Bearer " + BToken, eventID, seen_status);
+
+                Log.d("chatadata", "" + BToken + " " + eventID);
+            } else if (!S_Token.equals("")) {
+                Log.d("chatadata1", "" + S_Token + " " + eventID);
+                getChat("Bearer " + S_Token, eventID, seen_status);
+            }
         }
 
-        if (!BToken.equals("")) {
-            getChat("Bearer " + BToken, eventID, seen_status);
 
-            Log.d("chatadata", "" + BToken + " " + eventID);
-        } else if (!S_Token.equals("")) {
-            Log.d("chatadata1", "" + S_Token + " " + eventID);
-            getChat("Bearer " + S_Token, eventID, seen_status);
-        }
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -177,10 +180,25 @@ public class ChatBoxActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(ChatBoxActivity.this, BookEventActivity.class);
-                intent.putExtra("event_id",eventID);
+                if (!BToken.equals(""))
+                {
+                    Intent intent = new Intent(ChatBoxActivity.this, BusinessEventDetailAcitvity.class);
+                    intent.putExtra("event_id",eventID);
+                    intent.putExtra("lat", Home.lat);
+                    intent.putExtra("lng",Home.lng);
+                    intent.putExtra("eventType", "");
 //                intent.putExtra("user_ID",)
-                startActivity(intent);
+                    startActivity(intent);
+                }else if (!S_Token.equals(""))
+                {
+                    Intent intent = new Intent(ChatBoxActivity.this, BookEventActivity.class);
+                    intent.putExtra("event_id",eventID);
+                    intent.putExtra("lat", Home.lat);
+                    intent.putExtra("lng",Home.lng);
+//                intent.putExtra("user_ID",)
+                    startActivity(intent);
+                }
+
             }
         });
 
@@ -278,6 +296,7 @@ public class ChatBoxActivity extends AppCompatActivity {
 //                        Collections.reverse(arrayList);
                             setAdapter(arrayList);
                         }
+
                     } else {
                     }
                 } else {

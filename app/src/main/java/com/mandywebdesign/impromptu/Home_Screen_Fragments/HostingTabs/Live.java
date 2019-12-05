@@ -102,6 +102,14 @@ public class Live extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                 .build());
 
+        if (!BToken.equalsIgnoreCase("")) {
+            liveEvnts(BToken);
+        } else if (!S_Token.equalsIgnoreCase("")) {
+            liveEvnts(S_Token);
+        } else {
+            progressDialog.dismiss();
+        }
+
         progressDialog.show();
 
         return view;
@@ -116,14 +124,7 @@ public class Live extends Fragment implements DiscreteScrollView.OnItemChangedLi
     @Override
     public void onResume() {
         super.onResume();
-        if (!BToken.equalsIgnoreCase("")) {
 
-            liveEvnts(BToken);
-        } else if (!S_Token.equalsIgnoreCase("")) {
-            liveEvnts(S_Token);
-        } else {
-            progressDialog.dismiss();
-        }
     }
 
     public void liveEvnts(final String token) {
@@ -176,6 +177,19 @@ public class Live extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                                 if (time_t.startsWith("0")) {
                                     timeFrom = time_t.substring(1);
+                                    if (time_t.contains(":00"))
+                                    {
+                                        timeFrom = time_t.replace(":00","");
+
+                                        if (timeFrom.startsWith("0"))
+                                        {
+                                            timeFrom = time_t.replace("0","");
+                                            if (timeFrom.contains(":"))
+                                            {
+                                                timeFrom = time_t.replace(":","").replace("0","").replace("00","");
+                                            }
+                                        }
+                                    }
                                 } else {
                                     timeFrom = time_t.substring(0);
                                 }
@@ -203,7 +217,7 @@ public class Live extends Fragment implements DiscreteScrollView.OnItemChangedLi
                                     String str1 = str[0];
                                     String str2 = str[1];
                                     String str3 = str[2];
-                                    event_time.add(str2 + "/" + str1 + "/" + str3 + " at " + timeFrom);
+                                    event_time.add(str1 + "/" + str2 + "/" + str3 + " at " + timeFrom);
                                 }
 
 
@@ -215,7 +229,7 @@ public class Live extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                             adapter = new Business_LiveEventAdapter(getContext(), fragmentManager);
                             recyclerView.setAdapter(adapter);
-                            recyclerView.getLayoutManager().scrollToPosition(Integer.parseInt(itemPosition));
+//                            recyclerView.getLayoutManager().scrollToPosition(Integer.parseInt(itemPosition));
 
                             SharedPreferences.Editor editor = itemPositionPref.edit();
                             editor.clear();
