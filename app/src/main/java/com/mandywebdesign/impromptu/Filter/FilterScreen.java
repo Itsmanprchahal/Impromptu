@@ -89,8 +89,6 @@ import static android.app.Activity.RESULT_OK;
  */
 public class FilterScreen extends Fragment implements View.OnClickListener,
         OnMapReadyCallback {
-    int PLACE_PICKER_REQUEST = 1;
-    private static final int PLACE_REQUEST_2 = 10;
     ImageButton close;
     ImageView locationPin;
     View view;
@@ -255,6 +253,7 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
             public void onFailure(Call<NormalEventPrice> call, Throwable t) {
                 if (NoInternet.isOnline(getContext()) == false) {
                     NoInternet.dialog(getContext());
+                    progressDialog.dismiss();
                 }
             }
         });
@@ -429,6 +428,7 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
         final LocationManager manager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
         if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             buildAlertMessageNoGps();
+            progressDialog.dismiss();
         } else {
             CurrentLocation();
         }

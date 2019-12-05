@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEventDetailAcitvity;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessUserProfile;
+import com.mandywebdesign.impromptu.Home_Screen_Fragments.Home;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.UsersLiveEvent;
 import com.mandywebdesign.impromptu.Retrofit.UsersPastEvent;
@@ -56,6 +57,8 @@ public class UsersLiveEventsAdapter extends RecyclerView.Adapter<UsersLiveEvents
             public void onClick(View v) {
                 Intent intent = new Intent(context, BookEventActivity.class);
                 intent.putExtra("eventType","live");
+                intent.putExtra("lat", Home.lat);
+                intent.putExtra("lng",Home.lng);
                 intent.putExtra("event_id",datumArrayList.get(position).getEventId().toString());
                 context.startActivity(intent);
             }

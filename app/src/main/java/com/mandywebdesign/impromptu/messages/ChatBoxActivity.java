@@ -207,6 +207,8 @@ public class ChatBoxActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ChatBoxActivity.this, BookEventActivity.class);
                 intent.putExtra("event_id",eventID);
+                intent.putExtra("lat",Home.lat);
+                intent.putExtra("lng",Home.lng);
 //                intent.putExtra("user_ID",)
                 startActivity(intent);
             }

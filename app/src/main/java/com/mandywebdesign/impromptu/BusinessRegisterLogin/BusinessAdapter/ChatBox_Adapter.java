@@ -55,7 +55,6 @@ public class ChatBox_Adapter extends RecyclerView.Adapter<ChatBox_Adapter.ViewHo
         if (hostid.equals("")) {
             viewHolder.right.setText(arrayList.get(i).getMessage());
             Glide.with(context).load(arrayList.get(i).getUserAvatar()).into(viewHolder.rightUserImage);
-//            viewHolder.rightUserName.setText(arrayList.get(i).getUsername() );
             viewHolder.righttime.setVisibility(View.GONE);
             viewHolder.righttime.setText(Util.convertTimeStampDateTime(Long.parseLong(arrayList.get(i).getMessageDatetime())) );
             viewHolder.leftUsername.setVisibility(View.GONE);

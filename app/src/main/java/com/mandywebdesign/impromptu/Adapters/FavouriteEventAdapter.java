@@ -69,7 +69,7 @@ public class FavouriteEventAdapter extends RecyclerView.Adapter<FavouriteEventAd
         Log.e("addre", s);
 
 
-        viewHolder.eventAddress.setText(EventsFrag.addres_fav.get(i) + " , " + EventsFrag.postcode.get(i));
+        viewHolder.eventAddress.setText(EventsFrag.addres_fav.get(i));
 
 
         viewHolder.category.setText(EventsFrag.categois_fav.get(i));

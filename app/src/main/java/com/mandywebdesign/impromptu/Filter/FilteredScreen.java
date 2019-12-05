@@ -117,7 +117,10 @@ public class FilteredScreen extends Fragment implements DiscreteScrollView.OnIte
                         NormalFilterEvents data = response.body();
                         List<NormalFilterEvents.Datum> datumList = data.getData();
 
-
+                        if (datumList.size()==0)
+                        {
+                            noEvnets.setVisibility(View.VISIBLE);
+                        }
                         for (NormalFilterEvents.Datum datum : datumList) {
                             name1.add(datum.getBEventHostname());
                             title.add(datum.getTitle());

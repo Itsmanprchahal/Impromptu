@@ -823,6 +823,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                         startActivity(intent);
                         dialog.dismiss();
                     }else {
+
                         Toast.makeText(BookEventActivity.this, "You can buy one more ticket only", Toast.LENGTH_SHORT).show();
                     }
 
@@ -1011,6 +1012,11 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             postcode = datum.getPostcode();
                             city = datum.getCity();
                             tickets_booked_by_user = datum.getTickets_booked_by_user().toString();
+                             if (tickets_booked_by_user.equals("2"))
+                            {
+                                mBookEvent.setVisibility(View.GONE);
+                            }
+
                             gender = datum.getAttendeesGender();
                             hostUserID = datum.getUserid().toString();// host id
                             andendeenumber = datum.getAttendeesNo();
@@ -1062,6 +1068,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             title = datum.getTitle();
                             timefrom = datum.getTimeFrom();
                             timeto = datum.getTimeTo();
+                            organiserName.setText(datum.getHostname());
                             host_image = datum.getHostImage();
                             image = (ArrayList<String>) datum.getFile().get(0).getImg();
 //                            Collections.reverse(image);
