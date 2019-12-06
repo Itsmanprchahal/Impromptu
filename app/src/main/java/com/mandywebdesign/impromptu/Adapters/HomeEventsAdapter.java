@@ -89,7 +89,6 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Vi
         }
 
 
-
         if (Home.Cost.get(i).equals("0")) {
             viewHolder.eventPrice.setText("Free");
         } else if (!Home.Cost.get(i).equals("0") && !Home.Cost.get(i).equals("Paid"))
