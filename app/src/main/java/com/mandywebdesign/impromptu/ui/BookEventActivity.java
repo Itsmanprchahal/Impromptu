@@ -108,7 +108,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     RoundedImageView host_pic;
     PagerAdapter pagerAdapter;
     Dialog progressDialog;
-    TextView ticketPrice, book_location, book_date, totalPrice, event_title, eventprice;
+    TextView ticketPrice, book_location, book_date, totalPrice, event_title, eventprice,tickettype,dailog_ticket_type;
     Spinner spinner, ticketype_spinner;
     Button dialogButoon;
     public static CheckBox addtoFavCheck_box;
@@ -705,6 +705,10 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             ticketPrice.setText("0");
             ticketype_spinner.setVisibility(View.VISIBLE);
             dialogtickttype.setVisibility(View.GONE);
+            if (tickettypes.size()>=2)
+            {
+                tickettype.setText("Ticket Types");
+            }
             //Todo: ticket type spinner
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(BookEventActivity.this, android.R.layout.simple_spinner_item, tickettypes);
             arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -742,13 +746,10 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             ticketPrice.setText(ticktprice);
             tickettypespinnerposintion = "";
             ticketype_spinner.setVisibility(View.GONE);
-            dialogtickttype.setVisibility(View.VISIBLE);
-
+            dialogtickttype.setText("Free");
         }
 
         dialogtickttype.setText(ticktType);
-
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(BookEventActivity.this,
                 android.R.layout.simple_spinner_item, ticketNum);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -871,6 +872,8 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
 
     private void FindId(Dialog dialog) {
+        dailog_ticket_type =dialog.findViewById(R.id.dailog_ticket_type);
+         tickettype = dialog.findViewById(R.id.tickettype);
         Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
         ticketPrice = dialog.findViewById(R.id.dailog_ticket_price);
         totalPrice = dialog.findViewById(R.id.dailog_total_price);

@@ -102,7 +102,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
 
         if (!S_Token.equals("")) {
-
+            if (Messages.rating_status.get(i).equals(1))
+            {
+                viewHolder.leavefeedback.setVisibility(View.GONE);
+            }
             if (Messages.eventTitle.get(i).equals("")) {
                 viewHolder.mesgCount.setVisibility(View.GONE);
                 viewHolder.linearLayout1.setVisibility(View.VISIBLE);
@@ -115,6 +118,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             }
 
         } else {
+            if (Messages.rating_status.get(i).equals(1))
+            {
+                viewHolder.leavefeedback.setVisibility(View.GONE);
+            }
             viewHolder.leavefeedback.setVisibility(View.GONE);
             viewHolder.time.setVisibility(View.VISIBLE);
 
@@ -137,6 +144,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                         viewHolder.attendeename.setText(Messages.attendeename.get(i));
                         viewHolder.bookedeventname.setText("'" + Messages.bookedeventname.get(i) + "'");
 
+                    }else if (Messages.rating_status.get(i).equals(1))
+                    {
+                        viewHolder.leavefeedback.setVisibility(View.GONE);
                     }
                 }
             }

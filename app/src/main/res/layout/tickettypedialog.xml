@@ -97,13 +97,12 @@
             android:id="@+id/edt_tiketType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/custom_edittextwhite"
             android:fontFamily="@font/sfuitextlight"
             android:hint="Ticket Type Name"
             android:padding="@dimen/_6sdp"
-            android:singleLine="true"
-            app:layout_constraintTop_toBottomOf="@id/tickettext" />
+            android:singleLine="true" />
 
         <LinearLayout
             android:id="@+id/layoutone"

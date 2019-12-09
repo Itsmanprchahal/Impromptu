@@ -29,6 +29,7 @@
         android:hint="Ticket Type Name"
         android:padding="@dimen/_6sdp"
         android:singleLine="true"
+        android:layout_marginTop="@dimen/defaultmargin"
         app:layout_constraintTop_toBottomOf="@id/tickettext"
         tools:layout_editor_absoluteX="16dp" />
 

@@ -232,6 +232,7 @@ public class Messages extends Fragment {
         MesgCount.clear();
         lastMEsg.clear();
         bookedeventname.clear();
+        rating_status.clear();
         attendeename.clear();
     }
 
