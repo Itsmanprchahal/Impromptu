@@ -82,7 +82,8 @@ public class Home_Screen extends AppCompatActivity {
     public static String BprofileStatus, data;
     public static int countt = 0, newCount = 0;
     String refreshvalue, checkgender, socailtoken, counter;
-    public static String  count = "0";
+    public static String count = "0";
+    public static int framgposition, lastposition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -264,14 +265,14 @@ public class Home_Screen extends AppCompatActivity {
         if (MyFirebaseMessagingService.counter != null) {
             counter = MyFirebaseMessagingService.counter.toString();
 
-                if (!counter.equals("0") && count.equals("0")) {
-                    Menu menu = bottomNavigationView.getMenu();
-                    menu.findItem(R.id.messagetab).setIcon(R.drawable.mesgnotify);
+            if (!counter.equals("0") && count.equals("0")) {
+                Menu menu = bottomNavigationView.getMenu();
+                menu.findItem(R.id.messagetab).setIcon(R.drawable.mesgnotify);
 
-                } else if (!counter.equals("0") && count.equals("1")) {
-                    Menu menu = bottomNavigationView.getMenu();
-                    menu.findItem(R.id.messagetab).setIcon(R.drawable.messageinactive);
-                }
+            } else if (!counter.equals("0") && count.equals("1")) {
+                Menu menu = bottomNavigationView.getMenu();
+                menu.findItem(R.id.messagetab).setIcon(R.drawable.messageinactive);
+            }
 
         }
 
@@ -326,7 +327,14 @@ public class Home_Screen extends AppCompatActivity {
                             FragmentTransaction transaction = manager.beginTransaction();
                             transaction.replace(R.id.home_frame_layout, new Home());
                             transaction.commit();
-
+                            framgposition = 0;
+                            if (framgposition == 0) {
+                                Menu menu = bottomNavigationView.getMenu();
+                                menu.findItem(R.id.wallettab).setIcon(R.drawable.walletinactive);
+                                menu.findItem(R.id.profiletab).setIcon(R.drawable.useractive);
+                                menu.findItem(R.id.hometab).setIcon(R.drawable.eventactive);
+                                menu.findItem(R.id.messagetab).setIcon(R.drawable.messageinactive);
+                            }
                             setMesgIcon();
                             return true;
 
@@ -338,6 +346,15 @@ public class Home_Screen extends AppCompatActivity {
                             FragmentTransaction transaction1 = manager.beginTransaction();
                             transaction1.replace(R.id.home_frame_layout, new Events());
                             transaction1.commit();
+                            framgposition = 1;
+                            lastposition = 1;
+                            if (framgposition == 1) {
+                                Menu menu = bottomNavigationView.getMenu();
+                                menu.findItem(R.id.wallettab).setIcon(R.drawable.walletactive);
+                                menu.findItem(R.id.profiletab).setIcon(R.drawable.useractive);
+                                menu.findItem(R.id.hometab).setIcon(R.drawable.eventinactive);
+                                menu.findItem(R.id.messagetab).setIcon(R.drawable.messageinactive);
+                            }
                             setMesgIcon();
                             return true;
 
@@ -360,9 +377,17 @@ public class Home_Screen extends AppCompatActivity {
                             FragmentTransaction transaction2 = manager.beginTransaction();
                             transaction2.replace(R.id.home_frame_layout, new Messages());
                             transaction2.commit();
-                            Menu menu = bottomNavigationView.getMenu();
-                            menu.findItem(R.id.messagetab).setIcon(R.drawable.messageinactive);
+
                             count = "1";
+                            framgposition = 3;
+                            lastposition = 3;
+                            if (framgposition == 3) {
+                                Menu menu = bottomNavigationView.getMenu();
+                                menu.findItem(R.id.wallettab).setIcon(R.drawable.walletinactive);
+                                menu.findItem(R.id.profiletab).setIcon(R.drawable.useractive);
+                                menu.findItem(R.id.hometab).setIcon(R.drawable.eventinactive);
+                                menu.findItem(R.id.messagetab).setIcon(R.drawable.messageactive);
+                            }
                             return true;
 
                         case R.id.profiletab:
@@ -374,6 +399,15 @@ public class Home_Screen extends AppCompatActivity {
                             transaction3.replace(R.id.home_frame_layout, new Setting());
                             transaction3.commit();
                             setMesgIcon();
+                            framgposition = 4;
+                            lastposition = 4;
+                            if (framgposition == 4) {
+                                Menu menu = bottomNavigationView.getMenu();
+                                menu.findItem(R.id.wallettab).setIcon(R.drawable.walletinactive);
+                                menu.findItem(R.id.profiletab).setIcon(R.drawable.userinactive);
+                                menu.findItem(R.id.hometab).setIcon(R.drawable.eventinactive);
+                                menu.findItem(R.id.messagetab).setIcon(R.drawable.messageinactive);
+                            }
                             return true;
                     }
 
@@ -394,6 +428,16 @@ public class Home_Screen extends AppCompatActivity {
                             transaction0.replace(R.id.home_frame_layout, new BusinessUserProfile());
                             transaction0.commit();
                             setMesgIcon();
+                            framgposition = 0;
+                            framgposition = 3;
+                            lastposition = 3;
+                            if (framgposition == 3) {
+                                Menu menu = bottomNavigationView.getMenu();
+                                menu.findItem(R.id.wallettab).setIcon(R.drawable.profileactive);
+                                menu.findItem(R.id.profiletab).setIcon(R.drawable.useractive);
+                                menu.findItem(R.id.hometab).setIcon(R.drawable.profileinactive);
+                                menu.findItem(R.id.messagetab).setIcon(R.drawable.messageactive);
+                            }
                             return true;
 
                         case R.id.wallettab:
@@ -401,7 +445,15 @@ public class Home_Screen extends AppCompatActivity {
                             FragmentTransaction transaction = manager.beginTransaction();
                             transaction.replace(R.id.home_frame_layout, new Hosting());
                             transaction.commit();
-
+                            framgposition = 1;
+                            lastposition = 1;
+                            if (framgposition == 1) {
+                                Menu menu = bottomNavigationView.getMenu();
+                                menu.findItem(R.id.wallettab).setIcon(R.drawable.walletactive);
+                                menu.findItem(R.id.profiletab).setIcon(R.drawable.useractive);
+                                menu.findItem(R.id.hometab).setIcon(R.drawable.profileinactive);
+                                menu.findItem(R.id.messagetab).setIcon(R.drawable.messageinactive);
+                            }
                             setMesgIcon();
                             return true;
 
@@ -432,9 +484,16 @@ public class Home_Screen extends AppCompatActivity {
                             FragmentTransaction transaction1 = manager.beginTransaction();
                             transaction1.replace(R.id.home_frame_layout, new Messages());
                             transaction1.commit();
-                            Menu menu = bottomNavigationView.getMenu();
-                            menu.findItem(R.id.messagetab).setIcon(R.drawable.messageinactive);
                             count = "1";
+                            framgposition = 3;
+                            lastposition = 3;
+                            if (framgposition == 3) {
+                                Menu menu = bottomNavigationView.getMenu();
+                                menu.findItem(R.id.wallettab).setIcon(R.drawable.walletinactive);
+                                menu.findItem(R.id.profiletab).setIcon(R.drawable.useractive);
+                                menu.findItem(R.id.hometab).setIcon(R.drawable.profileinactive);
+                                menu.findItem(R.id.messagetab).setIcon(R.drawable.messageactive);
+                            }
                             return true;
 
                         case R.id.profiletab:
@@ -442,6 +501,15 @@ public class Home_Screen extends AppCompatActivity {
                             transaction2.replace(R.id.home_frame_layout, new Setting());
                             transaction2.commit();
                             setMesgIcon();
+                            framgposition = 4;
+                            lastposition = 4;
+                            if (framgposition == 4) {
+                                Menu menu = bottomNavigationView.getMenu();
+                                menu.findItem(R.id.wallettab).setIcon(R.drawable.walletinactive);
+                                menu.findItem(R.id.profiletab).setIcon(R.drawable.userinactive);
+                                menu.findItem(R.id.hometab).setIcon(R.drawable.profileinactive);
+                                menu.findItem(R.id.messagetab).setIcon(R.drawable.messageinactive);
+                            }
                             return true;
                     }
                     return false;
@@ -451,6 +519,70 @@ public class Home_Screen extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (framgposition != 0) {
+            if (account != null || !loggedOut) {
+                FragmentTransaction transaction2 = manager.beginTransaction();
+                transaction2.replace(R.id.home_frame_layout, new Home());
+                transaction2.commit();
+                framgposition = 0;
+            } else {
+                FragmentTransaction transaction2 = manager.beginTransaction();
+                transaction2.replace(R.id.home_frame_layout, new BusinessUserProfile());
+                transaction2.commit();
+                framgposition = 0;
+            }
+
+            if (account != null || !loggedOut) {
+                if (lastposition == 4) {
+                    Menu menu = bottomNavigationView.getMenu();
+                    menu.findItem(R.id.hometab).setIcon(R.drawable.eventactive);
+                    menu.findItem(R.id.profiletab).setIcon(R.drawable.useractive);
+                } else if (lastposition == 1) {
+                    Menu menu = bottomNavigationView.getMenu();
+                    menu.findItem(R.id.hometab).setIcon(R.drawable.eventactive);
+                    menu.findItem(R.id.wallettab).setIcon(R.drawable.walletinactive);
+                } else if (framgposition == 0) {
+                    Menu menu = bottomNavigationView.getMenu();
+                    menu.findItem(R.id.hometab).setIcon(R.drawable.eventactive);
+                    menu.findItem(R.id.wallettab).setIcon(R.drawable.walletinactive);
+                    menu.findItem(R.id.messagetab).setIcon(R.drawable.messageinactive);
+                    menu.findItem(R.id.profiletab).setIcon(R.drawable.useractive);
+                }
+            }
+            else {
+                if (lastposition == 4) {
+                    Menu menu = bottomNavigationView.getMenu();
+                    menu.findItem(R.id.hometab).setIcon(R.drawable.profileactive);
+                    menu.findItem(R.id.profiletab).setIcon(R.drawable.useractive);
+                } else if (lastposition == 1) {
+                    Menu menu = bottomNavigationView.getMenu();
+                    menu.findItem(R.id.hometab).setIcon(R.drawable.profileactive);
+                    menu.findItem(R.id.wallettab).setIcon(R.drawable.walletinactive);
+                } else if (framgposition == 0) {
+                    Menu menu = bottomNavigationView.getMenu();
+                    menu.findItem(R.id.hometab).setIcon(R.drawable.profileactive);
+                    menu.findItem(R.id.wallettab).setIcon(R.drawable.walletinactive);
+                    menu.findItem(R.id.messagetab).setIcon(R.drawable.messageinactive);
+                    menu.findItem(R.id.profiletab).setIcon(R.drawable.useractive);
+                }
+            }
+
+        } else {
+
+            if (account != null || !loggedOut) {
+                Menu menu = bottomNavigationView.getMenu();
+                menu.findItem(R.id.hometab).setIcon(R.drawable.eventinactive);
+            } else {
+                Menu menu = bottomNavigationView.getMenu();
+                menu.findItem(R.id.hometab).setIcon(R.drawable.profileactive);
+            }
+
+            super.onBackPressed();
+        }
     }
 
     private void dialog() {

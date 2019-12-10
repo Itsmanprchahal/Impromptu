@@ -274,7 +274,6 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
 
                 }
             } else if (event_type.equals("upcoming")) {
-
                 if (!S_Token.equalsIgnoreCase("")) {
                     getEventdata(S_Token, value);
                     getUsers(S_Token, value);

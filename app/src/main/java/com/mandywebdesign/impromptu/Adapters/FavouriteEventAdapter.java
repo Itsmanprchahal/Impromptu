@@ -17,9 +17,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEventDetailAcitvity;
+import com.mandywebdesign.impromptu.Home_Screen_Fragments.Home;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.favouriteTab.EventsFrag;
+import com.mandywebdesign.impromptu.Home_Screen_Fragments.favouriteTab.Hosts;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Utils.Constants;
+import com.mandywebdesign.impromptu.ui.BookEventActivity;
 
 public class FavouriteEventAdapter extends RecyclerView.Adapter<FavouriteEventAdapter.ViewHolder> {
 
@@ -79,14 +82,26 @@ public class FavouriteEventAdapter extends RecyclerView.Adapter<FavouriteEventAd
             @Override
             public void onClick(View v) {
                 String value = EventsFrag.event_id_fav.get(i);
-                Intent intent = new Intent(context, BusinessEventDetailAcitvity.class);
-                intent.putExtra("event_id", value);
+                Intent intent = new Intent(context, BookEventActivity.class);
+
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra("event_id",value);
+                intent.putExtra("eventType","fav");
+                intent.putExtra("other_events", "other_events");
+                intent.putExtra("lat", Home.lat);
+                intent.putExtra("lng",Home.lng);
+                intent.putExtra("hostname", EventsFrag.name1_fav.get(i));
+                editor.putString(Constants.itemPosition, String.valueOf(i));
+                editor.commit();
+                context.startActivity(intent);
+
+               /* intent.putExtra("event_id", value);
                 intent.putExtra("eventType", "fav");
                 intent.putExtra("hostname", EventsFrag.name1_fav.get(i));
                 intent.putExtra("other_events", "other_events");
                 editor.putString(Constants.itemPosition, String.valueOf(i));
                 editor.commit();
-                context.startActivity(intent);
+                context.startActivity(intent);*/
 
             }
         });

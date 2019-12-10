@@ -107,7 +107,7 @@ public class Join_us extends AppCompatActivity {
 
         googleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        getHashKey();
+//        getHashKey();
 
 
     }
@@ -162,28 +162,36 @@ public class Join_us extends AppCompatActivity {
                                     try {
                                         String first_name = object.getString("first_name");
                                         String last_name = object.getString("last_name");
-                                        String email = object.getString("email");
-                                        String id = object.getString("id");
+                                        String email = "";
+                                        if (object.getString("email")!=null)
+                                        {
+                                             email = object.getString("email");
+                                            String id = object.getString("id");
 
-                                        fbUsername = first_name + " " + last_name;
-                                        Log.d("fbUsername",fbUsername);
+                                            fbUsername = first_name + " " + last_name;
+                                            Log.d("fbUsername",fbUsername);
 
-                                        final String fbToken1 = AccessToken.getCurrentAccessToken().getToken();
-                                        fbEmail = email;
-                                        String image_url = "https://graph.facebook.com/" + id + "/picture?type=normal";
-                                        imageurl = image_url;
-                                        Log.d("first_name", fbUsername + " " + fbToken + " " + fbEmail + " " + image_url);
+                                            final String fbToken1 = AccessToken.getCurrentAccessToken().getToken();
+                                            fbEmail = email;
+                                            String image_url = "https://graph.facebook.com/" + id + "/picture?type=normal";
+                                            imageurl = image_url;
+                                            Log.d("first_name", fbUsername + " " + fbToken + " " + fbEmail + " " + image_url);
 
-                                        //=============================register and login facebook here========================\
-                                        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
-                                            @Override
-                                            public void onSuccess(InstanceIdResult instanceIdResult) {
-                                                String device_token = instanceIdResult.getToken();
-                                                Log.e("token",device_token);
-                                                NormalLogin("normal",fbToken,fbEmail,fbUsername,"facebook",device_token);
+                                            //=============================register and login facebook here========================\
+                                            FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+                                                @Override
+                                                public void onSuccess(InstanceIdResult instanceIdResult) {
+                                                    String device_token = instanceIdResult.getToken();
+                                                    Log.e("token",device_token);
+                                                    NormalLogin("normal",fbToken,fbEmail,fbUsername,"facebook",device_token);
 
-                                            }
-                                        });
+                                                }
+                                            });
+                                        }else {
+                                            Toast.makeText(Join_us.this, "We Didn't recog", Toast.LENGTH_SHORT).show();
+                                        }
+
+
 //                                        NormalLogin("normal",fbToken,fbEmail,fbUsername,"facebook");
 
 
@@ -203,12 +211,12 @@ public class Join_us extends AppCompatActivity {
 
             @Override
             public void onCancel() {
-
+                Toast.makeText(Join_us.this, "CANCEL", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(FacebookException error) {
-
+                Toast.makeText(Join_us.this, ""+error, Toast.LENGTH_SHORT).show();
             }
         });
     }

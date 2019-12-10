@@ -12,7 +12,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import java.util.TimeZone;
 
 import okhttp3.MediaType;
@@ -39,12 +38,15 @@ public class Util {
         return time_stamp;
     }
 
+
+
+    //convert date time to timestamp
     //date convert into time stamp
-    public static long calender_date_to_timestamp(String str_date) {
+    public static long calender_date_time_to_timestamp(String str_date) {
 
         long time_stamp = 0;
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
             //SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
             Date date = (Date) formatter.parse(str_date);
             time_stamp = date.getTime();

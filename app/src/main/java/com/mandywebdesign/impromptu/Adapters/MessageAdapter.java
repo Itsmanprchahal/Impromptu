@@ -166,6 +166,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                     intent.putExtra("event_image", Messages.eventImage.get(pos));
                     intent.putExtra("eventID", Messages.eventID.get(pos));
                     intent.putExtra("event_host_user", Messages.hostUserID.get(pos));
+                    intent.putExtra("event_status",Messages.event_status.get(pos));
 
 
                     if (Messages.MesgCount.get(i).equals("0")) {

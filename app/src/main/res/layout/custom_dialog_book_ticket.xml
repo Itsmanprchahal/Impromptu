@@ -116,6 +116,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/cal1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -126,6 +127,7 @@
                 android:textSize="18sp" />
 
             <LinearLayout
+                android:id="@+id/cal2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -158,6 +160,7 @@
 
 
             <TextView
+                android:id="@+id/cal3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -169,6 +172,7 @@
 
 
             <LinearLayout
+                android:id="@+id/cal4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"

@@ -78,7 +78,7 @@ public class ChatBoxActivity extends AppCompatActivity {
     String seen_status;
     Dialog progressDialog;
     RecyclerView recyclerView;
-    String eventID, titl, image, BToken, S_Token, userId, hostUserID;
+    String eventID, titl, image, BToken, S_Token, userId, hostUserID,event_status;
     SharedPreferences sharedPreferences;
     ArrayList<RetroGetMessages.Datum> arrayList = new ArrayList<>();
     Intent intent;
@@ -109,6 +109,7 @@ public class ChatBoxActivity extends AppCompatActivity {
             eventID = intent.getStringExtra("eventID");
             hostUserID = intent.getStringExtra("event_host_user");
             seen_status = intent.getStringExtra("seen_status");
+            event_status = intent.getStringExtra("event_status");
 
             if (titl.length() > 13) {
                 chat_title.setText(titl.substring(0, 12) + "...");
@@ -164,11 +165,9 @@ public class ChatBoxActivity extends AppCompatActivity {
                     if (!BToken.equals("")) {
                         SendMesg("Bearer " + BToken, eventID, titl, message);
                         typemess.setText("");
-//                        getChat("Bearer " + BToken, eventID, seen_status);
                     } else if (!S_Token.equals("")) {
                         SendMesg("Bearer " + S_Token, eventID, titl, message);
                         typemess.setText("");
-//                        getChat("Bearer " + S_Token, eventID, seen_status);
                     }
                 }
             }
@@ -187,7 +186,6 @@ public class ChatBoxActivity extends AppCompatActivity {
                     intent.putExtra("lat", Home.lat);
                     intent.putExtra("lng",Home.lng);
                     intent.putExtra("eventType", "");
-//                intent.putExtra("user_ID",)
                     startActivity(intent);
                 }else if (!S_Token.equals(""))
                 {
@@ -195,7 +193,7 @@ public class ChatBoxActivity extends AppCompatActivity {
                     intent.putExtra("event_id",eventID);
                     intent.putExtra("lat", Home.lat);
                     intent.putExtra("lng",Home.lng);
-//                intent.putExtra("user_ID",)
+                    intent.putExtra("eventType",event_status);
                     startActivity(intent);
                 }
 
@@ -209,6 +207,7 @@ public class ChatBoxActivity extends AppCompatActivity {
                 intent.putExtra("event_id",eventID);
                 intent.putExtra("lat",Home.lat);
                 intent.putExtra("lng",Home.lng);
+                intent.putExtra("eventType",event_status);
 //                intent.putExtra("user_ID",)
                 startActivity(intent);
             }
