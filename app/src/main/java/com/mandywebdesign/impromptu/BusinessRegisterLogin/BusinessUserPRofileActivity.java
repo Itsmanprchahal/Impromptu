@@ -430,7 +430,7 @@ public class BusinessUserPRofileActivity extends AppCompatActivity implements Vi
                         profileliveevents.clear();
                         images.clear();
                         for (UsersLiveEvent.Datum datum : datumArrayList) {
-                            profileliveevents.add(datum.getCategory());
+                            profileliveevents.add(datum.getTitle());
                             profileliveevents_id.add(String.valueOf(datum.getEventId()));
                             images.add(datum.getFile().toString());
                             Collections.reverse(images);

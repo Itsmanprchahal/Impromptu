@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEventDetailAcitvity;
+import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessUserPRofileActivity;
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessUserProfile;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.Home;
 import com.mandywebdesign.impromptu.R;
@@ -50,8 +51,8 @@ public class UsersLiveEventsAdapter extends RecyclerView.Adapter<UsersLiveEvents
     @Override
     public void onBindViewHolder(@NonNull UsersLiveEventsAdapter.ViewHolder holder, final int position) {
         Collections.reverse(datumArrayList);
-        holder.category.setText(datumArrayList.get(position).getTitle());
-        Glide.with(context).load(datumArrayList.get(position).getFile()).apply(new RequestOptions().override(200,200)).into(holder.imageView);
+        holder.category.setText(BusinessUserPRofileActivity.profileliveevents.get(position));
+        Glide.with(context).load(BusinessUserPRofileActivity.images.get(position)).apply(new RequestOptions().override(200,200)).into(holder.imageView);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

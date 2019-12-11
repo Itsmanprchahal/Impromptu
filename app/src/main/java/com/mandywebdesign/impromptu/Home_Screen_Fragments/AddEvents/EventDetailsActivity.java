@@ -743,10 +743,13 @@ public class EventDetailsActivity extends AppCompatActivity {
         //dialog.setCancelable(false);
         dialog.setContentView(R.layout.ticket_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        TextView tickettext = dialog.findViewById(R.id.tickettext);
         numbersTicketET = (TextView) dialog.findViewById(R.id.numbers_of_tickets_et);
         tickettype_et = dialog.findViewById(R.id.tickettypename_et);
         price_et = (EditText) dialog.findViewById(R.id.price_et_ticketdialog);
         okayDialog = (Button) dialog.findViewById(R.id.okaydialog);
+        tickettext.setVisibility(View.GONE);
+        tickettype_et.setVisibility(View.GONE);
         dialog.show();
 
 
@@ -756,7 +759,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
                 ticketET = numbersTicketET.getText().toString();
                 prceET = price_et.getText().toString();
-                tickettype = tickettype_et.getText().toString();
+                tickettype = "Standard";
                 getPrceET = prceET;
                 getTicketET = ticketET;
                 getTickettype = tickettype;

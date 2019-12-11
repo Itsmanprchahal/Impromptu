@@ -40,6 +40,8 @@ import com.mandywebdesign.impromptu.ui.ProgressBarClass;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -297,8 +299,20 @@ public class Messages extends Fragment {
                         eventID.add(response.body().getData().get(i).getEventId().toString());
                         hostUserID.add(response.body().getData().get(i).getSenderId().toString());
                         lastMEsg.add(response.body().getData().get(i).getLastMessageShow());
+                        rating_status.add(response.body().getData().get(i).getRatingStatus());
                         MesgCount.add(response.body().getData().get(i).getCount().toString());
+                        bookingstatus.add(response.body().getData().get(i).getBookingStatus());
                         lastmesgtime.add(response.body().getData().get(i).getLastMessageDatetime().toString());
+                        Collections.reverse(eventTitle);
+                        Collections.reverse(eventTicketType);
+                        Collections.reverse(eventImage);
+                        Collections.reverse(eventID);
+                        Collections.reverse(hostUserID);
+                        Collections.reverse(lastMEsg);
+                        Collections.reverse(rating_status);
+                        Collections.reverse(MesgCount);
+                        Collections.reverse(bookingstatus);
+                        Collections.reverse(lastmesgtime);
                         setData();
                     }
                 }else {
