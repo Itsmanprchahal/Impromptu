@@ -18,6 +18,7 @@ import com.mandywebdesign.impromptu.Home_Screen_Fragments.HostingTabs.Drafts;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.HostingTabs.History;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.HostingTabs.Live;
 import com.mandywebdesign.impromptu.R;
+import com.mandywebdesign.impromptu.Utils.Constants;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,7 +28,8 @@ public class Hosting extends Fragment {
     FragmentManager manager;
     String BToken, S_Token;
     LinearLayout linearLayout;
-    SharedPreferences sharedPreferences;
+    SharedPreferences sharedPreferences,itemPositionPref;
+    SharedPreferences.Editor editor;
     View view;
     TextView title;
 
@@ -44,6 +46,7 @@ public class Hosting extends Fragment {
 
         initlization();
         listeners();
+        setPostion();
 
 
         if (!BToken.equalsIgnoreCase("")) {
@@ -67,23 +70,34 @@ public class Hosting extends Fragment {
             {
                 livebtcolor();
                 manager.beginTransaction().replace(R.id.hosting_event_frame_layout, new Live()).commit();
+                setPostion();
             } else if (eventType.equals("history")) {
                 HistorybtColor();
                 manager.beginTransaction().replace(R.id.hosting_event_frame_layout, new History()).commit();
+                setPostion();
             }else if(eventType.equals("draft"))
             {
                 draftsbtcolor();
                 manager.beginTransaction().replace(R.id.hosting_event_frame_layout, new Drafts()).commit();
+                setPostion();
             }else {
                 manager.beginTransaction().replace(R.id.hosting_event_frame_layout, new Live()).commit();
+                setPostion();
             }
 
           //  Toast.makeText(getContext(), ""+eventType, Toast.LENGTH_SHORT).show();
         }else {
               manager.beginTransaction().replace(R.id.hosting_event_frame_layout, new Live()).commit();
+            setPostion();
         }
     }
 
+    private void setPostion() {
+        itemPositionPref = getContext().getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);
+        editor = itemPositionPref.edit();
+        editor.putString(Constants.itemPosition,"0");
+        editor.commit();
+    }
 
     private void initlization() {
 

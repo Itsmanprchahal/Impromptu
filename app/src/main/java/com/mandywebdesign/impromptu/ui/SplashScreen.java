@@ -16,12 +16,14 @@ import com.facebook.AccessToken;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.mandywebdesign.impromptu.R;
+import com.mandywebdesign.impromptu.Utils.Constants;
 
 import io.fabric.sdk.android.Fabric;
 
 public class SplashScreen extends AppCompatActivity {
 
-    SharedPreferences sharedPreferences,socialpref;
+    SharedPreferences sharedPreferences,itemPositionPref;
+    SharedPreferences.Editor editor;
     String user,socaildata;
     GoogleSignInAccount account;
 
@@ -39,9 +41,13 @@ public class SplashScreen extends AppCompatActivity {
 
          account = GoogleSignIn.getLastSignedInAccount(this);
 
+        itemPositionPref = getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);
         sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         user = sharedPreferences.getString("Usertoken", "");
         socaildata = sharedPreferences.getString("Socailtoken","");
+        editor = itemPositionPref.edit();
+        editor.putString(Constants.itemPosition,"0");
+        editor.commit();
 
         slapshcode();
     }

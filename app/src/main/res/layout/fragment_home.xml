@@ -16,8 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:gravity="center"
             android:fontFamily="@font/circularstdblack"
+            android:gravity="center"
             android:text="No Events"
             android:textColor="#000"
             android:textSize="40dp"
@@ -34,13 +34,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
 
-                <ImageView
+                <RelativeLayout
                     android:id="@+id/filter"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/filter" />
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:gravity="center|start">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/filter" />
+                </RelativeLayout>
+
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -53,57 +60,57 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:padding="@dimen/_12sdp"
-                    android:button="@drawable/custom_shufflecheckbox" />
+                    android:button="@drawable/custom_shufflecheckbox"
+                    android:padding="@dimen/_12sdp" />
 
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
 
 
         <!--<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-            <!--android:id="@+id/swipe_refresh_layout1"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_marginTop="55dp"-->
-            <!--android:layout_height="wrap_content">-->
+        <!--android:id="@+id/swipe_refresh_layout1"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_marginTop="55dp"-->
+        <!--android:layout_height="wrap_content">-->
 
-            <ScrollView
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/home_related">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/home_related">
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
 
-                <LinearLayout
+                <com.yarolegovich.discretescrollview.DiscreteScrollView
+                    android:id="@+id/home_feed_recyclerview"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
-                    <com.yarolegovich.discretescrollview.DiscreteScrollView
-                        android:id="@+id/home_feed_recyclerview"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                    </com.yarolegovich.discretescrollview.DiscreteScrollView>
+                </com.yarolegovich.discretescrollview.DiscreteScrollView>
 
 
-                    <TextView
-                        android:id="@+id/see_related"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/home_related"
-                        android:layout_centerHorizontal="true"
-                        android:layout_gravity="center_horizontal"
-                        android:background="@color/colorTrans"
-                        android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp"
-                        android:fontFamily="@font/sfuitextlight"
-                        android:gravity="center"
-                        android:text="See related events"
-                        android:textColor="@color/colorTheme"
-                        android:textSize="@dimen/normalText"
-                        android:visibility="gone" />
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/see_related"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/home_related"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/colorTrans"
+                    android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:gravity="center"
+                    android:text="See related events"
+                    android:textColor="@color/colorTheme"
+                    android:textSize="@dimen/normalText"
+                    android:visibility="gone" />
+            </LinearLayout>
 
-            </ScrollView>
+        </ScrollView>
 
         <!--</android.support.v4.widget.SwipeRefreshLayout>-->
         <TextView
@@ -132,8 +139,6 @@
             android:textColor="@color/colorTheme"
             android:textSize="@dimen/normalText"
             android:visibility="gone" />
-
-
 
 
         <RelativeLayout

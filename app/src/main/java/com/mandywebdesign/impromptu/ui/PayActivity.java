@@ -56,7 +56,7 @@ public class PayActivity extends AppCompatActivity {
     EditText feedback;
     ImageView close;
     TextView total_price, ticket_price, tickt_num,event_Titletv;
-    EditText CardNumber, CardName, Card_ExpiryDate, Card_CSV;
+    EditText CardNumber, CardName, Card_ExpiryDate,pay_expiry_year ,Card_CSV;
     FragmentManager fragmentManager;
     DatePickerDialog.OnDateSetListener dateSetListener;
     Calendar calendar;
@@ -141,12 +141,39 @@ public class PayActivity extends AppCompatActivity {
             }
         });
 
+
+        Card_ExpiryDate.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (count==2)
+                {
+                    int month = Integer.parseInt(Card_ExpiryDate.getText().toString());
+                    if (month>12)
+                    {
+                        Card_ExpiryDate.setError("Invalid Month");
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         Card_ExpiryDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(PayActivity.this, R.style.DialogTheme, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-                datePickerDialog.show();
+
+//                DatePickerDialog datePickerDialog = new DatePickerDialog(PayActivity.this, R.style.DialogTheme, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+//                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+//                datePickerDialog.show();
             }
         });
 
@@ -178,13 +205,15 @@ public class PayActivity extends AppCompatActivity {
                 String cardnuber = CardNumber.getText().toString();
                 String Cardname = CardName.getText().toString();
                 String E_Date = Card_ExpiryDate.getText().toString();
+                String E_YEar = pay_expiry_year.getText().toString();
                 String csv = Card_CSV.getText().toString();
 
 
-                if (cardnuber.isEmpty() && Cardname.isEmpty() && E_Date.isEmpty() && csv.isEmpty()) {
+                if (cardnuber.isEmpty() && Cardname.isEmpty() && E_Date.isEmpty() && E_YEar.isEmpty() && csv.isEmpty()) {
                     CardNumber.setError("Enter Card Number");
                     CardName.setError("Enter Card Name");
                     Card_ExpiryDate.setError("Enter Card Expiry Date");
+                    pay_expiry_year.setError("Enter Card Expiry Year");
                     Card_CSV.setError("Enter Card CSV sumber");
                 } else if (cardnuber.isEmpty()) {
                     CardNumber.setError("Enter Card Number");
@@ -192,13 +221,15 @@ public class PayActivity extends AppCompatActivity {
                     CardName.setError("Enter Card Name");
                 } else if (E_Date.isEmpty()) {
                     Card_ExpiryDate.setError("Enter Card Expiry Date");
+                } else if (E_YEar.isEmpty()) {
+                    pay_expiry_year.setError("Enter Card Expiry Year");
                 } else if (csv.isEmpty()) {
-                    Card_CSV.setError("Enter Card CSV sumber");
+                    Card_CSV.setError("Enter Card CSV number");
                 } else {
 
                     progressDialog.show();
-                    String exp_month = E_Date.substring(0, 2).toString();
-                    String exp_year = E_Date.substring(3, 5).toString();
+                    String exp_month = Card_ExpiryDate.getText().toString();
+                    String exp_year = pay_expiry_year.getText().toString();
                     eventId = intent.getStringExtra("event_id");
 
                     onClickSomething(cardnuber, exp_month, exp_year, csv);
@@ -264,6 +295,7 @@ public class PayActivity extends AppCompatActivity {
                     }
                     editor.apply();
                     startActivity(intent);
+                    finish();
 
                 } else {
                     Intent intent = new Intent(PayActivity.this, NoInternetScreen.class);
@@ -293,6 +325,7 @@ public class PayActivity extends AppCompatActivity {
         ticket_price = (TextView) findViewById(R.id.pay_ticket_price);
         tickt_num = (TextView) findViewById(R.id.pay_ticket_type);
         event_Titletv = (TextView)findViewById(R.id.event_Title);
+        pay_expiry_year = findViewById(R.id.pay_expiry_year);
     }
 
     public void dialog() {

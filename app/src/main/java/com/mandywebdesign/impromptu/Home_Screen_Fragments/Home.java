@@ -33,6 +33,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -82,7 +83,8 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
     public static DiscreteScrollView relatedEventsRecyclerView;
     public static DiscreteScrollView recyclerView;
     public static TextView textView, see_related;
-    ImageView filter, swipeUp;
+    ImageView  swipeUp;
+    RelativeLayout filter;
     InfiniteScrollAdapter infiniteAdapter;
     View view;
     TextView noevents;
@@ -185,7 +187,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
         Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
         Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
         textView = (TextView) view.findViewById(R.id.home_related);
-        filter = (ImageView) view.findViewById(R.id.filter);
+        filter = (RelativeLayout) view.findViewById(R.id.filter);
         noevents = (TextView) view.findViewById(R.id.noevents);
         see_related = (TextView) view.findViewById(R.id.see_related);
     }

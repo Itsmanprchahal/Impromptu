@@ -1,6 +1,8 @@
 package com.mandywebdesign.impromptu.MyEventsFragments;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -12,13 +14,15 @@ import android.widget.Button;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.AttendingTab.Past;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.AttendingTab.Upcoming;
 import com.mandywebdesign.impromptu.R;
+import com.mandywebdesign.impromptu.Utils.Constants;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class Attending extends Fragment {
 
-
+    SharedPreferences itemPositionPref;
+    SharedPreferences.Editor editor;
     Button Upcoming,Past;
     FragmentManager manager;
     View view;
@@ -32,6 +36,8 @@ public class Attending extends Fragment {
          view = inflater.inflate(R.layout.fragment_attending, container, false);
         manager = getFragmentManager();
 
+        setPostion();
+
         init();
 
         Bundle bundle = getArguments();
@@ -43,6 +49,7 @@ public class Attending extends Fragment {
             {
                 upcomingColor();
                manager.beginTransaction().replace(R.id.attending_events_frame_layout,new Upcoming()).commit();
+
             }else if (eventType==("past"))
             {
                 pastColor();
@@ -58,6 +65,13 @@ public class Attending extends Fragment {
         listeners();
 
         return view;
+    }
+
+    private void setPostion() {
+        itemPositionPref = getContext().getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);
+        editor = itemPositionPref.edit();
+        editor.putString(Constants.itemPosition,"0");
+        editor.commit();
     }
 
     private void init() {
@@ -80,6 +94,7 @@ public class Attending extends Fragment {
 
                 upcomingColor();
                 manager.beginTransaction().replace(R.id.attending_events_frame_layout,new Upcoming()).commit();
+                setPostion();
             }
         });
 
@@ -89,7 +104,7 @@ public class Attending extends Fragment {
 
                 pastColor();
                 manager.beginTransaction().replace(R.id.attending_events_frame_layout,new Past()).commit();
-
+                setPostion();
             }
         });
 

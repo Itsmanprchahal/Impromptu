@@ -1,6 +1,8 @@
 package com.mandywebdesign.impromptu.MyEventsFragments;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -12,6 +14,7 @@ import android.widget.Button;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.favouriteTab.EventsFrag;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.favouriteTab.Hosts;
 import com.mandywebdesign.impromptu.R;
+import com.mandywebdesign.impromptu.Utils.Constants;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +26,8 @@ public class Favourite extends Fragment {
     FragmentManager manager;
     View view;
     String eventType,favType;
+    SharedPreferences sharedPreferences,itemPositionPref;
+    SharedPreferences.Editor editor;
 
 
     @Override
@@ -35,6 +40,7 @@ public class Favourite extends Fragment {
 
         initlization();
         listeners();
+        setPostion();
 
         Bundle bundle = getArguments();
         if (bundle!=null){
@@ -45,14 +51,24 @@ public class Favourite extends Fragment {
             {
                 hostData();
                 manager.beginTransaction().replace(R.id.myEvent_favourite_framelayout,new Hosts()).commit();
+                setPostion();
             }else {
                 eventData();
                 manager.beginTransaction().replace(R.id.myEvent_favourite_framelayout,new EventsFrag()).commit();
+                setPostion();
             }
         }else {
             manager.beginTransaction().replace(R.id.myEvent_favourite_framelayout, new EventsFrag()).commit();
+            setPostion();
         }
         return view;
+    }
+
+    private void setPostion() {
+        itemPositionPref = getContext().getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);
+        editor = itemPositionPref.edit();
+        editor.putString(Constants.itemPosition,"0");
+        editor.commit();
     }
 
     private void listeners() {
@@ -62,6 +78,7 @@ public class Favourite extends Fragment {
 
                 eventData();
                 manager.beginTransaction().replace(R.id.myEvent_favourite_framelayout, new EventsFrag()).commit();
+                setPostion();
 
 
             }
@@ -73,7 +90,7 @@ public class Favourite extends Fragment {
                 hostData();
                 manager.beginTransaction().replace(R.id.myEvent_favourite_framelayout, new Hosts()).commit();
 
-
+                setPostion();
             }
         });
     }

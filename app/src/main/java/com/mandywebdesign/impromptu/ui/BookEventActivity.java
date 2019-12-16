@@ -148,6 +148,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     ArrayList<String> ticketprice = new ArrayList<>();
     static String tickettypeposition, getSpinnerposition = "1";
     static String currentlat,currenlng,eventlat,eventlng;
+    ArrayAdapter<String> adapter;
 
 
     @Override
@@ -226,6 +227,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                     mBookEvent.setVisibility(View.GONE);
                     invite_layouit.setVisibility(View.GONE);
                     askforrefund.setVisibility(View.VISIBLE);
+                    mBookEvent.setVisibility(View.VISIBLE);
                 }else if (eventType.equals("past"))
                 {
                     mBookEvent.setVisibility(View.GONE);
@@ -707,6 +709,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
     public void dialog(final String value) {
         String ticketNum[] = new String[]{"1", "2"};
+        String ticketNum1[] = new String[]{"1"};
 
         final Dialog dialog = new Dialog(BookEventActivity.this);
         dialog.setContentView(R.layout.custom_dialog_book_ticket);
@@ -778,9 +781,15 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             }
         }
 
+        if (tickets_booked_by_user.equals("0"))
+        {
+            adapter = new ArrayAdapter<String>(BookEventActivity.this,
+                    android.R.layout.simple_spinner_item, ticketNum);
+        }else {
+            adapter = new ArrayAdapter<String>(BookEventActivity.this,
+                    android.R.layout.simple_spinner_item, ticketNum1);
+        }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(BookEventActivity.this,
-                android.R.layout.simple_spinner_item, ticketNum);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
@@ -802,7 +811,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                     String total_ticket = String.valueOf(TotalTIcket);
 
                     if (TotalTIcket > RemainingTIckets) {
-                        Toast.makeText(BookEventActivity.this, "Not Available", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BookEventActivity.this, "Not Available enough tickets", Toast.LENGTH_SHORT).show();
                     } else {
 
 

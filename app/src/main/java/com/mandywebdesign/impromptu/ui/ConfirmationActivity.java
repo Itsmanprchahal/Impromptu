@@ -189,10 +189,10 @@ public class ConfirmationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(ConfirmationActivity.this,Home_Screen.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("bookevent","eventBooked");
-                startActivity(intent);
+//                Intent intent = new Intent(ConfirmationActivity.this,Home_Screen.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                intent.putExtra("bookevent","eventBooked");
+//                startActivity(intent);
                 finish();
 
             }
@@ -201,10 +201,10 @@ public class ConfirmationActivity extends AppCompatActivity {
         confirm_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ConfirmationActivity.this,Home_Screen.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("bookevent","eventBooked");
-                startActivity(intent);
+//                Intent intent = new Intent(ConfirmationActivity.this,Home_Screen.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                intent.putExtra("bookevent","eventBooked");
+//                startActivity(intent);
                 finish();
             }
         });

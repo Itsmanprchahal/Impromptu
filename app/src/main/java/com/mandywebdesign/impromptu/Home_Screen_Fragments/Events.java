@@ -28,6 +28,7 @@ public class Events extends Fragment {
     private Button attending, hosting, favourites, upComing;
     FragmentManager manager;
     SharedPreferences sharedPreferences, itemPositionPref;
+    SharedPreferences.Editor editor;
     String BToken, S_Token, itemPosition, eventType="", favType;
     View view;
 
@@ -41,7 +42,10 @@ public class Events extends Fragment {
         BToken = sharedPreferences.getString("Usertoken", "");
         S_Token = sharedPreferences.getString("Socailtoken", "");
         itemPositionPref = getContext().getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);
-        itemPosition = itemPositionPref.getString(Constants.itemPosition, String.valueOf(0));
+        itemPosition = itemPositionPref.getString(Constants.itemPosition, "0");
+        editor = itemPositionPref.edit();
+        editor.putString(Constants.itemPosition,"0");
+        editor.commit();
         manager = getFragmentManager();
         initlization();
 
@@ -63,6 +67,9 @@ public class Events extends Fragment {
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.replace(R.id.myEvent_framelayout,new Attending());
             transaction.commit();
+            editor = itemPositionPref.edit();
+            editor.putString(Constants.itemPosition,"0");
+            editor.commit();
 
             attending.setBackgroundColor(getResources().getColor(R.color.colorTheme));
             attending.setTextColor(getResources().getColor(R.color.colortextwhite));
@@ -138,6 +145,9 @@ public class Events extends Fragment {
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.myEvent_framelayout, favourite);
         transaction.commit();
+        editor = itemPositionPref.edit();
+        editor.putString(Constants.itemPosition,"0");
+        editor.commit();
     }
 
     private void attendingData() {
@@ -160,6 +170,9 @@ public class Events extends Fragment {
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.myEvent_framelayout, attending);
         transaction.commit();
+        editor = itemPositionPref.edit();
+        editor.putString(Constants.itemPosition,"0");
+        editor.commit();
 
     }
 
@@ -182,6 +195,9 @@ public class Events extends Fragment {
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.myEvent_framelayout, hosting);
         transaction.commit();
+        editor = itemPositionPref.edit();
+        editor.putString(Constants.itemPosition,"0");
+        editor.commit();
 
     }
 
