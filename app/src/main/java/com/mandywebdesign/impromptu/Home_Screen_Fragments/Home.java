@@ -146,7 +146,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
         releatedposition = itemPositionPref.getString(Constants.eventType, String.valueOf(0));
         getCategory = itemPositionPref.getString(Constants.Category, "");
         recyclerView = view.findViewById(R.id.home_feed_recyclerview);
-        relatedEventsRecyclerView = view.findViewById(R.id.home_frag_related_items);
+          relatedEventsRecyclerView = view.findViewById(R.id.home_frag_related_items);
 
         init();
         shuffle = (CheckBox) view.findViewById(R.id.home_shuffle);

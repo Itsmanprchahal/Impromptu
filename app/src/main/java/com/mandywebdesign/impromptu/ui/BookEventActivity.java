@@ -197,7 +197,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             value = intent.getStringExtra("event_id");
             payvalue = intent.getStringExtra("back_pay");
             eventType = intent.getStringExtra("eventType");
-
             //  fav_id = bundle.getString("fav_id");
             hostname = intent.getStringExtra("hostname");
             hostimage = intent.getStringExtra("hostImage");
@@ -563,7 +562,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             public void onClick(View view) {
 
                 DynamicLink dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink()
-                        .setLink(Uri.parse("https://www.amit.com/" + "event_id/" + value))
+                        .setLink(Uri.parse("https://www.impromptusocial.com/" + "event_id/" + value))
                         .setDomainUriPrefix("impromptusocial.page.link")
                         // Open links with this app on Android  amitpandey12.page.link
                         .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build())
@@ -1055,16 +1054,17 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             {
                                 if (eventType.equals("fav"))
                                 {
-                                    if (datum.getTickets_booked_by_user().equals("0"))
-                                    {
-                                        mBookEvent.setVisibility(View.VISIBLE);
-                                    }
+
                                 }
                             }
 
                             getTickets_booked_by_user = datum.getTickets_booked_by_user();
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                               distance(Double.parseDouble(currentlat), Double.parseDouble(currenlng), Double.parseDouble(eventlat), Double.parseDouble(eventlng));
+                                if(currenlng!=null && currentlat!=null)
+                                {
+                                    distance(Double.parseDouble(currentlat), Double.parseDouble(currenlng), Double.parseDouble(eventlat), Double.parseDouble(eventlng));
+                                }
+
                             }
                             postcode = datum.getPostcode();
                             city = datum.getCity();
@@ -1088,7 +1088,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                     }else {
                                         askforrefund.setVisibility(View.VISIBLE);
                                     }
-                                }else if (eventType.equals("past"))
+                                }else if (eventType.equals("past") || eventType.equals("fav"))
                                 {
 
                                     Calendar c = Calendar.getInstance();
@@ -1107,7 +1107,12 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                         Log.d("eventdatetime",datum.getEventEndDt()+"  "+currentdatetime+"  "+diff);
                                         if (diff>=1)
                                         {
-                                            mBookEvent.setVisibility(View.VISIBLE);
+                                            if (datum.getTickets_booked_by_user().equals("0")||datum.getTickets_booked_by_user().equals("1"))
+                                            {
+                                                mBookEvent.setVisibility(View.VISIBLE);
+                                            }else {
+                                                mBookEvent.setVisibility(View.GONE);
+                                            }
                                         }else {
                                             mBookEvent.setVisibility(View.GONE);
                                         }
@@ -1115,13 +1120,15 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                     } catch (ParseException e) {
                                         e.printStackTrace();
                                     }
-                                }else if (eventType.equals("fav"))
+                                }
+                                /*else if (eventType.equals("fav"))
                                 {
+
                                     if (getTickets_booked_by_user.equals("0")||getTickets_booked_by_user.equals("1"))
                                     {
                                         mBookEvent.setVisibility(View.VISIBLE);
                                     }
-                                }
+                                }*/
                             }
                             ticktType = datum.getTicketType();
                             transaction_id = datum.getTransactionId().toString();

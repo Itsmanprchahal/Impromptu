@@ -87,7 +87,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     String tomilles;
     int year1;
     int month1;
-    int date1, totalTicket;
+    int date1 = 0, totalTicket;
     SharedPreferences sharedPreferences;
     Dialog dialog1;
 
@@ -451,31 +451,121 @@ public class EventDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-                        if (hourOfDay < 10 && minute < 10) {
-                            eventTime_from.setText("0" + hourOfDay + ":" + "0" + minute);
-                        } else if (hourOfDay < 10) {
-                            eventTime_from.setText("0" + hourOfDay + ":" + minute);
-                        } else if (minute < 10) {
-                            eventTime_from.setText(hourOfDay + ":" + "0" + minute);
+//                        if (hourOfDay < 10 && minute < 10) {
+//                            eventTime_from.setText("0" + hourOfDay + ":" + "0" + minute);
+//                        } else if (hourOfDay < 10) {
+//                            eventTime_from.setText("0" + hourOfDay + ":" + minute);
+//                        } else if (minute < 10) {
+//                            eventTime_from.setText(hourOfDay + ":" + "0" + minute);
+//                        } else {
+//                            eventTime_from.setText(hourOfDay + ":" + minute);
+//                        }
+//
+//                        String myTime = eventTime_from.getText().toString();
+//                        SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+//                        Date d = null;
+//                        try {
+//                            d = df.parse(myTime);
+//                        } catch (ParseException e) {
+//                            e.printStackTrace();
+//                        }
+//                        Calendar cal = Calendar.getInstance();
+//                        cal.setTime(d);
+//                        cal.add(Calendar.MINUTE, 60);
+//                        String newTime = df.format(cal.getTime());
+//                        eventTime_to.setText(newTime);
+//
+//                        to_time_milles = eventTime_to.getText().toString();
+
+                        if (date1 != 0) {
+                            if (date1 != calendar.get(Calendar.DAY_OF_MONTH)) {
+                                if (hourOfDay < 10 && minute < 10) {
+                                    eventTime_from.setText("0" + hourOfDay + ":" + "0" + minute);
+                                } else if (hourOfDay < 10) {
+                                    eventTime_from.setText("0" + hourOfDay + ":" + minute);
+                                } else if (minute < 10) {
+                                    eventTime_from.setText(hourOfDay + ":" + "0" + minute);
+                                } else {
+                                    eventTime_from.setText(hourOfDay + ":" + minute);
+                                }
+
+                                String myTime = eventTime_from.getText().toString();
+                                SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+                                Date d = null;
+                                try {
+                                    d = df.parse(myTime);
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                                Calendar cal = Calendar.getInstance();
+                                cal.setTime(d);
+                                cal.add(Calendar.MINUTE, 60);
+                                String newTime = df.format(cal.getTime());
+                                eventTime_to.setText(newTime);
+
+                                to_time_milles = eventTime_to.getText().toString();
+                            } else {
+                                Calendar datetime = Calendar.getInstance();
+                                Calendar c = Calendar.getInstance();
+                                datetime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                datetime.set(Calendar.MINUTE, minute);
+                                if (datetime.getTimeInMillis() >= c.getTimeInMillis()) {
+                                    //it's after current
+                                    if (hourOfDay < 10 && minute < 10) {
+                                        eventTime_from.setText("0" + hourOfDay + ":" + "0" + minute);
+                                    } else if (hourOfDay < 10) {
+                                        eventTime_from.setText("0" + hourOfDay + ":" + minute);
+                                    } else if (minute < 10) {
+                                        eventTime_from.setText(hourOfDay + ":" + "0" + minute);
+                                    } else {
+                                        eventTime_from.setText(hourOfDay + ":" + minute);
+                                    }
+//                                    eventTime_from.setText(hourOfDay + ":" + minute);
+                                    String myTime = eventTime_from.getText().toString();
+                                    SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+                                    Date d = null;
+                                    try {
+                                        d = df.parse(myTime);
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                    Calendar cal = Calendar.getInstance();
+                                    cal.setTime(d);
+                                    cal.add(Calendar.MINUTE, 60);
+                                    String newTime = df.format(cal.getTime());
+                                    eventTime_to.setText(newTime);
+                                    to_time_milles = eventTime_to.getText().toString();
+                                } else {
+                                    //it's before current'
+                                    eventTime_to.setText("");
+                                    eventTime_from.setText("");
+                                    Toast.makeText(getApplicationContext(), "Invalid Time", Toast.LENGTH_LONG).show();
+                                }
+                            }
                         } else {
-                            eventTime_from.setText(hourOfDay + ":" + minute);
-                        }
 
-                        String myTime = eventTime_from.getText().toString();
-                        SimpleDateFormat df = new SimpleDateFormat("HH:mm");
-                        Date d = null;
-                        try {
-                            d = df.parse(myTime);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
+                            Calendar datetime = Calendar.getInstance();
+                            Calendar c = Calendar.getInstance();
+                            datetime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                            datetime.set(Calendar.MINUTE, minute);
+                            if (datetime.getTimeInMillis() >= c.getTimeInMillis()) {
+                                //it's after current
+                                if (hourOfDay < 10 && minute < 10) {
+                                    eventTime_from.setText("0" + hourOfDay + ":" + "0" + minute);
+                                } else if (hourOfDay < 10) {
+                                    eventTime_from.setText("0" + hourOfDay + ":" + minute);
+                                } else if (minute < 10) {
+                                    eventTime_from.setText(hourOfDay + ":" + "0" + minute);
+                                } else {
+                                    eventTime_from.setText(hourOfDay + ":" + minute);
+                                }
+                                to_time_milles = eventTime_to.getText().toString();
+                            } else {
+                                //it's before current'
+                                eventTime_from.setText("");
+                                Toast.makeText(getApplicationContext(), "Invalid Time", Toast.LENGTH_LONG).show();
+                            }
                         }
-                        Calendar cal = Calendar.getInstance();
-                        cal.setTime(d);
-                        cal.add(Calendar.MINUTE, 60);
-                        String newTime = df.format(cal.getTime());
-                        eventTime_to.setText(newTime);
-
-                        to_time_milles = eventTime_to.getText().toString();
 
                     }
                 }, hour, minute, true);
@@ -498,7 +588,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-                        //convert time to milliseconds
+                       /* //convert time to milliseconds
                         final Calendar calendar = Calendar.getInstance();
                          calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         calendar.set(Calendar.MINUTE, minute);
@@ -516,7 +606,74 @@ public class EventDetailsActivity extends AppCompatActivity {
                         }
                         to_time_milles = eventTime_to.getText().toString();
 
-                        Log.d("time", "" + to_time_milles);
+                        Log.d("time", "" + to_time_milles);*/
+
+                        if (date1 != 0) {
+                            if (date1 != calendar.get(Calendar.DAY_OF_MONTH)) {
+                                if (hourOfDay < 10 && minute < 10) {
+                                    eventTime_to.setText("0" + hourOfDay + ":" + "0" + minute);
+                                } else if (hourOfDay < 10) {
+                                    eventTime_to.setText("0" + hourOfDay + ":" + minute);
+                                } else if (minute < 10) {
+                                    eventTime_to.setText(hourOfDay + ":" + "0" + minute);
+                                } else {
+                                    eventTime_to.setText(hourOfDay + ":" + minute);
+
+                                }
+                                to_time_milles = eventTime_to.getText().toString();
+                            } else {
+                                Calendar datetime = Calendar.getInstance();
+                                Calendar c = Calendar.getInstance();
+                                datetime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                datetime.set(Calendar.MINUTE, minute);
+                                if (datetime.getTimeInMillis() >= c.getTimeInMillis()) {
+                                    //it's after current
+                                    int hour = hourOfDay % 24;
+                                    if (hourOfDay < 10 && minute < 10) {
+                                        eventTime_to.setText("0" + hourOfDay + ":" + "0" + minute);
+                                    } else if (hourOfDay < 10) {
+                                        eventTime_to.setText("0" + hourOfDay + ":" + minute);
+                                    } else if (minute < 10) {
+                                        eventTime_to.setText(hourOfDay + ":" + "0" + minute);
+                                    } else {
+                                        eventTime_to.setText(hourOfDay + ":" + minute);
+
+                                    }
+                                    to_time_milles = eventTime_to.getText().toString();
+                                } else {
+                                    //it's before current'
+                                    eventTime_to.setText("");
+                                    Toast.makeText(getApplicationContext(), "Invalid Time", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        } else {
+
+                            Calendar datetime = Calendar.getInstance();
+                            Calendar c = Calendar.getInstance();
+                            datetime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                            datetime.set(Calendar.MINUTE, minute);
+                            if (datetime.getTimeInMillis() >= c.getTimeInMillis()) {
+                                //it's after current
+                                int hour = hourOfDay % 12;
+                               /* eventTime_to.setText(String.format("%02d:%02d %s", hour == 0 ? 12 : hour,
+                                        minute, hourOfDay < 12 ? "am" : "pm"));*/
+                                if (hourOfDay < 10 && minute < 10) {
+                                    eventTime_to.setText("0" + hourOfDay + ":" + "0" + minute);
+                                } else if (hourOfDay < 10) {
+                                    eventTime_to.setText("0" + hourOfDay + ":" + minute);
+                                } else if (minute < 10) {
+                                    eventTime_to.setText(hourOfDay + ":" + "0" + minute);
+                                } else {
+                                    eventTime_to.setText(hourOfDay + ":" + minute);
+
+                                }
+                                to_time_milles = eventTime_to.getText().toString();
+                            } else {
+                                //it's before current'
+                                eventTime_to.setText("");
+                                Toast.makeText(getApplicationContext(), "Invalid Time", Toast.LENGTH_LONG).show();
+                            }
+                        }
                     }
                 }, hour, minute, true);
                 timePickerDialog.show();
@@ -667,7 +824,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                         type1.setVisibility(View.VISIBLE);
                         type1.setText(arryList.get(0).getTikcettype() + " £ " + arryList.get(0).getPrice() + " (" + arryList.get(0).getNumberofticket() + ") ");
 
-                        type = arryList.get(0).getTikcettype() ;
+                        type = arryList.get(0).getTikcettype();
                         values = String.valueOf(arryList.get(0).getPrice());
                         numbertickets = String.valueOf(arryList.get(0).getNumberofticket());
 
@@ -690,10 +847,9 @@ public class EventDetailsActivity extends AppCompatActivity {
                     } else {
                         if (totalTicket > numofTicker1) {
                             edt_numbersOfTicket.setError(totalTicket + " remaining tickets");
-                        }else if (totalTicket<numofTicker1)
-                        {
-                            edt_numbersOfTicket.setError("limit exceed. "+totalTicket +" are remaining tickets.");
-                        }else {
+                        } else if (totalTicket < numofTicker1) {
+                            edt_numbersOfTicket.setError("limit exceed. " + totalTicket + " are remaining tickets.");
+                        } else {
                             if (arryList.size() == 3) {
                                 type1.setVisibility(View.VISIBLE);
                                 type1.setText(arryList.get(0).getTikcettype() + " £ " + arryList.get(0).getPrice() + " (" + arryList.get(0).getNumberofticket() + ") ");
@@ -728,10 +884,9 @@ public class EventDetailsActivity extends AppCompatActivity {
                     dialog1.dismiss();
                 }
 
-            }
-            else if (totalTicket<numofTicker1){
-                edt_numbersOfTicket.setError("limit exceed. "+totalTicket +" are remaining tickets.");
-            }else {
+            } else if (totalTicket < numofTicker1) {
+                edt_numbersOfTicket.setError("limit exceed. " + totalTicket + " are remaining tickets.");
+            } else {
                 dialog1.dismiss();
             }
         }
@@ -793,15 +948,15 @@ public class EventDetailsActivity extends AppCompatActivity {
                     event_city.setText(response.body().getData().get(0).getCity());
 
 
-                    if (edit.equalsIgnoreCase("republish")) {
-                        Calendar c = Calendar.getInstance();
+//                    if (edit.equalsIgnoreCase("republish")) {
+                    Calendar c = Calendar.getInstance();
 
-                        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
-                        mDate.setText(df.format(c.getTime()));
-                    } else {
-                        mDate.setText(Util.convertTimeStampDate(Long.parseLong(response.body().getData().get(0).getEventStartDt())));
-                    }
+                    mDate.setText(df.format(c.getTime()));
+//                    } else {
+//                        mDate.setText(Util.convertTimeStampDate(Long.parseLong(response.body().getData().get(0).getEventStartDt())));
+//                    }
 
 
                     eventTime_from.setText(response.body().getData().get(0).getTimeFrom());
@@ -812,15 +967,15 @@ public class EventDetailsActivity extends AppCompatActivity {
                     to_date = Util.convertTimeStampDate(Long.parseLong(response.body().getData().get(0).getEventEndDt()));
 
 
-                    if (edit.equalsIgnoreCase("republish")) {
-                        Calendar c = Calendar.getInstance();
+//                    if (edit.equalsIgnoreCase("republish")) {
+                    Calendar c1 = Calendar.getInstance();
 
-                        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                    SimpleDateFormat df1 = new SimpleDateFormat("dd/MM/yyyy");
 
-                        event_details_date_etto.setText(df.format(c.getTime()));
-                    } else {
-                        event_details_date_etto.setText(to_date);
-                    }
+                    event_details_date_etto.setText(df1.format(c1.getTime()));
+//                    } else {
+//                        event_details_date_etto.setText(to_date);
+//                    }
 
                     getPrceET = prceET;
                     getTicketET = ticketET;

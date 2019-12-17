@@ -43,7 +43,7 @@ public class UsersLiveEventsAdapter extends RecyclerView.Adapter<UsersLiveEvents
     @Override
     public UsersLiveEventsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.business_vustom_event_thumbs,parent,false);
+        View view = layoutInflater.inflate(R.layout.business_vustom_event_thumbs, parent, false);
 
         return new UsersLiveEventsAdapter.ViewHolder(view);
     }
@@ -51,16 +51,19 @@ public class UsersLiveEventsAdapter extends RecyclerView.Adapter<UsersLiveEvents
     @Override
     public void onBindViewHolder(@NonNull UsersLiveEventsAdapter.ViewHolder holder, final int position) {
         Collections.reverse(datumArrayList);
+
         holder.category.setText(BusinessUserPRofileActivity.profileliveevents.get(position));
-        Glide.with(context).load(BusinessUserPRofileActivity.images.get(position)).apply(new RequestOptions().override(200,200)).into(holder.imageView);
+        Glide.with(context).load(BusinessUserPRofileActivity.images.get(position)).apply(new RequestOptions().override(200, 200)).into(holder.imageView);
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, BookEventActivity.class);
-                intent.putExtra("eventType","live");
+                intent.putExtra("eventType", "live");
                 intent.putExtra("lat", Home.lat);
-                intent.putExtra("lng",Home.lng);
-                intent.putExtra("event_id",datumArrayList.get(position).getEventId().toString());
+                intent.putExtra("lng", Home.lng);
+                intent.putExtra("event_id", datumArrayList.get(position).getEventId().toString());
                 context.startActivity(intent);
             }
         });

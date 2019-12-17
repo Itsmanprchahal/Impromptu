@@ -433,10 +433,10 @@ public class Home_Screen extends AppCompatActivity {
                             lastposition = 3;
                             if (framgposition == 3) {
                                 Menu menu = bottomNavigationView.getMenu();
-                                menu.findItem(R.id.wallettab).setIcon(R.drawable.profileactive);
+                                menu.findItem(R.id.wallettab).setIcon(R.drawable.walletinactive);
                                 menu.findItem(R.id.profiletab).setIcon(R.drawable.useractive);
-                                menu.findItem(R.id.hometab).setIcon(R.drawable.profileinactive);
-                                menu.findItem(R.id.messagetab).setIcon(R.drawable.messageactive);
+                                menu.findItem(R.id.hometab).setIcon(R.drawable.profileactive);
+                                menu.findItem(R.id.messagetab).setIcon(R.drawable.messageinactive);
                             }
                             return true;
 

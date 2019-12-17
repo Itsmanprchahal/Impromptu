@@ -360,7 +360,7 @@ public class NormalGetProfile extends AppCompatActivity {
                             LinearLayoutManager layoutManager = new LinearLayoutManager(NormalGetProfile.this, LinearLayoutManager.HORIZONTAL, false);
                             hostRecycler.setLayoutManager(layoutManager);
 
-                            UsersLiveEventsAdapter adapter = new UsersLiveEventsAdapter(NormalGetProfile.this, datumList);
+                            NormalUserLiveEvents adapter = new NormalUserLiveEvents(NormalGetProfile.this);
                             hostRecycler.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         }

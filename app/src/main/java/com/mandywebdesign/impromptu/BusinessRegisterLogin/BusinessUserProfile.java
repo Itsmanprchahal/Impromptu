@@ -207,7 +207,6 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
                                 UserName.setText(userName);
                             }
 
-//                            UserName.setText(userName);
                             Address.setText(address1);
                             Address2.setText(address2);
                             AboutUs.setText(desc);

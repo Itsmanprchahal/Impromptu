@@ -244,10 +244,9 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
 
             @Override
             public void onFailure(Call<Normal_past_booked> call, Throwable t) {
+                progressDialog.dismiss();
                 Log.d("++++", "t" + t);
                 if (NoInternet.isOnline(getContext()) == false) {
-                    progressDialog.dismiss();
-
                     NoInternet.dialog(getContext());
                 }else {
                     Toast.makeText(getContext(), ""+t.getMessage(), Toast.LENGTH_SHORT).show();
