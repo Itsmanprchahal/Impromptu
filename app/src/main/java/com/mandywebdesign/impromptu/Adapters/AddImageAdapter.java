@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.mandywebdesign.impromptu.Home_Screen_Fragments.AddEvents.Add_Event_Activity;
 import com.mandywebdesign.impromptu.R;
 
 import java.util.List;
@@ -46,20 +47,12 @@ public class AddImageAdapter extends RecyclerView.Adapter<AddImageAdapter.ViewHo
             public void onClick(View v) {
                 int position = viewHolder.getAdapterPosition();
                 addImagePojos.remove(position);
+                Add_Event_Activity.part.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, addImagePojos.size());
 
             }
         });
-
-//        viewHolder.imageView.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//              Animation animation = AnimationUtils.loadAnimation(context, R.anim.shake_anim);
-//              viewHolder.imageView.setAnimation(animation);
-//                return false;
-//            }
-//        });
     }
 
     @Override

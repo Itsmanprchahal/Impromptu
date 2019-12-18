@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,7 +76,7 @@ public class FilteredScreen extends Fragment implements DiscreteScrollView.OnIte
         Bundle bundle = getArguments();
         String loc = bundle.getString("loc");
         String date = bundle.getString("date");
-        String price = bundle.getString("price");
+        final String price = bundle.getString("price");
         String gender = bundle.getString("gender");
         String lat = bundle.getString("lat");
         String lng = bundle.getString("lng");
@@ -117,22 +119,26 @@ public class FilteredScreen extends Fragment implements DiscreteScrollView.OnIte
                         NormalFilterEvents data = response.body();
                         List<NormalFilterEvents.Datum> datumList = data.getData();
 
-                        if (datumList.size()==0)
-                        {
+                        if (datumList.size() == 0) {
                             noEvnets.setVisibility(View.VISIBLE);
                         }
                         for (NormalFilterEvents.Datum datum : datumList) {
                             name1.add(datum.getBEventHostname());
                             title.add(datum.getTitle());
-                            if (datum.getPrice().equals("0")) {
 
-                                prices.add("Free");
+                            if (datum.getPrice() != null) {
+                                if (datum.getPrice().equals("0")) {
+
+                                    prices.add("Free");
+                                } else {
+                                    prices.add("£ " + datum.getPrice());
+                                }
                             } else {
-                                prices.add("£ " + datum.getPrice());
+                                prices.add("Paid");
                             }
 
 
-                            String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM","am").replaceFirst("PM","pm");
+                            String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
 
                             if (time_t.startsWith("0")) {
                                 timeFrom = time_t.substring(1);
@@ -152,9 +158,9 @@ public class FilteredScreen extends Fragment implements DiscreteScrollView.OnIte
 
                             if (formattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
                                 event_time.add("Today at " + timeFrom);
-                            } else if (getFormattedDate.matches(Util.convertTimeStampDate (Long.parseLong(datum.getEventStartDt())))) {
-                                 event_time.add("Tomorrow at " + timeFrom);
-                            }else {
+                            } else if (getFormattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
+                                event_time.add("Tomorrow at " + timeFrom);
+                            } else {
                                 String date = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
                                 /*to change server date formate*/
                                 String s1 = date;

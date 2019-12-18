@@ -501,6 +501,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/defaultmargin"
                         android:layout_marginRight="@dimen/defaultmargin"
+                        android:layout_marginBottom="@dimen/_10sdp"
                         android:id="@+id/invite_layouit"
                         android:gravity="center_horizontal">
 
@@ -521,6 +522,7 @@
                             android:layout_height="30dp"
                             android:layout_alignParentRight="true"
                             android:layout_marginTop="15dp"
+                            android:layout_centerVertical="true"
                             android:layout_marginRight="10dp"
                             android:src="@drawable/userlogo" />
 

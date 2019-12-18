@@ -542,15 +542,14 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
 
     void moveItem(int oldPos, int newPos) {
         String image = image_uris.get(oldPos);
-
         image_uris.remove(oldPos);
         image_uris.add(newPos, image);
         adapter.notifyItemMoved(oldPos, newPos);
-
     }
 
     void deleteItem(final int position) {
         image_uris.remove(position);
+        part.remove(position);
         adapter.notifyItemRemoved(position);
     }
 

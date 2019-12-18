@@ -39,6 +39,7 @@ import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.Rating;
 import com.mandywebdesign.impromptu.Utils.Constants;
 import com.mandywebdesign.impromptu.ui.BarcodeEncoder;
+import com.mandywebdesign.impromptu.ui.BookEventActivity;
 import com.mandywebdesign.impromptu.ui.ProgressBarClass;
 
 import retrofit2.Call;
@@ -161,7 +162,7 @@ public class Normal_pastbooked extends RecyclerView.Adapter<Normal_pastbooked.Vi
             @Override
             public void onClick(View v) {
                 String value = Past.event_id.get(i);
-                Intent intent = new Intent(context, BusinessEventDetailAcitvity.class);
+                Intent intent = new Intent(context, BookEventActivity.class);
                 intent.putExtra("event_id", value);
                 intent.putExtra("eventType", "past");
                 editor.putString(Constants.itemPosition, String.valueOf(i));

@@ -138,7 +138,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     static String timeFrom;
     String timeTo, usertype, eventType, event_book, tickettypedialog;
     String itemPos,event_status;
-    static String value, S_token, fav_id, hostname, payvalue, spinnerposition, tickettypespinnerposintion;
+    static String value, S_token, fav_id, hostname, payvalue, spinnerposition, tickettypespinnerposintion,tickettypeS;
     public static ArrayList<String> image = new ArrayList<>();
     public static String id, cate, host_image, transaction_id, tickets_booked_by_user, date, decs, follow_status, postcode, ticktType, ticktprice, timefrom, hostimage, timeto, title, location, location2, city, gender, andendeenumber, numberoftickts, freeEvent, username;
     int CurrentPage = 0;
@@ -230,6 +230,9 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                 }else if (eventType.equals("past"))
                 {
                     mBookEvent.setVisibility(View.GONE);
+                    askforrefund.setVisibility(View.GONE);
+                    eventdistance.setVisibility(View.GONE);
+                    invite_layouit.setVisibility(View.GONE);
                 }else {
                     mBookEvent.setVisibility(View.GONE);
                     invite_layouit.setVisibility(View.GONE);
@@ -778,6 +781,8 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             }else {
                 dialogtickttype.setText(ticktType);
             }
+        }else {
+
         }
 
         if (tickets_booked_by_user.equals("0"))
@@ -1002,7 +1007,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                         for (int i = 0; i < bookedUsersList.size(); i++) {
                             userImage.add(response.body().getData().get(i).getFile());
                             user_id.add(response.body().getData().get(i).getUserid().toString());
-                            Log.d("userImage", "" + response.body().getData().get(i).toString());
                         }
                     } else {
                         peoplegoing.setText("no one has booked yet");
@@ -1165,7 +1169,20 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             title = datum.getTitle();
                             timefrom = datum.getTimeFrom();
                             timeto = datum.getTimeTo();
-                            organiserName.setText(datum.getHostname());
+                            hostname = datum.getHostname();
+                            if (hostname != null) {
+                                String[] name = hostname.split(" ");
+                                if (name.length == 1) {
+                                    String Fname = name[0];
+                                    organiserName.setText(Fname + " ");
+                                } else {
+                                    String Fname = name[0];
+                                    String Lname = name[1];
+                                    organiserName.setText(Fname + " " + Lname.subSequence(0, 1));
+                                }
+                            } else {
+                                organiserName.setText(hostname);
+                            }
                             host_image = datum.getHostImage();
                             image = (ArrayList<String>) datum.getFile().get(0).getImg();
 //                            Collections.reverse(image);
