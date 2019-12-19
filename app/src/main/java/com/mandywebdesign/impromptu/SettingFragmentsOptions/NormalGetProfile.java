@@ -137,14 +137,17 @@ public class NormalGetProfile extends AppCompatActivity {
                     totlaEvents.setVisibility(View.VISIBLE);
                 } else {
                     getProfile(BToken, userid);
+                    getUsersLiveEvents(userid);
+                    getUsersattendingEvents(userid);
                     editprofile.setVisibility(View.GONE);
-                    user_profile_Event.setVisibility(View.GONE);
-                    pastEvents.setVisibility(View.GONE);
-                    user_profile_Event_attend.setVisibility(View.GONE);
-                    hostRecycler.setVisibility(View.GONE);
-                    eventsAttendingRecycler.setVisibility(View.GONE);
-                    totlaEvents.setVisibility(View.GONE);
+                    user_profile_Event.setVisibility(View.VISIBLE);
+                    pastEvents.setVisibility(View.VISIBLE);
+                    user_profile_Event_attend.setVisibility(View.VISIBLE);
+                    hostRecycler.setVisibility(View.VISIBLE);
+                    eventsAttendingRecycler.setVisibility(View.VISIBLE);
+                    totlaEvents.setVisibility(View.VISIBLE);
                 }
+
 
 
             } else {

@@ -51,12 +51,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         try {
             jsonObject1 = new JSONObject(data);
             title = jsonObject1.getString("title");
-            counter = jsonObject1.getString("booking_counter");
+            //Todo: add user id in all response
             get_userID = jsonObject1.getString("user_id");
             Log.d("remotedata", get_userID);
             message = jsonObject1.getString("body");
             click_action = jsonObject1.getString("click_action");
             invoiceId = jsonObject1.get("invoice_id").toString();
+            counter = jsonObject1.getString("booking_counter");
         } catch (JSONException e) {
             e.printStackTrace();
         }

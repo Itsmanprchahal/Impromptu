@@ -83,6 +83,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
 
         viewHolder.title.setText(Messages.eventTitle.get(i));
+//        if (Messages.hostUserID.equals())
         if (Messages.lastMEsg.get(i).length() > 13) {
             viewHolder.ticketType.setText(Messages.lastMEsg.get(i).substring(0, 12) + "...");
         } else {
@@ -167,7 +168,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                     intent.putExtra("eventID", Messages.eventID.get(pos));
                     intent.putExtra("event_host_user", Messages.hostUserID.get(pos));
                     intent.putExtra("event_status",Messages.event_status.get(pos));
-
 
                     if (Messages.MesgCount.get(i).equals("0")) {
                         intent.putExtra("seen_status", "0");

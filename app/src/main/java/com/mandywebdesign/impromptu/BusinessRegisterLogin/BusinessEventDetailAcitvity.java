@@ -129,7 +129,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
     TextView ticketview;
     Button seemessagesforthisevent;
     Intent intent;
-    String from, getTickets_booked_by_user, bookedticket;
+    String from, userTYpe,getTickets_booked_by_user, bookedticket;
     static String tickettypeposition, spinnerposition, total_ticket, tot, remaini_tickets, getSpinnerposition = "1";
     Spinner spinner, ticketype_spinner;
     Button dialogButoon;
@@ -172,6 +172,8 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
         checkEventtype();
         gotomessagebox(value);
 
+
+
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         users.setLayoutManager(layoutManager);
@@ -202,7 +204,6 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
             value = intent.getStringExtra("event_id");
             event_type = intent.getStringExtra("eventType");
             otherEvnts = intent.getStringExtra("other_events");
-
 
             if (event_type.equals("draft")) {
 
@@ -285,6 +286,11 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                 if (!S_Token.equalsIgnoreCase("")) {
                     getEventdata(S_Token, value);
                     getUsers(S_Token, value);
+                    linearLayout.setVisibility(View.GONE);
+                    checkInGuest.setVisibility(View.GONE);
+                }else {
+                    getEventdata(BToken, value);
+                    getUsers(BToken, value);
                     linearLayout.setVisibility(View.GONE);
                     checkInGuest.setVisibility(View.GONE);
                 }

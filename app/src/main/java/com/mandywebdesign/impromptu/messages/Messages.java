@@ -63,7 +63,7 @@ public class Messages extends Fragment {
     FragmentManager manager;
     Dialog progressDialog;
     TextView nomessages;
-    public static String BToken, S_Token;
+    public static String BToken, S_Token,userID;
     public static ArrayList<String> eventTitle = new ArrayList<>();
     public static ArrayList<String> eventImage = new ArrayList<>();
     public static ArrayList<String> eventTicketType = new ArrayList<>();
@@ -88,6 +88,7 @@ public class Messages extends Fragment {
         sharedPreferences = getContext().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         BToken = sharedPreferences.getString("Usertoken", "");
         S_Token = sharedPreferences.getString("Socailtoken", "");
+        userID = sharedPreferences.getString("UserToken","");
         sharedPreferences1 = getActivity().getSharedPreferences("BusinessProfile1", Context.MODE_PRIVATE);
         profileupdatedPref = getContext().getSharedPreferences("profileupdated", Context.MODE_PRIVATE);
 
@@ -157,6 +158,7 @@ public class Messages extends Fragment {
                             eventImage.add(datum.getFile().toString());
                             eventID.add(datum.getEventId().toString().toString());
                             hostUserID.add(datum.getSenderId().toString().toString());
+
                             MesgCount.add(datum.getCount().toString().toString());
                             lastMEsg.add(datum.getLastMessageShow().toString());
                             if (!datum.getRatingStatus().equals(""))

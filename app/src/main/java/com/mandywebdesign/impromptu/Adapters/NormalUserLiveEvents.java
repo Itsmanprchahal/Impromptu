@@ -46,7 +46,7 @@ public class NormalUserLiveEvents extends RecyclerView.Adapter<NormalUserLiveEve
             public void onClick(View v) {
 
 
-                    Intent intent = new Intent(context, BusinessEventDetailAcitvity.class);
+                    Intent intent = new Intent(context, BookEventActivity.class);
                     intent.putExtra("event_id", NormalGetProfile.liveevent_id.get(i));
                     intent.putExtra("eventType","live");
                     context.startActivity(intent);

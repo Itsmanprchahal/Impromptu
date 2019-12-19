@@ -451,32 +451,6 @@ public class EventDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-//                        if (hourOfDay < 10 && minute < 10) {
-//                            eventTime_from.setText("0" + hourOfDay + ":" + "0" + minute);
-//                        } else if (hourOfDay < 10) {
-//                            eventTime_from.setText("0" + hourOfDay + ":" + minute);
-//                        } else if (minute < 10) {
-//                            eventTime_from.setText(hourOfDay + ":" + "0" + minute);
-//                        } else {
-//                            eventTime_from.setText(hourOfDay + ":" + minute);
-//                        }
-//
-//                        String myTime = eventTime_from.getText().toString();
-//                        SimpleDateFormat df = new SimpleDateFormat("HH:mm");
-//                        Date d = null;
-//                        try {
-//                            d = df.parse(myTime);
-//                        } catch (ParseException e) {
-//                            e.printStackTrace();
-//                        }
-//                        Calendar cal = Calendar.getInstance();
-//                        cal.setTime(d);
-//                        cal.add(Calendar.MINUTE, 60);
-//                        String newTime = df.format(cal.getTime());
-//                        eventTime_to.setText(newTime);
-//
-//                        to_time_milles = eventTime_to.getText().toString();
-
                         if (date1 != 0) {
                             if (date1 != calendar.get(Calendar.DAY_OF_MONTH)) {
                                 if (hourOfDay < 10 && minute < 10) {
@@ -539,7 +513,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                                     //it's before current'
                                     eventTime_to.setText("");
                                     eventTime_from.setText("");
-                                    Toast.makeText(getApplicationContext(), "Invalid Time", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Invalid Time", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         } else {
@@ -563,7 +537,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                             } else {
                                 //it's before current'
                                 eventTime_from.setText("");
-                                Toast.makeText(getApplicationContext(), "Invalid Time", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Invalid Time", Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -587,26 +561,6 @@ public class EventDetailsActivity extends AppCompatActivity {
                 final TimePickerDialog timePickerDialog = new TimePickerDialog(EventDetailsActivity.this, R.style.DialogTheme, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
-                       /* //convert time to milliseconds
-                        final Calendar calendar = Calendar.getInstance();
-                         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        calendar.set(Calendar.MINUTE, minute);
-                        calendar.set(Calendar.SECOND, 0);
-                        calendar.set(Calendar.MILLISECOND, 0);
-
-                        if (hourOfDay < 10 && minute < 10) {
-                            eventTime_to.setText("0" + hourOfDay + ":" + "0" + minute);
-                        } else if (hourOfDay < 10) {
-                            eventTime_to.setText("0" + hourOfDay + ":" + minute);
-                        } else if (minute < 10) {
-                            eventTime_to.setText(hourOfDay + ":" + "0" + minute);
-                        } else {
-                            eventTime_to.setText(hourOfDay + ":" + minute);
-                        }
-                        to_time_milles = eventTime_to.getText().toString();
-
-                        Log.d("time", "" + to_time_milles);*/
 
                         if (date1 != 0) {
                             if (date1 != calendar.get(Calendar.DAY_OF_MONTH)) {
@@ -643,7 +597,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 } else {
                                     //it's before current'
                                     eventTime_to.setText("");
-                                    Toast.makeText(getApplicationContext(), "Invalid Time", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Invalid Time", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         } else {
@@ -671,7 +625,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                             } else {
                                 //it's before current'
                                 eventTime_to.setText("");
-                                Toast.makeText(getApplicationContext(), "Invalid Time", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Invalid Time", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
