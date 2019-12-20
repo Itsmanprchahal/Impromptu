@@ -637,6 +637,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                             }
 
 
+
                             if (time_t.startsWith("0") && time_to.startsWith("0")) {
                                 timeFrom = time_t.substring(1);
                                 timeTo = time_to.substring(1);

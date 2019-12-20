@@ -52,6 +52,7 @@ import com.mandywebdesign.impromptu.SettingFragmentsOptions.FAQs;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.HelpActivity;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.HelpOptionsActivity;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalGetProfile;
+import com.mandywebdesign.impromptu.SettingFragmentsOptions.PaymentDetailActivity;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.PrivancyActivity;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.TandCOptions;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.TermsAndConditionsActivityy;
@@ -150,8 +151,10 @@ public class Setting extends Fragment {
                 @Override
                 public void onClick(View view) {
                     //Creating dialog box
-                    AlertDialog alert = builder.create();
-                    alert.show();
+//                    AlertDialog alert = builder.create();
+//                    alert.show();
+                    Intent intent = new Intent(getContext(), PaymentDetailActivity.class);
+                    startActivity(intent);
                 }
             });
 

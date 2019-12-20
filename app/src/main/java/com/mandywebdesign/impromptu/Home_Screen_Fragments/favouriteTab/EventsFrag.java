@@ -165,7 +165,24 @@ public class EventsFrag extends Fragment implements DiscreteScrollView.OnItemCha
                                         }
                                     }
                                 }
-                            } else {
+
+                            }else if(!time_t.startsWith("0"))
+                            {
+                                if (time_t.contains(":00"))
+                                {
+                                    timeFrom = time_t.replace(":00","");
+
+                                    if (timeFrom.startsWith("0"))
+                                    {
+                                        timeFrom = time_t.replace("0","");
+                                        if (timeFrom.contains(":"))
+                                        {
+                                            timeFrom = time_t.replace(":","").replace("0","").replace("00","");
+                                        }
+                                    }
+                                }
+                            }
+                            else {
                                 timeFrom = time_t.substring(0);
                             }
 

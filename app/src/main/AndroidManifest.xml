@@ -48,10 +48,11 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:ignore="HardcodedDebugMode">
+        <activity android:name=".SettingFragmentsOptions.PaymentDetailActivity"></activity>
         <activity android:name=".BusinessRegisterLogin.BusinessUserPRofileActivity">
-
             <intent-filter>
                 <action android:name="com.mandywebdesign.impromptu.PROFILE_BUSINESS" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -65,11 +66,14 @@
         <activity android:name=".SettingFragmentsOptions.TermsAndConditionsActivityy" />
         <activity android:name=".SettingFragmentsOptions.HelpActivity" />
         <activity android:name=".ui.PayActivity" />
-        <activity android:name=".messages.ChatBoxActivity" >
-            <!--<intent-filter>
+        <activity android:name=".messages.ChatBoxActivity">
+
+            <!--
+            <intent-filter>
                 <action android:name="com.mandywebdesign.impromptu.EVENT_CHAT" />
                 <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity android:name=".BusinessRegisterLogin.SeeAll_activity" />
         <activity android:name=".BusinessRegisterLogin.QrScanActivity" />
@@ -91,10 +95,10 @@
         <activity android:name=".SettingFragmentsOptions.NormalGetProfile">
             <intent-filter>
                 <action android:name="com.mandywebdesign.impromptu.PROFILE_NORMAL" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity android:name=".SettingFragmentsOptions.NormalPublishProfile" />
         <activity
             android:name=".SettingFragmentsOptions.FAQs"
@@ -191,7 +195,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/googleclientId" />
-
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />

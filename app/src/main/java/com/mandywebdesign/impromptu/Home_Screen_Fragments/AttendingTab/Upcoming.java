@@ -168,24 +168,41 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
                             String start_date = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
                             String end_date = Util.convertTimeStampDate(Long.parseLong(datum.getEventEndDt()));
 
-                                 if (time_t.startsWith("0")) {
-                                    timeFrom = time_t.substring(1);
-                                     if (time_t.contains(":00"))
-                                     {
-                                         timeFrom = time_t.replace(":00","");
+                            if (time_t.startsWith("0")) {
+                                timeFrom = time_t.substring(1);
+                                if (time_t.contains(":00"))
+                                {
+                                    timeFrom = time_t.replace(":00","");
 
-                                         if (timeFrom.startsWith("0"))
-                                         {
-                                             timeFrom = time_t.replace("0","");
-                                             if (timeFrom.contains(":"))
-                                             {
-                                                 timeFrom = time_t.replace(":","").replace("0","").replace("00","");
-                                             }
-                                         }
-                                     }
-                                } else {
-                                    timeFrom = time_t.substring(0);
+                                    if (timeFrom.startsWith("0"))
+                                    {
+                                        timeFrom = time_t.replace("0","");
+                                        if (timeFrom.contains(":"))
+                                        {
+                                            timeFrom = time_t.replace(":","").replace("0","").replace("00","");
+                                        }
+                                    }
                                 }
+
+                            }else if(!time_t.startsWith("0"))
+                            {
+                                if (time_t.contains(":00"))
+                                {
+                                    timeFrom = time_t.replace(":00","");
+
+                                    if (timeFrom.startsWith("0"))
+                                    {
+                                        timeFrom = time_t.replace("0","");
+                                        if (timeFrom.contains(":"))
+                                        {
+                                            timeFrom = time_t.replace(":","").replace("0","").replace("00","");
+                                        }
+                                    }
+                                }
+                            }
+                            else {
+                                timeFrom = time_t.substring(0);
+                            }
 
                                 Calendar c = Calendar.getInstance();
 
@@ -217,7 +234,7 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
                             images.add(datum.getFile().get(0));
                             event_id.add(datum.getEventId().toString());
                             userID.add(datum.getUserId().toString());
-
+                            reverse();
 
                             adapter = new Normal_upcoming_events_adpater(getContext(), fragmentManager);
                             recyclerView.setAdapter(adapter);
@@ -229,7 +246,7 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
                             SharedPreferences.Editor editor = itemPositionPref.edit();
                             editor.clear();
                             editor.commit();
-                            reverse();
+                            ;
                         }
                     } else if (response.body().getStatus().equals("400")) {
                         noEvnets.setVisibility(View.VISIBLE);

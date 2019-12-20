@@ -138,11 +138,53 @@ public class FilteredScreen extends Fragment implements DiscreteScrollView.OnIte
                             }
 
 
-                            String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
+                          /*  String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
 
                             if (time_t.startsWith("0")) {
                                 timeFrom = time_t.substring(1);
                             } else {
+                                timeFrom = time_t.substring(0);
+                            }
+*/
+
+                            String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
+
+                            Log.d("eventTIme", time_t);
+
+
+                            if (time_t.startsWith("0")) {
+                                timeFrom = time_t.substring(1);
+                                if (time_t.contains(":00"))
+                                {
+                                    timeFrom = time_t.replace(":00","");
+
+                                    if (timeFrom.startsWith("0"))
+                                    {
+                                        timeFrom = time_t.replace("0","");
+                                        if (timeFrom.contains(":"))
+                                        {
+                                            timeFrom = time_t.replace(":","").replace("0","").replace("00","");
+                                        }
+                                    }
+                                }
+
+                            }else if(!time_t.startsWith("0"))
+                            {
+                                if (time_t.contains(":00"))
+                                {
+                                    timeFrom = time_t.replace(":00","");
+
+                                    if (timeFrom.startsWith("0"))
+                                    {
+                                        timeFrom = time_t.replace("0","");
+                                        if (timeFrom.contains(":"))
+                                        {
+                                            timeFrom = time_t.replace(":","").replace("0","").replace("00","");
+                                        }
+                                    }
+                                }
+                            }
+                            else {
                                 timeFrom = time_t.substring(0);
                             }
 

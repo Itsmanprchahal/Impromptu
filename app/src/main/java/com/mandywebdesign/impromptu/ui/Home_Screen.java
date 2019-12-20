@@ -193,6 +193,7 @@ public class Home_Screen extends AppCompatActivity {
 
 
             } else {
+                Bundle bundle = new Bundle();
                 FragmentTransaction transaction = manager.beginTransaction();
                 transaction.replace(R.id.home_frame_layout, new Events());
                 transaction.commit();

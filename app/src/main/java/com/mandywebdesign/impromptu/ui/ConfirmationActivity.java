@@ -106,7 +106,37 @@ public class ConfirmationActivity extends AppCompatActivity {
 
                             if (timeto.startsWith("0")) {
                                 timeFrom = timeto.substring(1);
-                            } else {
+                                if (timeto.contains(":00"))
+                                {
+                                    timeFrom = timeto.replace(":00","");
+
+                                    if (timeFrom.startsWith("0"))
+                                    {
+                                        timeFrom = timeto.replace("0","");
+                                        if (timeFrom.contains(":"))
+                                        {
+                                            timeFrom = timeto.replace(":","").replace("0","").replace("00","");
+                                        }
+                                    }
+                                }
+
+                            }else if(!timeto.startsWith("0"))
+                            {
+                                if (timeto.contains(":00"))
+                                {
+                                    timeFrom = timeto.replace(":00","");
+
+                                    if (timeFrom.startsWith("0"))
+                                    {
+                                        timeFrom = timeto.replace("0","");
+                                        if (timeFrom.contains(":"))
+                                        {
+                                            timeFrom = timeto.replace(":","").replace("0","").replace("00","");
+                                        }
+                                    }
+                                }
+                            }
+                            else {
                                 timeFrom = timeto.substring(0);
                             }
 
@@ -189,10 +219,10 @@ public class ConfirmationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-//                Intent intent = new Intent(ConfirmationActivity.this,Home_Screen.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                intent.putExtra("bookevent","eventBooked");
-//                startActivity(intent);
+                Intent intent = new Intent(ConfirmationActivity.this,Home_Screen.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("bookevent","eventBooked");
+                startActivity(intent);
                 finish();
 
             }
@@ -201,10 +231,10 @@ public class ConfirmationActivity extends AppCompatActivity {
         confirm_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(ConfirmationActivity.this,Home_Screen.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                intent.putExtra("bookevent","eventBooked");
-//                startActivity(intent);
+                Intent intent = new Intent(ConfirmationActivity.this,Home_Screen.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("bookevent","eventBooked");
+                startActivity(intent);
                 finish();
             }
         });

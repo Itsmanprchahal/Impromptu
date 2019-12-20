@@ -794,6 +794,10 @@ public class EventDetailsActivity extends AppCompatActivity {
                         type2.setVisibility(View.VISIBLE);
                         type2.setText(arryList.get(1).getTikcettype() + " £ " + arryList.get(1).getPrice() + " (" + arryList.get(1).getNumberofticket() + ") ");
 
+                        type = arryList.get(0).getTikcettype() + "," + arryList.get(1).getTikcettype() ;
+                        values = arryList.get(0).getPrice() + "," + arryList.get(1).getPrice() ;
+                        numbertickets = arryList.get(0).getNumberofticket() + "," + arryList.get(1).getNumberofticket();
+
                         edt_tiketType.setText("");
                         edt_price.setText("");
                         edt_numbersOfTicket.setText("");

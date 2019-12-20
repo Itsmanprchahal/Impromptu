@@ -1112,14 +1112,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                         e.printStackTrace();
                                     }
                                 }
-                                /*else if (eventType.equals("fav"))
-                                {
-
-                                    if (getTickets_booked_by_user.equals("0")||getTickets_booked_by_user.equals("1"))
-                                    {
-                                        mBookEvent.setVisibility(View.VISIBLE);
-                                    }
-                                }*/
                             }
                             ticktType = datum.getTicketType();
                             transaction_id = datum.getTransactionId().toString();
@@ -1257,10 +1249,38 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                     book_time.setText(timeFrom + " - " + timeTo);
                                 }
                             } else if (!time_t.startsWith("0") && !time_to.startsWith("0")) {
-                                timeFrom = time_t.substring(0);
-                                timeTo = time_to.substring(0);
+                                if (time_t.contains(":00") ||time_to.contains(":00"))
+                                {
+                                    timeFrom = time_t.replace(":00","");
+                                    timeTo = time_to.replace(":00","");
+
+                                    if (timeFrom.startsWith("0"))
+                                    {
+                                        timeFrom = time_t.replace("0","");
+                                        if (timeFrom.contains(":"))
+                                        {
+                                            timeFrom = time_t.replace(":","").replace("0","").replace("00","");
+                                        }
+                                    }
+                                }
+
+                                if (time_to.contains(":00"))
+                                {
+                                    timeTo = time_to.replace(":00","");
+
+                                    if (timeTo.startsWith("0"))
+                                    {
+                                        timeTo = time_to.replace("0","");
+                                        if (timeTo.contains(":"))
+                                        {
+                                            timeTo = time_to.replace(":","").replace("0","").replace("00","");
+                                        }
+                                    }
+                                }
                                 book_time.setText(timeFrom + " - " + timeTo);
                             }
+
+//                            ------------------------------------------------------------------
 
                             int count = Integer.parseInt(String.valueOf(datum.getTotalEventBookings()));
                             int lesscount = count - 1;
