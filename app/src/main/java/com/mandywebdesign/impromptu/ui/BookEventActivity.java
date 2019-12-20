@@ -83,6 +83,7 @@ import com.mandywebdesign.impromptu.Utils.Util;
 import com.yarolegovich.mp.util.Utils;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -109,7 +110,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     FragmentManager fragmentManager;
     Button mBookEvent, askforrefund;
     ImageButton follow_button;
-    TextView organiserName, eventdistance, book_time, book_categry, peoplegoing, seeAll, remainingTicketTV, invitefriends, dialogtickttype, link1, link2, link3;
+    TextView organiserName, eventdistance, book_time,book_time2, book_categry, peoplegoing, seeAll, remainingTicketTV, invitefriends, dialogtickttype, link1, link2, link3;
     ViewPager viewPager;
     RecyclerView users;
     ReadMoreTextView descri;
@@ -503,6 +504,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     }
 
     private void init() {
+        book_time2 = findViewById(R.id.book_time2);
         eventdistance = findViewById(R.id.eventdistance);
         follow_button = findViewById(R.id.follow_button);
         screenshot = findViewById(R.id.screenshot);
@@ -1201,12 +1203,13 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
                             //get Time to in AM PM
 
-                            String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
-                            String time_to = Util.convertTimeStampToTime(Long.parseLong(datum.getEventEndDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
+                            String time_t = Util.convertTimeStampToTime1(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
+                            String time_to = Util.convertTimeStampToTime1(Long.parseLong(datum.getEventEndDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
                             String start_date = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
                             String end_date = Util.convertTimeStampDate(Long.parseLong(datum.getEventEndDt()));
 
-                            Calendar c = Calendar.getInstance();
+                            Log.d("timecheck",time_t+"  "+time_to);
+                             Calendar c = Calendar.getInstance();
 
                             DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                             Date date = null;
@@ -1224,62 +1227,24 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             } else {
                                 book_date.setText(start_date + " - " + end_date);
                             }
-                            if (time_t.startsWith("0") && time_to.startsWith("0")) {
-                                timeFrom = time_t.substring(1);
-                                timeTo = time_to.substring(1);
-                                book_time.setText(timeFrom + " - " + timeTo);
 
-                            } else if (time_t.startsWith("0")) {
-                                timeFrom = time_t.substring(1);
-                                if (time_to.startsWith("0")) {
-                                    timeTo = time_to.substring(1);
-                                    book_time.setText(timeFrom + " - " + timeTo);
-                                } else {
-                                    timeTo = time_to.substring(0);
-                                    book_time.setText(timeFrom + " - " + timeTo);
-                                }
-                            } else if (time_to.startsWith("0")) {
-                                timeTo = time_to.substring(1);
-                                if (time_t.startsWith("0")) {
-                                    timeFrom = time_t.substring(1);
-                                    book_time.setText(timeFrom + " - " + timeTo);
-//                                    book_date.setText(start_date + " - " + end_date);
-                                } else {
-                                    timeFrom = time_t.substring(0);
-                                    book_time.setText(timeFrom + " - " + timeTo);
-                                }
-                            } else if (!time_t.startsWith("0") && !time_to.startsWith("0")) {
-                                if (time_t.contains(":00") ||time_to.contains(":00"))
-                                {
-                                    timeFrom = time_t.replace(":00","");
-                                    timeTo = time_to.replace(":00","");
-
-                                    if (timeFrom.startsWith("0"))
-                                    {
-                                        timeFrom = time_t.replace("0","");
-                                        if (timeFrom.contains(":"))
-                                        {
-                                            timeFrom = time_t.replace(":","").replace("0","").replace("00","");
-                                        }
-                                    }
-                                }
-
-                                if (time_to.contains(":00"))
-                                {
-                                    timeTo = time_to.replace(":00","");
-
-                                    if (timeTo.startsWith("0"))
-                                    {
-                                        timeTo = time_to.replace("0","");
-                                        if (timeTo.contains(":"))
-                                        {
-                                            timeTo = time_to.replace(":","").replace("0","").replace("00","");
-                                        }
-                                    }
-                                }
-                                book_time.setText(timeFrom + " - " + timeTo);
+                            String startTime = removeLeadingZeroes(time_t);
+                            if (startTime.contains(":00"))
+                            {
+                                startTime = removeLeadingZeroes(time_t).replace(":00","");
+                                book_time.setText(startTime);
+                            }else {
+                                book_time.setText(removeLeadingZeroes(time_t));
                             }
 
+                            String endTime = removeLeadingZeroes(time_to);
+                            if (endTime.contains(":00"))
+                            {
+                                endTime = removeLeadingZeroes(time_to).replace(":00","");
+                                book_time2.setText(endTime);
+                            }else {
+                                book_time2.setText(removeLeadingZeroes(endTime));
+                            }
 //                            ------------------------------------------------------------------
 
                             int count = Integer.parseInt(String.valueOf(datum.getTotalEventBookings()));
@@ -1380,6 +1345,16 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             }
         });
     }
+
+    String removeLeadingZeroes(String s) {
+        StringBuilder sb = new StringBuilder(s);
+        while (sb.length() > 0 && sb.charAt(0) == '0') {
+          sb.deleteCharAt(0);
+        }
+
+        return sb.toString();
+    }
+
 
     public void addFav(final String token, final String value) {
 

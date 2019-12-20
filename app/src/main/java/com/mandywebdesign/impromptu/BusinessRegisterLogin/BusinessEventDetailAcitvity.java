@@ -100,7 +100,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
     ImageButton backon_b_eventdetail;
     View view;
     RecyclerView users;
-    TextView category, event_price, datetime, loc, BusinessEvent_detailsFragment_book_time, ticketPrice, ticketPrice1, ticketPrice2, dtotalPrice, dticketPrice, numberofTickets, numberofTickets1, numberofTickets2, totalPrice, totalPrice1, totalPrice2, freetext, event_title, see_all,
+    TextView category, event_price, datetime, loc, BusinessEvent_detailsFragment_book_time,BusinessEvent_detailsFragment_book_time2, ticketPrice, ticketPrice1, ticketPrice2, dtotalPrice, dticketPrice, numberofTickets, numberofTickets1, numberofTickets2, totalPrice, totalPrice1, totalPrice2, freetext, event_title, see_all,
             BusinessEvent_detailsFragment_book_link1, BusinessEvent_detailsFragment_book_link2, BusinessEvent_detailsFragment_book_link3;
     public TextView peoplecoming, revenue;
     ReadMoreTextView descri;
@@ -626,8 +626,8 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                             fav_id = datum.getFavourite().toString();
 
                             //get Time to in AM PM
-                            String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
-                            String time_to = Util.convertTimeStampToTime(Long.parseLong(datum.getEventEndDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
+                            String time_t = Util.convertTimeStampToTime1(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
+                            String time_to = Util.convertTimeStampToTime1(Long.parseLong(datum.getEventEndDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
                             String start_date = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
                             String end_date = Util.convertTimeStampDate(Long.parseLong(datum.getEventEndDt()));
                             if (start_date.matches(end_date)) {
@@ -637,33 +637,22 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                             }
 
 
+                            String startTime = removeLeadingZeroes(time_t);
+                            if (startTime.contains(":00"))
+                            {
+                                startTime = removeLeadingZeroes(time_t).replace(":00","");
+                                BusinessEvent_detailsFragment_book_time.setText(startTime);
+                            }else {
+                                BusinessEvent_detailsFragment_book_time.setText(removeLeadingZeroes(time_t));
+                            }
 
-                            if (time_t.startsWith("0") && time_to.startsWith("0")) {
-                                timeFrom = time_t.substring(1);
-                                timeTo = time_to.substring(1);
-                                BusinessEvent_detailsFragment_book_time.setText(timeFrom + " - " + timeTo);
-                            } else if (time_t.startsWith("0")) {
-                                timeFrom = time_t.substring(1);
-                                if (time_to.startsWith("0")) {
-                                    timeTo = time_to.substring(1);
-                                    BusinessEvent_detailsFragment_book_time.setText(timeFrom + " - " + timeTo);
-                                } else {
-                                    timeTo = time_to.substring(0);
-                                    BusinessEvent_detailsFragment_book_time.setText(timeFrom + " - " + timeTo);
-                                }
-                            } else if (time_to.startsWith("0")) {
-                                timeTo = time_to.substring(1);
-                                if (time_t.startsWith("0")) {
-                                    timeFrom = time_t.substring(1);
-                                    BusinessEvent_detailsFragment_book_time.setText(timeFrom + " - " + timeTo);
-                                } else {
-                                    timeFrom = time_t.substring(0);
-                                    BusinessEvent_detailsFragment_book_time.setText(timeFrom + " - " + timeTo);
-                                }
-                            } else if (!time_t.startsWith("0") && !time_to.startsWith("0")) {
-                                timeFrom = time_t.substring(0);
-                                timeTo = time_to.substring(0);
-                                BusinessEvent_detailsFragment_book_time.setText(timeFrom + " - " + timeTo);
+                            String endTime = removeLeadingZeroes(time_to);
+                            if (endTime.contains(":00"))
+                            {
+                                endTime = removeLeadingZeroes(time_to).replace(":00","");
+                                BusinessEvent_detailsFragment_book_time2.setText(endTime);
+                            }else {
+                                BusinessEvent_detailsFragment_book_time2.setText(removeLeadingZeroes(endTime));
                             }
 
 
@@ -743,12 +732,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                                 BusinessEvent_detailsFragment_book_link3.setText(content);
                                 BusinessEvent_detailsFragment_book_link3.setVisibility(View.VISIBLE);
                             }
-//                            if (ticktprice.equals("")) {
-//                                ticketPrice.setText("£ 0");
-//                                totalPrice.setText("£ 0");
-//                            } else {
-//                                ticketPrice.setText("£ " + ticktprice);
-//                            }
+
                             loc.setText(location + " , " + postcode);
 
 
@@ -806,6 +790,15 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                 progressDialog.dismiss();
             }
         });
+    }
+
+    String removeLeadingZeroes(String s) {
+        StringBuilder sb = new StringBuilder(s);
+        while (sb.length() > 0 && sb.charAt(0) == '0') {
+            sb.deleteCharAt(0);
+        }
+
+        return sb.toString();
     }
 
     public void dialog(final String value) {
@@ -1118,6 +1111,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
     }
 
     private void init() {
+        BusinessEvent_detailsFragment_book_time2 = findViewById(R.id.BusinessEvent_detailsFragment_book_time2);
         BusinessEvent_detailsFragment_book_button = findViewById(R.id.BusinessEvent_detailsFragment_book_button);
         ticketview = findViewById(R.id.ticketview);
         revenue = findViewById(R.id.revenue);

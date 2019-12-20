@@ -220,21 +220,56 @@
                             android:textSize="@dimen/_12sdp"
                             tools:ignore="MissingConstraints" />
 
-                        <TextView
-                            android:id="@+id/BusinessEvent_detailsFragment_book_time"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:orientation="horizontal"
                             android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_marginTop="@dimen/_2sdp"
-                            android:fontFamily="@font/sfuitextlight"
-                            android:shadowColor="#A90A0A0A"
-                            android:shadowDx="2"
-                            android:shadowDy="2"
-                            android:shadowRadius="3"
-                            android:text=""
-                            android:textColor="@color/colortextwhite"
-                            android:textSize="@dimen/_12sdp"
-                            tools:ignore="MissingConstraints"></TextView>
+                            android:layout_marginTop="@dimen/_2sdp">
+
+                            <TextView
+                                android:id="@+id/BusinessEvent_detailsFragment_book_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:shadowColor="#A90A0A0A"
+                                android:shadowDx="2"
+                                android:shadowDy="2"
+                                android:shadowRadius="3"
+                                android:fontFamily="@font/sfuitextlight"
+                                android:textColor="@color/colortextwhite"
+                                android:textSize="@dimen/_12sdp"
+                                tools:ignore="MissingConstraints"></TextView>
+
+                            <TextView
+                                android:id="@+id/BusinessEvent_detailsFragment_book_time1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" - "
+                                android:shadowColor="#A90A0A0A"
+                                android:shadowDx="2"
+                                android:shadowDy="2"
+                                android:shadowRadius="3"
+                                android:fontFamily="@font/sfuitextlight"
+                                android:textColor="@color/colortextwhite"
+                                android:textSize="@dimen/_12sdp"
+                                tools:ignore="MissingConstraints"></TextView>
+
+                            <TextView
+                                android:id="@+id/BusinessEvent_detailsFragment_book_time2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:shadowColor="#A90A0A0A"
+                                android:shadowDx="2"
+                                android:shadowDy="2"
+                                android:shadowRadius="3"
+                                android:fontFamily="@font/sfuitextlight"
+                                android:textColor="@color/colortextwhite"
+                                android:textSize="@dimen/_12sdp"
+                                tools:ignore="MissingConstraints"></TextView>
+                        </LinearLayout>
+
 
 
                         <TextView

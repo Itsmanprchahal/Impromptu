@@ -60,14 +60,17 @@ public class Util {
     }
 
     public static String convertTimeStampToTime(long timestamp) {
-//        Calendar calendar = Calendar.getInstance();
-//        TimeZone tz = TimeZone.getDefault();
-//        calendar.add(Calendar.MILLISECOND, tz.getOffset(calendar.getTimeInMillis()));
-////        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
-//        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
-//        sdf.setTimeZone(tz);
-//        Date currenTimeZone = new Date(timestamp * 1000);
-//        return sdf.format(currenTimeZone);
+
+        // Create a DateFormatter object for displaying date in specified format.
+        DateFormat formatter = new SimpleDateFormat("hh:mm a");
+
+        // Create a calendar object that will convert the date and time value in milliseconds to date.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timestamp);
+        return formatter.format(calendar.getTime());
+    }
+
+    public static String convertTimeStampToTime1(long timestamp) {
 
         // Create a DateFormatter object for displaying date in specified format.
         DateFormat formatter = new SimpleDateFormat("hh:mm a");
