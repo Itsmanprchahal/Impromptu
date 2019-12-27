@@ -139,15 +139,14 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
                             name1.add(datum.getBEventHostname());
                             title.add(datum.getTitle());
                             draftsimages.add(datum.getFile().toString());
-                            if(datum.getPrice()!=null)
-                            {
+                            if (datum.getPrice() != null) {
                                 if (datum.getPrice().equals("")) {
 
                                     prices.add("Free");
                                 } else {
                                     prices.add(datum.getPrice());
                                 }
-                            }else {
+                            } else {
                                 prices.add("Paid");
                             }
 
@@ -156,40 +155,11 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
                             String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
 
 
-                            if (time_t.startsWith("0")) {
-                                timeFrom = time_t.substring(1);
-                                if (time_t.contains(":00"))
-                                {
-                                    timeFrom = time_t.replace(":00","");
-
-                                    if (timeFrom.startsWith("0"))
-                                    {
-                                        timeFrom = time_t.replace("0","");
-                                        if (timeFrom.contains(":"))
-                                        {
-                                            timeFrom = time_t.replace(":","").replace("0","").replace("00","");
-                                        }
-                                    }
-                                }
-
-                            }else if(!time_t.startsWith("0"))
-                            {
-                                if (time_t.contains(":00"))
-                                {
-                                    timeFrom = time_t.replace(":00","");
-
-                                    if (timeFrom.startsWith("0"))
-                                    {
-                                        timeFrom = time_t.replace("0","");
-                                        if (timeFrom.contains(":"))
-                                        {
-                                            timeFrom = time_t.replace(":","").replace("0","").replace("00","");
-                                        }
-                                    }
-                                }
-                            }
-                            else {
-                                timeFrom = time_t.substring(0);
+                            timeFrom = removeLeadingZeroes(time_t);
+                            if (timeFrom.contains(":00")) {
+                                timeFrom = removeLeadingZeroes(time_t).replace(":00", "");
+                            } else {
+                                timeFrom = removeLeadingZeroes(time_t);
                             }
 
                             Calendar c = Calendar.getInstance();
@@ -300,5 +270,14 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
         Collections.reverse(event_id);
         Collections.reverse(eventTIme);
         Collections.reverse(draftsimages);
+    }
+
+    String removeLeadingZeroes(String s) {
+        StringBuilder sb = new StringBuilder(s);
+        while (sb.length() > 0 && sb.charAt(0) == '0') {
+            sb.deleteCharAt(0);
+        }
+
+        return sb.toString();
     }
 }

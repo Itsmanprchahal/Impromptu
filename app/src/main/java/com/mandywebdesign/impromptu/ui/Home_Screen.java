@@ -586,6 +586,7 @@ public class Home_Screen extends AppCompatActivity {
         }
     }
 
+
     private void dialog() {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.updateprofilepopoup);

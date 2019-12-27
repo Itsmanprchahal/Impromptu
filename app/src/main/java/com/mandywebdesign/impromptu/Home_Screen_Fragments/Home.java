@@ -389,12 +389,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                             //split date format
                             rel_date.add(datum.getDate());
-                            /*to change server date formate*/
-                            String s1 = rel_date.get(0);
-                            String[] str = s1.split("/");
-                            String str1 = str[0];
-                            String str2 = str[1];
-                            String str3 = str[2];
+
 
                             // rel_time.add(datum.getTimeTo());
 
@@ -409,28 +404,17 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
                             String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
 
 
-                            if (time_t.startsWith("0")) {
-                                timeFrom = time_t.substring(1);
-                                if (time_t.contains(":00"))
-                                {
-                                    timeFrom = time_t.replace(":00","");
-
-                                    if (timeFrom.startsWith("0"))
-                                    {
-                                        timeFrom = time_t.replace("0","");
-                                        if (timeFrom.contains(":"))
-                                        {
-                                            timeFrom = time_t.replace(":","").replace("0","").replace("00","");
-                                        }
-                                    }
-                                }
-                            } else {
-                                timeFrom = time_t.substring(0);
+                            timeFrom = removeLeadingZeroes(time_t);
+                            if (timeFrom.contains(":00"))
+                            {
+                                timeFrom = removeLeadingZeroes(time_t).replace(":00","");
+                            }else {
+                                timeFrom = removeLeadingZeroes(time_t);
                             }
 
                             Calendar c = Calendar.getInstance();
 
-                            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                             formattedDate = df.format(c.getTime());
                             c.add(Calendar.DATE, 1);
 
@@ -438,11 +422,20 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                             System.out.println("Current time ==> " + c.getTime());
 
-                            if (formattedDate.matches(rel_date.get(0))) {
+                            if (formattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
                                 rel_time.add("Today at " + timeFrom);
-                            } else if (getFormattedDate.matches(rel_date.get(0))) {
+                            } else if (getFormattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
                                 rel_time.add("Tomorrow at " + timeFrom);
                             } else {
+
+                                String dateformat = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
+                                /*to change server date formate*/
+                                String s1 = dateformat;
+                                String[] str = s1.split("/");
+                                String str1 = str[0];
+                                String str2 = str[1];
+                                String str3 = str[2];
+
                                 rel_time.add(str1 + "/" + str2 + "/" + str3 + " at " + timeFrom);
                             }
 
@@ -614,42 +607,13 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
                             Log.d("eventTIme", time_t);
 
 
-                            if (time_t.startsWith("0")) {
-                                timeFrom = time_t.substring(1);
-                                if (time_t.contains(":00"))
-                                {
-                                    timeFrom = time_t.replace(":00","");
-
-                                    if (timeFrom.startsWith("0"))
-                                    {
-                                        timeFrom = time_t.replace("0","");
-                                        if (timeFrom.contains(":"))
-                                        {
-                                            timeFrom = time_t.replace(":","").replace("0","").replace("00","");
-                                        }
-                                    }
-                                }
-
-                            }else if(!time_t.startsWith("0"))
+                            timeFrom = removeLeadingZeroes(time_t);
+                            if (timeFrom.contains(":00"))
                             {
-                                if (time_t.contains(":00"))
-                                {
-                                    timeFrom = time_t.replace(":00","");
-
-                                    if (timeFrom.startsWith("0"))
-                                    {
-                                        timeFrom = time_t.replace("0","");
-                                        if (timeFrom.contains(":"))
-                                        {
-                                            timeFrom = time_t.replace(":","").replace("0","").replace("00","");
-                                        }
-                                    }
-                                }
+                                timeFrom = removeLeadingZeroes(time_t).replace(":00","");
+                            }else {
+                                timeFrom = removeLeadingZeroes(time_t);
                             }
-                            else {
-                                timeFrom = time_t.substring(0);
-                            }
-
                             Calendar c = Calendar.getInstance();
 
                             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -761,10 +725,12 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
                                 final Date dateObj = sdf.parse(time_t);
                                 time_t = new SimpleDateFormat("hh:mm aa").format(dateObj);
 
-                                if (time_t.startsWith("0")) {
-                                    timeFrom = time_t.substring(1);
-                                } else {
-                                    timeFrom = time_t.substring(0);
+                                timeFrom = removeLeadingZeroes(time_t);
+                                if (timeFrom.contains(":00"))
+                                {
+                                    timeFrom = removeLeadingZeroes(time_t).replace(":00","");
+                                }else {
+                                    timeFrom = removeLeadingZeroes(time_t);
                                 }
 
                                 Calendar c = Calendar.getInstance();
@@ -959,5 +925,15 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
         }
 
     }
+
+    String removeLeadingZeroes(String s) {
+        StringBuilder sb = new StringBuilder(s);
+        while (sb.length() > 0 && sb.charAt(0) == '0') {
+            sb.deleteCharAt(0);
+        }
+
+        return sb.toString();
+    }
+
 
 }

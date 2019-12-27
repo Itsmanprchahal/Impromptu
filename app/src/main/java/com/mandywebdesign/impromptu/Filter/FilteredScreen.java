@@ -137,55 +137,17 @@ public class FilteredScreen extends Fragment implements DiscreteScrollView.OnIte
                                 prices.add("Paid");
                             }
 
-
-                          /*  String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
-
-                            if (time_t.startsWith("0")) {
-                                timeFrom = time_t.substring(1);
-                            } else {
-                                timeFrom = time_t.substring(0);
-                            }
-*/
-
                             String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
 
                             Log.d("eventTIme", time_t);
 
 
-                            if (time_t.startsWith("0")) {
-                                timeFrom = time_t.substring(1);
-                                if (time_t.contains(":00"))
-                                {
-                                    timeFrom = time_t.replace(":00","");
-
-                                    if (timeFrom.startsWith("0"))
-                                    {
-                                        timeFrom = time_t.replace("0","");
-                                        if (timeFrom.contains(":"))
-                                        {
-                                            timeFrom = time_t.replace(":","").replace("0","").replace("00","");
-                                        }
-                                    }
-                                }
-
-                            }else if(!time_t.startsWith("0"))
+                            timeFrom = removeLeadingZeroes(time_t);
+                            if (timeFrom.contains(":00"))
                             {
-                                if (time_t.contains(":00"))
-                                {
-                                    timeFrom = time_t.replace(":00","");
-
-                                    if (timeFrom.startsWith("0"))
-                                    {
-                                        timeFrom = time_t.replace("0","");
-                                        if (timeFrom.contains(":"))
-                                        {
-                                            timeFrom = time_t.replace(":","").replace("0","").replace("00","");
-                                        }
-                                    }
-                                }
-                            }
-                            else {
-                                timeFrom = time_t.substring(0);
+                                timeFrom = removeLeadingZeroes(time_t).replace(":00","");
+                            }else {
+                                timeFrom = removeLeadingZeroes(time_t);
                             }
 
                             Calendar c = Calendar.getInstance();
@@ -287,4 +249,14 @@ public class FilteredScreen extends Fragment implements DiscreteScrollView.OnIte
     public void onCurrentItemChanged(@Nullable RecyclerView.ViewHolder viewHolder, int adapterPosition) {
 
     }
+
+    String removeLeadingZeroes(String s) {
+        StringBuilder sb = new StringBuilder(s);
+        while (sb.length() > 0 && sb.charAt(0) == '0') {
+            sb.deleteCharAt(0);
+        }
+
+        return sb.toString();
+    }
+
 }

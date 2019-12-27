@@ -6,10 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,22 +48,22 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class History extends Fragment  implements  DiscreteScrollView.OnItemChangedListener {
+public class History extends Fragment implements DiscreteScrollView.OnItemChangedListener {
 
     View view;
-    SharedPreferences sharedPreferences,itemPositionPref,sharedPreferences1,profileupdatedPref;
+    SharedPreferences sharedPreferences, itemPositionPref, sharedPreferences1, profileupdatedPref;
     FragmentManager manager;
     TextView noEvnets;
-    String user,BToken,S_Token,itemPosition,formattedDate,getFormattedDate,timeFrom;
+    String user, BToken, S_Token, itemPosition, formattedDate, getFormattedDate, timeFrom;
     DiscreteScrollView recyclerView;
     InfiniteScrollAdapter infiniteAdapter;
     Dialog progressDialog;
-    public  static ArrayList<String> name1=new ArrayList<>();
+    public static ArrayList<String> name1 = new ArrayList<>();
     public static ArrayList<String> title = new ArrayList<>();
     public static ArrayList<String> prices = new ArrayList<>();
     public static ArrayList<String> addres = new ArrayList<>();
     public static ArrayList<String> eventTime = new ArrayList<>();
-    public  static ArrayList<String> categois = new ArrayList<>();
+    public static ArrayList<String> categois = new ArrayList<>();
     public static ArrayList<String> images = new ArrayList<>();
     public static ArrayList<String> event_id = new ArrayList<>();
     public static ArrayList<String> ratingstatus = new ArrayList<>();
@@ -85,15 +87,15 @@ public class History extends Fragment  implements  DiscreteScrollView.OnItemChan
         profileupdatedPref = getContext().getSharedPreferences("profileupdated", Context.MODE_PRIVATE);
         sharedPreferences = getContext().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         itemPositionPref = getContext().getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);
-        user = "Bearer "+ sharedPreferences.getString("Usertoken", "");
-        BToken = sharedPreferences.getString("Usertoken","");
+        user = "Bearer " + sharedPreferences.getString("Usertoken", "");
+        BToken = sharedPreferences.getString("Usertoken", "");
         S_Token = sharedPreferences.getString("Socailtoken", "");
         itemPosition = itemPositionPref.getString(Constants.itemPosition, String.valueOf(0));
 
         recyclerView = (DiscreteScrollView) view.findViewById(R.id.business_history__recyclerview);
         recyclerView.setOrientation(DSVOrientation.HORIZONTAL);
         recyclerView.addOnItemChangedListener(this);
-        infiniteAdapter = InfiniteScrollAdapter.wrap(new Business_History_adapter(getContext(),manager,S_Token));
+        infiniteAdapter = InfiniteScrollAdapter.wrap(new Business_History_adapter(getContext(), manager, S_Token));
         recyclerView.setAdapter(infiniteAdapter);
         recyclerView.setItemTransitionTimeMillis(DiscreteScrollViewOptions.getTransitionTime());
         recyclerView.setItemTransformer(new ScaleTransformer.Builder()
@@ -104,13 +106,12 @@ public class History extends Fragment  implements  DiscreteScrollView.OnItemChan
         if (!BToken.equalsIgnoreCase("")) {
 
             histortEvnts(BToken);
-        } else if (!S_Token.equalsIgnoreCase(""))
-        {
+        } else if (!S_Token.equalsIgnoreCase("")) {
             histortEvnts(S_Token);
-        }else {
+        } else {
             progressDialog.dismiss();
         }
-        return  view;
+        return view;
     }
 
     private void histortEvnts(String bToken) {
@@ -125,7 +126,7 @@ public class History extends Fragment  implements  DiscreteScrollView.OnItemChan
         ratingstatus.clear();
         rating_overall.clear();
         progressDialog.show();
-        Call<RetroHistoryEvents> call = WebAPI.getInstance().getApi().history("Bearer "+bToken,"application/json");
+        Call<RetroHistoryEvents> call = WebAPI.getInstance().getApi().history("Bearer " + bToken, "application/json");
         call.enqueue(new Callback<RetroHistoryEvents>() {
             @Override
             public void onResponse(Call<RetroHistoryEvents> call, Response<RetroHistoryEvents> response) {
@@ -142,100 +143,68 @@ public class History extends Fragment  implements  DiscreteScrollView.OnItemChan
                             categois.add(datum.getCategory());
                             images.add(datum.getFile());
                             event_id.add(datum.getEventId().toString());
-                            if (datum.getRating()!=null)
-                            {
+                            if (datum.getRating() != null) {
                                 ratingstatus.add(datum.getRating().toString());
                             }
 
-                            if (datum.getTotalRating()!=null)
-                            {
+                            if (datum.getTotalRating() != null) {
                                 rating_overall.add(datum.getTotalRating().toString());
                             }
 
-                            if (datum.getPrice()!=null)
-                            {
+                            if (datum.getPrice() != null) {
                                 if (datum.getPrice().equals("")) {
 
                                     prices.add("Free");
                                 } else {
                                     prices.add(datum.getPrice());
                                 }
-                            }else {
+                            } else {
                                 prices.add("Paid");
                             }
 
 
-                            String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.","am").replaceFirst("p.m.","pm").replaceFirst("AM","am").replaceFirst("PM","pm");
+                            String time_t = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
 
 
-                            if (time_t.startsWith("0")) {
-                                timeFrom = time_t.substring(1);
-                                if (time_t.contains(":00"))
-                                {
-                                    timeFrom = time_t.replace(":00","");
-
-                                    if (timeFrom.startsWith("0"))
-                                    {
-                                        timeFrom = time_t.replace("0","");
-                                        if (timeFrom.contains(":"))
-                                        {
-                                            timeFrom = time_t.replace(":","").replace("0","").replace("00","");
-                                        }
-                                    }
-                                }
-
-                            }else if(!time_t.startsWith("0"))
-                            {
-                                if (time_t.contains(":00"))
-                                {
-                                    timeFrom = time_t.replace(":00","");
-
-                                    if (timeFrom.startsWith("0"))
-                                    {
-                                        timeFrom = time_t.replace("0","");
-                                        if (timeFrom.contains(":"))
-                                        {
-                                            timeFrom = time_t.replace(":","").replace("0","").replace("00","");
-                                        }
-                                    }
-                                }
-                            }
-                            else {
-                                timeFrom = time_t.substring(0);
+                            timeFrom = removeLeadingZeroes(time_t);
+                            if (timeFrom.contains(":00")) {
+                                timeFrom = removeLeadingZeroes(time_t).replace(":00", "");
+                            } else {
+                                timeFrom = removeLeadingZeroes(time_t);
                             }
 
-                                Calendar c = Calendar.getInstance();
+                            Calendar c = Calendar.getInstance();
 
-                                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                                formattedDate = df.format(c.getTime());
-                                c.add(Calendar.DATE, 1);
+                            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                            formattedDate = df.format(c.getTime());
+                            c.add(Calendar.DATE, 1);
 
-                                getFormattedDate = df.format(c.getTime());
-                                // Toast.makeText(getContext(), "TOMORROW_DATE"+getFormattedDate, Toast.LENGTH_SHORT).show();
+                            getFormattedDate = df.format(c.getTime());
+                            // Toast.makeText(getContext(), "TOMORROW_DATE"+getFormattedDate, Toast.LENGTH_SHORT).show();
 
-                                System.out.println("Current time ==> " + c.getTime());
+                            System.out.println("Current time ==> " + c.getTime());
 
-                                if (formattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
-                                    eventTime.add("Today at " + timeFrom);
-                                } else if (getFormattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
-                                    eventTime.add("Tomorrow at " + timeFrom);
-                                } else {
+                            if (formattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
+                                eventTime.add("Today at " + timeFrom);
+                            } else if (getFormattedDate.matches(Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt())))) {
+                                eventTime.add("Tomorrow at " + timeFrom);
+                            } else {
 
-                                    String date = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
-                                    /*to change server date formate*/
-                                    String s1 = date;
-                                    String[] str = s1.split("/");
-                                    String str1 = str[0];
-                                    String str2 = str[1];
-                                    String str3 = str[2];
-                                    eventTime.add(str1 + "/" + str2 + "/" + str3 + " at " + timeFrom);
-                                }
+                                String date = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
+                                /*to change server date formate*/
+                                String s1 = date;
+                                String[] str = s1.split("/");
+                                String str1 = str[0];
+                                String str2 = str[1];
+                                String str3 = str[2];
+                                eventTime.add(str1 + "/" + str2 + "/" + str3 + " at " + timeFrom);
+                            }
 
 
                             categois.add(datum.getCategory());
                             // Toast.makeText(getContext(), "Toast", Toast.LENGTH_SHORT).show();
 
-                            adapter = new Business_History_adapter(getContext(), manager,S_Token);
+                            adapter = new Business_History_adapter(getContext(), manager, S_Token);
                             recyclerView.setAdapter(adapter);
                             recyclerView.getLayoutManager().scrollToPosition(Integer.parseInt(itemPosition));
 
@@ -267,7 +236,7 @@ public class History extends Fragment  implements  DiscreteScrollView.OnItemChan
                         getActivity().startActivity(intent);
                         getActivity().finish();
                     }
-                }else {
+                } else {
                     Intent intent = new Intent(getContext(), NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
@@ -279,13 +248,12 @@ public class History extends Fragment  implements  DiscreteScrollView.OnItemChan
 
             @Override
             public void onFailure(Call<RetroHistoryEvents> call, Throwable t) {
-                if (NoInternet.isOnline(getContext())==false)
-                {
+                if (NoInternet.isOnline(getContext()) == false) {
                     progressDialog.dismiss();
 
                     NoInternet.dialog(getContext());
-                }else {
-                    Toast.makeText(getContext(), ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -311,4 +279,14 @@ public class History extends Fragment  implements  DiscreteScrollView.OnItemChan
         Collections.reverse(rating_overall);
         Collections.reverse(ratingstatus);
     }
+
+    String removeLeadingZeroes(String s) {
+        StringBuilder sb = new StringBuilder(s);
+        while (sb.length() > 0 && sb.charAt(0) == '0') {
+            sb.deleteCharAt(0);
+        }
+
+        return sb.toString();
+    }
+
 }

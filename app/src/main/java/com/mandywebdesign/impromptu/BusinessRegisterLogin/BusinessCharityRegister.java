@@ -283,7 +283,7 @@ public class BusinessCharityRegister extends AppCompatActivity {
                         public void onSuccess(InstanceIdResult instanceIdResult) {
                             String token = instanceIdResult.getToken();
                             Log.e("token",token);
-                            BussinessLogin(BusinessLoginEmail,BusinessPasswordEt);
+                            BussinessLogin(BusinessLoginEmail,BusinessPasswordEt,token);
 
                         }
                     });
@@ -300,8 +300,8 @@ public class BusinessCharityRegister extends AppCompatActivity {
         });
     }
 
-    private void BussinessLogin(String mBusinessLoginET, String mBusinessPasswordEt) {
-        Call<RetroLoginPojo> call = WebAPI.getInstance().getApi().LoginUser(mBusinessLoginET, mBusinessPasswordEt);
+    private void BussinessLogin(String mBusinessLoginET, String mBusinessPasswordEt, String token) {
+        Call<RetroLoginPojo> call = WebAPI.getInstance().getApi().LoginUser(mBusinessLoginET, mBusinessPasswordEt,token);
 
         call.enqueue(new Callback<RetroLoginPojo>() {
             @Override

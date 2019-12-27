@@ -104,40 +104,13 @@ public class ConfirmationActivity extends AppCompatActivity {
                             timeto = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt()));
                             image = String.valueOf(datum.getFile().get(0).getImg().toString());
 
-                            if (timeto.startsWith("0")) {
-                                timeFrom = timeto.substring(1);
-                                if (timeto.contains(":00"))
-                                {
-                                    timeFrom = timeto.replace(":00","");
-
-                                    if (timeFrom.startsWith("0"))
-                                    {
-                                        timeFrom = timeto.replace("0","");
-                                        if (timeFrom.contains(":"))
-                                        {
-                                            timeFrom = timeto.replace(":","").replace("0","").replace("00","");
-                                        }
-                                    }
-                                }
-
-                            }else if(!timeto.startsWith("0"))
+                            timeFrom = removeLeadingZeroes(timeto);
+                            if (timeFrom.contains(":00"))
                             {
-                                if (timeto.contains(":00"))
-                                {
-                                    timeFrom = timeto.replace(":00","");
+                                timeFrom = removeLeadingZeroes(timeto).replace(":00","");
 
-                                    if (timeFrom.startsWith("0"))
-                                    {
-                                        timeFrom = timeto.replace("0","");
-                                        if (timeFrom.contains(":"))
-                                        {
-                                            timeFrom = timeto.replace(":","").replace("0","").replace("00","");
-                                        }
-                                    }
-                                }
-                            }
-                            else {
-                                timeFrom = timeto.substring(0);
+                            }else {
+                                timeFrom=(removeLeadingZeroes(timeto));
                             }
 
                             Calendar c = Calendar.getInstance();
@@ -250,5 +223,14 @@ public class ConfirmationActivity extends AppCompatActivity {
         confirm_close = (ImageView) findViewById(R.id.confirm_close);
         confirm_date = findViewById(R.id.confirm_date);
         confirm_category = findViewById(R.id.confirm_category);
+    }
+
+    String removeLeadingZeroes(String s) {
+        StringBuilder sb = new StringBuilder(s);
+        while (sb.length() > 0 && sb.charAt(0) == '0') {
+            sb.deleteCharAt(0);
+        }
+
+        return sb.toString();
     }
 }

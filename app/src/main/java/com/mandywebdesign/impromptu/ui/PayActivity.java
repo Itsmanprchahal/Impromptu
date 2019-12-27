@@ -21,6 +21,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,6 +36,7 @@ import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.NormalPayment;
 import com.mandywebdesign.impromptu.Retrofit.Rating;
+import com.mandywebdesign.impromptu.Retrofit.SavedCardsResponse;
 import com.stripe.android.Stripe;
 import com.stripe.android.TokenCallback;
 import com.stripe.android.model.Card;
@@ -49,6 +52,7 @@ import retrofit2.Response;
 
 public class PayActivity extends AppCompatActivity {
 
+    CheckBox savethiscard;
     View view;
     Button pay;
     RatingBar ratingBar;
@@ -67,6 +71,7 @@ public class PayActivity extends AppCompatActivity {
     String tokenPay, eventId, tot;
     static String total_tickets, ticketprice, totalprice, paid, eventID,event_Title,tickettype,imagerecieve;
     Intent intent;
+    boolean saveStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,20 +128,16 @@ public class PayActivity extends AppCompatActivity {
 
     private void listeners() {
 
-
-        CardNumber.addTextChangedListener(new TextWatcher() {
+        GetSavdCards(userToken);
+        savethiscard.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                String text = CardNumber.getText().toString();
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                {
+                    saveStatus = true;
+                }else {
+                    saveStatus = false;
+                }
 
             }
         });
@@ -167,16 +168,6 @@ public class PayActivity extends AppCompatActivity {
             }
         });
 
-        Card_ExpiryDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-//                DatePickerDialog datePickerDialog = new DatePickerDialog(PayActivity.this, R.style.DialogTheme, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-//                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-//                datePickerDialog.show();
-            }
-        });
-
         dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -191,8 +182,6 @@ public class PayActivity extends AppCompatActivity {
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                fragmentManager.beginTransaction().replace(R.id.home_frame_layout, new BookEventFragment()).commit();
-
                finish();
 
             }
@@ -207,7 +196,6 @@ public class PayActivity extends AppCompatActivity {
                 String E_Date = Card_ExpiryDate.getText().toString();
                 String E_YEar = pay_expiry_year.getText().toString();
                 String csv = Card_CSV.getText().toString();
-
 
                 if (cardnuber.isEmpty() && Cardname.isEmpty() && E_Date.isEmpty() && E_YEar.isEmpty() && csv.isEmpty()) {
                     CardNumber.setError("Enter Card Number");
@@ -225,20 +213,22 @@ public class PayActivity extends AppCompatActivity {
                     pay_expiry_year.setError("Enter Card Expiry Year");
                 } else if (csv.isEmpty()) {
                     Card_CSV.setError("Enter Card CSV number");
-                } else {
-
+                }else if (CardNumber.length()<16)
+                {
+                    CardNumber.setError("Enter Valid Card");
+                }else {
                     progressDialog.show();
                     String exp_month = Card_ExpiryDate.getText().toString();
                     String exp_year = pay_expiry_year.getText().toString();
+                    String cardholdername = CardName.getText().toString();
                     eventId = intent.getStringExtra("event_id");
-
-                    onClickSomething(cardnuber, exp_month, exp_year, csv);
+                    onClickSomething(cardnuber, exp_month, exp_year, csv,cardholdername);
                 }
             }
         });
     }
 
-    public void onClickSomething(final String cardNumber, final String cardExpMonth, final String cardExpYear, final String cardCVC) {
+    public void onClickSomething(final String cardNumber, final String cardExpMonth, final String cardExpYear, final String cardCVC, final String cardholdername) {
         Card card = new Card(
                 cardNumber,
                 Integer.valueOf(cardExpMonth),
@@ -264,16 +254,16 @@ public class PayActivity extends AppCompatActivity {
 
                 tokenPay = token.getId();
 
-                SetData(userToken, eventId, totalprice, tokenPay, total_tickets,tickettype);
+                SetData(userToken, eventId, totalprice, tokenPay, total_tickets,tickettype,cardNumber,cardExpMonth,cardExpYear,cardholdername,saveStatus);
             }
         });
 
     }
 
 
-    public void SetData(final String userToken, final String eventID, String totalprice, String tokenPay, String total_tickets,String tickettype) {
+    public void SetData(final String userToken, final String eventID, String totalprice, String tokenPay, String total_tickets,String tickettype,String card_number,String month,String year,String cardholdername,boolean savecard) {
 
-        Call<NormalPayment> call = WebAPI.getInstance().getApi().normalPayment("Bearer " + userToken, eventID, totalprice, tokenPay, total_tickets,tickettype);
+        Call<NormalPayment> call = WebAPI.getInstance().getApi().normalPayment("Bearer " + userToken, eventID, totalprice, tokenPay, total_tickets,tickettype,card_number,month,year,cardholdername,savecard);
         call.enqueue(new Callback<NormalPayment>() {
             @Override
             public void onResponse(Call<NormalPayment> call, Response<NormalPayment> response) {
@@ -314,7 +304,7 @@ public class PayActivity extends AppCompatActivity {
 
 
     private void init() {
-        Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
+        savethiscard = findViewById(R.id.savethiscard);
         pay = (Button) findViewById(R.id.pay_button);
         CardNumber = (EditText) findViewById(R.id.pay_card_number);
         CardName = (EditText) findViewById(R.id.pay_card_name);
@@ -326,6 +316,36 @@ public class PayActivity extends AppCompatActivity {
         tickt_num = (TextView) findViewById(R.id.pay_ticket_type);
         event_Titletv = (TextView)findViewById(R.id.event_Title);
         pay_expiry_year = findViewById(R.id.pay_expiry_year);
+    }
+
+    public void GetSavdCards(String token)
+    {
+        Call<SavedCardsResponse> cardsResponseCall =  WebAPI.getInstance().getApi().savedCard("Bearer "+token);
+        cardsResponseCall.enqueue(new Callback<SavedCardsResponse>() {
+            @Override
+            public void onResponse(Call<SavedCardsResponse> call, Response<SavedCardsResponse> response) {
+                if (response.isSuccessful())
+                {
+                    if (response.body().getStatus()==200)
+                    {
+                        if (response.body().getData().getCardNumber()!=null && response.body().getData().getCardEdate()!=null && response.body().getData().getCardSdate()!=null&& response.body().getData().getCard_holder_name()!=null)
+                        {
+                            CardNumber.setText(response.body().getData().getCardNumber().toString());
+                            Card_ExpiryDate.setText(response.body().getData().getCardSdate());
+                            pay_expiry_year.setText(response.body().getData().getCardEdate().toString());
+                           savethiscard.setChecked(true);
+                        CardName.setText(response.body().getData().getCard_holder_name());
+                        }
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SavedCardsResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     public void dialog() {
@@ -357,7 +377,6 @@ public class PayActivity extends AppCompatActivity {
                             {
                                 dialog.dismiss();
                                 progressDialog.dismiss();
-//                                Toast.makeText(getContext(), "Rating => " + response.body().getData().getRating(), Toast.LENGTH_SHORT).show();
 
                                 Intent intent = new Intent(PayActivity.this,ConfirmationActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -365,8 +384,6 @@ public class PayActivity extends AppCompatActivity {
                                 intent.putExtra("paid","Paid");
                                 editor.putString("eventImage", BookEventActivity.image.get(0));
                                 editor.apply();
-
-
 
                             }else {
                                 dialog.dismiss();

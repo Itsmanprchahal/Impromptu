@@ -301,8 +301,16 @@
                     android:hint="000"/>
             </LinearLayout>
 
-
+            <CheckBox
+                android:id="@+id/savethiscard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/defaultmargin"
+                android:text="Save this card"
+                android:layout_gravity="end"
+                android:buttonTint="@color/colorTheme"></CheckBox>
         </LinearLayout>
+
 
     </LinearLayout>
     <Button

@@ -53,6 +53,7 @@ import com.mandywebdesign.impromptu.Retrofit.RetroRegisterPojo;
 import com.mandywebdesign.impromptu.Retrofit.RetroTerms;
 import com.mandywebdesign.impromptu.Retrofit.RetroUploadProfilePojo;
 import com.mandywebdesign.impromptu.Retrofit.RetroUsernameiMage;
+import com.mandywebdesign.impromptu.Retrofit.SavedCardsResponse;
 import com.mandywebdesign.impromptu.Retrofit.SearchMessages;
 import com.mandywebdesign.impromptu.Retrofit.TotalTickets;
 import com.mandywebdesign.impromptu.Retrofit.UpdateDraft;
@@ -91,7 +92,8 @@ public interface RegisterApiInterface {
     @POST("login")
     Call<RetroLoginPojo> LoginUser(
             @Field("email") String email,
-            @Field("password") String password
+            @Field("password") String password,
+            @Field("device_token") String device_token
     );
 
     @Multipart
@@ -406,7 +408,12 @@ public interface RegisterApiInterface {
             @Field("amount") String amount,
             @Field("token") String stripe_token,
             @Field("total_tickets") String total_tickets,
-            @Field("ticket_type") String tickettype
+            @Field("ticket_type") String tickettype,
+            @Field("card_number") String card_number,
+            @Field("card_sdate") String card_sdate,
+            @Field("card_edate") String  card_edate,
+            @Field("card_holder_name") String  card_holder_name,
+            @Field("card_save") boolean card_save
     );
 
     @GET("past-events")
@@ -564,5 +571,11 @@ public interface RegisterApiInterface {
     Call<RefundAPI> refundapi(
             @Header("Authorization") String token,
             @Query("event_id") String event_id
+    );
+
+
+    @GET("savedcard")
+    Call<SavedCardsResponse> savedCard(
+            @Header("Authorization") String token
     );
 }
