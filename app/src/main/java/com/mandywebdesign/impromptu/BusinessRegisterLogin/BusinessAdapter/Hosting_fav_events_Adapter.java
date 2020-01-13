@@ -106,7 +106,6 @@ public class Hosting_fav_events_Adapter extends RecyclerView.Adapter<Hosting_fav
                 editor.putString(Constants.itemPosition, String.valueOf(i));
                 editor.commit();
                 context.startActivity(intent);
-
           }
         });
     }

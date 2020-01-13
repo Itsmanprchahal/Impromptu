@@ -67,7 +67,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     private Button perviewButoon;
     Toolbar toolbar;
     SimpleDateFormat dateFormat;
-    Calendar calendar;
+    Calendar calendar, calendar1;
     EditText event_lcation_address1, event_lcation_address2, event_postcode, event_city, event_attendees_no, mDate, event_details_date_etto, eventTime_from, eventTime_to;
     RadioButton event_radiobutton_all, event_radiobutton_female, event_radiobutton_male;
     TextView addTicket;
@@ -75,7 +75,6 @@ public class EventDetailsActivity extends AppCompatActivity {
     Button okayDialog;
     Dialog progressDialog;
     ImageView close;
-    String value_checkout, value_checkIn;
     String prceET, ticketET, tickettype, myFormat, to_date;
     String getPrceET, getTicketET, getTickettype;
     EditText price_et, tickettype_et;
@@ -107,6 +106,8 @@ public class EventDetailsActivity extends AppCompatActivity {
     String type;
     String values;
     String numbertickets;
+    long startdatemilli;
+    long enddatemilli;
     int totalticketsnumber;
     int pendingtickets;
 
@@ -197,7 +198,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        event_postcode.addTextChangedListener(new TextWatcher() {
+        /*event_postcode.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -230,7 +231,7 @@ public class EventDetailsActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
 
             }
-        });
+        });*/
     }
 
 
@@ -296,7 +297,7 @@ public class EventDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(EventDetailsActivity.this, PerviewEventActivity.class);
+                final Intent intent = new Intent(EventDetailsActivity.this, PerviewEventActivity.class);
                 if (event_radiobutton_all.isChecked()) {
                     intent.putExtra("gender", "All");
                 } else if (event_radiobutton_male.isChecked()) {
@@ -349,58 +350,87 @@ public class EventDetailsActivity extends AppCompatActivity {
                     Toast.makeText(EventDetailsActivity.this, "Select event type", Toast.LENGTH_SHORT).show();
                 } else if (event_radiobutton_male.isChecked() | event_radiobutton_female.isChecked() | event_radiobutton_all.isChecked()) {
 
-                    String givenDateString = mDate.getText().toString() + " " + eventTime_from.getText().toString();
-                    DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                    Date date = null;
-                    try {
-                        date = (Date) formatter.parse(givenDateString);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
+                    String postcode;
+                    if (event_postcode.getText().toString().contains(" "))
+                    {
+                        postcode = event_postcode.getText().toString().replace(" ","");
+                    }else {
+                        postcode = event_postcode.getText().toString();
                     }
-                    frommilles = String.valueOf(date.getTime());
+                    Call<RetroPostcode> call = WebAPI.getInstance().getApi().checkpostcode(postcode);
+                    call.enqueue(new Callback<RetroPostcode>() {
+                        @Override
+                        public void onResponse(Call<RetroPostcode> call, Response<RetroPostcode> response) {
+                            if (response.body() != null) {
+                                if (response.body().getStatus().equals("200")) {
 
-                    Log.d("frommilles", "" + frommilles);
+                                    event_postcode.setError(null);
+
+                                    String givenDateString = mDate.getText().toString() + " " + eventTime_from.getText().toString();
+                                    DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                                    Date date = null;
+                                    try {
+                                        date = (Date) formatter.parse(givenDateString);
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                    frommilles = String.valueOf(date.getTime());
+
+                                    Log.d("frommilles", "" + frommilles);
 
 
-                    String givenDateString1 = event_details_date_etto.getText().toString() + " " + eventTime_to.getText().toString();
-                    DateFormat formatter1 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                    Date date1 = null;
-                    try {
-                        date1 = (Date) formatter1.parse(givenDateString1);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    tomilles = String.valueOf(date1.getTime());
+                                    String givenDateString1 = event_details_date_etto.getText().toString() + " " + eventTime_to.getText().toString();
+                                    DateFormat formatter1 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                                    Date date1 = null;
+                                    try {
+                                        date1 = (Date) formatter1.parse(givenDateString1);
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                    tomilles = String.valueOf(date1.getTime());
 
 
-                    intent.putExtra("eventTitle", eventTitle);
-                    intent.putExtra("eventDesc", eventDesc);
-                    intent.putExtra("eventCate", eventCate);
-                    intent.putExtra("address1", event_lcation_address1.getText().toString());
-                    intent.putExtra("address2", event_lcation_address2.getText().toString());
-                    intent.putExtra("postcode", event_postcode.getText().toString());
-                    intent.putExtra("city", event_city.getText().toString());
-                    intent.putExtra("SelectedDate", mDate.getText().toString());
-                    intent.putExtra("To_date", event_details_date_etto.getText().toString());
-                    intent.putExtra("FromTime", eventTime_from.getText().toString());
-                    intent.putExtra("ToTime", eventTime_to.getText().toString());
-                    intent.putExtra("attendeesNo", event_attendees_no.getText().toString());
-                    intent.putExtra("value", value);
-                    intent.putExtra("editevent", edit);
-                    intent.putExtra("link1", link1);
-                    intent.putExtra("link2", link2);
-                    intent.putExtra("link3", link3);
-                    intent.putExtra("fromtimeinmilles", frommilles);
-                    intent.putExtra("totimeinmilles", tomilles);
-                    intent.putExtra("type", type);
-                    intent.putExtra("ticketprice", values);
-                    intent.putExtra("numbertickets", numbertickets);
-                    to_date = event_details_date_etto.getText().toString();
-                    intent.putExtra("to_Date", to_date);
-                    startActivity(intent);
+                                    intent.putExtra("eventTitle", eventTitle);
+                                    intent.putExtra("eventDesc", eventDesc);
+                                    intent.putExtra("eventCate", eventCate);
+                                    intent.putExtra("address1", event_lcation_address1.getText().toString());
+                                    intent.putExtra("address2", event_lcation_address2.getText().toString());
+                                    intent.putExtra("postcode", event_postcode.getText().toString());
+                                    intent.putExtra("city", event_city.getText().toString());
+                                    intent.putExtra("SelectedDate", mDate.getText().toString());
+                                    intent.putExtra("To_date", event_details_date_etto.getText().toString());
+                                    intent.putExtra("FromTime", eventTime_from.getText().toString());
+                                    intent.putExtra("ToTime", eventTime_to.getText().toString());
+                                    intent.putExtra("attendeesNo", event_attendees_no.getText().toString());
+                                    intent.putExtra("value", value);
+                                    intent.putExtra("editevent", edit);
+                                    intent.putExtra("link1", link1);
+                                    intent.putExtra("link2", link2);
+                                    intent.putExtra("link3", link3);
+                                    intent.putExtra("fromtimeinmilles", frommilles);
+                                    intent.putExtra("totimeinmilles", tomilles);
+                                    intent.putExtra("type", type);
+                                    intent.putExtra("ticketprice", values);
+                                    intent.putExtra("numbertickets", numbertickets);
+                                    to_date = event_details_date_etto.getText().toString();
+                                    intent.putExtra("to_Date", to_date);
+                                    startActivity(intent);
+
+                                } else if (response.body().getStatus().equals("400")) {
+                                    event_postcode.setError("Invalid Postcode");
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<RetroPostcode> call, Throwable t) {
+
+                        }
+                    });
                 } else {
                     Toast.makeText(EventDetailsActivity.this, "Select atleast one option from gender", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
@@ -419,6 +449,16 @@ public class EventDetailsActivity extends AppCompatActivity {
 
                 mDate.setText(simpleDateFormat.format(calendar.getTime()));
 
+                DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                Date date = null;
+                try {
+                    date = (Date) formatter.parse(formatter.format(calendar.getTime()));
+                    Log.d("StartDate", String.valueOf(date.getTime()));
+                    startdatemilli = date.getTime();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
 
             }
         };
@@ -435,13 +475,33 @@ public class EventDetailsActivity extends AppCompatActivity {
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 myFormat = "dd/MM/yyyy";
+
+
+                DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                Date date = null;
+                try {
+                    date = (Date) formatter.parse(formatter.format(calendar.getTime()));
+                    Log.d("StartDate", String.valueOf(date.getTime()));
+                    enddatemilli = date.getTime();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Log.d("DATETEST", startdatemilli + "   " + enddatemilli);
+
+
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myFormat, Locale.US);
 
-                event_details_date_etto.setText(simpleDateFormat.format(calendar.getTime()));
-
+                if (startdatemilli <= enddatemilli) {
+                    event_details_date_etto.setText(simpleDateFormat.format(calendar.getTime()));
+                } else {
+                    eventTime_to.setText("");
+                    event_details_date_etto.setText("");
+                    Toast.makeText(getApplicationContext(), "Invalid Date", Toast.LENGTH_SHORT).show();
+                }
 
             }
         };
+
 
         eventTime_from.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -487,7 +547,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 Calendar c = Calendar.getInstance();
                                 datetime.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                 datetime.set(Calendar.MINUTE, minute);
-                                if (datetime.getTimeInMillis() >= c.getTimeInMillis()) {
+                                if (datetime.getTimeInMillis() + 1 >= c.getTimeInMillis()) {
                                     //it's after current
                                     if (hourOfDay < 10 && minute < 10) {
                                         eventTime_from.setText("0" + hourOfDay + ":" + "0" + minute);
@@ -571,74 +631,72 @@ public class EventDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-                      if (mDate.getText().toString().equals(event_details_date_etto.getText().toString()))
-                      {
-                          if (date1 != 0) {
-                              if (date1 != calendar.get(Calendar.DAY_OF_MONTH)) {
-                                  if (hourOfDay < 10 && minute < 10) {
-                                      eventTime_to.setText("0" + hourOfDay + ":" + "0" + minute);
-                                  } else if (hourOfDay < 10) {
-                                      eventTime_to.setText("0" + hourOfDay + ":" + minute);
-                                  } else if (minute < 10) {
-                                      eventTime_to.setText(hourOfDay + ":" + "0" + minute);
-                                  } else {
-                                      eventTime_to.setText(hourOfDay + ":" + minute);
+                        if (mDate.getText().toString().equals(event_details_date_etto.getText().toString())) {
+                            if (date1 != 0) {
+                                if (date1 != calendar.get(Calendar.DAY_OF_MONTH)) {
+                                    if (hourOfDay < 10 && minute < 10) {
+                                        eventTime_to.setText("0" + hourOfDay + ":" + "0" + minute);
+                                    } else if (hourOfDay < 10) {
+                                        eventTime_to.setText("0" + hourOfDay + ":" + minute);
+                                    } else if (minute < 10) {
+                                        eventTime_to.setText(hourOfDay + ":" + "0" + minute);
+                                    } else {
+                                        eventTime_to.setText(hourOfDay + ":" + minute);
 
-                                  }
-                                  to_time_milles = eventTime_to.getText().toString();
-                              }
-                              else {
-                                  Calendar datetime = Calendar.getInstance();
-                                  Calendar c = Calendar.getInstance();
-                                  datetime.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                                  datetime.set(Calendar.MINUTE, minute);
-                                  if (datetime.getTimeInMillis() >= c.getTimeInMillis()) {
-                                      //it's after current
-                                      int hour = hourOfDay % 24;
-                                      if (hourOfDay < 10 && minute < 10) {
-                                          eventTime_to.setText("0" + hourOfDay + ":" + "0" + minute);
-                                      } else if (hourOfDay < 10) {
-                                          eventTime_to.setText("0" + hourOfDay + ":" + minute);
-                                      } else if (minute < 10) {
-                                          eventTime_to.setText(hourOfDay + ":" + "0" + minute);
-                                      } else {
-                                          eventTime_to.setText(hourOfDay + ":" + minute);
+                                    }
+                                    to_time_milles = eventTime_to.getText().toString();
+                                } else {
+                                    Calendar datetime = Calendar.getInstance();
+                                    Calendar c = Calendar.getInstance();
+                                    datetime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                    datetime.set(Calendar.MINUTE, minute);
+                                    if (datetime.getTimeInMillis() >= c.getTimeInMillis()) {
+                                        //it's after current
+                                        int hour = hourOfDay % 24;
+                                        if (hourOfDay < 10 && minute < 10) {
+                                            eventTime_to.setText("0" + hourOfDay + ":" + "0" + minute);
+                                        } else if (hourOfDay < 10) {
+                                            eventTime_to.setText("0" + hourOfDay + ":" + minute);
+                                        } else if (minute < 10) {
+                                            eventTime_to.setText(hourOfDay + ":" + "0" + minute);
+                                        } else {
+                                            eventTime_to.setText(hourOfDay + ":" + minute);
 
-                                      }
-                                      to_time_milles = eventTime_to.getText().toString();
-                                  } else {
-                                      //it's before current'
-                                      eventTime_to.setText("");
-                                      Toast.makeText(getApplicationContext(), "Invalid Time", Toast.LENGTH_SHORT).show();
-                                  }
-                              }
-                          } else {
-                              if (hourOfDay < 10 && minute < 10) {
-                                  eventTime_to.setText("0" + hourOfDay + ":" + "0" + minute);
-                              } else if (hourOfDay < 10) {
-                                  eventTime_to.setText("0" + hourOfDay + ":" + minute);
-                              } else if (minute < 10) {
-                                  eventTime_to.setText(hourOfDay + ":" + "0" + minute);
-                              } else {
-                                  eventTime_to.setText(hourOfDay + ":" + minute);
+                                        }
+                                        to_time_milles = eventTime_to.getText().toString();
+                                    } else {
+                                        //it's before current'
+                                        eventTime_to.setText("");
+                                        Toast.makeText(getApplicationContext(), "Invalid Time", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            } else {
+                                if (hourOfDay < 10 && minute < 10) {
+                                    eventTime_to.setText("0" + hourOfDay + ":" + "0" + minute);
+                                } else if (hourOfDay < 10) {
+                                    eventTime_to.setText("0" + hourOfDay + ":" + minute);
+                                } else if (minute < 10) {
+                                    eventTime_to.setText(hourOfDay + ":" + "0" + minute);
+                                } else {
+                                    eventTime_to.setText(hourOfDay + ":" + minute);
 
-                              }
-                              to_time_milles = eventTime_to.getText().toString();
+                                }
+                                to_time_milles = eventTime_to.getText().toString();
 
-                          }
-                      }else {
-                          if (hourOfDay < 10 && minute < 10) {
-                              eventTime_to.setText("0" + hourOfDay + ":" + "0" + minute);
-                          } else if (hourOfDay < 10) {
-                              eventTime_to.setText("0" + hourOfDay + ":" + minute);
-                          } else if (minute < 10) {
-                              eventTime_to.setText(hourOfDay + ":" + "0" + minute);
-                          } else {
-                              eventTime_to.setText(hourOfDay + ":" + minute);
+                            }
+                        } else {
+                            if (hourOfDay < 10 && minute < 10) {
+                                eventTime_to.setText("0" + hourOfDay + ":" + "0" + minute);
+                            } else if (hourOfDay < 10) {
+                                eventTime_to.setText("0" + hourOfDay + ":" + minute);
+                            } else if (minute < 10) {
+                                eventTime_to.setText(hourOfDay + ":" + "0" + minute);
+                            } else {
+                                eventTime_to.setText(hourOfDay + ":" + minute);
 
-                          }
-                          to_time_milles = eventTime_to.getText().toString();
-                      }
+                            }
+                            to_time_milles = eventTime_to.getText().toString();
+                        }
 
                     }
                 }, hour, minute, true);
@@ -806,8 +864,8 @@ public class EventDetailsActivity extends AppCompatActivity {
                         type2.setVisibility(View.VISIBLE);
                         type2.setText(arryList.get(1).getTikcettype() + " £ " + arryList.get(1).getPrice() + " (" + arryList.get(1).getNumberofticket() + ") ");
 
-                        type = arryList.get(0).getTikcettype() + "," + arryList.get(1).getTikcettype() ;
-                        values = arryList.get(0).getPrice() + "," + arryList.get(1).getPrice() ;
+                        type = arryList.get(0).getTikcettype() + "," + arryList.get(1).getTikcettype();
+                        values = arryList.get(0).getPrice() + "," + arryList.get(1).getPrice();
                         numbertickets = arryList.get(0).getNumberofticket() + "," + arryList.get(1).getNumberofticket();
 
                         edt_tiketType.setText("");
@@ -918,15 +976,11 @@ public class EventDetailsActivity extends AppCompatActivity {
                     event_city.setText(response.body().getData().get(0).getCity());
 
 
-//                    if (edit.equalsIgnoreCase("republish")) {
                     Calendar c = Calendar.getInstance();
 
                     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
                     mDate.setText(df.format(c.getTime()));
-//                    } else {
-//                        mDate.setText(Util.convertTimeStampDate(Long.parseLong(response.body().getData().get(0).getEventStartDt())));
-//                    }
 
 
                     eventTime_from.setText(response.body().getData().get(0).getTimeFrom());
@@ -968,9 +1022,6 @@ public class EventDetailsActivity extends AppCompatActivity {
 
                     }
 
-//                    if (response.body().getData().get(0).getFreeEvent().equals("1")) {
-//                        addTicket.setText("edit or delete ticket type");
-//                    }else
                     if (response.body().getData().get(0).getFreeEvent().equals("1") && response.body().getData().get(0).getTicketsType().size() > 0) {
                         addTicket.setText("+Add ticket type");
                     } else if (response.body().getData().get(0).getFreeEvent().equals("1")) {

@@ -62,9 +62,6 @@ public class FilteredAdapter extends RecyclerView.Adapter<FilteredAdapter.ViewHo
 
                 String value = FilteredScreen.event_id.get(i);
 
-                editor.putString(Constants.itemPosition, String.valueOf(i));
-                editor.commit();
-
                 Intent intent = new Intent(context, BookEventActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 intent.putExtra("event_id",value);
@@ -72,6 +69,8 @@ public class FilteredAdapter extends RecyclerView.Adapter<FilteredAdapter.ViewHo
                 intent.putExtra("lat", Home.lat);
                 intent.putExtra("lng",Home.lng);
                 intent.putExtra("hostname",FilteredScreen.name1.get(i));
+                editor.putString(Constants.itemPosition, String.valueOf(i));
+                editor.commit();
                 context.startActivity(intent);
 
             }

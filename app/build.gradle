@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
-
 repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
@@ -10,7 +9,7 @@ android {
     compileSdkVersion 29
     defaultConfig {
         applicationId "com.mandywebdesign.impromptu"
-        minSdkVersion 17
+        minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -27,7 +26,13 @@ android {
     repositories {
         maven { url "https://dl.bintray.com/hani-momanii/maven" }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
+
 
 buildscript {
     repositories {
@@ -41,6 +46,8 @@ buildscript {
         //ADD this Line
         classpath 'io.fabric.tools:gradle:1.28.0'
     }
+
+
 }
 
 dependencies {
@@ -82,11 +89,11 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'androidx.annotation:annotation:1.0.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'com.google.android.gms:play-services-location:16.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
     implementation 'com.github.yalantis:ucrop:2.2.2'
     implementation 'com.github.yalantis:ucrop:2.2.2'
-    implementation 'com.google.android.gms:play-services-places:16.1.0'
+    implementation 'com.google.android.gms:play-services-places:17.0.0'
     implementation 'com.google.zxing:core:3.2.1'
     implementation 'com.google.android.gms:play-services-auth:16.0.0'
     implementation 'me.dm7.barcodescanner:zxing:1.9'
@@ -144,8 +151,13 @@ dependencies {
     //
     implementation 'com.squareup.picasso:picasso:2.71828'
 
-
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+    implementation 'com.google.firebase:firebase-auth:19.2.0'
+    implementation 'com.github.Mindinventory:VanillaPlacePicker:0.1.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.github.rtchagas:pingplacepicker:1.1.6'
 }
 apply plugin: 'io.fabric'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'

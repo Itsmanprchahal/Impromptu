@@ -3,6 +3,7 @@ package com.mandywebdesign.impromptu.Filter;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -18,6 +19,7 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
@@ -38,9 +40,12 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -61,10 +66,12 @@ import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.Home;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.NormalEventPrice;
+import com.mandywebdesign.impromptu.Utils.Constants;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.NoInternet;
 import com.mandywebdesign.impromptu.ui.NoInternetScreen;
 import com.mandywebdesign.impromptu.ui.ProgressBarClass;
+import com.rtchagas.pingplacepicker.PingPlacePicker;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -100,7 +107,7 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
     RadioButton male, female, all;
     RadioGroup radioGroup;
     String lat = "0.0";
-    static String eventMax_Price, formattedDate, gender;
+    static String eventMax_Price, formattedDate,todayENdtime, gender, itemPosition;
     static String value;
     String lng = "0.0";
     LatLng latLng;
@@ -111,8 +118,8 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
     ArrayList<LatLng> loc = new ArrayList<>();
     SeekBar seekBar;
     TextView filterPrice;
-    String latt, lnng,getGender;
-    SharedPreferences sharedPreferences;
+    String latt, lnng, getGender;
+    SharedPreferences sharedPreferences, itemPositionPref;
     int step = 1;
     int min = 0;
 
@@ -128,7 +135,6 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
         view = inflater.inflate(R.layout.fragment_filter_screen, container, false);
 
         manager = getFragmentManager();
-
         progressDialog = ProgressBarClass.showProgressDialog(getContext());
         progressDialog.dismiss();
 
@@ -145,19 +151,28 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
             e.printStackTrace();
         }
 
+        //------------today enddatetime=---------------
+        DateFormat formatter1 = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            String endtime = formatter1.format(c.getTime())+" 23:59";
+            Date date1 = formatter.parse(endtime);
+            Log.d("TodayDATE",""+date1.getTime());
+            todayENdtime = String.valueOf(date1.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         sharedPreferences = getActivity().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         social_token = "Bearer " + sharedPreferences.getString("Socailtoken", "");
-        getGender  = sharedPreferences.getString("profilegender","");
+        getGender = sharedPreferences.getString("profilegender", "");
         getEventPrice();
 
         value = eventMax_Price;
         gender = "all";
 
-        if (getGender.equals("Male"))
-        {
+        if (getGender.equals("Male")) {
             female.setVisibility(View.GONE);
-        }else if (getGender.equals("Female"))
-        {
+        } else if (getGender.equals("Female")) {
             male.setVisibility(View.GONE);
         }
 
@@ -232,9 +247,8 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
             @Override
             public void onResponse(Call<NormalEventPrice> call, Response<NormalEventPrice> response) {
                 progressDialog.dismiss();
-                if (response.body()!=null) {
-                    if (response.body().getStatus().equals("200"))
-                    {
+                if (response.body() != null) {
+                    if (response.body().getStatus().equals("200")) {
 
                         eventMax_Price = response.body().getData().getPrice();
                         endcost.setText("£ " + response.body().getData().getPrice());
@@ -301,7 +315,8 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
         if (v == searchLoc) {
             if (isNetworkIsConnected()) {
 
-                FireSearchIntent();
+//                FireSearchIntent();
+                showPlacePicker();
             } else {
                 Toast.makeText(getContext(), "Check Internet Connection...", Toast.LENGTH_SHORT).show();
 
@@ -328,6 +343,7 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
                 bundle.putString("price", value1);
                 bundle.putString("lat", lat);
                 bundle.putString("lng", lng);
+                bundle.putString("edate",todayENdtime);
 
                 FilteredScreen filterScreen = new FilteredScreen();
                 filterScreen.setArguments(bundle);
@@ -356,11 +372,25 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
             Calendar c = Calendar.getInstance();
 
             DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            DateFormat formatter1 = new SimpleDateFormat("dd/MM/yyyy");
+
             Date date = null;
             try {
                 date = (Date) formatter.parse(formatter.format(c.getTime()));
                 Log.d("TodayDate", String.valueOf(date.getTime()));
                 formattedDate = String.valueOf(date.getTime());
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            //---------------******************---------------------
+
+            try {
+                String endtime = formatter1.format(c.getTime())+" 23:59";
+                Date date1 = formatter.parse(endtime);
+                Log.d("TodayDATE",""+date1.getTime());
+                todayENdtime = String.valueOf(date1.getTime());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -379,7 +409,7 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
 
             System.out.println("Current time ==> " + c.getTime());
 
-            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             Date date = null;
             try {
                 date = (Date) formatter.parse(formatter.format(c.getTime()));
@@ -389,6 +419,16 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
                 e.printStackTrace();
             }
 
+            DateFormat formatter0 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            DateFormat formatter1 = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                String endtime = formatter1.format(c.getTime())+" 23:59";
+                Date date1 = formatter0.parse(endtime);
+                Log.d("TommorowEnd",""+date1.getTime());
+                todayENdtime = String.valueOf(date1.getTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -422,6 +462,25 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
                 AutocompleteActivityMode.FULLSCREEN, fields)
                 .build(getContext());
         startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
+    }
+
+    private void showPlacePicker() {
+
+
+        PingPlacePicker.IntentBuilder builder = new PingPlacePicker.IntentBuilder();
+        builder.setAndroidApiKey("AIzaSyBv3FYZuLZJR8mOlONc6hMGqh-Taeo7-7g")
+                .setMapsApiKey(String.valueOf(R.string.key_google_apis_maps));
+        // If you want to set a initial location rather then the current device location.
+        // NOTE: enable_nearby_search MUST be true.
+        // builder.setLatLng(new LatLng(37.4219999, -122.0862462))
+
+        try {
+            Intent placeIntent = builder.build(getActivity());
+            startActivityForResult(placeIntent, AUTOCOMPLETE_REQUEST_CODE);
+        }
+        catch (Exception ex) {
+            // Google Play services is not available...
+        }
     }
 
     public void statusCheck() {
@@ -587,10 +646,9 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
             address = (List<Address>) geocoder.getFromLocation(Double.parseDouble(lat), Double.parseDouble(lng), 1);
             if (address != null) {
 
-                if (address.size()==0)
-                {
+                if (address.size() == 0) {
                     cityname.setText("Address not found");
-                }else {
+                } else {
                     city = address.get(0).getLocality();
                     cityname.setText(address.get(0).getAddressLine(0));
                 }
@@ -630,9 +688,11 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                Place place = Autocomplete.getPlaceFromIntent(data);
+//                Place place = Autocomplete.getPlaceFromIntent(data);
+                Place place = PingPlacePicker.getPlace(data);
                 String puneet = String.valueOf(place).subSequence(String.valueOf(place).indexOf("name") + 5, String.valueOf(place).length()).toString();
                 String[] puni = puneet.split(",");
                 Log.d("checkplace", "" + String.valueOf(place));
@@ -640,6 +700,7 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
                 Log.d("checkplace", "" + puni[0]);
 
                 cityname.setText(puni[0]);
+
                 //Toast.makeText(getContext(), ""+cityname.getText().toString(), Toast.LENGTH_SHORT).show();
 
                 String loc = String.valueOf(place);
@@ -649,23 +710,21 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
                     List<LatLng> latLngs = new ArrayList<LatLng>(addresses.size());
 
                     Log.d("latLngs", String.valueOf(latLngs));
-                    if (addresses != null && addresses.size()!=0) {
+                    if (addresses != null && addresses.size() != 0) {
                         city = addresses.get(0).getAddressLine(0);
                         cityname.setText(addresses.get(0).getAddressLine(0).toString());
                     } else {
-                        if (puni[0].equals("Stratford"))
-                        {
+                        if (puni[0].equals("Stratford")) {
                             lat = String.valueOf(51.5472);
                             lng = String.valueOf(0.0081);
                             location(lat, lng);
                             cityname.setText("Stratford");
-                        }else if (puni[0].equals("EE"))
-                        {
+                        } else if (puni[0].equals("EE")) {
                             lat = String.valueOf(51.5430);
                             lng = String.valueOf(0.0042);
                             location(lat, lng);
                             cityname.setText("Stratford Westfield");
-                        }else {
+                        } else {
                             cityname.setText("Address not found");
                         }
 
@@ -676,10 +735,10 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
                         if (a.hasLatitude() && a.hasLongitude()) {
                             latLngs.add(new LatLng(a.getLatitude(), a.getLongitude()));
 
-                                lat = String.valueOf(a.getLatitude());
-                                lng = String.valueOf(a.getLongitude());
-                                location(lat, lng);
-                                Log.d("checkplace", "" + String.valueOf(a.getLatitude()));
+                            lat = String.valueOf(a.getLatitude());
+                            lng = String.valueOf(a.getLongitude());
+                            location(lat, lng);
+                            Log.d("checkplace", "" + String.valueOf(a.getLatitude()));
 
 
                         }

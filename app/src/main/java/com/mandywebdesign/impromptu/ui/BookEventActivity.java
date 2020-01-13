@@ -241,6 +241,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                 }
                 if (eventType.equals("fav")) {
                     eventdistance.setVisibility(View.GONE);
+                    invite_layouit.setVisibility(View.VISIBLE);
                 }
             } else {
                 mBookEvent.setVisibility(View.VISIBLE);

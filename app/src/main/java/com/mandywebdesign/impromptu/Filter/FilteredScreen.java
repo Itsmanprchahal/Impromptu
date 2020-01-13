@@ -53,7 +53,7 @@ public class FilteredScreen extends Fragment implements DiscreteScrollView.OnIte
     String social_token, timeFrom, formattedDate, getFormattedDate;
     View view;
     ImageView back;
-    String itemPosition;
+    static String itemPosition="0";
     FilteredAdapter adapter;
     SharedPreferences itemPositionPref;
     private InfiniteScrollAdapter infiniteAdapter;
@@ -80,12 +80,12 @@ public class FilteredScreen extends Fragment implements DiscreteScrollView.OnIte
         String gender = bundle.getString("gender");
         String lat = bundle.getString("lat");
         String lng = bundle.getString("lng");
+        String eDate = bundle.getString("edate");
         Log.d("filteredScreen", lat + "  " + lng);
 
         sharedPreferences = getActivity().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
-        itemPositionPref = getContext().getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);
         social_token = "Bearer " + sharedPreferences.getString("Socailtoken", "");
-        itemPosition = itemPositionPref.getString(Constants.itemPosition, String.valueOf(0));
+
 
         init();
 
@@ -107,7 +107,7 @@ public class FilteredScreen extends Fragment implements DiscreteScrollView.OnIte
         listeners();
 
         Clear();
-        Call<NormalFilterEvents> call = WebAPI.getInstance().getApi().filterEvnt(social_token, "application/json", lat, lng, gender, date, price);
+        Call<NormalFilterEvents> call = WebAPI.getInstance().getApi().filterEvnt(social_token, "application/json", lat, lng, gender, date,eDate, price);
         call.enqueue(new Callback<NormalFilterEvents>() {
             @Override
             public void onResponse(Call<NormalFilterEvents> call, Response<NormalFilterEvents> response) {
@@ -183,7 +183,6 @@ public class FilteredScreen extends Fragment implements DiscreteScrollView.OnIte
 
                             adapter = new FilteredAdapter(getContext(), manager);
                             recyclerView.setAdapter(adapter);
-                            recyclerView.getLayoutManager().scrollToPosition(Integer.parseInt(itemPosition));
                         }
                     } else if (response.body().getStatus().equals("400")) {
                         Clear();

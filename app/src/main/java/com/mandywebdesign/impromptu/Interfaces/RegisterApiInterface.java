@@ -389,6 +389,7 @@ public interface RegisterApiInterface {
             @Query("lng") String lng,
             @Query("gender") String gender,
             @Query("date") String date,
+            @Query("edate") String edate,
             @Query("price") String price
     );
 

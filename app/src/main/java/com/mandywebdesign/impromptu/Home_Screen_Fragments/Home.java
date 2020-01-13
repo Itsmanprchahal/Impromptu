@@ -71,6 +71,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -198,6 +199,8 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
             @Override
             public void onClick(View v) {
                 fragmentManager.beginTransaction().replace(R.id.home_frame_layout, new FilterScreen()).addToBackStack(null).commit();
+//                Intent intent = new Intent(getContext(), Demo.class);
+//                startActivity(intent);
             }
         });
 
@@ -557,7 +560,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
     public void getAllEvent(String lat, String lng) {
 
-        sharedPreferences = getActivity().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
+        sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         social_token = "Bearer " + sharedPreferences.getString("Socailtoken", "");
 
         progressDialog.show();

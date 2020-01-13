@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- TODO: Move to Firebase remote configs -->
+    <string name="key_google_apis_android" translatable="false">@string/googleclientId</string>
+    <string name="key_google_apis_maps" translatable="false" tools:ignore="ResourceCycle">@string/key_google_apis_maps</string>
+
+</resources>

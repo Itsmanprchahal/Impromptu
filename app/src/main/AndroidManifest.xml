@@ -48,7 +48,8 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:ignore="HardcodedDebugMode">
-        <activity android:name=".SettingFragmentsOptions.PaymentDetailActivity"></activity>
+        <activity android:name=".Filter.Demo"></activity>
+        <activity android:name=".SettingFragmentsOptions.PaymentDetailActivity" />
         <activity android:name=".BusinessRegisterLogin.BusinessUserPRofileActivity">
             <intent-filter>
                 <action android:name="com.mandywebdesign.impromptu.PROFILE_BUSINESS" />
