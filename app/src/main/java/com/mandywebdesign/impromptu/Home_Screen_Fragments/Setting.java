@@ -72,7 +72,7 @@ import retrofit2.Response;
 public class Setting extends Fragment {
 
 
-    TextView logout, setting_help_option, terms, setting_paymentdetails_option, privancy, FAQ, changepassword, contactus, deleteAccount, invite, setting_verification_option;
+    TextView logout, setting_help_option, terms, setting_paymentdetails_option, changepassword, contactus,  invite, setting_verification_option;
     GoogleApiClient googleApiClient;
     boolean loggedOut;
     GoogleSignInAccount account;

@@ -48,12 +48,13 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:ignore="HardcodedDebugMode">
-        <activity android:name=".Filter.Demo"></activity>
+        <activity android:name=".Filter.FilteredActivity"></activity>
+        <activity android:name=".Filter.FilterActivity" />
+        <activity android:name=".Filter.CustomPlacePicker"  android:windowSoftInputMode="stateVisible"/>
         <activity android:name=".SettingFragmentsOptions.PaymentDetailActivity" />
         <activity android:name=".BusinessRegisterLogin.BusinessUserPRofileActivity">
             <intent-filter>
                 <action android:name="com.mandywebdesign.impromptu.PROFILE_BUSINESS" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

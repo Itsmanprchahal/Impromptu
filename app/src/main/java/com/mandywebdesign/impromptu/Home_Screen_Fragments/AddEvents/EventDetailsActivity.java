@@ -40,9 +40,11 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
+import com.mandywebdesign.impromptu.Interfaces.WebAPI1;
 import com.mandywebdesign.impromptu.Models.RetroPostcode;
 import com.mandywebdesign.impromptu.Models.TicketTypeModel;
 import com.mandywebdesign.impromptu.R;
+import com.mandywebdesign.impromptu.Retrofit.PostCode;
 import com.mandywebdesign.impromptu.Retrofit.RetroGetEventData;
 import com.mandywebdesign.impromptu.Utils.Util;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
@@ -357,12 +359,12 @@ public class EventDetailsActivity extends AppCompatActivity {
                     }else {
                         postcode = event_postcode.getText().toString();
                     }
-                    Call<RetroPostcode> call = WebAPI.getInstance().getApi().checkpostcode(postcode);
-                    call.enqueue(new Callback<RetroPostcode>() {
+                    Call<PostCode> call = WebAPI1.getInstance().getApi().postcode(postcode);
+                    call.enqueue(new Callback<PostCode>() {
                         @Override
-                        public void onResponse(Call<RetroPostcode> call, Response<RetroPostcode> response) {
+                        public void onResponse(Call<PostCode> call, Response<PostCode> response) {
                             if (response.body() != null) {
-                                if (response.body().getStatus().equals("200")) {
+                                if (response.code()==200) {
 
                                     event_postcode.setError(null);
 
@@ -416,14 +418,18 @@ public class EventDetailsActivity extends AppCompatActivity {
                                     intent.putExtra("to_Date", to_date);
                                     startActivity(intent);
 
-                                } else if (response.body().getStatus().equals("400")) {
+                                } else if (response.code()==404) {
                                     event_postcode.setError("Invalid Postcode");
+                                    event_postcode.setText("");
                                 }
+                            }else if (response.code()==404) {
+                                event_postcode.setError("Invalid Postcode");
+                                event_postcode.setText("");
                             }
                         }
 
                         @Override
-                        public void onFailure(Call<RetroPostcode> call, Throwable t) {
+                        public void onFailure(Call<PostCode> call, Throwable t) {
 
                         }
                     });

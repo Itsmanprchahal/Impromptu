@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.mandywebdesign.impromptu.Filter.FilteredActivity;
 import com.mandywebdesign.impromptu.Filter.FilteredScreen;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.Home;
 import com.mandywebdesign.impromptu.Utils.Constants;
@@ -24,13 +25,11 @@ public class FilteredAdapter extends RecyclerView.Adapter<FilteredAdapter.ViewHo
 
     Context context;
     CardAdapterHelper cardAdapterHelper= new CardAdapterHelper();
-    FragmentManager manager;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
-    public FilteredAdapter(Context context,FragmentManager manager) {
+    public FilteredAdapter(Context context) {
         this.context = context;
-        this.manager = manager;
     }
 
     @NonNull
@@ -48,19 +47,19 @@ public class FilteredAdapter extends RecyclerView.Adapter<FilteredAdapter.ViewHo
         sharedPreferences = context.getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-        viewHolder.eventName.setText(FilteredScreen.title.get(i));
-        viewHolder.evetPrice.setText(FilteredScreen.prices.get(i));
-        viewHolder.eventAddress.setText(FilteredScreen.addres.get(i));
-        viewHolder.category.setText(FilteredScreen.categois.get(i));
-        Glide.with(context).load(FilteredScreen.images.get(i)).into(viewHolder.eventImage);
-        viewHolder.date.setText(FilteredScreen.event_time.get(i));
+        viewHolder.eventName.setText(FilteredActivity.title.get(i));
+        viewHolder.evetPrice.setText(FilteredActivity.prices.get(i));
+        viewHolder.eventAddress.setText(FilteredActivity.addres.get(i));
+        viewHolder.category.setText(FilteredActivity.categois.get(i));
+        Glide.with(context).load(FilteredActivity.images.get(i)).into(viewHolder.eventImage);
+        viewHolder.date.setText(FilteredActivity.event_time.get(i));
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
-                String value = FilteredScreen.event_id.get(i);
+                String value = FilteredActivity.event_id.get(i);
 
                 Intent intent = new Intent(context, BookEventActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -68,7 +67,7 @@ public class FilteredAdapter extends RecyclerView.Adapter<FilteredAdapter.ViewHo
                 intent.putExtra("fav_id","0");
                 intent.putExtra("lat", Home.lat);
                 intent.putExtra("lng",Home.lng);
-                intent.putExtra("hostname",FilteredScreen.name1.get(i));
+                intent.putExtra("hostname",FilteredActivity.name1.get(i));
                 editor.putString(Constants.itemPosition, String.valueOf(i));
                 editor.commit();
                 context.startActivity(intent);
@@ -81,7 +80,7 @@ public class FilteredAdapter extends RecyclerView.Adapter<FilteredAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return FilteredScreen.name1.size();
+        return FilteredActivity.name1.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder

@@ -1,5 +1,10 @@
 package com.mandywebdesign.impromptu.Filter;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -16,20 +21,9 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.core.content.ContextCompat;
-
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -39,13 +33,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -59,11 +49,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.widget.Autocomplete;
-import com.google.android.libraries.places.widget.AutocompleteActivity;
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
-import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.Home;
+import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.NormalEventPrice;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
@@ -85,14 +72,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.app.Activity.RESULT_CANCELED;
-import static android.app.Activity.RESULT_OK;
-
-/**
- * A simple {@link Fragment} subclass.
- */
-public class FilterScreen extends Fragment implements View.OnClickListener,
-        OnMapReadyCallback {
+public class FilterActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
     ImageButton close;
     ImageView locationPin;
     View view;
@@ -104,7 +84,7 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
     RadioButton male, female, all;
     RadioGroup radioGroup;
     String lat = "0.0";
-    static String eventMax_Price, formattedDate,todayENdtime, gender, itemPosition;
+    static String eventMax_Price, formattedDate, todayENdtime, gender, itemPosition;
     static String value;
     String lng = "0.0";
     LatLng latLng;
@@ -120,32 +100,22 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
     int step = 1;
     int min = 0;
     GoogleApiClient mGoogleApiClient;
-    Bundle bundle;
+    Intent intent;
 
     int AUTOCOMPLETE_REQUEST_CODE = 1;
     List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
 
     @SuppressLint("ResourceAsColor")
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_filter_screen, container, false);
-
-        bundle = getArguments();
-        if (bundle!=null)
-        {
-            lat = bundle.getString("lat");
-            lng = bundle.getString("lng");
-            Toast.makeText(getContext(), ""+latt  + "  "+lng, Toast.LENGTH_SHORT).show();
-        }
-        manager = getFragmentManager();
-        progressDialog = ProgressBarClass.showProgressDialog(getContext());
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_filter);
+        manager = getSupportFragmentManager();
+        progressDialog = ProgressBarClass.showProgressDialog(this);
         progressDialog.dismiss();
 
-
         init();
+        intent = getIntent();
 
 
         Calendar c = Calendar.getInstance();
@@ -163,15 +133,15 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
         //------------today enddatetime=---------------
         DateFormat formatter1 = new SimpleDateFormat("dd/MM/yyyy");
         try {
-            String endtime = formatter1.format(c.getTime())+" 23:59";
+            String endtime = formatter1.format(c.getTime()) + " 23:59";
             Date date1 = formatter.parse(endtime);
-            Log.d("TodayDATE",""+date1.getTime());
+            Log.d("TodayDATE", "" + date1.getTime());
             todayENdtime = String.valueOf(date1.getTime());
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        sharedPreferences = getActivity().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         social_token = "Bearer " + sharedPreferences.getString("Socailtoken", "");
         getGender = sharedPreferences.getString("profilegender", "");
         getEventPrice();
@@ -186,7 +156,7 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
         }
 
 
-        Places.initialize(getContext(), getContext().getResources().getString(R.string.googleclientId));
+        Places.initialize(this, getResources().getString(R.string.googleclientId));
 
         listerner();
 
@@ -241,13 +211,11 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
 
 
         mapView.onCreate(savedInstanceState);
-        mapView.getMapAsync(this);
-        MapsInitializer.initialize(this.getActivity());
+        mapView.getMapAsync((OnMapReadyCallback) FilterActivity.this);
+        MapsInitializer.initialize(this);
 
 
-        return view;
     }
-
 
     private void getEventPrice() {
         progressDialog.show();
@@ -275,8 +243,8 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
 
             @Override
             public void onFailure(Call<NormalEventPrice> call, Throwable t) {
-                if (NoInternet.isOnline(getContext()) == false) {
-                    NoInternet.dialog(getContext());
+                if (NoInternet.isOnline(FilterActivity.this) == false) {
+                    NoInternet.dialog(FilterActivity.this);
                     progressDialog.dismiss();
                 }
             }
@@ -285,23 +253,22 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
 
 
     private void init() {
-        Home_Screen.bottomNavigationView.setVisibility(View.GONE);
-        close = view.findViewById(R.id.close_filter);
-        searchLoc = view.findViewById(R.id.search_loc);
-        mapView = view.findViewById(R.id.mapview);
-        today = view.findViewById(R.id.filter_today);
-        tomorrow = view.findViewById(R.id.filter_tomorrow);
-        seekBar = view.findViewById(R.id.costseekbar);
-        cityname = view.findViewById(R.id.loc);
-        setlocation = view.findViewById(R.id.setLocatiion);
-        filterPrice = view.findViewById(R.id.filterprice);
-        endcost = view.findViewById(R.id.endcost);
-        filter_bt_filter = view.findViewById(R.id.filter_bt_filter);
-        male = view.findViewById(R.id.filter_male_only);
-        female = view.findViewById(R.id.filter_radio_female_only);
-        all = view.findViewById(R.id.filter_radio_all);
-        radioGroup = view.findViewById(R.id.radiogroup_filter);
-        locationPin = view.findViewById(R.id.locationpin);
+        close = findViewById(R.id.close_filter);
+        searchLoc = findViewById(R.id.search_loc);
+        mapView = findViewById(R.id.mapview);
+        today = findViewById(R.id.filter_today);
+        tomorrow = findViewById(R.id.filter_tomorrow);
+        seekBar = findViewById(R.id.costseekbar);
+        cityname = findViewById(R.id.loc);
+        setlocation = findViewById(R.id.setLocatiion);
+        filterPrice = findViewById(R.id.filterprice);
+        endcost = findViewById(R.id.endcost);
+        filter_bt_filter = findViewById(R.id.filter_bt_filter);
+        male = findViewById(R.id.filter_male_only);
+        female = findViewById(R.id.filter_radio_female_only);
+        all = findViewById(R.id.filter_radio_all);
+        radioGroup = findViewById(R.id.radiogroup_filter);
+        locationPin = findViewById(R.id.locationpin);
 
     }
 
@@ -319,18 +286,18 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
     public void onClick(View v) {
         if (v == close) {
 
-            manager.beginTransaction().replace(R.id.home_frame_layout, new Home()).commit();
+            onBackPressed();
         }
         if (v == searchLoc) {
             if (isNetworkIsConnected()) {
 
-                Intent intent = new Intent(getContext(),CustomPlacePicker.class);
+                Intent intent = new Intent(FilterActivity.this, CustomPlacePicker.class);
                 startActivity(intent);
 //                FireSearchIntent();
 //                showPlacePicker();
 //                locationPicker();
             } else {
-                Toast.makeText(getContext(), "Check Internet Connection...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(FilterActivity.this, "Check Internet Connection...", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -349,21 +316,19 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
                 Log.d("+++++++++", "+++ price +++" + value1);
                 progressDialog.dismiss();
 
-                Bundle bundle = new Bundle();
-                bundle.putString("loc", loc);
-                bundle.putString("gender", gender);
-                bundle.putString("date", formattedDate);
-                bundle.putString("price", value1);
-                bundle.putString("lat", lat);
-                bundle.putString("lng", lng);
-                bundle.putString("edate",todayENdtime);
 
-                FilteredScreen filterScreen = new FilteredScreen();
-                filterScreen.setArguments(bundle);
-                manager.beginTransaction().replace(R.id.home_frame_layout, filterScreen).commit();
+                Intent intent = new Intent(FilterActivity.this,FilteredActivity.class);
+                intent.putExtra("loc", loc);
+                intent.putExtra("gender", gender);
+                intent.putExtra("date", formattedDate);
+                intent.putExtra("price", value1);
+                intent.putExtra("lat", lat);
+                intent.putExtra("lng", lng);
+                intent.putExtra("edate", todayENdtime);
+                startActivity(intent);
             } else {
 
-                Toast.makeText(getContext(), "Select atleast one option from gender", Toast.LENGTH_SHORT).show();
+                Toast.makeText(FilterActivity.this, "Select atleast one option from gender", Toast.LENGTH_SHORT).show();
             }
 
 
@@ -400,9 +365,9 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
             //---------------******************---------------------
 
             try {
-                String endtime = formatter1.format(c.getTime())+" 23:59";
+                String endtime = formatter1.format(c.getTime()) + " 23:59";
                 Date date1 = formatter.parse(endtime);
-                Log.d("TodayDATE",""+date1.getTime());
+                Log.d("TodayDATE", "" + date1.getTime());
                 todayENdtime = String.valueOf(date1.getTime());
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -434,9 +399,9 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
             DateFormat formatter0 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             DateFormat formatter1 = new SimpleDateFormat("dd/MM/yyyy");
             try {
-                String endtime = formatter1.format(c.getTime())+" 23:59";
+                String endtime = formatter1.format(c.getTime()) + " 23:59";
                 Date date1 = formatter0.parse(endtime);
-                Log.d("TommorowEnd",""+date1.getTime());
+                Log.d("TommorowEnd", "" + date1.getTime());
                 todayENdtime = String.valueOf(date1.getTime());
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -465,132 +430,39 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
     }
 
     public boolean isNetworkIsConnected() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return connectivityManager.getActiveNetworkInfo() != null;
     }
 
-    public void FireSearchIntent() {
-        Intent intent = new Autocomplete.IntentBuilder(
-                AutocompleteActivityMode.FULLSCREEN, fields)
-                .build(getContext());
-        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
-    }
-
-    /*private void showPlacePicker() {
-        PingPlacePicker.IntentBuilder builder = new PingPlacePicker.IntentBuilder();
-        builder.setAndroidApiKey("AIzaSyDKpkPtlJLZC0KR-p-cvb4QXG_5JtXFL40")
-                .setMapsApiKey(String.valueOf(R.string.key_google_apis_maps));
-        // If you want to set a initial location rather then the current device location.
-        // NOTE: enable_nearby_search MUST be true.
-         //builder.setLatLng(new LatLng(37.4219999, -122.0862462));
-        try {
-            Intent placeIntent = builder.build(getActivity());
-            startActivityForResult(placeIntent, AUTOCOMPLETE_REQUEST_CODE);
-        }
-        catch (Exception ex) {
-            // Google Play services is not available...
-        }
-    }*/
-
-   /* private void locationPicker() {
-
-        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-        try {
-            startActivityForResult(builder.build(getActivity()), AUTOCOMPLETE_REQUEST_CODE);
-        } catch (GooglePlayServicesRepairableException e) {
-            e.printStackTrace();
-        } catch (GooglePlayServicesNotAvailableException e) {
-            e.printStackTrace();
-        }
-    }*/
-
-
-
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onPointerCaptureChanged(boolean hasCapture) {
 
-
-        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                com.google.android.gms.location.places.Place place =  PlaceAutocomplete.getPlace(getActivity(), data);
-//                Place place = PingPlacePicker.getPlace(data);
-                String puneet = String.valueOf(place).subSequence(String.valueOf(place).indexOf("name") + 5, String.valueOf(place).length()).toString();
-                String[] puni = puneet.split(",");
-                Log.d("checkplace", "" + String.valueOf(place));
-                Log.d("checkplace", "" + String.valueOf(place).subSequence(String.valueOf(place).indexOf("name") + 5, String.valueOf(place).length()));
-                Log.d("checkplace", "" + puni[0]);
-
-                cityname.setText(puni[0]);
-
-                //Toast.makeText(getContext(), ""+cityname.getText().toString(), Toast.LENGTH_SHORT).show();
-
-                String loc = String.valueOf(place);
-                Geocoder geocoder = new Geocoder(getContext());
-                try {
-                    List<Address> addresses = geocoder.getFromLocationName(loc, 10);
-                    List<LatLng> latLngs = new ArrayList<LatLng>(addresses.size());
-
-                    Log.d("latLngs", String.valueOf(latLngs));
-                    if (addresses != null && addresses.size() != 0) {
-                        city = addresses.get(0).getAddressLine(0);
-                        cityname.setText(addresses.get(0).getAddressLine(0).toString());
-                    } else {
-                        if (puni[0].equals("Stratford")) {
-                            lat = String.valueOf(51.5472);
-                            lng = String.valueOf(0.0081);
-                            location(lat, lng);
-                            cityname.setText("Stratford");
-                        } else if (puni[0].equals("EE")) {
-                            lat = String.valueOf(51.5430);
-                            lng = String.valueOf(0.0042);
-                            location(lat, lng);
-                            cityname.setText("Stratford Westfield");
-                        } else {
-                            cityname.setText("Address not found");
-                        }
-
-                    }
-
-
-                    for (Address a : addresses) {
-                        if (a.hasLatitude() && a.hasLongitude()) {
-                            latLngs.add(new LatLng(a.getLatitude(), a.getLongitude()));
-
-                            lat = String.valueOf(a.getLatitude());
-                            lng = String.valueOf(a.getLongitude());
-                            location(lat, lng);
-                            Log.d("checkplace", "" + String.valueOf(a.getLatitude()));
-
-
-                        }
-
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
-
-//                Status status = Autocomplete.getStatusFromIntent(data);
-//                Log.i("Hello", status.getStatusMessage());
-            } else if (resultCode == RESULT_CANCELED) {
-                // The user canceled the operation.
-            }
-        }
     }
-
 
     public void statusCheck() {
-        final LocationManager manager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             buildAlertMessageNoGps();
             progressDialog.dismiss();
         } else {
-            CurrentLocation();
+
+            String from = intent.getStringExtra("from");
+            if (from.equals("picker")) {
+                lat = intent.getStringExtra("lat");
+                lng = intent.getStringExtra("lng");
+                latt = lat;
+                lnng = lng;
+                Log.d("LatLNG", "lat   " + lat + "     " + lng);
+
+            } else {
+                CurrentLocation();
+            }
+
         }
     }
 
     private void buildAlertMessageNoGps() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(FilterActivity.this);
         builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -610,9 +482,9 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
     }
 
     private void CurrentLocation() {
-        final FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(getActivity());
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        final FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(FilterActivity.this);
+        if (ActivityCompat.checkSelfPermission(FilterActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(FilterActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             return;
         } else {
@@ -628,14 +500,14 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
                                 // location(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
 
                                 if (location == null) {
-                                    Toast.makeText(getContext(), "Unable to get Location", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(FilterActivity.this, "Unable to get Location", Toast.LENGTH_SHORT).show();
                                 } else {
                                     lat = String.valueOf(location.getLatitude());
                                     lng = String.valueOf(location.getLongitude());
                                 }
 
                                 Log.d("Location", "" + lat + "" + lng);
-                                Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+                                Geocoder geocoder = new Geocoder(FilterActivity.this, Locale.getDefault());
                                 try {
                                     List<Address> address = (List<Address>) geocoder.getFromLocation(Double.parseDouble(lat), Double.parseDouble(lng), 1);
 
@@ -649,7 +521,7 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
                                     if (mapView != null) {
                                         mapView.onCreate(null);
                                         mapView.onResume();
-                                        mapView.getMapAsync(FilterScreen.this);
+                                        mapView.getMapAsync((OnMapReadyCallback) FilterActivity.this);
                                     }
 
                                 } catch (IOException e) {
@@ -661,7 +533,7 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
                         task.addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(getContext(), "Location Not Found...,Enter Location Manually...", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(FilterActivity.this, "Location Not Found...,Enter Location Manually...", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -681,7 +553,7 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
         CameraPosition cameraPosition = CameraPosition.builder().target(new LatLng(Double.parseDouble(lat), Double.parseDouble(lng))).zoom(15).bearing(0).tilt(40).build();
         Gmap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(FilterActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(FilterActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             // here to request the missing permissions, and then overriding
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
@@ -711,7 +583,7 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
             setlocation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+                    Geocoder geocoder = new Geocoder(FilterActivity.this, Locale.getDefault());
                     try {
                         List<Address> address = (List<Address>) geocoder.getFromLocation(Double.valueOf(latt), Double.valueOf(lnng), 1);
                         city = address.get(0).getLocality();
@@ -729,14 +601,14 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    Toast.makeText(getContext(), "New Location Set " + city, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FilterActivity.this, "New Location Set " + city, Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
 
     private void getCityName(String lat, String lng) {
-        Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+        Geocoder geocoder = new Geocoder(FilterActivity.this, Locale.getDefault());
         List<Address> address = null;
         try {
             address = (List<Address>) geocoder.getFromLocation(Double.parseDouble(lat), Double.parseDouble(lng), 1);
@@ -765,12 +637,12 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_READ_LOCATION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                        Toast.makeText(getContext(), "Permission granted", Toast.LENGTH_SHORT).show();
+                    if (ContextCompat.checkSelfPermission(FilterActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        Toast.makeText(FilterActivity.this, "Permission granted", Toast.LENGTH_SHORT).show();
 
                     }
                 } else {
-                    Toast.makeText(getContext(), "No permission Granted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FilterActivity.this, "No permission Granted", Toast.LENGTH_SHORT).show();
 
                 }
                 return;
@@ -781,11 +653,10 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
     }
 
 
-
     private void location(String lat, String lng) {
 
 
-        Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+        Geocoder geocoder = new Geocoder(FilterActivity.this, Locale.getDefault());
         try {
             List<Address> address = (List<Address>) geocoder.getFromLocation(Double.valueOf(lat), Double.valueOf(lng), 1);
             city = address.get(0).getLocality();
@@ -801,7 +672,7 @@ public class FilterScreen extends Fragment implements View.OnClickListener,
             if (mapView != null) {
                 mapView.onCreate(null);
                 mapView.onResume();
-                mapView.getMapAsync(FilterScreen.this);
+                mapView.getMapAsync(FilterActivity.this);
             }
 
         } catch (IOException e) {

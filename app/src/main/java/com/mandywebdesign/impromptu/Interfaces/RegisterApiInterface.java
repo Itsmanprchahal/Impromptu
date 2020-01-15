@@ -13,6 +13,7 @@ import com.mandywebdesign.impromptu.Retrofit.FAQ;
 import com.mandywebdesign.impromptu.Retrofit.FollowUnfollow;
 import com.mandywebdesign.impromptu.Retrofit.FollowerPublish;
 import com.mandywebdesign.impromptu.Retrofit.GusetCheckIns;
+import com.mandywebdesign.impromptu.Retrofit.HostedEvents;
 import com.mandywebdesign.impromptu.Retrofit.InappropriateBehaviour;
 import com.mandywebdesign.impromptu.Retrofit.NormalEventPrice;
 import com.mandywebdesign.impromptu.Retrofit.NormalFilterEvents;
@@ -27,6 +28,7 @@ import com.mandywebdesign.impromptu.Retrofit.NormalRetrologin;
 import com.mandywebdesign.impromptu.Retrofit.Normal_past_booked;
 import com.mandywebdesign.impromptu.Retrofit.NormalrelatedEvents;
 import com.mandywebdesign.impromptu.Retrofit.NormalretroHosting_fav_evnts;
+import com.mandywebdesign.impromptu.Retrofit.PostCode;
 import com.mandywebdesign.impromptu.Retrofit.Rating;
 import com.mandywebdesign.impromptu.Retrofit.RefundAPI;
 import com.mandywebdesign.impromptu.Retrofit.RemainingTickets;
@@ -73,6 +75,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface RegisterApiInterface {
@@ -195,6 +198,7 @@ public interface RegisterApiInterface {
             @Query("postcode") String postcode
     );
 
+
     @GET("view-profile")
     Call<RetroGetProfile> getProfile(
             @Header("Authorization") String token,
@@ -284,6 +288,12 @@ public interface RegisterApiInterface {
     Call<RetroDelete> delete(
             @Header("Authorization") String token,
             @Header("Accept") String accept
+    );
+
+    @GET("hosted-events")
+    Call<HostedEvents> hostedEvents(
+            @Header("Authorization") String token,
+            @Query("user_id") String user_id
     );
 
     //===============normal users=====================

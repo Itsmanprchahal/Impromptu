@@ -34,7 +34,8 @@
     <string name="facebook_app_id">837238269949836</string>
     <string name="fb_login_protocol_scheme">fb837238269949836</string>
     <string name="googleclientId">AIzaSyBv3FYZuLZJR8mOlONc6hMGqh-Taeo7-7g</string>
-    <!--<string name="googleclientId">AIzaSyAmYry1bhZSOxVdIb3HmWz3QjqRda8yvrA</string>-->
+    <!--    <string name="googleclientId">AIzaSyBm_8oGbXAp_2Yoa0YI8ZAQWg16h9G-bvo</string>-->
+    <!--    <string name="googleclientId">AIzaSyDKpkPtlJLZC0KR-p-cvb4QXG_5JtXFL40</string>-->
     <string name="userProfileQuestion">+ Answer up to three of these questions "\n" (Showcase your personality in the process)</string>
     <string name="userProfileStatus">Write a bit about yourself to share with other users</string>
     <string name="title_activity_maps">Map</string>
@@ -47,4 +48,9 @@
     <string name="feedback"><u>Leave Feedback</u></string>
     <string name="uniqueid"><b>Unique Event ID </b>(found in event listing)</string>
     <string name="contactuscomment">Any feedback? Any comments? "\n" Don’t be shy, give us a shout...</string>
+
+    <string name="enter_location">Enter Location</string>
+    <string name="auto_complete_text">Autocomplete textview with custom adapter.</string>
+    <string name="error">Google Api key is missing.</string>
+
 </resources>

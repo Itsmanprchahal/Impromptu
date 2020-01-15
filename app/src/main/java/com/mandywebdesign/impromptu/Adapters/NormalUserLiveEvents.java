@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,12 @@ import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEventDetailAci
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalGetProfile;
 import com.mandywebdesign.impromptu.ui.BookEventActivity;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class NormalUserLiveEvents extends RecyclerView.Adapter<NormalUserLiveEvents.ViewHolder> {
 
@@ -41,17 +48,24 @@ public class NormalUserLiveEvents extends RecyclerView.Adapter<NormalUserLiveEve
         viewHolder.category.setText(NormalGetProfile.eventTitle.get(i));
         Glide.with(context).load(NormalGetProfile.images.get(i)).into(viewHolder.imageView);
 
+
+
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
+                if (NormalGetProfile.event_status.equals("live"))
+                {
                     Intent intent = new Intent(context, BookEventActivity.class);
                     intent.putExtra("event_id", NormalGetProfile.liveevent_id.get(i));
                     intent.putExtra("eventType","live");
                     context.startActivity(intent);
-
-
+                }else {
+                    Intent intent = new Intent(context, BookEventActivity.class);
+                    intent.putExtra("event_id", NormalGetProfile.liveevent_id.get(i));
+                    intent.putExtra("eventType","past");
+                    context.startActivity(intent);
+                }
             }
         });
     }

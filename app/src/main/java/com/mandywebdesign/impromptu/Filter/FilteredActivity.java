@@ -1,20 +1,17 @@
 package com.mandywebdesign.impromptu.Filter;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +20,6 @@ import com.mandywebdesign.impromptu.Adapters.FilteredAdapter;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.NormalFilterEvents;
-import com.mandywebdesign.impromptu.Utils.Constants;
 import com.mandywebdesign.impromptu.Utils.Util;
 import com.mandywebdesign.impromptu.ui.DiscreteScrollViewOptions;
 import com.mandywebdesign.impromptu.ui.NoInternetScreen;
@@ -42,8 +38,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+public class FilteredActivity extends AppCompatActivity implements DiscreteScrollView.OnItemChangedListener{
 
-public class FilteredScreen extends Fragment implements DiscreteScrollView.OnItemChangedListener {
 
     public DiscreteScrollView recyclerView;
     TextView noEvnets;
@@ -65,37 +61,35 @@ public class FilteredScreen extends Fragment implements DiscreteScrollView.OnIte
     public static ArrayList<String> images = new ArrayList<>();
     public static ArrayList<String> event_time = new ArrayList<>();
     public static ArrayList<String> event_id = new ArrayList<>();
-
+    Intent intent;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_filtered_screen, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_filtered);
 
-        manager = getFragmentManager();
-        Bundle bundle = getArguments();
-        String loc = bundle.getString("loc");
-        String date = bundle.getString("date");
-        final String price = bundle.getString("price");
-        String gender = bundle.getString("gender");
-        String lat = bundle.getString("lat");
-        String lng = bundle.getString("lng");
-        String eDate = bundle.getString("edate");
+        intent = getIntent();
+        String loc = intent.getStringExtra("loc");
+        String date = intent.getStringExtra("date");
+        final String price = intent.getStringExtra("price");
+        String gender = intent.getStringExtra("gender");
+        String lat = intent.getStringExtra("lat");
+        String lng = intent.getStringExtra("lng");
+        String eDate = intent.getStringExtra("edate");
         Log.d("filteredScreen", lat + "  " + lng);
 
-        sharedPreferences = getActivity().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         social_token = "Bearer " + sharedPreferences.getString("Socailtoken", "");
 
 
         init();
 
-        progressDialog = ProgressBarClass.showProgressDialog(getContext());
+        progressDialog = ProgressBarClass.showProgressDialog(FilteredActivity.this);
         progressDialog.show();
 
 
         recyclerView.setOrientation(DSVOrientation.HORIZONTAL);
         recyclerView.addOnItemChangedListener(this);
-        infiniteAdapter = InfiniteScrollAdapter.wrap(new FilteredAdapter(getContext()));
+        infiniteAdapter = InfiniteScrollAdapter.wrap(new FilteredAdapter(FilteredActivity.this));
         recyclerView.setAdapter(infiniteAdapter);
         recyclerView.setItemTransitionTimeMillis(DiscreteScrollViewOptions.getTransitionTime());
         recyclerView.setItemTransformer(new ScaleTransformer.Builder()
@@ -181,7 +175,7 @@ public class FilteredScreen extends Fragment implements DiscreteScrollView.OnIte
                             images.add(datum.getFile());
                             event_id.add(datum.getEventId().toString());
 
-                            adapter = new FilteredAdapter(getContext());
+                            adapter = new FilteredAdapter(FilteredActivity.this);
                             recyclerView.setAdapter(adapter);
                         }
                     } else if (response.body().getStatus().equals("400")) {
@@ -193,7 +187,7 @@ public class FilteredScreen extends Fragment implements DiscreteScrollView.OnIte
                 } else {
                     Clear();
                     recyclerView.setVisibility(View.GONE);
-                    Intent intent = new Intent(getContext(), NoInternetScreen.class);
+                    Intent intent = new Intent(FilteredActivity.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     progressDialog.dismiss();
@@ -204,32 +198,30 @@ public class FilteredScreen extends Fragment implements DiscreteScrollView.OnIte
             @Override
             public void onFailure(Call<NormalFilterEvents> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(FilteredActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
-
-        return view;
     }
 
     private void listeners() {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("back_pay", "filter");
-
-                FilterScreen filterScreen = new FilterScreen();
-                filterScreen.setArguments(bundle);
-                manager.beginTransaction().replace(R.id.home_frame_layout, filterScreen).commit();
+//                Bundle bundle = new Bundle();
+//                bundle.putString("back_pay", "filter");
+//
+//                FilterScreen filterScreen = new FilterScreen();
+//                filterScreen.setArguments(bundle);
+//                manager.beginTransaction().replace(R.id.home_frame_layout, filterScreen).commit();
+                onBackPressed();
             }
         });
     }
 
     private void init() {
-        recyclerView = view.findViewById(R.id.filtered__recyclerview);
-        back = view.findViewById(R.id.back_filter);
-        noEvnets = view.findViewById(R.id.noevents_filtered);
+        recyclerView = findViewById(R.id.filtered__recyclerview);
+        back = findViewById(R.id.back_filter);
+        noEvnets = findViewById(R.id.noevents_filtered);
     }
 
     public void Clear() {
@@ -257,5 +249,4 @@ public class FilteredScreen extends Fragment implements DiscreteScrollView.OnIte
 
         return sb.toString();
     }
-
 }

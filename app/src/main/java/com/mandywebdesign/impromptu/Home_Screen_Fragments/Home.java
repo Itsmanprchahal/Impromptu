@@ -45,6 +45,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.mandywebdesign.impromptu.Adapters.HomeEventsAdapter;
 import com.mandywebdesign.impromptu.Adapters.RelatedEventAdapter;
+import com.mandywebdesign.impromptu.Filter.FilterActivity;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.Filter.FilterScreen;
 import com.mandywebdesign.impromptu.R;
@@ -198,9 +199,10 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentManager.beginTransaction().replace(R.id.home_frame_layout, new FilterScreen()).addToBackStack(null).commit();
-//                Intent intent = new Intent(getContext(), Demo.class);
-//                startActivity(intent);
+//                fragmentManager.beginTransaction().replace(R.id.home_frame_layout, new FilterScreen()).addToBackStack(null).commit();
+                Intent intent = new Intent(getContext(), FilterActivity.class);
+                intent.putExtra("from","home");
+                startActivity(intent);
             }
         });
 

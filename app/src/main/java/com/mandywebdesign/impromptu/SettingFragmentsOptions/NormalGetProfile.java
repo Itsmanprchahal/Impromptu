@@ -45,6 +45,7 @@ import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessAdapter.UsersP
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessUserPRofileActivity;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
+import com.mandywebdesign.impromptu.Retrofit.HostedEvents;
 import com.mandywebdesign.impromptu.Retrofit.Normal_past_booked;
 import com.mandywebdesign.impromptu.Retrofit.RetroHistoryEvents;
 import com.mandywebdesign.impromptu.Retrofit.RetroLiveEvents;
@@ -89,6 +90,7 @@ public class NormalGetProfile extends AppCompatActivity {
     public static ArrayList<String> Questions = new ArrayList<>();
     public static ArrayList<String> Answer = new ArrayList<>();
     public static ArrayList<String> QA_id = new ArrayList<>();
+    public static ArrayList<String> event_status = new ArrayList<>();
     static String prfileAge;
     Intent intent;
 
@@ -126,7 +128,8 @@ public class NormalGetProfile extends AppCompatActivity {
             if (userid != null) {
                 if (!userToken.equals("")) {
                     getProfile(userToken, userid);
-                    getUsersLiveEvents(userid);
+//                    getUsersLiveEvents(userid); //here new work
+                    getHostedEvents(userToken,userid);
                     getUsersattendingEvents(userid);
                     editprofile.setVisibility(View.GONE);
                     user_profile_Event.setVisibility(View.VISIBLE);
@@ -137,7 +140,8 @@ public class NormalGetProfile extends AppCompatActivity {
                     totlaEvents.setVisibility(View.VISIBLE);
                 } else {
                     getProfile(BToken, userid);
-                    getUsersLiveEvents(userid);
+//                    getUsersLiveEvents(userid); //here new work
+                    getHostedEvents(BToken,userid);
                     getUsersattendingEvents(userid);
                     editprofile.setVisibility(View.GONE);
                     user_profile_Event.setVisibility(View.VISIBLE);
@@ -153,12 +157,14 @@ public class NormalGetProfile extends AppCompatActivity {
             } else {
                 if (!userToken.equals("")) {
                     getProfile(userToken, userid);
-                    getLiveEvents(userToken);
+//                    getLiveEvents(userToken);
+                    getHostedEvents(userToken,"");
                     getattendingEvents(userToken);
 //                    getHistoryEvents(userToken);
                 } else {
                     getProfile(BToken, userid);
-                    getLiveEvents(userToken);
+                    getHostedEvents(userToken,"");
+//                    getLiveEvents(userToken);
 //                    getHistoryEvents(userToken);
                     getattendingEvents(userToken);
                 }
@@ -179,6 +185,57 @@ public class NormalGetProfile extends AppCompatActivity {
             eventsAttendingRecycler.setVisibility(View.VISIBLE);
             totlaEvents.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void getHostedEvents(String userToken,String user_id) {
+        Call<HostedEvents> call = WebAPI.getInstance().getApi().hostedEvents("Bearer "+userToken,user_id);
+        call.enqueue(new Callback<HostedEvents>() {
+            @Override
+            public void onResponse(Call<HostedEvents> call, Response<HostedEvents> response) {
+
+                if (response.body() != null) {
+                    if (response.body().getStatus().equals("200")) {
+                        HostedEvents retroLiveEvents = response.body();
+                        List<HostedEvents.Datum> datumList = retroLiveEvents.getData();
+                        images.clear();
+                        eventTitle.clear();
+                        liveevent_id.clear();
+                        event_status.clear();
+                        for (HostedEvents.Datum datum : datumList) {
+                            eventTitle.add(datum.getTitle());
+                            images.add(datum.getFile());
+                            liveevent_id.add(String.valueOf(datum.getEventId()));
+                            event_status.add(datum.getEvent_status());
+
+                            Collections.reverse(eventTitle);
+                            Collections.reverse(images);
+                            Collections.reverse(event_status);
+                            Collections.reverse(liveevent_id);
+
+                            totlaEvents.setText("( " + String.valueOf(images.size()) + " )");
+
+                            LinearLayoutManager layoutManager = new LinearLayoutManager(NormalGetProfile.this, LinearLayoutManager.HORIZONTAL, false);
+                            hostRecycler.setLayoutManager(layoutManager);
+
+                            NormalUserLiveEvents adapter = new NormalUserLiveEvents(NormalGetProfile.this);
+                            hostRecycler.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                        }
+
+                    }
+                }else {
+                    Intent intent = new Intent(NormalGetProfile.this, NoInternetScreen.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<HostedEvents> call, Throwable t) {
+
+            }
+        });
     }
 
     private void getHistoryEvents(final String userToken) {
