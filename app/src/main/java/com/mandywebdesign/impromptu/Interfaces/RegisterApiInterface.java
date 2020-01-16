@@ -64,10 +64,13 @@ import com.mandywebdesign.impromptu.Retrofit.UsersLiveEvent;
 import com.mandywebdesign.impromptu.Retrofit.UsersPastEvent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.HEAD;
@@ -75,8 +78,10 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 public interface RegisterApiInterface {
 
@@ -157,6 +162,15 @@ public interface RegisterApiInterface {
             @Query("value") String value,
             @Query("numberoftickets") String numberoftickets
     );
+
+    @Multipart
+    @POST("events")
+    Call<RetroAddEvent> addEventNew(
+            @Header("Authorization") String token,
+            @Part HashMap<String, String> params,
+            @Part ArrayList<MultipartBody.Part> images
+    );
+
 
     //edit draft and post
     @Multipart

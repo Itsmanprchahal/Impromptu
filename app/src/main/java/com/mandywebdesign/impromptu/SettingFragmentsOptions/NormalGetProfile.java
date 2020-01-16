@@ -501,12 +501,10 @@ public class NormalGetProfile extends AppCompatActivity {
             public void onFailure(Call<Normal_past_booked> call, Throwable t) {
                 if (NoInternet.isOnline(NormalGetProfile.this) == false) {
                     progressDialog.dismiss();
-
                     NoInternet.dialog(NormalGetProfile.this);
                 }
             }
         });
-
     }
 
     private void getProfile(String userToken, String user_id) {

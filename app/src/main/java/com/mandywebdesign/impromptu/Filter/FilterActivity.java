@@ -292,7 +292,9 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
             if (isNetworkIsConnected()) {
 
                 Intent intent = new Intent(FilterActivity.this, CustomPlacePicker.class);
+                intent.putExtra("is_from","filter");
                 startActivity(intent);
+                finish();
 //                FireSearchIntent();
 //                showPlacePicker();
 //                locationPicker();
@@ -326,6 +328,7 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
                 intent.putExtra("lng", lng);
                 intent.putExtra("edate", todayENdtime);
                 startActivity(intent);
+                finish();
             } else {
 
                 Toast.makeText(FilterActivity.this, "Select atleast one option from gender", Toast.LENGTH_SHORT).show();

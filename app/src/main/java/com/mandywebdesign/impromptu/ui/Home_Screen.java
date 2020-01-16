@@ -133,7 +133,7 @@ public class Home_Screen extends AppCompatActivity {
         listeners();
 
         intent = getIntent();
-        String backvalue = intent.getStringExtra("backonmessg");
+
 
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
         final View iconView = menuView.getChildAt(2).findViewById(com.google.android.material.R.id.icon);
@@ -184,13 +184,25 @@ public class Home_Screen extends AppCompatActivity {
             //updateProfiledialog();
             Intent intent1 = getIntent();
             String value = intent1.getStringExtra("bookevent");
+            String s = intent1.getStringExtra("isFrom");
 
-            if (value == null) {
+            if (value == null && s == null) {
                 FragmentTransaction transaction = manager.beginTransaction();
                 transaction.replace(R.id.home_frame_layout, new Home());
                 transaction.commit();
                 setMesgIcon();
 
+
+            } else if (value == null && s.equals("NormaleventCreation")) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString("eventType", "live");
+                Events events = new Events();
+                events.setArguments(bundle);
+                FragmentTransaction transaction1 = manager.beginTransaction();
+                transaction1.replace(R.id.home_frame_layout, events);
+                transaction1.commit();
+                setMesgIcon();
 
             } else {
                 Bundle bundle = new Bundle();
@@ -207,59 +219,61 @@ public class Home_Screen extends AppCompatActivity {
             progressDialog.dismiss();
 
 
-        } else {
-            Call<RetroGetProfile> call = WebAPI.getInstance().getApi().getProfile(userToken, accept, "");
-            call.enqueue(new Callback<RetroGetProfile>() {
-                @Override
-                public void onResponse(Call<RetroGetProfile> call, Response<RetroGetProfile> response) {
-                    if (response.body() != null) {
-                        if (response.body().getStatus().equals("200")) {
-                            BprofileStatus = response.body().getData().get(0).getProfileNumber().toString();
-                            if (response.body().getData().get(0).getProfileNumber().equals(1)) {
+        }  else {
+                Call<RetroGetProfile> call = WebAPI.getInstance().getApi().getProfile(userToken, accept, "");
+                call.enqueue(new Callback<RetroGetProfile>() {
+                    @Override
+                    public void onResponse(Call<RetroGetProfile> call, Response<RetroGetProfile> response) {
+                        if (response.body() != null) {
+                            if (response.body().getStatus().equals("200")) {
+                                BprofileStatus = response.body().getData().get(0).getProfileNumber().toString();
+                                if (response.body().getData().get(0).getProfileNumber().equals(1)) {
 
-                                FragmentTransaction transaction = manager.beginTransaction();
-                                transaction.replace(R.id.home_frame_layout, new BusinessUserProfile());
-                                transaction.commit();
+                                    FragmentTransaction transaction = manager.beginTransaction();
+                                    transaction.replace(R.id.home_frame_layout, new BusinessUserProfile());
+                                    transaction.commit();
 
-                                Menu menu = bottomNavigationView.getMenu();
-                                menu.findItem(R.id.hometab).setIcon(R.drawable.iconprofile);
+                                    Menu menu = bottomNavigationView.getMenu();
+                                    menu.findItem(R.id.hometab).setIcon(R.drawable.iconprofile);
 
-                            } else {
-                                Intent intent = new Intent(Home_Screen.this, BussinessProfileAcitivity1.class);
-                                intent.putExtra("value", "0");
+                                } else {
+                                    Intent intent = new Intent(Home_Screen.this, BussinessProfileAcitivity1.class);
+                                    intent.putExtra("value", "0");
+                                    startActivity(intent);
+                                    finish();
+
+                                }
+                            } else if (response.body().getStatus().equals("401")) {
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.clear();
+                                editor.commit();
+
+                                Intent intent = new Intent(Home_Screen.this, Join_us.class);
                                 startActivity(intent);
                                 finish();
-
                             }
-                        } else if (response.body().getStatus().equals("401")) {
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.clear();
-                            editor.commit();
 
-                            Intent intent = new Intent(Home_Screen.this, Join_us.class);
+                            progressDialog.dismiss();
+
+                        } else {
+                            Intent intent = new Intent(Home_Screen.this, NoInternetScreen.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
-                            finish();
                         }
-
-                        progressDialog.dismiss();
-
-                    } else {
-                        Intent intent = new Intent(Home_Screen.this, NoInternetScreen.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
                     }
-                }
 
-                @Override
-                public void onFailure(Call<RetroGetProfile> call, Throwable t) {
-                    if (NoInternet.isOnline(Home_Screen.this) == false) {
-                        progressDialog.dismiss();
-                        NoInternet.dialog(Home_Screen.this);
+                    @Override
+                    public void onFailure(Call<RetroGetProfile> call, Throwable t) {
+                        if (NoInternet.isOnline(Home_Screen.this) == false) {
+                            progressDialog.dismiss();
+                            NoInternet.dialog(Home_Screen.this);
+                        }
                     }
-                }
-            });
+                });
 
-        }
+            }
+
+
     }
 
     public void setMesgIcon() {
@@ -553,8 +567,7 @@ public class Home_Screen extends AppCompatActivity {
                     menu.findItem(R.id.messagetab).setIcon(R.drawable.messageinactive);
                     menu.findItem(R.id.profiletab).setIcon(R.drawable.useractive);
                 }
-            }
-            else {
+            } else {
                 if (lastposition == 4) {
                     Menu menu = bottomNavigationView.getMenu();
                     menu.findItem(R.id.hometab).setIcon(R.drawable.profileactive);

@@ -31,6 +31,7 @@ public class Events extends Fragment {
     SharedPreferences.Editor editor;
     String BToken, S_Token, itemPosition, eventType="", favType;
     View view;
+    Bundle bundle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,6 +48,7 @@ public class Events extends Fragment {
         editor.putString(Constants.itemPosition,"0");
         editor.commit();
         manager = getFragmentManager();
+
         initlization();
 
         Bundle bundle = getArguments();

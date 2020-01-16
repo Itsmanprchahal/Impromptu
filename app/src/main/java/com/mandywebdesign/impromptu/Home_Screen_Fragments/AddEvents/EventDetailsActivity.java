@@ -39,6 +39,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.mandywebdesign.impromptu.Filter.CustomPlacePicker;
+import com.mandywebdesign.impromptu.Filter.FilterActivity;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI1;
 import com.mandywebdesign.impromptu.Models.RetroPostcode;
@@ -82,7 +84,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     EditText price_et, tickettype_et;
     TextView numbersTicketET;
     DatePickerDialog.OnDateSetListener dateSetListener, dateSetListener1;
-    String eventTitle, eventDesc, eventCate, edit, value, userToken, BToken, S_Token, getGender, link1, link2, link3;
+    String eventTitle, eventDesc, eventCate, edit, value, userToken, BToken, S_Token, getGender, link1="", link2="", link3="";
     public static String to_time_milles;
     String frommilles;
     String tomilles;
@@ -111,7 +113,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     long startdatemilli;
     long enddatemilli;
     int totalticketsnumber;
-    int pendingtickets;
+    String address1, address2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,14 +142,33 @@ public class EventDetailsActivity extends AppCompatActivity {
         });
 
         Intent intent = getIntent();
-        eventTitle = intent.getStringExtra("eventTitle");
-        eventDesc = intent.getStringExtra("eventDesc");
-        eventCate = intent.getStringExtra("eventCate");
-        edit = intent.getStringExtra("editevent");
-        value = intent.getStringExtra("value");
-        link1 = intent.getStringExtra("link1");
-        link2 = intent.getStringExtra("link2");
-        link3 = intent.getStringExtra("link3");
+
+        address1 = sharedPreferences.getString("address1", "");
+        address2 = sharedPreferences.getString("address2", "");
+        event_lcation_address1.setText(address1);
+        event_lcation_address2.setText(address2);
+            /*if (intent.getStringExtra("address1")!=null)
+            {
+                event_lcation_address1.setText(intent.getStringExtra("address1"));
+
+            }else if (intent.getStringExtra("address2")!=null)
+            {
+                event_lcation_address2.setText(intent.getStringExtra("address2"));
+            }*/
+        Log.d("checkAddress",address1+"   "+address2);
+
+            eventTitle = intent.getStringExtra("eventTitle");
+            eventDesc = intent.getStringExtra("eventDesc");
+            eventCate = intent.getStringExtra("eventCate");
+            edit = intent.getStringExtra("editevent");
+            value = intent.getStringExtra("value");
+            link1 = intent.getStringExtra("link1");
+            link2 = intent.getStringExtra("link2");
+            link3 = intent.getStringExtra("link3");
+            Log.d("link",link1+"   "+link2+"   "+link3);
+
+
+
 
         if (getGender.equals("Male")) {
             event_radiobutton_female.setVisibility(View.GONE);
@@ -199,45 +220,48 @@ public class EventDetailsActivity extends AppCompatActivity {
         close = (ImageView) findViewById(R.id.event_close);
         setSupportActionBar(toolbar);
 
-
-        /*event_postcode.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                Call<RetroPostcode> call = WebAPI.getInstance().getApi().checkpostcode(event_postcode.getText().toString());
-                call.enqueue(new Callback<RetroPostcode>() {
-                    @Override
-                    public void onResponse(Call<RetroPostcode> call, Response<RetroPostcode> response) {
-                        if (response.body() != null) {
-                            if (response.body().getStatus().equals("200")) {
-
-                                event_postcode.setError(null);
-                            } else if (response.body().getStatus().equals("400")) {
-                                event_postcode.setError("Invalid Postcode");
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<RetroPostcode> call, Throwable t) {
-
-                    }
-                });
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });*/
     }
 
 
     public void listeners() {
+
+        event_lcation_address1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EventDetailsActivity.this, CustomPlacePicker.class);
+                intent.putExtra("is_from", "event_create_add1");
+                intent.putExtra("eventTitle",eventTitle);
+                intent.putExtra("eventDesc",eventDesc);
+                intent.putExtra("eventCate",eventCate);
+                intent.putExtra("editevent",edit);
+                intent.putExtra("value",value);
+                intent.putExtra("link1",link1);
+                intent.putExtra("link2",link2);
+                intent.putExtra("link3",link3);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        event_lcation_address2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(EventDetailsActivity.this, CustomPlacePicker.class);
+                intent.putExtra("is_from", "event_create_add2");
+                intent.putExtra("eventTitle",eventTitle);
+                intent.putExtra("eventDesc",eventDesc);
+                intent.putExtra("eventCate",eventCate);
+                intent.putExtra("editevent",edit);
+                intent.putExtra("value",value);
+                intent.putExtra("link1",link1);
+                intent.putExtra("link2",link2);
+                intent.putExtra("link3",link3);
+                startActivity(intent);
+                finish();
+
+            }
+        });
 
         mDate.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -353,10 +377,9 @@ public class EventDetailsActivity extends AppCompatActivity {
                 } else if (event_radiobutton_male.isChecked() | event_radiobutton_female.isChecked() | event_radiobutton_all.isChecked()) {
 
                     String postcode;
-                    if (event_postcode.getText().toString().contains(" "))
-                    {
-                        postcode = event_postcode.getText().toString().replace(" ","");
-                    }else {
+                    if (event_postcode.getText().toString().contains(" ")) {
+                        postcode = event_postcode.getText().toString().replace(" ", "");
+                    } else {
                         postcode = event_postcode.getText().toString();
                     }
                     Call<PostCode> call = WebAPI1.getInstance().getApi().postcode(postcode);
@@ -364,7 +387,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<PostCode> call, Response<PostCode> response) {
                             if (response.body() != null) {
-                                if (response.code()==200) {
+                                if (response.code() == 200) {
 
                                     event_postcode.setError(null);
 
@@ -391,12 +414,11 @@ public class EventDetailsActivity extends AppCompatActivity {
                                     }
                                     tomilles = String.valueOf(date1.getTime());
 
-
                                     intent.putExtra("eventTitle", eventTitle);
                                     intent.putExtra("eventDesc", eventDesc);
                                     intent.putExtra("eventCate", eventCate);
-                                    intent.putExtra("address1", event_lcation_address1.getText().toString());
-                                    intent.putExtra("address2", event_lcation_address2.getText().toString());
+                                    intent.putExtra("address1", address1);
+                                    intent.putExtra("address2", address2);
                                     intent.putExtra("postcode", event_postcode.getText().toString());
                                     intent.putExtra("city", event_city.getText().toString());
                                     intent.putExtra("SelectedDate", mDate.getText().toString());
@@ -418,11 +440,11 @@ public class EventDetailsActivity extends AppCompatActivity {
                                     intent.putExtra("to_Date", to_date);
                                     startActivity(intent);
 
-                                } else if (response.code()==404) {
+                                } else if (response.code() == 404) {
                                     event_postcode.setError("Invalid Postcode");
                                     event_postcode.setText("");
                                 }
-                            }else if (response.code()==404) {
+                            } else if (response.code() == 404) {
                                 event_postcode.setError("Invalid Postcode");
                                 event_postcode.setText("");
                             }

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mandywebdesign.impromptu.Filter.FilteredActivity;
-import com.mandywebdesign.impromptu.Filter.FilteredScreen;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.Home;
 import com.mandywebdesign.impromptu.Utils.Constants;
 import com.mandywebdesign.impromptu.R;

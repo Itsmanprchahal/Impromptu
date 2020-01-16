@@ -27,7 +27,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -47,7 +46,6 @@ import com.mandywebdesign.impromptu.Adapters.HomeEventsAdapter;
 import com.mandywebdesign.impromptu.Adapters.RelatedEventAdapter;
 import com.mandywebdesign.impromptu.Filter.FilterActivity;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
-import com.mandywebdesign.impromptu.Filter.FilterScreen;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.NormalGetEvent;
 import com.mandywebdesign.impromptu.Retrofit.NormalrelatedEvents;

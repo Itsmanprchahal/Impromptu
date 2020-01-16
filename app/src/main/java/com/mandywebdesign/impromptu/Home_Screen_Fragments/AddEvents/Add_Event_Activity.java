@@ -90,6 +90,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
     ArrayList<String> cate = new ArrayList<>();
     ArrayList<String> cate_id = new ArrayList<>();
     SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
     String userToken, BToken, S_Token;
     String categ;
     Dialog progressDialog;
@@ -114,6 +115,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
         progressDialog = ProgressBarClass.showProgressDialog(this);
         progressDialog.dismiss();
         sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
+
         userToken = "Bearer " + sharedPreferences.getString("Usertoken", "");
         BToken = sharedPreferences.getString("Usertoken", "");
         S_Token = sharedPreferences.getString("Socailtoken", "");
@@ -458,6 +460,10 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
                 } else if (image_uris.size() == 0) {
                     Toast.makeText(Add_Event_Activity.this, "Add Images to create event", Toast.LENGTH_SHORT).show();
                 } else {
+                    editor = sharedPreferences.edit();
+                    editor.putString("address1", "");
+                    editor.putString("address2", "");
+                    editor.apply();
                     startActivity(intent);
                 }
 
