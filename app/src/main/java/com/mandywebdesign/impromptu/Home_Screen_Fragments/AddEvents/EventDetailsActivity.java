@@ -477,6 +477,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
                 mDate.setText(simpleDateFormat.format(calendar.getTime()));
 
+
                 DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 Date date = null;
                 try {
@@ -560,6 +561,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 Date d = null;
                                 try {
                                     d = df.parse(myTime);
+                                    Toast.makeText(EventDetailsActivity.this, ""+d, Toast.LENGTH_SHORT).show();
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }

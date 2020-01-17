@@ -474,9 +474,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
             @Override
             public void onClick(View v) {
                 image_uris.clear();
-                Intent intent = new Intent(Add_Event_Activity.this, Home_Screen.class);
-                startActivity(intent);
-                finish();
+               onBackPressed();
             }
         });
 
