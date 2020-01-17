@@ -89,28 +89,27 @@
                 android:textColor="@color/colortextBlack"
                 android:fontFamily="@font/circularstdbold"
                 />
-            <EditText
+            <AutoCompleteTextView
                 android:layout_marginTop="10dp"
                 android:id="@+id/event_lcation_address1"
                 android:layout_width="match_parent"
                 android:fontFamily="@font/sfuitextlight"
                 android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
                 android:inputType="text|textCapSentences"
-                android:focusable="false"
-                android:editable="false"
                 android:background="@drawable/custom_edittext"
                 android:hint="Address line 1"
                 android:padding="@dimen/editPadding"
                 />
-            <EditText
+            
+            <AutoCompleteTextView
                 android:layout_marginTop="10dp"
                 android:id="@+id/event_lcation_address2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
                 android:fontFamily="@font/sfuitextlight"
                 android:inputType="text|textCapSentences"
-                android:focusable="false"
-                android:editable="false"
                 android:background="@drawable/custom_edittext"
                 android:hint="Address line 2"
                 android:padding="@dimen/editPadding"
@@ -184,6 +183,7 @@
                     android:background="@drawable/custom_edittext"
                     android:hint="Postcode"
                     android:maxLength="8"
+                    android:imeOptions="actionNext"
                     android:fontFamily="@font/sfuitextlight"
                     android:inputType="text|textCapSentences"
                     android:padding="@dimen/editPadding"

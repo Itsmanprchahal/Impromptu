@@ -29,7 +29,7 @@ public class AutoCompleteAdapter extends ArrayAdapter<AutocompletePrediction> im
     private ArrayList<AutocompletePrediction> mResultList;
     private PlacesClient placesClient;
 
-    AutoCompleteAdapter(Context context, PlacesClient placesClient) {
+    public AutoCompleteAdapter(Context context, PlacesClient placesClient) {
         super(context, android.R.layout.simple_expandable_list_item_2, android.R.id.text1);
         this.placesClient = placesClient;
     }

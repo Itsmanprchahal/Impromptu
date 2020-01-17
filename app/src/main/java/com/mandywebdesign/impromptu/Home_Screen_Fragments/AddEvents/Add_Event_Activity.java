@@ -460,10 +460,6 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
                 } else if (image_uris.size() == 0) {
                     Toast.makeText(Add_Event_Activity.this, "Add Images to create event", Toast.LENGTH_SHORT).show();
                 } else {
-                    editor = sharedPreferences.edit();
-                    editor.putString("address1", "");
-                    editor.putString("address2", "");
-                    editor.apply();
                     startActivity(intent);
                 }
 

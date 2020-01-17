@@ -1,5 +1,6 @@
 package com.mandywebdesign.impromptu.Home_Screen_Fragments.AddEvents;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -9,8 +10,11 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Build;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,6 +31,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -39,8 +45,19 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.AutocompletePrediction;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.FetchPlaceRequest;
+import com.google.android.libraries.places.api.net.FetchPlaceResponse;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.mandywebdesign.impromptu.Filter.AutoCompleteAdapter;
 import com.mandywebdesign.impromptu.Filter.CustomPlacePicker;
 import com.mandywebdesign.impromptu.Filter.FilterActivity;
+import com.mandywebdesign.impromptu.Home_Screen_Fragments.Events;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI1;
 import com.mandywebdesign.impromptu.Models.RetroPostcode;
@@ -53,12 +70,15 @@ import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.NoInternetScreen;
 import com.mandywebdesign.impromptu.ui.ProgressBarClass;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -72,7 +92,8 @@ public class EventDetailsActivity extends AppCompatActivity {
     Toolbar toolbar;
     SimpleDateFormat dateFormat;
     Calendar calendar, calendar1;
-    EditText event_lcation_address1, event_lcation_address2, event_postcode, event_city, event_attendees_no, mDate, event_details_date_etto, eventTime_from, eventTime_to;
+    AutoCompleteTextView event_lcation_address1, event_lcation_address2;
+    EditText  event_postcode, event_city, event_attendees_no, mDate, event_details_date_etto, eventTime_from, eventTime_to;
     RadioButton event_radiobutton_all, event_radiobutton_female, event_radiobutton_male;
     TextView addTicket;
     CheckBox freeevent_checkbox;
@@ -84,7 +105,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     EditText price_et, tickettype_et;
     TextView numbersTicketET;
     DatePickerDialog.OnDateSetListener dateSetListener, dateSetListener1;
-    String eventTitle, eventDesc, eventCate, edit, value, userToken, BToken, S_Token, getGender, link1="", link2="", link3="";
+    String eventTitle, eventDesc, eventCate, edit, value, userToken, BToken, S_Token, getGender, link1 = "", link2 = "", link3 = "";
     public static String to_time_milles;
     String frommilles;
     String tomilles;
@@ -93,6 +114,8 @@ public class EventDetailsActivity extends AppCompatActivity {
     int date1 = 0, totalTicket;
     SharedPreferences sharedPreferences;
     Dialog dialog1;
+    AutoCompleteAdapter adapter;
+    PlacesClient placesClient;
 
 
     EditText edt_tiketType;
@@ -129,6 +152,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         BToken = sharedPreferences.getString("Usertoken", "");
         S_Token = sharedPreferences.getString("Socailtoken", "");
 
+        autocompleteAddress();
         dateFormat = new SimpleDateFormat("MM-dd-yy", Locale.US);
         init();
         Toolbar toolbar = findViewById(R.id.event_toolbar);
@@ -143,10 +167,6 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        address1 = sharedPreferences.getString("address1", "");
-        address2 = sharedPreferences.getString("address2", "");
-        event_lcation_address1.setText(address1);
-        event_lcation_address2.setText(address2);
             /*if (intent.getStringExtra("address1")!=null)
             {
                 event_lcation_address1.setText(intent.getStringExtra("address1"));
@@ -155,20 +175,15 @@ public class EventDetailsActivity extends AppCompatActivity {
             {
                 event_lcation_address2.setText(intent.getStringExtra("address2"));
             }*/
-        Log.d("checkAddress",address1+"   "+address2);
 
-            eventTitle = intent.getStringExtra("eventTitle");
-            eventDesc = intent.getStringExtra("eventDesc");
-            eventCate = intent.getStringExtra("eventCate");
-            edit = intent.getStringExtra("editevent");
-            value = intent.getStringExtra("value");
-            link1 = intent.getStringExtra("link1");
-            link2 = intent.getStringExtra("link2");
-            link3 = intent.getStringExtra("link3");
-            Log.d("link",link1+"   "+link2+"   "+link3);
-
-
-
+        eventTitle = intent.getStringExtra("eventTitle");
+        eventDesc = intent.getStringExtra("eventDesc");
+        eventCate = intent.getStringExtra("eventCate");
+        edit = intent.getStringExtra("editevent");
+        value = intent.getStringExtra("value");
+        link1 = intent.getStringExtra("link1");
+        link2 = intent.getStringExtra("link2");
+        link3 = intent.getStringExtra("link3");
 
         if (getGender.equals("Male")) {
             event_radiobutton_female.setVisibility(View.GONE);
@@ -197,6 +212,21 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     }
 
+    private void autocompleteAddress() {
+        String apiKey = getString(R.string.googleclientId);
+        if (apiKey.isEmpty()) {
+
+            return;
+        }
+
+        // Setup Places Client
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), apiKey);
+        }
+
+        placesClient = Places.createClient(this);
+    }
+
     private void init() {
 
         progressBar = (ProgressBar) findViewById(R.id.event_progress_bar);
@@ -207,8 +237,19 @@ public class EventDetailsActivity extends AppCompatActivity {
         eventTime_from = (EditText) findViewById(R.id.event_from);
         eventTime_to = (EditText) findViewById(R.id.event_to);
         addTicket = (TextView) findViewById(R.id.event_tickettype);
-        event_lcation_address1 = (EditText) findViewById(R.id.event_lcation_address1);
-        event_lcation_address2 = (EditText) findViewById(R.id.event_lcation_address2);
+
+        event_lcation_address1 = (AutoCompleteTextView) findViewById(R.id.event_lcation_address1);
+        event_lcation_address1.setThreshold(1);
+        event_lcation_address1.setOnItemClickListener(autocompleteClickListener);
+        adapter = new AutoCompleteAdapter(this, placesClient);
+        event_lcation_address1.setAdapter(adapter);
+
+        event_lcation_address2 = (AutoCompleteTextView) findViewById(R.id.event_lcation_address2);
+        event_lcation_address2.setThreshold(1);
+        event_lcation_address2.setOnItemClickListener(autocompleteClickListener);
+        adapter = new AutoCompleteAdapter(this, placesClient);
+        event_lcation_address2.setAdapter(adapter);
+
         event_postcode = (EditText) findViewById(R.id.event_postcode);
         event_postcode.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
         event_city = (EditText) findViewById(R.id.event_city);
@@ -225,43 +266,6 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     public void listeners() {
 
-        event_lcation_address1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(EventDetailsActivity.this, CustomPlacePicker.class);
-                intent.putExtra("is_from", "event_create_add1");
-                intent.putExtra("eventTitle",eventTitle);
-                intent.putExtra("eventDesc",eventDesc);
-                intent.putExtra("eventCate",eventCate);
-                intent.putExtra("editevent",edit);
-                intent.putExtra("value",value);
-                intent.putExtra("link1",link1);
-                intent.putExtra("link2",link2);
-                intent.putExtra("link3",link3);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        event_lcation_address2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(EventDetailsActivity.this, CustomPlacePicker.class);
-                intent.putExtra("is_from", "event_create_add2");
-                intent.putExtra("eventTitle",eventTitle);
-                intent.putExtra("eventDesc",eventDesc);
-                intent.putExtra("eventCate",eventCate);
-                intent.putExtra("editevent",edit);
-                intent.putExtra("value",value);
-                intent.putExtra("link1",link1);
-                intent.putExtra("link2",link2);
-                intent.putExtra("link3",link3);
-                startActivity(intent);
-                finish();
-
-            }
-        });
 
         mDate.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -417,8 +421,8 @@ public class EventDetailsActivity extends AppCompatActivity {
                                     intent.putExtra("eventTitle", eventTitle);
                                     intent.putExtra("eventDesc", eventDesc);
                                     intent.putExtra("eventCate", eventCate);
-                                    intent.putExtra("address1", address1);
-                                    intent.putExtra("address2", address2);
+                                    intent.putExtra("address1", event_lcation_address1.getText().toString());
+                                    intent.putExtra("address2", event_lcation_address2.getText().toString());
                                     intent.putExtra("postcode", event_postcode.getText().toString());
                                     intent.putExtra("city", event_city.getText().toString());
                                     intent.putExtra("SelectedDate", mDate.getText().toString());
@@ -561,7 +565,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 Date d = null;
                                 try {
                                     d = df.parse(myTime);
-                                    Toast.makeText(EventDetailsActivity.this, ""+d, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(EventDetailsActivity.this, "" + d, Toast.LENGTH_SHORT).show();
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
@@ -1071,4 +1075,81 @@ public class EventDetailsActivity extends AppCompatActivity {
             }
         });
     }
+
+    private AdapterView.OnItemClickListener autocompleteClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            try {
+                final AutocompletePrediction item = adapter.getItem(i);
+                String placeID = null;
+                if (item != null) {
+                    placeID = item.getPlaceId();
+                }
+
+//                To specify which data types to return, pass an array of Place.Fields in your FetchPlaceRequest
+//                Use only those fields which are required.
+
+                List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS
+                        , Place.Field.LAT_LNG);
+
+                FetchPlaceRequest request = null;
+                if (placeID != null) {
+                    request = FetchPlaceRequest.builder(placeID, placeFields)
+                            .build();
+                }
+
+                if (request != null) {
+                    placesClient.fetchPlace(request).addOnSuccessListener(new OnSuccessListener<FetchPlaceResponse>() {
+                        @SuppressLint("SetTextI18n")
+                        @Override
+                        public void onSuccess(FetchPlaceResponse task) {
+
+                            String loc = String.valueOf(task.getPlace());
+                            Geocoder geocoder = new Geocoder(EventDetailsActivity.this);
+                            try {
+                                List<Address> addresses = geocoder.getFromLocationName(loc, 10);
+                                List<LatLng> latLngs = new ArrayList<LatLng>(addresses.size());
+
+                                Log.d("latLngs", String.valueOf(latLngs));
+
+
+                                for (Address a : addresses) {
+                                    if (a.hasLatitude() && a.hasLongitude()) {
+                                        latLngs.add(new LatLng(a.getLatitude(), a.getLongitude()));
+
+                                        String lat = String.valueOf(a.getLatitude());
+                                        String lng = String.valueOf(a.getLongitude());
+
+
+                                        Intent intent = new Intent(EventDetailsActivity.this, FilterActivity.class);
+                                        intent.putExtra("lat", lat);
+                                        intent.putExtra("lng", lng);
+                                        intent.putExtra("from", "picker");
+                                        startActivity(intent);
+                                        finish();
+
+                                        Log.d("checkplace", "" + String.valueOf(a.getLatitude()));
+
+
+                                    }
+
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
 }

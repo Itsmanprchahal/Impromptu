@@ -48,31 +48,14 @@ public class CustomPlacePicker extends AppCompatActivity {
     PlacesClient placesClient;
     ImageButton back;
     Intent intent;
-    String ifFrom,city,eventTitle,eventDesc,eventCate,edit,value,link1,link2,link3;
-
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
+    String ifFrom, city, eventTitle, eventDesc, eventCate, edit, value, link1, link2, link3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_place_picker);
 
-        sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
-        intent = getIntent();
 
-        if (intent!=null)
-        {
-            ifFrom = intent.getStringExtra("is_from");
-            eventTitle = intent.getStringExtra("eventTitle");
-            eventDesc = intent.getStringExtra("eventDesc");
-            eventCate = intent.getStringExtra("eventCate");
-            edit = intent.getStringExtra("editevent");
-            value = intent.getStringExtra("value");
-            link1 = intent.getStringExtra("link1");
-            link2 = intent.getStringExtra("link2");
-            link3 = intent.getStringExtra("link3");
-        }
         back = findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,52 +133,13 @@ public class CustomPlacePicker extends AppCompatActivity {
                                         String lat = String.valueOf(a.getLatitude());
                                         String lng = String.valueOf(a.getLongitude());
 
-                                        if (ifFrom.equals("filter"))
-                                        {
-                                            Intent intent = new Intent(CustomPlacePicker.this,FilterActivity.class);
-                                            intent.putExtra("lat", lat);
-                                            intent.putExtra("lng", lng);
-                                            intent.putExtra("from","picker");
-                                            startActivity(intent);
-                                            finish();
-                                        }else if (ifFrom.equals("event_create_add1")){
-                                            String address1 = task.getPlace().getName();
 
-                                            editor = sharedPreferences.edit();
-                                            editor.putString("address1", address1);
-                                            editor.apply();
-                                            Intent intent = new Intent(CustomPlacePicker.this,EventDetailsActivity.class);
-                                            intent.putExtra("address1",address1);
-                                            intent.putExtra("eventTitle",eventTitle);
-                                            intent.putExtra("eventDesc",eventDesc);
-                                            intent.putExtra("eventCate",eventCate);
-                                            intent.putExtra("editevent",edit);
-                                            intent.putExtra("value",value);
-                                            intent.putExtra("link1",link1);
-                                            intent.putExtra("link2",link2);
-                                            intent.putExtra("link3",link3);
-                                            startActivity(intent);
-                                            finish();
-                                            Log.d("CHECKPLACE+++",task.getPlace().getName() + "\n" + task.getPlace().getAddress());
-                                        }else if (ifFrom.equals("event_create_add2"))
-                                        {
-                                            String address2 = task.getPlace().getName();
-                                            editor = sharedPreferences.edit();
-                                            editor.putString("address2", address2);
-                                            editor.apply();
-                                            Intent intent = new Intent(CustomPlacePicker.this,EventDetailsActivity.class);
-                                            intent.putExtra("address2",address2);
-                                            intent.putExtra("eventTitle",eventTitle);
-                                            intent.putExtra("eventDesc",eventDesc);
-                                            intent.putExtra("eventCate",eventCate);
-                                            intent.putExtra("editevent",edit);
-                                            intent.putExtra("value",value);
-                                            intent.putExtra("link1",link1);
-                                            intent.putExtra("link2",link2);
-                                            intent.putExtra("link3",link3);
-                                            startActivity(intent);
-                                            finish();
-                                        }
+                                        Intent intent = new Intent(CustomPlacePicker.this, FilterActivity.class);
+                                        intent.putExtra("lat", lat);
+                                        intent.putExtra("lng", lng);
+                                        intent.putExtra("from", "picker");
+                                        startActivity(intent);
+                                        finish();
 
                                         Log.d("checkplace", "" + String.valueOf(a.getLatitude()));
 
@@ -220,31 +164,4 @@ public class CustomPlacePicker extends AppCompatActivity {
             }
         }
     };
-
-    private void getCityName(String lat, String lng) {
-        Geocoder geocoder = new Geocoder(CustomPlacePicker.this, Locale.getDefault());
-        List<Address> address = null;
-        try {
-            address = (List<Address>) geocoder.getFromLocation(Double.parseDouble(lat), Double.parseDouble(lng), 1);
-            if (address != null) {
-
-                if (address.size() == 0) {
-
-                } else {
-                    city = address.get(0).getLocality();
-                    /*Intent intent = new Intent(CustomPlacePicker.this, EventDetailsActivity.class);
-                    startActivity(intent);
-                    finish();*/
-                    responseView.setText(city);
-                }
-
-
-            } else {
-
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
