@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -67,7 +68,7 @@ public class PrivancyActivity extends AppCompatActivity {
                     if (response.body().getStatus().equals("200")) {
                         String privacydata = response.body().getData().get(0).getContent();
                         // Toast.makeText(getContext(), ""+helpdata, Toast.LENGTH_SHORT).show();
-                        privacy.setText(privacydata);
+                        privacy.setText(Html.fromHtml(privacydata));
                         progressDialog.dismiss();
                     }
                 }else {

@@ -185,7 +185,6 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
     private void init() {
         Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
-        Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
         textView = (TextView) view.findViewById(R.id.home_related);
         filter = (RelativeLayout) view.findViewById(R.id.filter);
         noevents = (TextView) view.findViewById(R.id.noevents);

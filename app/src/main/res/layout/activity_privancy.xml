@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardElevation="13dp">
+
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -31,18 +32,18 @@
                         android:id="@+id/back_on_privacy"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
                         android:background="@drawable/transperent"
+                        android:gravity="center_vertical"
                         android:src="@drawable/ic_arrow_back_black_24dp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Privacy"
-                        android:textColor="@color/colortextBlack"
-                        android:textSize="@dimen/toolbartext"
                         android:fontFamily="@font/circularstdbold"
-                        android:gravity="center_horizontal"/>
+                        android:gravity="center_horizontal"
+                        android:text="Privacy Policy"
+                        android:textColor="@color/colortextBlack"
+                        android:textSize="@dimen/toolbartext" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -51,17 +52,23 @@
         </androidx.cardview.widget.CardView>
 
 
-
-        <TextView
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="@color/colortextBlack"
-            android:layout_marginLeft="@dimen/defaultmargin"
-            android:fontFamily="@font/sfuitextlight"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="@dimen/defaultmargin"
-            android:textSize="@dimen/_12sdp"
-            android:id="@+id/privacy"/>
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/privacy"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/defaultmargin"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="@dimen/defaultmargin"
+                android:fontFamily="@font/sfuitextlight"
+                android:textColor="@color/colortextBlack"
+                android:textSize="@dimen/_12sdp" />
+        </ScrollView>
+
 
     </LinearLayout>
 

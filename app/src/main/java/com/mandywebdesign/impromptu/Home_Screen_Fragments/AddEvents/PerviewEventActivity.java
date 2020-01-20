@@ -540,9 +540,7 @@ public class PerviewEventActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PerviewEventActivity.this, EventDetailsActivity.class);
-                startActivity(intent);
-                finish();
+                onBackPressed();
             }
         });
 
@@ -639,9 +637,10 @@ public class PerviewEventActivity extends AppCompatActivity {
                         Toast.makeText(PerviewEventActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
 
+                        Home_Screen.framgposition =1;
                         Log.d("++++++++", "++++response ++" + response);
                         Intent intent = new Intent(PerviewEventActivity.this, Home_Screen.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         intent.putExtra("isFrom","NormaleventCreation");
                         startActivity(intent);
                         finish();
@@ -701,11 +700,12 @@ public class PerviewEventActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 if (response.body() != null) {
                     if (response.body().getStatus().equals("200")) {
+                        Home_Screen.framgposition =1;
                         Toast.makeText(PerviewEventActivity.this, "Event created ", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                         isPublish = true;
                         Intent intent = new Intent(PerviewEventActivity.this, Home_Screen.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         intent.putExtra("isFrom","NormaleventCreation");
                         //Home_Screen.newCount=1;
                         startActivity(intent);
@@ -769,7 +769,7 @@ public class PerviewEventActivity extends AppCompatActivity {
                         progressDialog.dismiss();
 
                         Intent intent = new Intent(PerviewEventActivity.this, Home_Screen.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         intent.putExtra("refresh", "1");
                         startActivity(intent);
                         finish();
@@ -844,9 +844,8 @@ public class PerviewEventActivity extends AppCompatActivity {
                         Toast.makeText(PerviewEventActivity.this, "Event Saved In drafts ", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
 
-
                         Intent intent = new Intent(PerviewEventActivity.this, Home_Screen.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         intent.putExtra("refresh", "1");
                         startActivity(intent);
                         finish();
@@ -914,7 +913,7 @@ public class PerviewEventActivity extends AppCompatActivity {
                     Toast.makeText(PerviewEventActivity.this, "Draft Published", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(PerviewEventActivity.this, Home_Screen.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     intent.putExtra("refresh", "1");
                     startActivity(intent);
                     finish();

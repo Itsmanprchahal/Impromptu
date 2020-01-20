@@ -24,7 +24,10 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.Filter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -48,7 +51,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.AutocompletePrediction;
 import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.FetchPlaceRequest;
+import com.google.android.libraries.places.api.net.FetchPlaceResponse;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.mandywebdesign.impromptu.Home_Screen_Fragments.AddEvents.EventDetailsActivity;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.Home;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
@@ -77,7 +85,10 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
     ImageView locationPin;
     View view;
     FragmentManager manager;
-    TextView searchLoc, cityname, endcost;
+    TextView cityname, endcost;
+    AutoCompleteTextView searchLoc;
+    AutoCompleteAdapter adapter;
+    PlacesClient placesClient;
     public static final int MY_PERMISSIONS_REQUEST_READ_LOCATION = 121;
     MapView mapView;
     GoogleMap Gmap;
@@ -96,14 +107,10 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
     SeekBar seekBar;
     TextView filterPrice;
     String latt, lnng, getGender;
-    SharedPreferences sharedPreferences, itemPositionPref;
+    SharedPreferences sharedPreferences;
     int step = 1;
     int min = 0;
-    GoogleApiClient mGoogleApiClient;
     Intent intent;
-
-    int AUTOCOMPLETE_REQUEST_CODE = 1;
-    List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -114,9 +121,9 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
         progressDialog = ProgressBarClass.showProgressDialog(this);
         progressDialog.dismiss();
 
+        autocompleteAddress();
         init();
         intent = getIntent();
-
 
         Calendar c = Calendar.getInstance();
 
@@ -217,6 +224,21 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
+    private void autocompleteAddress() {
+        String apiKey = getString(R.string.googleclientId);
+        if (apiKey.isEmpty()) {
+
+            return;
+        }
+
+        // Setup Places Client
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), apiKey);
+        }
+
+        placesClient = Places.createClient(this);
+    }
+
     private void getEventPrice() {
         progressDialog.show();
         Call<NormalEventPrice> call = WebAPI.getInstance().getApi().eventPrice();
@@ -228,8 +250,8 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
                     if (response.body().getStatus().equals("200")) {
 
                         eventMax_Price = response.body().getData().getPrice();
-                        endcost.setText("£ " + response.body().getData().getPrice());
-                        seekBar.setMax(Integer.parseInt((response.body().getData().getPrice())));
+                        endcost.setText("£ " + "" + "50");
+                        seekBar.setMax(50);
                     }
 
                 }
@@ -254,7 +276,13 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
 
     private void init() {
         close = findViewById(R.id.close_filter);
+
         searchLoc = findViewById(R.id.search_loc);
+        searchLoc.setThreshold(1);
+        searchLoc.setOnItemClickListener(autocompleteClickListener);
+        adapter = new AutoCompleteAdapter(this, placesClient);
+        searchLoc.setAdapter(adapter);
+
         mapView = findViewById(R.id.mapview);
         today = findViewById(R.id.filter_today);
         tomorrow = findViewById(R.id.filter_tomorrow);
@@ -275,7 +303,6 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
     private void listerner() {
 
         close.setOnClickListener(this);
-        searchLoc.setOnClickListener(this);
         today.setOnClickListener(this);
         tomorrow.setOnClickListener(this);
         filter_bt_filter.setOnClickListener(this);
@@ -288,7 +315,7 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
 
             onBackPressed();
         }
-        if (v == searchLoc) {
+       /* if (v == searchLoc) {
             if (isNetworkIsConnected()) {
 
                 Intent intent = new Intent(FilterActivity.this, CustomPlacePicker.class);
@@ -301,9 +328,9 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
             } else {
                 Toast.makeText(FilterActivity.this, "Check Internet Connection...", Toast.LENGTH_SHORT).show();
 
-            }
+            }*/
 
-        }
+//        }
 
         if (v == filter_bt_filter) {
 
@@ -312,14 +339,17 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
                 final String loc = city;
                 lat = latt;
                 lng = lnng;
+                String value1;
 
+                if (value.equals("50")) {
+                    value1 = "0-" + eventMax_Price;
+                } else {
+                    value1 = "0-" + value;
+                }
 
-                final String value1 = "0-" + value;
-                Log.d("+++++++++", "+++ price +++" + value1);
                 progressDialog.dismiss();
 
-
-                Intent intent = new Intent(FilterActivity.this,FilteredActivity.class);
+                Intent intent = new Intent(FilterActivity.this, FilteredActivity.class);
                 intent.putExtra("loc", loc);
                 intent.putExtra("gender", gender);
                 intent.putExtra("date", formattedDate);
@@ -449,19 +479,10 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
             progressDialog.dismiss();
         } else {
 
-            String from = intent.getStringExtra("from");
-            if (from.equals("picker")) {
-                lat = intent.getStringExtra("lat");
-                lng = intent.getStringExtra("lng");
-                latt = lat;
-                lnng = lng;
-                Log.d("LatLNG", "lat   " + lat + "     " + lng);
-
-            } else {
-                CurrentLocation();
-            }
+            CurrentLocation();
 
         }
+
     }
 
     private void buildAlertMessageNoGps() {
@@ -682,4 +703,76 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
             e.printStackTrace();
         }
     }
+
+    private AdapterView.OnItemClickListener autocompleteClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            try {
+                final AutocompletePrediction item = adapter.getItem(i);
+                String placeID = null;
+                if (item != null) {
+                    placeID = item.getPlaceId();
+                }
+
+//                To specify which data types to return, pass an array of Place.Fields in your FetchPlaceRequest
+//                Use only those fields which are required.
+
+                List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS
+                        , Place.Field.LAT_LNG);
+
+                FetchPlaceRequest request = null;
+                if (placeID != null) {
+                    request = FetchPlaceRequest.builder(placeID, placeFields)
+                            .build();
+                }
+
+                if (request != null) {
+                    placesClient.fetchPlace(request).addOnSuccessListener(new OnSuccessListener<FetchPlaceResponse>() {
+                        @SuppressLint("SetTextI18n")
+                        @Override
+                        public void onSuccess(FetchPlaceResponse task) {
+
+                            String loc = String.valueOf(task.getPlace());
+                            Geocoder geocoder = new Geocoder(FilterActivity.this);
+                            try {
+                                List<Address> addresses = geocoder.getFromLocationName(loc, 10);
+                                List<LatLng> latLngs = new ArrayList<LatLng>(addresses.size());
+
+                                Log.d("latLngs", String.valueOf(latLngs));
+
+
+                                for (Address a : addresses) {
+                                    if (a.hasLatitude() && a.hasLongitude()) {
+                                        latLngs.add(new LatLng(a.getLatitude(), a.getLongitude()));
+
+                                        String lat1 = String.valueOf(a.getLatitude());
+                                        String lng1 = String.valueOf(a.getLongitude());
+                                        Log.d("postcode", a.getPostalCode());
+
+
+                                        lat = lat1;
+                                        lng = lng1;
+                                        getCityName(lat1, lng1);
+                                        location(lat1, lng1);
+
+                                    }
+
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    };
 }

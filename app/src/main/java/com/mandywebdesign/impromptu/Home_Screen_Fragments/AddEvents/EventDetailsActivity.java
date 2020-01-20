@@ -93,7 +93,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     SimpleDateFormat dateFormat;
     Calendar calendar, calendar1;
     AutoCompleteTextView event_lcation_address1, event_lcation_address2;
-    EditText  event_postcode, event_city, event_attendees_no, mDate, event_details_date_etto, eventTime_from, eventTime_to;
+    EditText event_postcode, event_city, event_attendees_no, mDate, event_details_date_etto, eventTime_from, eventTime_to;
     RadioButton event_radiobutton_all, event_radiobutton_female, event_radiobutton_male;
     TextView addTicket;
     CheckBox freeevent_checkbox;
@@ -109,12 +109,12 @@ public class EventDetailsActivity extends AppCompatActivity {
     public static String to_time_milles;
     String frommilles;
     String tomilles;
-    int year1;
+    int year1, hour1, minute1, second1, year2, month2, day2, hour2, minute2, second2;
     int month1;
     int date1 = 0, totalTicket;
     SharedPreferences sharedPreferences;
     Dialog dialog1;
-    AutoCompleteAdapter adapter;
+    AutoCompleteAdapter adapter,autoCompleteAdapter;
     PlacesClient placesClient;
 
 
@@ -136,7 +136,6 @@ public class EventDetailsActivity extends AppCompatActivity {
     long startdatemilli;
     long enddatemilli;
     int totalticketsnumber;
-    String address1, address2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,16 +165,6 @@ public class EventDetailsActivity extends AppCompatActivity {
         });
 
         Intent intent = getIntent();
-
-            /*if (intent.getStringExtra("address1")!=null)
-            {
-                event_lcation_address1.setText(intent.getStringExtra("address1"));
-
-            }else if (intent.getStringExtra("address2")!=null)
-            {
-                event_lcation_address2.setText(intent.getStringExtra("address2"));
-            }*/
-
         eventTitle = intent.getStringExtra("eventTitle");
         eventDesc = intent.getStringExtra("eventDesc");
         eventCate = intent.getStringExtra("eventCate");
@@ -237,6 +226,11 @@ public class EventDetailsActivity extends AppCompatActivity {
         eventTime_from = (EditText) findViewById(R.id.event_from);
         eventTime_to = (EditText) findViewById(R.id.event_to);
         addTicket = (TextView) findViewById(R.id.event_tickettype);
+        if (!BToken.equals("")) {
+            addTicket.setText("+ Add ticket type");
+        } else {
+            addTicket.setText("+ Add ticket");
+        }
 
         event_lcation_address1 = (AutoCompleteTextView) findViewById(R.id.event_lcation_address1);
         event_lcation_address1.setThreshold(1);
@@ -246,9 +240,9 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         event_lcation_address2 = (AutoCompleteTextView) findViewById(R.id.event_lcation_address2);
         event_lcation_address2.setThreshold(1);
-        event_lcation_address2.setOnItemClickListener(autocompleteClickListener);
-        adapter = new AutoCompleteAdapter(this, placesClient);
-        event_lcation_address2.setAdapter(adapter);
+        event_lcation_address2.setOnItemClickListener(autocompleteClickListener1);
+        autoCompleteAdapter = new AutoCompleteAdapter(this, placesClient);
+        event_lcation_address2.setAdapter(autoCompleteAdapter);
 
         event_postcode = (EditText) findViewById(R.id.event_postcode);
         event_postcode.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
@@ -318,6 +312,60 @@ public class EventDetailsActivity extends AppCompatActivity {
                     Toast.makeText(EventDetailsActivity.this, "Enter start date", Toast.LENGTH_SHORT).show();
                 }
 
+
+            }
+        });
+
+        event_lcation_address1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if (event_lcation_address1.getText().toString().contains(",")) {
+                    String place = s.toString();
+                    if (s != null) {
+                        String[] name = place.split(",");
+                        String Fname = name[0];
+                        event_lcation_address1.setText(Fname + " ");
+
+                    }
+                }
+
+            }
+        });
+
+        event_lcation_address2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if (event_lcation_address2.getText().toString().contains(",")) {
+                    String place = s.toString();
+                    if (s != null) {
+                        String[] name = place.split(",");
+                        String Fname = name[0];
+                        event_lcation_address2.setText(Fname + " ");
+
+                    }
+                }
 
             }
         });
@@ -473,6 +521,9 @@ public class EventDetailsActivity extends AppCompatActivity {
                 year1 = year;
                 month1 = month;
                 date1 = dayOfMonth;
+                year2 = year1;
+                month2 = month1;
+                day2 = date1;
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -515,6 +566,9 @@ public class EventDetailsActivity extends AppCompatActivity {
                 try {
                     date = (Date) formatter.parse(formatter.format(calendar.getTime()));
                     Log.d("StartDate", String.valueOf(date.getTime()));
+                    year2 = year;
+                    month2 = month;
+                    day2 = dayOfMonth;
                     enddatemilli = date.getTime();
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -544,12 +598,93 @@ public class EventDetailsActivity extends AppCompatActivity {
                 final int hour = calendar.get(Calendar.AM_PM);
                 int minute = calendar.get(Calendar.MINUTE);
 
-                final TimePickerDialog timePickerDialog = new TimePickerDialog(EventDetailsActivity.this, R.style.DialogTheme, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                if (TextUtils.isEmpty(mDate.getText().toString())) {
+                    Toast.makeText(EventDetailsActivity.this, "Enter Start date", Toast.LENGTH_SHORT).show();
+                } else if (TextUtils.isEmpty(event_details_date_etto.getText().toString())) {
+                    Toast.makeText(EventDetailsActivity.this, "Enter End date", Toast.LENGTH_SHORT).show();
+                } else if (TextUtils.isEmpty(mDate.getText().toString()) && TextUtils.isEmpty(event_details_date_etto.getText().toString())) {
+                    Toast.makeText(EventDetailsActivity.this, "Enter Event date", Toast.LENGTH_SHORT).show();
+                } else {
+                    final TimePickerDialog timePickerDialog = new TimePickerDialog(EventDetailsActivity.this, R.style.DialogTheme, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-                        if (date1 != 0) {
-                            if (date1 != calendar.get(Calendar.DAY_OF_MONTH)) {
+                            if (date1 != 0) {
+                                if (date1 != calendar.get(Calendar.DAY_OF_MONTH)) {
+                                    if (hourOfDay < 10 && minute < 10) {
+                                        eventTime_from.setText("0" + hourOfDay + ":" + "0" + minute);
+                                    } else if (hourOfDay < 10) {
+                                        eventTime_from.setText("0" + hourOfDay + ":" + minute);
+                                    } else if (minute < 10) {
+                                        eventTime_from.setText(hourOfDay + ":" + "0" + minute);
+                                    } else {
+                                        eventTime_from.setText(hourOfDay + ":" + minute);
+                                    }
+
+                                    String myTime = eventTime_from.getText().toString();
+                                    SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+                                    Date d = null;
+                                    try {
+                                        d = df.parse(myTime);
+                                        Toast.makeText(EventDetailsActivity.this, "" + d, Toast.LENGTH_SHORT).show();
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                    Calendar cal = Calendar.getInstance();
+                                    cal.setTime(d);
+                                    cal.add(Calendar.MINUTE, 60);
+                                    String newTime = df.format(cal.getTime());
+                                    eventTime_to.setText(newTime);
+                                    hour1 = hourOfDay;
+                                    minute1 = minute;
+                                    hour2 = hourOfDay;
+                                    minute2 = minute;
+
+                                    to_time_milles = eventTime_to.getText().toString();
+                                } else {
+                                    Calendar datetime = Calendar.getInstance();
+                                    Calendar c = Calendar.getInstance();
+                                    datetime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                    datetime.set(Calendar.MINUTE, minute);
+                                    if (datetime.getTimeInMillis() + 1 >= c.getTimeInMillis()) {
+                                        //it's after current
+                                        if (hourOfDay < 10 && minute < 10) {
+                                            eventTime_from.setText("0" + hourOfDay + ":" + "0" + minute);
+                                        } else if (hourOfDay < 10) {
+                                            eventTime_from.setText("0" + hourOfDay + ":" + minute);
+                                        } else if (minute < 10) {
+                                            eventTime_from.setText(hourOfDay + ":" + "0" + minute);
+                                        } else {
+                                            eventTime_from.setText(hourOfDay + ":" + minute);
+                                        }
+//                                    eventTime_from.setText(hourOfDay + ":" + minute);
+                                        String myTime = eventTime_from.getText().toString();
+                                        SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+                                        Date d = null;
+                                        try {
+                                            d = df.parse(myTime);
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        }
+                                        Calendar cal = Calendar.getInstance();
+                                        cal.setTime(d);
+                                        cal.add(Calendar.MINUTE, 60);
+                                        String newTime = df.format(cal.getTime());
+                                        eventTime_to.setText(newTime);
+                                        hour1 = hourOfDay;
+                                        minute1 = minute;
+                                        hour2 = hourOfDay;
+                                        minute2 = minute;
+                                        to_time_milles = eventTime_to.getText().toString();
+                                    } else {
+                                        //it's before current'
+                                        eventTime_to.setText("");
+                                        eventTime_from.setText("");
+                                        Toast.makeText(getApplicationContext(), "Invalid Time", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                }
+                            } else {
                                 if (hourOfDay < 10 && minute < 10) {
                                     eventTime_from.setText("0" + hourOfDay + ":" + "0" + minute);
                                 } else if (hourOfDay < 10) {
@@ -565,7 +700,6 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 Date d = null;
                                 try {
                                     d = df.parse(myTime);
-                                    Toast.makeText(EventDetailsActivity.this, "" + d, Toast.LENGTH_SHORT).show();
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
@@ -574,81 +708,21 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 cal.add(Calendar.MINUTE, 60);
                                 String newTime = df.format(cal.getTime());
                                 eventTime_to.setText(newTime);
+                                hour1 = hourOfDay;
+                                minute1 = minute;
+                                hour2 = hourOfDay;
+                                minute2 = minute;
 
                                 to_time_milles = eventTime_to.getText().toString();
-                            } else {
-                                Calendar datetime = Calendar.getInstance();
-                                Calendar c = Calendar.getInstance();
-                                datetime.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                                datetime.set(Calendar.MINUTE, minute);
-                                if (datetime.getTimeInMillis() + 1 >= c.getTimeInMillis()) {
-                                    //it's after current
-                                    if (hourOfDay < 10 && minute < 10) {
-                                        eventTime_from.setText("0" + hourOfDay + ":" + "0" + minute);
-                                    } else if (hourOfDay < 10) {
-                                        eventTime_from.setText("0" + hourOfDay + ":" + minute);
-                                    } else if (minute < 10) {
-                                        eventTime_from.setText(hourOfDay + ":" + "0" + minute);
-                                    } else {
-                                        eventTime_from.setText(hourOfDay + ":" + minute);
-                                    }
-//                                    eventTime_from.setText(hourOfDay + ":" + minute);
-                                    String myTime = eventTime_from.getText().toString();
-                                    SimpleDateFormat df = new SimpleDateFormat("HH:mm");
-                                    Date d = null;
-                                    try {
-                                        d = df.parse(myTime);
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                    Calendar cal = Calendar.getInstance();
-                                    cal.setTime(d);
-                                    cal.add(Calendar.MINUTE, 60);
-                                    String newTime = df.format(cal.getTime());
-                                    eventTime_to.setText(newTime);
-                                    to_time_milles = eventTime_to.getText().toString();
-                                } else {
-                                    //it's before current'
-                                    eventTime_to.setText("");
-                                    eventTime_from.setText("");
-                                    Toast.makeText(getApplicationContext(), "Invalid Time", Toast.LENGTH_SHORT).show();
-                                }
-
-                            }
-                        } else {
-
-                            if (hourOfDay < 10 && minute < 10) {
-                                eventTime_from.setText("0" + hourOfDay + ":" + "0" + minute);
-                            } else if (hourOfDay < 10) {
-                                eventTime_from.setText("0" + hourOfDay + ":" + minute);
-                            } else if (minute < 10) {
-                                eventTime_from.setText(hourOfDay + ":" + "0" + minute);
-                            } else {
-                                eventTime_from.setText(hourOfDay + ":" + minute);
                             }
 
-                            String myTime = eventTime_from.getText().toString();
-                            SimpleDateFormat df = new SimpleDateFormat("HH:mm");
-                            Date d = null;
-                            try {
-                                d = df.parse(myTime);
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            Calendar cal = Calendar.getInstance();
-                            cal.setTime(d);
-                            cal.add(Calendar.MINUTE, 60);
-                            String newTime = df.format(cal.getTime());
-                            eventTime_to.setText(newTime);
-
-                            to_time_milles = eventTime_to.getText().toString();
                         }
+                    }, hour, minute, true);
+                    timePickerDialog.show();
 
-                    }
-                }, hour, minute, true);
-                timePickerDialog.show();
+                    calendar.add(Calendar.HOUR, 1);
+                }
 
-                calendar.add(Calendar.HOUR, 1);
             }
         });
 
@@ -657,36 +731,51 @@ public class EventDetailsActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(final View v) {
-                calendar = Calendar.getInstance();
-                int hour = calendar.get(Calendar.AM_PM);
-                int minute = calendar.get(Calendar.MINUTE);
+                if (TextUtils.isEmpty(mDate.getText().toString())) {
+                    Toast.makeText(EventDetailsActivity.this, "Enter Start date", Toast.LENGTH_SHORT).show();
+                } else if (TextUtils.isEmpty(event_details_date_etto.getText().toString())) {
+                    Toast.makeText(EventDetailsActivity.this, "Enter End dat", Toast.LENGTH_SHORT).show();
+                } else if (TextUtils.isEmpty(eventTime_from.getText().toString())) {
+                    Toast.makeText(EventDetailsActivity.this, "Enter Start time", Toast.LENGTH_SHORT).show();
 
-                final TimePickerDialog timePickerDialog = new TimePickerDialog(EventDetailsActivity.this, R.style.DialogTheme, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                } else if (TextUtils.isEmpty(mDate.getText().toString()) && TextUtils.isEmpty(eventTime_from.getText().toString()) && TextUtils.isEmpty(event_details_date_etto.getText().toString())) {
 
-                        if (mDate.getText().toString().equals(event_details_date_etto.getText().toString())) {
-                            if (date1 != 0) {
-                                if (date1 != calendar.get(Calendar.DAY_OF_MONTH)) {
-                                    if (hourOfDay < 10 && minute < 10) {
-                                        eventTime_to.setText("0" + hourOfDay + ":" + "0" + minute);
-                                    } else if (hourOfDay < 10) {
-                                        eventTime_to.setText("0" + hourOfDay + ":" + minute);
-                                    } else if (minute < 10) {
-                                        eventTime_to.setText(hourOfDay + ":" + "0" + minute);
-                                    } else {
-                                        eventTime_to.setText(hourOfDay + ":" + minute);
+                    Toast.makeText(EventDetailsActivity.this, "Enter Event date", Toast.LENGTH_SHORT).show();
+                } else {
+                    calendar = Calendar.getInstance();
+                    int hour = calendar.get(Calendar.AM_PM);
+                    int minute = calendar.get(Calendar.MINUTE);
 
-                                    }
-                                    to_time_milles = eventTime_to.getText().toString();
-                                } else {
-                                    Calendar datetime = Calendar.getInstance();
-                                    Calendar c = Calendar.getInstance();
-                                    datetime.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                                    datetime.set(Calendar.MINUTE, minute);
-                                    if (datetime.getTimeInMillis() >= c.getTimeInMillis()) {
-                                        //it's after current
-                                        int hour = hourOfDay % 24;
+                    final TimePickerDialog timePickerDialog = new TimePickerDialog(EventDetailsActivity.this, R.style.DialogTheme, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+                            Calendar calendar1 = Calendar.getInstance();
+                            calendar1.set(Calendar.MINUTE, minute1);
+                            calendar1.set(Calendar.HOUR, hour1);
+                            calendar1.set(Calendar.MONTH, month1);
+                            calendar1.set(Calendar.DAY_OF_MONTH, date1);
+                            calendar1.set(Calendar.YEAR, year1);
+
+                            Calendar calendar2 = Calendar.getInstance();
+                            calendar2.set(Calendar.MINUTE, minute);
+                            calendar2.set(Calendar.HOUR, hourOfDay);
+                            calendar2.set(Calendar.MONTH, month2);
+                            calendar2.set(Calendar.DAY_OF_MONTH, day2);
+                            calendar2.set(Calendar.YEAR, year2);
+
+                            Log.d("+++++++++", "++ calender1 ++" + date1 + month1 + year1 + hour1 + minute1);
+                            Log.d("+++++++++", "++ calender1 ++" + day2 + month2 + year2 + hourOfDay + minute);
+
+                            if (calendar1.getTimeInMillis() > calendar2.getTimeInMillis()) {
+                                Toast.makeText(EventDetailsActivity.this, "Invalid selection", Toast.LENGTH_SHORT).show();
+                                eventTime_to.setText("");
+                                return;
+                            }
+
+                            if (mDate.getText().toString().equals(event_details_date_etto.getText().toString())) {
+                                if (date1 != 0) {
+                                    if (date1 != calendar.get(Calendar.DAY_OF_MONTH)) {
                                         if (hourOfDay < 10 && minute < 10) {
                                             eventTime_to.setText("0" + hourOfDay + ":" + "0" + minute);
                                         } else if (hourOfDay < 10) {
@@ -699,10 +788,43 @@ public class EventDetailsActivity extends AppCompatActivity {
                                         }
                                         to_time_milles = eventTime_to.getText().toString();
                                     } else {
-                                        //it's before current'
-                                        eventTime_to.setText("");
-                                        Toast.makeText(getApplicationContext(), "Invalid Time", Toast.LENGTH_SHORT).show();
+                                        Calendar datetime = Calendar.getInstance();
+                                        Calendar c = Calendar.getInstance();
+                                        datetime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                        datetime.set(Calendar.MINUTE, minute);
+                                        if (datetime.getTimeInMillis() >= c.getTimeInMillis()) {
+                                            //it's after current
+                                            int hour = hourOfDay % 24;
+                                            if (hourOfDay < 10 && minute < 10) {
+                                                eventTime_to.setText("0" + hourOfDay + ":" + "0" + minute);
+                                            } else if (hourOfDay < 10) {
+                                                eventTime_to.setText("0" + hourOfDay + ":" + minute);
+                                            } else if (minute < 10) {
+                                                eventTime_to.setText(hourOfDay + ":" + "0" + minute);
+                                            } else {
+                                                eventTime_to.setText(hourOfDay + ":" + minute);
+
+                                            }
+                                            to_time_milles = eventTime_to.getText().toString();
+                                        } else {
+                                            //it's before current'
+                                            eventTime_to.setText("");
+                                            Toast.makeText(EventDetailsActivity.this, "Invalid Time", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
+                                } else {
+                                    if (hourOfDay < 10 && minute < 10) {
+                                        eventTime_to.setText("0" + hourOfDay + ":" + "0" + minute);
+                                    } else if (hourOfDay < 10) {
+                                        eventTime_to.setText("0" + hourOfDay + ":" + minute);
+                                    } else if (minute < 10) {
+                                        eventTime_to.setText(hourOfDay + ":" + "0" + minute);
+                                    } else {
+                                        eventTime_to.setText(hourOfDay + ":" + minute);
+
+                                    }
+                                    to_time_milles = eventTime_to.getText().toString();
+
                                 }
                             } else {
                                 if (hourOfDay < 10 && minute < 10) {
@@ -716,25 +838,13 @@ public class EventDetailsActivity extends AppCompatActivity {
 
                                 }
                                 to_time_milles = eventTime_to.getText().toString();
-
                             }
-                        } else {
-                            if (hourOfDay < 10 && minute < 10) {
-                                eventTime_to.setText("0" + hourOfDay + ":" + "0" + minute);
-                            } else if (hourOfDay < 10) {
-                                eventTime_to.setText("0" + hourOfDay + ":" + minute);
-                            } else if (minute < 10) {
-                                eventTime_to.setText(hourOfDay + ":" + "0" + minute);
-                            } else {
-                                eventTime_to.setText(hourOfDay + ":" + minute);
 
-                            }
-                            to_time_milles = eventTime_to.getText().toString();
                         }
+                    }, hour, minute, true);
+                    timePickerDialog.show();
+                }
 
-                    }
-                }, hour, minute, true);
-                timePickerDialog.show();
             }
         });
 
@@ -792,6 +902,8 @@ public class EventDetailsActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+//        event_lcation_address1
 
     }
 
@@ -1118,18 +1230,99 @@ public class EventDetailsActivity extends AppCompatActivity {
                                     if (a.hasLatitude() && a.hasLongitude()) {
                                         latLngs.add(new LatLng(a.getLatitude(), a.getLongitude()));
 
-                                        String lat = String.valueOf(a.getLatitude());
-                                        String lng = String.valueOf(a.getLongitude());
+                                        String lat1 = String.valueOf(a.getLatitude());
+                                        String lng1 = String.valueOf(a.getLongitude());
+
+                                        getCityName(lat1, lng1);
+
+                                    }
+
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    private void getCityName(String lat, String lng) {
+        Geocoder geocoder = new Geocoder(EventDetailsActivity.this, Locale.getDefault());
+        List<Address> address = null;
+        try {
+            address = (List<Address>) geocoder.getFromLocation(Double.parseDouble(lat), Double.parseDouble(lng), 1);
+            if (address != null) {
+
+                if (address.get(0).getPostalCode()!=null)
+                {
+                    event_postcode.setText(address.get(0).getPostalCode());
+                }
 
 
-                                        Intent intent = new Intent(EventDetailsActivity.this, FilterActivity.class);
-                                        intent.putExtra("lat", lat);
-                                        intent.putExtra("lng", lng);
-                                        intent.putExtra("from", "picker");
-                                        startActivity(intent);
-                                        finish();
+            } else {
+            }
 
-                                        Log.d("checkplace", "" + String.valueOf(a.getLatitude()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private AdapterView.OnItemClickListener autocompleteClickListener1 = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            try {
+                final AutocompletePrediction item = adapter.getItem(i);
+                String placeID = null;
+                if (item != null) {
+                    placeID = item.getPlaceId();
+                }
+
+//                To specify which data types to return, pass an array of Place.Fields in your FetchPlaceRequest
+//                Use only those fields which are required.
+
+                List<Place.Field> placeFields = Arrays.asList(Place.Field.ADDRESS);
+
+                FetchPlaceRequest request = null;
+                if (placeID != null) {
+                    request = FetchPlaceRequest.builder(placeID, placeFields)
+                            .build();
+                }
+
+                if (request != null) {
+                    placesClient.fetchPlace(request).addOnSuccessListener(new OnSuccessListener<FetchPlaceResponse>() {
+                        @SuppressLint("SetTextI18n")
+                        @Override
+                        public void onSuccess(FetchPlaceResponse task) {
+
+                            String loc = String.valueOf(task.getPlace());
+                            Geocoder geocoder = new Geocoder(EventDetailsActivity.this);
+                            try {
+                                List<Address> addresses = geocoder.getFromLocationName(loc, 10);
+                                List<LatLng> latLngs = new ArrayList<LatLng>(addresses.size());
+
+                                Log.d("latLngs", String.valueOf(latLngs));
+
+
+                                for (Address a : addresses) {
+                                    if (a.hasLatitude() && a.hasLongitude()) {
+                                        latLngs.add(new LatLng(a.getLatitude(), a.getLongitude()));
+
+                                        String lat1 = String.valueOf(a.getLatitude());
+                                        String lng1 = String.valueOf(a.getLongitude());
+
+//                                        getCityName(lat1,lng1);
+//                                        latt = lat1;
+//                                        lnng = lng1;
 
 
                                     }
@@ -1138,6 +1331,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
+
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override

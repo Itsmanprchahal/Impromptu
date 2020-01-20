@@ -448,7 +448,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_8sdp"
                             android:fontFamily="@font/sfuitextlight"
-                            android:text="+Add ticket type"
+                            android:text="+ Add ticket"
                             android:textColor="@color/colorTheme"
                             android:textSize="@dimen/_12sdp"
                             android:textStyle="bold" />

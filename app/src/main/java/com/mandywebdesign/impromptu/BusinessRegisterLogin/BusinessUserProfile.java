@@ -83,6 +83,7 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
     public static ArrayList<String> profilePastEvents_id = new ArrayList<>();
     public static ArrayList<String> images = new ArrayList<>();
     public static ArrayList<String> pastImages = new ArrayList<>();
+    Context context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,7 +91,7 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_business_user_profile, container, false);
 
-
+        context = getActivity();
 
         progressDialog = ProgressBarClass.showProgressDialog(getContext());
         progressDialog.dismiss();
@@ -210,7 +211,7 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
                             Address.setText(address1);
                             Address2.setText(address2);
                             AboutUs.setText(desc);
-                            Glide.with(BusinessUserProfile.this).load(avatar).into(UserImage);
+                            Glide.with(context).load(avatar).into(UserImage);
                         }
                     } else if (response.body().getStatus().equals("401")) {
                         SharedPreferences.Editor editor = sharedPreferences.edit();

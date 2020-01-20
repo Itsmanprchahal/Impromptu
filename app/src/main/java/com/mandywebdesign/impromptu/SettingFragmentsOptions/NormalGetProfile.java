@@ -610,11 +610,13 @@ public class NormalGetProfile extends AppCompatActivity {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     intent.putExtra("normal_edit", "1");
                     startActivity(intent);
+                    finish();
                 } else {
                     Intent intent = new Intent(NormalGetProfile.this, NormalPublishProfile.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     intent.putExtra("normal_edit", "0");
                     startActivity(intent);
+                    finish();
                 }
 
             }

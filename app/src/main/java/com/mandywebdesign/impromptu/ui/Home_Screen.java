@@ -27,6 +27,7 @@ import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
 
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -84,6 +85,7 @@ public class Home_Screen extends AppCompatActivity {
     String refreshvalue, checkgender, socailtoken, counter;
     public static String count = "0";
     public static int framgposition, lastposition;
+    String s;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +136,6 @@ public class Home_Screen extends AppCompatActivity {
 
         intent = getIntent();
 
-
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
         final View iconView = menuView.getChildAt(2).findViewById(com.google.android.material.R.id.icon);
         final ViewGroup.LayoutParams layoutParams = iconView.getLayoutParams();
@@ -184,17 +185,14 @@ public class Home_Screen extends AppCompatActivity {
             //updateProfiledialog();
             Intent intent1 = getIntent();
             String value = intent1.getStringExtra("bookevent");
-            String s = intent1.getStringExtra("isFrom");
+            s = intent1.getStringExtra("isFrom");
 
             if (value == null && s == null) {
                 FragmentTransaction transaction = manager.beginTransaction();
                 transaction.replace(R.id.home_frame_layout, new Home());
                 transaction.commit();
                 setMesgIcon();
-
-
             } else if (value == null && s.equals("NormaleventCreation")) {
-
                 Bundle bundle = new Bundle();
                 bundle.putString("eventType", "live");
                 Events events = new Events();
@@ -202,7 +200,10 @@ public class Home_Screen extends AppCompatActivity {
                 FragmentTransaction transaction1 = manager.beginTransaction();
                 transaction1.replace(R.id.home_frame_layout, events);
                 transaction1.commit();
+
                 setMesgIcon();
+                framgposition = 1;
+                lastposition = 1;
 
             } else {
                 Bundle bundle = new Bundle();
@@ -219,59 +220,62 @@ public class Home_Screen extends AppCompatActivity {
             progressDialog.dismiss();
 
 
-        }  else {
-                Call<RetroGetProfile> call = WebAPI.getInstance().getApi().getProfile(userToken, accept, "");
-                call.enqueue(new Callback<RetroGetProfile>() {
-                    @Override
-                    public void onResponse(Call<RetroGetProfile> call, Response<RetroGetProfile> response) {
-                        if (response.body() != null) {
-                            if (response.body().getStatus().equals("200")) {
-                                BprofileStatus = response.body().getData().get(0).getProfileNumber().toString();
-                                if (response.body().getData().get(0).getProfileNumber().equals(1)) {
+        } else {
 
-                                    FragmentTransaction transaction = manager.beginTransaction();
-                                    transaction.replace(R.id.home_frame_layout, new BusinessUserProfile());
-                                    transaction.commit();
+            Intent intent1 = getIntent();
+            s = intent1.getStringExtra("isFrom");
+            Call<RetroGetProfile> call = WebAPI.getInstance().getApi().getProfile(userToken, accept, "");
+            call.enqueue(new Callback<RetroGetProfile>() {
+                @Override
+                public void onResponse(Call<RetroGetProfile> call, Response<RetroGetProfile> response) {
+                    if (response.body() != null) {
+                        if (response.body().getStatus().equals("200")) {
+                            BprofileStatus = response.body().getData().get(0).getProfileNumber().toString();
+                            if (response.body().getData().get(0).getProfileNumber().equals(1)) {
 
-                                    Menu menu = bottomNavigationView.getMenu();
-                                    menu.findItem(R.id.hometab).setIcon(R.drawable.iconprofile);
+                                FragmentTransaction transaction = manager.beginTransaction();
+                                transaction.replace(R.id.home_frame_layout, new BusinessUserProfile());
+                                transaction.commit();
 
-                                } else {
-                                    Intent intent = new Intent(Home_Screen.this, BussinessProfileAcitivity1.class);
-                                    intent.putExtra("value", "0");
-                                    startActivity(intent);
-                                    finish();
+                                Menu menu = bottomNavigationView.getMenu();
+                                menu.findItem(R.id.hometab).setIcon(R.drawable.iconprofile);
 
-                                }
-                            } else if (response.body().getStatus().equals("401")) {
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.clear();
-                                editor.commit();
-
-                                Intent intent = new Intent(Home_Screen.this, Join_us.class);
+                            } else {
+                                Intent intent = new Intent(Home_Screen.this, BussinessProfileAcitivity1.class);
+                                intent.putExtra("value", "0");
                                 startActivity(intent);
                                 finish();
+
                             }
+                        } else if (response.body().getStatus().equals("401")) {
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.clear();
+                            editor.commit();
 
-                            progressDialog.dismiss();
-
-                        } else {
-                            Intent intent = new Intent(Home_Screen.this, NoInternetScreen.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            Intent intent = new Intent(Home_Screen.this, Join_us.class);
                             startActivity(intent);
+                            finish();
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<RetroGetProfile> call, Throwable t) {
-                        if (NoInternet.isOnline(Home_Screen.this) == false) {
-                            progressDialog.dismiss();
-                            NoInternet.dialog(Home_Screen.this);
-                        }
-                    }
-                });
+                        progressDialog.dismiss();
 
-            }
+                    } else {
+                        Intent intent = new Intent(Home_Screen.this, NoInternetScreen.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<RetroGetProfile> call, Throwable t) {
+                    if (NoInternet.isOnline(Home_Screen.this) == false) {
+                        progressDialog.dismiss();
+                        NoInternet.dialog(Home_Screen.this);
+                    }
+                }
+            });
+
+        }
 
 
     }
@@ -292,6 +296,7 @@ public class Home_Screen extends AppCompatActivity {
         }
 
     }
+
 
     public void updateProfiledialog() {
         final Dialog dialog = new Dialog(Home_Screen.this);
@@ -443,7 +448,6 @@ public class Home_Screen extends AppCompatActivity {
                             transaction0.replace(R.id.home_frame_layout, new BusinessUserProfile());
                             transaction0.commit();
                             setMesgIcon();
-                            framgposition = 0;
                             framgposition = 3;
                             lastposition = 3;
                             if (framgposition == 3) {
@@ -538,6 +542,23 @@ public class Home_Screen extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
+        if (s != null) {
+            if (s.equals("NormaleventCreation")) {
+
+                if (framgposition == 0) {
+                    finishAffinity();
+                    finish();
+                }
+               /* Intent a = new Intent(Intent.ACTION_MAIN);
+                a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(a);
+                finishAffinity();
+                finish();*/
+
+            }
+        }
+
         if (framgposition != 0) {
             if (account != null || !loggedOut) {
                 FragmentTransaction transaction2 = manager.beginTransaction();
@@ -550,6 +571,7 @@ public class Home_Screen extends AppCompatActivity {
                 transaction2.commit();
                 framgposition = 0;
             }
+
 
             if (account != null || !loggedOut) {
                 if (lastposition == 4) {

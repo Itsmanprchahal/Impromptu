@@ -76,6 +76,7 @@
             android:drawableLeft="@drawable/ic_verifiaction"
             android:gravity="center_vertical"
             android:fontFamily="@font/sfuitextlight"
+            android:visibility="gone"
             android:padding="@dimen/_8sdp"
             android:drawableRight="@drawable/ic_correct"
             android:drawablePadding="15dp"
@@ -85,6 +86,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
+            android:visibility="gone"
             android:background="@color/colorgrey"></View>
 
         <TextView

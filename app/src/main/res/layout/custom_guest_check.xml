@@ -95,8 +95,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="30dp"
-            android:foregroundGravity="center_horizontal"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="-1dp"
+            android:foregroundGravity="center_vertical"
             android:src="@drawable/ic_checked" />
     </RelativeLayout>
 
@@ -111,6 +112,7 @@
         android:textAlignment="center"
         android:background="@drawable/circle_background"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:layout_marginTop="30dp"
         android:layout_marginRight="10dp"
         android:visibility="visible"

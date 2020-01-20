@@ -71,7 +71,13 @@ public class CheckGuestAdapter extends RecyclerView.Adapter<CheckGuestAdapter.Vi
             viewHolder.name.setText(userName);
         }
 
-        viewHolder.ticket.setText(datum.getTotal_tickets_by_user()+" tickets");
+        if (datum.getTotal_tickets_by_user().equals("1"))
+        {
+            viewHolder.ticket.setText(datum.getTotal_tickets_by_user()+" ticket");
+        }else {
+            viewHolder.ticket.setText(datum.getTotal_tickets_by_user()+" tickets");
+        }
+
         if (datum.getCheckin().equals("1")) {
             viewHolder.custom_guest_check.setImageResource(R.drawable.ic_checked);
             viewHolder.custom_guest_check.setColorFilter(ContextCompat.getColor(context, R.color.colorTheme), android.graphics.PorterDuff.Mode.MULTIPLY);

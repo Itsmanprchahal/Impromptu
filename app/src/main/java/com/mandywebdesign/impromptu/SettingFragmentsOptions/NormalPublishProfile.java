@@ -359,6 +359,7 @@ public class NormalPublishProfile extends AppCompatActivity {
                                             editor.putString("profilegender",Gender);
                                             editor.apply();
                                             Intent intent = new Intent(NormalPublishProfile.this,NormalGetProfile.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                             startActivity(intent);
                                             finish();
                                         }

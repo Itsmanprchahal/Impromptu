@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -68,7 +69,7 @@ public class TermsAndConditionsActivityy extends AppCompatActivity {
                     if (response.body().getStatus().equals("200")) {
                         String term = response.body().getData().get(0).getContent();
 //                 Toast.makeText(getContext(), ""+term, Toast.LENGTH_SHORT).show();
-                        terms.setText(term);
+                        terms.setText(Html.fromHtml(term));
                         progressDialog.dismiss();
                     } else if (response.body().getStatus().equals("401")) {
                         //Toast.makeText(getContext(), ""+response.body().getStatus(), Toast.LENGTH_SHORT).show();
