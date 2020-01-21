@@ -229,12 +229,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                     invite_layouit.setVisibility(View.GONE);
                     askforrefund.setVisibility(View.VISIBLE);
                     mBookEvent.setVisibility(View.VISIBLE);
-                } else if (eventType.equals("past")) {
-                    mBookEvent.setVisibility(View.GONE);
-                    askforrefund.setVisibility(View.GONE);
-                    eventdistance.setVisibility(View.GONE);
-                    invite_layouit.setVisibility(View.GONE);
-                } else {
+                }  else {
                     mBookEvent.setVisibility(View.GONE);
                     invite_layouit.setVisibility(View.GONE);
                     askforrefund.setVisibility(View.GONE);
@@ -556,14 +551,15 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         backonbookevent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BookEventActivity.this, Home_Screen.class);
+                /*Intent intent = new Intent(BookEventActivity.this, Home_Screen.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 editorItemPos.putString(Constants.itemPosition, itemPos);
                 editorItemPos.apply();
                 startActivity(intent);
                 finish();
                 spinnerposition = "0";
-                tickettypespinnerposintion = "0";
+                tickettypespinnerposintion = "0";*/
+                onBackPressed();
             }
         });
 
@@ -1060,6 +1056,15 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
                                 }
                             }
+
+                             if (event_status.equals("past"))
+                             {
+                                 mBookEvent.setVisibility(View.GONE);
+                                 askforrefund.setVisibility(View.GONE);
+                                 eventdistance.setVisibility(View.GONE);
+                                 invite_layouit.setVisibility(View.GONE);
+                                 peoplegoing.setVisibility(View.GONE);
+                             }
 
                             getTickets_booked_by_user = datum.getTickets_booked_by_user();
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

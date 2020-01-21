@@ -239,11 +239,12 @@ public class PayActivity extends AppCompatActivity {
         card.validateNumber();
         card.validateCVC();
 
-        Stripe stripe = new Stripe(PayActivity.this, "pk_test_NUze3lWY5JhW6P0xmCebM00s000LALfIfF");
+        Stripe stripe = new Stripe(PayActivity.this, "pk_live_7M5piE9lr63i8sIn6Km4uzL700iuLHEESD");
         stripe.createToken(card, new TokenCallback() {
             @Override
             public void onError(@NonNull Exception error) {
                 Log.d("card_token", "card " + error);
+                Toast.makeText(PayActivity.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
             }
 

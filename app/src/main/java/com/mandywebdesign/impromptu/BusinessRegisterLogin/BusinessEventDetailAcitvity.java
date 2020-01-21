@@ -100,7 +100,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
     ImageButton backon_b_eventdetail;
     View view;
     RecyclerView users;
-    TextView category, event_price, datetime, loc, BusinessEvent_detailsFragment_book_time,BusinessEvent_detailsFragment_book_time2, ticketPrice, ticketPrice1, ticketPrice2, dtotalPrice, dticketPrice, numberofTickets, numberofTickets1, numberofTickets2, totalPrice, totalPrice1, totalPrice2, freetext, event_title, see_all,
+    TextView category, event_price, datetime, loc, BusinessEvent_detailsFragment_book_time, BusinessEvent_detailsFragment_book_time2, ticketPrice, ticketPrice1, ticketPrice2, dtotalPrice, dticketPrice, numberofTickets, numberofTickets1, numberofTickets2, totalPrice, totalPrice1, totalPrice2, freetext, event_title, see_all,
             BusinessEvent_detailsFragment_book_link1, BusinessEvent_detailsFragment_book_link2, BusinessEvent_detailsFragment_book_link3;
     public TextView peoplecoming, revenue;
     ReadMoreTextView descri;
@@ -123,13 +123,13 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
     public static ArrayList<String> userName = new ArrayList<>();
     String BToken, S_Token, attendess, link1, link2, link3;
     public static ArrayList<String> image = new ArrayList<>();
-    static String id, cate, ticktprice,event_status, ticketprice1, ticketprice2, ticketprice3, hostImage, hostUserID, tickets_booked_by_user, decs, postcode, ticktType, timefrom, timeto, title, location, location2, city, gender, andendeenumber, bookedtickets, numberoftickts, freeEvent, username, timeFrom, timeTo;
+    static String id, cate, ticktprice, event_status, ticketprice1, ticketprice2, ticketprice3, hostImage, hostUserID, tickets_booked_by_user, decs, postcode, ticktType, timefrom, timeto, title, location, location2, city, gender, andendeenumber, bookedtickets, numberoftickts, freeEvent, username, timeFrom, timeTo;
     int CurrentPage = 0;
     CheckBox eventdetail_favbt;
     TextView ticketview;
     Button seemessagesforthisevent;
     Intent intent;
-    String from, userTYpe,getTickets_booked_by_user, bookedticket;
+    String from, userTYpe, getTickets_booked_by_user, bookedticket;
     static String tickettypeposition, spinnerposition, total_ticket, tot, remaini_tickets, getSpinnerposition = "1";
     Spinner spinner, ticketype_spinner;
     Button dialogButoon;
@@ -171,7 +171,6 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
 
         checkEventtype();
         gotomessagebox(value);
-
 
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -290,7 +289,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                     getUsers(S_Token, value);
                     linearLayout.setVisibility(View.GONE);
                     checkInGuest.setVisibility(View.GONE);
-                }else {
+                } else {
                     getEventdata(BToken, value);
                     getUsers(BToken, value);
                     linearLayout.setVisibility(View.GONE);
@@ -435,15 +434,12 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
 
                         }
 
-                        if (event_type.equals("past") || event_type.equals("history")) {
-                            if (bookedUsersList.size() == 1) {
-                                peoplecoming.setText("1 person attended");
-                            } else if (bookedUsersList.size() >= 2) {
-                                peoplecoming.setText(bookedUsersList.size() + " person attended");
+                        if (event_status.equals("past")) {
+                            peoplecoming.setVisibility(View.GONE);
+                        }
 
-                            } else {
-                                peoplecoming.setText("0 people attended");
-                            }
+                        if (event_type.equals("past") || event_type.equals("history")) {
+
                         } else {
                             if (bookedUsersList.size() == 1) {
                                 peoplecoming.setText("1 Person is coming");
@@ -458,11 +454,8 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                         users.setAdapter(adapter);
 
                     } else if (response.body().getStatus().equals("400")) {
-                        if (event_type.equals("history") || event_type.equals("past")) {
-                            peoplecoming.setText("0 People attended");
-                        } else {
-                            peoplecoming.setText("0 People  coming");
-                        }
+
+                        peoplecoming.setText("0 People  coming");
 
 
                         users.setVisibility(View.GONE);
@@ -641,20 +634,18 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
 
 
                             String startTime = removeLeadingZeroes(time_t);
-                            if (startTime.contains(":00"))
-                            {
-                                startTime = removeLeadingZeroes(time_t).replace(":00","");
+                            if (startTime.contains(":00")) {
+                                startTime = removeLeadingZeroes(time_t).replace(":00", "");
                                 BusinessEvent_detailsFragment_book_time.setText(startTime);
-                            }else {
+                            } else {
                                 BusinessEvent_detailsFragment_book_time.setText(removeLeadingZeroes(time_t));
                             }
 
                             String endTime = removeLeadingZeroes(time_to);
-                            if (endTime.contains(":00"))
-                            {
-                                endTime = removeLeadingZeroes(time_to).replace(":00","");
+                            if (endTime.contains(":00")) {
+                                endTime = removeLeadingZeroes(time_to).replace(":00", "");
                                 BusinessEvent_detailsFragment_book_time2.setText(endTime);
-                            }else {
+                            } else {
                                 BusinessEvent_detailsFragment_book_time2.setText(removeLeadingZeroes(endTime));
                             }
 
