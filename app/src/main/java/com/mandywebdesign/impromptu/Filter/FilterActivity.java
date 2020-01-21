@@ -748,7 +748,6 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
 
                                         String lat1 = String.valueOf(a.getLatitude());
                                         String lng1 = String.valueOf(a.getLongitude());
-                                        Log.d("postcode", a.getPostalCode());
 
 
                                         lat = lat1;

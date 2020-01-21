@@ -1054,7 +1054,8 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             location2 = datum.getAddressline2();
                             eventlat = datum.getLattitude();
                             eventlng = datum.getLongitude();
-                            if (eventType != null) {
+                            event_status = datum.getEvent_status();
+                             if (eventType != null) {
                                 if (eventType.equals("fav")) {
 
                                 }

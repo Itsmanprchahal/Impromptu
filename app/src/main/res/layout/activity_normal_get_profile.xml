@@ -17,7 +17,6 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardElevation="2dp"
                 android:id="@+id/user_card">
 
                 <androidx.appcompat.widget.Toolbar
@@ -129,7 +128,6 @@
                             android:textAlignment="viewStart"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_8sdp"
-                            android:textStyle="bold"
                             tools:ignore="RtlCompat" />
                     </LinearLayout>
 
@@ -151,8 +149,8 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
                             android:layout_marginLeft="5dp"
+                            android:textColor="@color/colorGold"
                             android:text="Points"
                             android:textSize="12sp"
                             android:id="@+id/points"></TextView>

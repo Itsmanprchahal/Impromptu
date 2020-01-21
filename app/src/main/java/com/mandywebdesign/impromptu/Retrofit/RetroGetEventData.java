@@ -58,6 +58,18 @@ public class RetroGetEventData {
         @SerializedName("favourite")
         @Expose
         private Integer favourite;
+
+        public String getEvent_status() {
+            return event_status;
+        }
+
+        public void setEvent_status(String event_status) {
+            this.event_status = event_status;
+        }
+
+        @SerializedName("event_status")
+        @Expose
+        private String event_status;
         @SerializedName("title")
         @Expose
         private String title;

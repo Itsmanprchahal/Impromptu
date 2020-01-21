@@ -123,7 +123,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
     public static ArrayList<String> userName = new ArrayList<>();
     String BToken, S_Token, attendess, link1, link2, link3;
     public static ArrayList<String> image = new ArrayList<>();
-    static String id, cate, ticktprice, ticketprice1, ticketprice2, ticketprice3, hostImage, hostUserID, tickets_booked_by_user, decs, postcode, ticktType, timefrom, timeto, title, location, location2, city, gender, andendeenumber, bookedtickets, numberoftickts, freeEvent, username, timeFrom, timeTo;
+    static String id, cate, ticktprice,event_status, ticketprice1, ticketprice2, ticketprice3, hostImage, hostUserID, tickets_booked_by_user, decs, postcode, ticktType, timefrom, timeto, title, location, location2, city, gender, andendeenumber, bookedtickets, numberoftickts, freeEvent, username, timeFrom, timeTo;
     int CurrentPage = 0;
     CheckBox eventdetail_favbt;
     TextView ticketview;
@@ -253,11 +253,13 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                 if (!BToken.equalsIgnoreCase("")) {
                     getEventdata(BToken, value);
                     getUsers(BToken, value);
+                    peoplecoming.setVisibility(View.GONE);
                     checkInGuest.setText("Relist");
 
                 } else if (!S_Token.equalsIgnoreCase("")) {
                     getEventdata(S_Token, value);
                     getUsers(S_Token, value);
+                    peoplecoming.setVisibility(View.GONE);
                     checkInGuest.setText("Relist");
 
                 }
@@ -282,7 +284,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                     checkInGuest.setVisibility(View.GONE);
                 }
             } else if (event_type.equals("past")) {
-
+                peoplecoming.setVisibility(View.GONE);
                 if (!S_Token.equalsIgnoreCase("")) {
                     getEventdata(S_Token, value);
                     getUsers(S_Token, value);
@@ -510,6 +512,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                             ticktType = datum.getTicketType();
                             bookstatus = datum.getEventBook().toString();
                             getTickets_booked_by_user = datum.getTickets_booked_by_user();
+                            event_status = datum.getEvent_status();
 
                             //Todo: get tickets types
                             for (int i = 0; i < datum.getTicketsType().size(); i++) {
