@@ -13,7 +13,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            app:cardElevation="5dp"
+            app:cardElevation="0dp"
             android:id="@+id/cardview"
             tools:ignore="MissingConstraints">
 

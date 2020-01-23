@@ -128,6 +128,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     Bundle bundle;
     ArrayList<String> userImage = new ArrayList<>();
     ArrayList<String> user_id = new ArrayList<>();
+    ArrayList<String> user_booked_tickets = new ArrayList<>();
     TextView cal1, cal3;
     LinearLayout cal2, cal4;
     static String tot;
@@ -997,12 +998,14 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                     List<Booked_User.Datum> bookedUsersList = booked_users.getData();
                     userImage.clear();
                     user_id.clear();
+                    user_booked_tickets.clear();
                     ;
 
                     if (response.body().getStatus().equals("200")) {
                         for (int i = 0; i < bookedUsersList.size(); i++) {
                             userImage.add(response.body().getData().get(i).getFile());
                             user_id.add(response.body().getData().get(i).getUserid().toString());
+                            user_booked_tickets.add(response.body().getData().get(i).getTotalTickets().toString());
                         }
                     } else {
                         peoplegoing.setText("no one has booked yet");
@@ -1011,7 +1014,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                         users.setVisibility(View.GONE);
                     }
 
-                    Booked_users adapter = new Booked_users(BookEventActivity.this, userImage, user_id);
+                    Booked_users adapter = new Booked_users(BookEventActivity.this, userImage, user_id,user_booked_tickets);
                     users.setAdapter(adapter);
                 } else {
                     Intent intent = new Intent(BookEventActivity.this, NoInternetScreen.class);
@@ -1064,6 +1067,10 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                  eventdistance.setVisibility(View.GONE);
                                  invite_layouit.setVisibility(View.GONE);
                                  peoplegoing.setVisibility(View.GONE);
+                                 remainingTicketTV.setVisibility(View.GONE);
+                             }else
+                             {
+                                 peoplegoing.setVisibility(View.VISIBLE);
                              }
 
                             getTickets_booked_by_user = datum.getTickets_booked_by_user();

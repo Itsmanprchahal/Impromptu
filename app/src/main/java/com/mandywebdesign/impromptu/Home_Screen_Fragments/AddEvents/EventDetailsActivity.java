@@ -626,7 +626,6 @@ public class EventDetailsActivity extends AppCompatActivity {
                                     Date d = null;
                                     try {
                                         d = df.parse(myTime);
-                                        Toast.makeText(EventDetailsActivity.this, "" + d, Toast.LENGTH_SHORT).show();
                                     } catch (ParseException e) {
                                         e.printStackTrace();
                                     }
@@ -1265,6 +1264,8 @@ public class EventDetailsActivity extends AppCompatActivity {
                 if (address.get(0).getPostalCode()!=null)
                 {
                     event_postcode.setText(address.get(0).getPostalCode());
+                }else {
+                    event_postcode.setText("");
                 }
 
 

@@ -15,10 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/normal_user_profile_card">
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/normal_user_profile_toolbar"
@@ -52,15 +48,14 @@
                 </androidx.appcompat.widget.Toolbar>
 
 
-            </androidx.cardview.widget.CardView>
+
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/normal_user_profile_card"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="54dp"
                 android:layout_marginRight="16dp">
 
 

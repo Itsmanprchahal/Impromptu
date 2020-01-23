@@ -119,6 +119,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
     ImageView editevent;
     PagerAdapter pagerAdapter;
     public static ArrayList<String> userImage = new ArrayList<>();
+    public static ArrayList<String> total_tickets = new ArrayList<>();
     public static ArrayList<String> user_id = new ArrayList<>();
     public static ArrayList<String> userName = new ArrayList<>();
     String BToken, S_Token, attendess, link1, link2, link3;
@@ -423,20 +424,30 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                     List<Booked_User.Datum> bookedUsersList = booked_users.getData();
                     userImage.clear();
                     user_id.clear();
+                    total_tickets.clear();
 
                     if (response.body().getStatus().equals("200")) {
                         for (int i = 0; i < bookedUsersList.size(); i++) {
                             userImage.add(response.body().getData().get(i).getFile());
                             user_id.add(response.body().getData().get(i).getUserid().toString());
                             userName.add(response.body().getData().get(i).getUsername());
+                            total_tickets.add(response.body().getData().get(i).getTotalTickets().toString());
 
                             Log.d("userImage", "" + response.body().getData().get(i).getFile());
 
                         }
 
-                        if (event_status.equals("past")) {
-                            peoplecoming.setVisibility(View.GONE);
+                        if (event_status!=null)
+                        {
+                            if (event_status.equals("past")) {
+                                peoplecoming.setVisibility(View.GONE);
+
+                            }else
+                            {
+                                peoplecoming.setVisibility(View.VISIBLE);
+                            }
                         }
+
 
                         if (event_type.equals("past") || event_type.equals("history")) {
 
@@ -450,7 +461,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                                 peoplecoming.setText("No one booked this event yet");
                             }
                         }
-                        Booked_users adapter = new Booked_users(BusinessEventDetailAcitvity.this, userImage, user_id);
+                        Booked_users adapter = new Booked_users(BusinessEventDetailAcitvity.this, userImage, user_id,total_tickets);
                         users.setAdapter(adapter);
 
                     } else if (response.body().getStatus().equals("400")) {

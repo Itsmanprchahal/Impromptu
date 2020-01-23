@@ -9,9 +9,6 @@
     tools:context=".SettingFragmentsOptions.HelpOptionsActivity">
 
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
 
         <androidx.appcompat.widget.Toolbar
@@ -43,9 +40,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.appcompat.widget.Toolbar>
-
-
-    </androidx.cardview.widget.CardView>
 
     <ScrollView
         android:layout_width="match_parent"

@@ -7,13 +7,6 @@
     android:background="@color/colortextwhite"
     tools:context=".SettingFragmentsOptions.HelpActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-
-
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -26,11 +19,13 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/toolbartext"
                         android:fontFamily="@font/circularstdbold"
-                        android:textColor="@color/colortextBlack"
+                        android:gravity="center_horizontal"
                         android:text="Help Guide"
-                        android:gravity="center_horizontal"/>
+                        android:textColor="@color/colortextBlack"
+                        android:textSize="@dimen/toolbartext"
+                        tools:layout_editor_absoluteX="0dp"
+                        tools:layout_editor_absoluteY="-2dp" />
 
                     <ImageView
                         android:id="@+id/back_on_help"
@@ -44,23 +39,15 @@
 
             </androidx.appcompat.widget.Toolbar>
 
-
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colortextBlack"
-            android:textSize="@dimen/_13sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:fontFamily="@font/sfuitextlight"
-            android:id="@+id/help_text"
-            android:layout_marginLeft="@dimen/defaultmargin"
-            android:layout_marginRight="@dimen/defaultmargin"/>
-
-
-
-
-    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colortextBlack"
+        android:textSize="@dimen/_13sdp"
+        android:layout_marginTop="@dimen/_54sdp"
+        android:fontFamily="@font/sfuitextlight"
+        android:id="@+id/help_text"
+        android:layout_marginLeft="@dimen/defaultmargin"
+        android:layout_marginRight="@dimen/defaultmargin"/>
 
 </RelativeLayout>

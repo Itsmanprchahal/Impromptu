@@ -24,13 +24,15 @@ public class Booked_users extends RecyclerView.Adapter<Booked_users.ViewHolder> 
     Context context;
     ArrayList<String> usersImage= new ArrayList<>();
     ArrayList<String> user_id = new ArrayList<>();
+    ArrayList<String> total_tickets = new ArrayList<>();
     String count;
 
 
-    public Booked_users(Context context, ArrayList<String> usersImage,ArrayList<String> user_id) {
+    public Booked_users(Context context, ArrayList<String> usersImage,ArrayList<String> user_id,ArrayList<String> total_tickets) {
         this.context = context;
         this.usersImage = usersImage;
         this.user_id = user_id;
+        this.total_tickets = total_tickets;
     }
 
     @NonNull
@@ -45,14 +47,22 @@ public class Booked_users extends RecyclerView.Adapter<Booked_users.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull Booked_users.ViewHolder viewHolder, final int i) {
         Glide.with(context).load(usersImage.get(i)).into(viewHolder.userImage);
-        int count = usersImage.size();
+//        Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
+        int count = Integer.parseInt(total_tickets.get(i).toString());
         int count1 = count-1;
-        if (count1==0)
+
+        if (total_tickets.get(i).equals("1"))
         {
             viewHolder.attendeescount.setVisibility(View.GONE);
         }else {
             viewHolder.attendeescount.setText("+"+count1);
         }
+        /*if (count1==0)
+        {
+            viewHolder.attendeescount.setVisibility(View.GONE);
+        }else {
+            viewHolder.attendeescount.setText("+"+count1);
+        }*/
 
         viewHolder.userImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +77,23 @@ public class Booked_users extends RecyclerView.Adapter<Booked_users.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return 1;
+
+        if (usersImage.size()>=5)
+        {
+            return 4;
+        }else if (usersImage.size()==4)
+        {
+            return 4;
+        }else if (usersImage.size()==3)
+        {
+            return 3;
+        }else if (usersImage.size()==2)
+        {
+            return 2;
+        }else {
+            return 1;
+        }
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

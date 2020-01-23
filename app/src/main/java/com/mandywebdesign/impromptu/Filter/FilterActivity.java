@@ -358,7 +358,6 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
                 intent.putExtra("lng", lng);
                 intent.putExtra("edate", todayENdtime);
                 startActivity(intent);
-                finish();
             } else {
 
                 Toast.makeText(FilterActivity.this, "Select atleast one option from gender", Toast.LENGTH_SHORT).show();
