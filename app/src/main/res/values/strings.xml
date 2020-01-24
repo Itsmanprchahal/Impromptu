@@ -52,5 +52,6 @@
     <string name="enter_location">Enter Location</string>
     <string name="auto_complete_text">Autocomplete textview with custom adapter.</string>
     <string name="error">Google Api key is missing.</string>
+    <string name="privancypolicytext">By using Impromptu’s services, you consent to the collection and use of your data as described in this Privacy Policy. Please carefully read the following to get a clear understanding of how we collect, use, disclose, protect and otherwise handle information about you.  "\n""\n"<b><font size="18">This policy details;</font></b> </string>
 
 </resources>

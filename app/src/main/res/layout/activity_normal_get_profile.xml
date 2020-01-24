@@ -90,7 +90,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="5dp"
                              android:fontFamily="@font/circularstdbold"
-                            android:text="Name"
+                            android:text=""
                             android:textColor="@color/colorTheme"
                             android:textSize="@dimen/_14sdp"
                             android:textStyle="bold" />
@@ -109,7 +109,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Gender"
+                            android:text=""
                             android:textColor="@color/black"
                             android:fontFamily="@font/sfuitextlight"
                             android:id="@+id/normal_user_gender"/>
@@ -119,7 +119,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/sfuitextlight"
-                            android:text=",Age"
+                            android:text=""
                             android:gravity="bottom"
                             android:textAlignment="viewStart"
                             android:textColor="@color/black"
@@ -147,7 +147,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:textColor="@color/colorGold"
-                            android:text="Points"
+                            android:text=""
                             android:textSize="12sp"
                             android:id="@+id/points"></TextView>
                     </LinearLayout>
@@ -166,7 +166,7 @@
                         android:paddingTop="10dp"
                         android:paddingRight="10dp"
                         android:paddingBottom="10dp"
-                        android:text="@string/userProfileStatus"
+                        android:text=""
                         android:textSize="12sp" />
 
 

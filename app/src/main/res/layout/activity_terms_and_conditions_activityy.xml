@@ -56,7 +56,6 @@
                 android:textSize="@dimen/_12sdp"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="@dimen/defaultmargin"
-                android:fontFamily="@font/sfuitextlight"
                 android:layout_marginRight="@dimen/defaultmargin"
                 android:textColor="@color/colortextBlack"
                 android:id="@+id/terms_text" />

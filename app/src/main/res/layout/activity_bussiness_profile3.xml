@@ -79,7 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/circularstdbold"
-                    android:text="Bosphorous Kebabs"
+                    android:text=""
                     android:textColor="@color/colortextBlack"
                     app:layout_constraintRight_toLeftOf="@id/business_profilepublish_user_Image"
                     app:layout_constraintLeft_toLeftOf="parent"

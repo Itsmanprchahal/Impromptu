@@ -60,8 +60,8 @@
                 android:layout_marginLeft="@dimen/defaultmargin"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="@dimen/defaultmargin"
-                android:fontFamily="@font/sfuitextlight"
                 android:textColor="@color/colortextBlack"
+                android:text="@string/privancypolicytext"
                 android:textSize="@dimen/_12sdp" />
         </ScrollView>
 
