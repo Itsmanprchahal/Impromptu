@@ -80,6 +80,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -116,6 +117,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     Dialog dialog1;
     AutoCompleteAdapter adapter,autoCompleteAdapter;
     PlacesClient placesClient;
+    long newChangeForDate=0;
 
 
     EditText edt_tiketType;
@@ -527,6 +529,8 @@ public class EventDetailsActivity extends AppCompatActivity {
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//                calendar.setTimeZone(TimeZone.getTimeZone("Europe/London"));
+                newChangeForDate = calendar.getTimeInMillis();
                 myFormat = "dd/MM/yyyy";
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myFormat, Locale.US);
 
@@ -558,6 +562,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//                calendar.setTimeZone(TimeZone.getTimeZone("Europe/London"));
                 myFormat = "dd/MM/yyyy";
 
 
@@ -594,6 +599,7 @@ public class EventDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 calendar = Calendar.getInstance();
+//                calendar.setTimeZone(TimeZone.getTimeZone("Europe/London"));
 
                 final int hour = calendar.get(Calendar.AM_PM);
                 int minute = calendar.get(Calendar.MINUTE);
@@ -611,6 +617,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
                             if (date1 != 0) {
                                 if (date1 != calendar.get(Calendar.DAY_OF_MONTH)) {
+                                //if (newChangeForDate != calendar.getTimeInMillis() ||newChangeForDate != calendar.getTimeInMillis()) {
                                     if (hourOfDay < 10 && minute < 10) {
                                         eventTime_from.setText("0" + hourOfDay + ":" + "0" + minute);
                                     } else if (hourOfDay < 10) {
@@ -742,6 +749,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                     Toast.makeText(EventDetailsActivity.this, "Enter Event date", Toast.LENGTH_SHORT).show();
                 } else {
                     calendar = Calendar.getInstance();
+//                    calendar.setTimeZone(TimeZone.getTimeZone("Europe/London"));
                     int hour = calendar.get(Calendar.AM_PM);
                     int minute = calendar.get(Calendar.MINUTE);
 
@@ -755,6 +763,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                             calendar1.set(Calendar.MONTH, month1);
                             calendar1.set(Calendar.DAY_OF_MONTH, date1);
                             calendar1.set(Calendar.YEAR, year1);
+//                            calendar1.setTimeZone(TimeZone.getTimeZone("Europe/London"));
 
                             Calendar calendar2 = Calendar.getInstance();
                             calendar2.set(Calendar.MINUTE, minute);
@@ -762,6 +771,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                             calendar2.set(Calendar.MONTH, month2);
                             calendar2.set(Calendar.DAY_OF_MONTH, day2);
                             calendar2.set(Calendar.YEAR, year2);
+//                            calendar2.setTimeZone(TimeZone.getTimeZone("Europe/London"));
 
                             Log.d("+++++++++", "++ calender1 ++" + date1 + month1 + year1 + hour1 + minute1);
                             Log.d("+++++++++", "++ calender1 ++" + day2 + month2 + year2 + hourOfDay + minute);
@@ -789,6 +799,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                                     } else {
                                         Calendar datetime = Calendar.getInstance();
                                         Calendar c = Calendar.getInstance();
+//                                        c.setTimeZone(TimeZone.getTimeZone("Europe/London"));
                                         datetime.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                         datetime.set(Calendar.MINUTE, minute);
                                         if (datetime.getTimeInMillis() >= c.getTimeInMillis()) {

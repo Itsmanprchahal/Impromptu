@@ -129,7 +129,6 @@
                     android:layout_gravity="end"
                     android:layout_marginLeft="@dimen/_5sdp"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginRight="@dimen/_5sdp"
                     android:fontFamily="@font/circularstdbold"
                     android:hint="1"
                     android:textAlignment="textEnd"

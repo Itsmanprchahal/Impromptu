@@ -2,6 +2,7 @@ package com.mandywebdesign.impromptu.Interfaces;
 
 import com.mandywebdesign.impromptu.Models.ChangePassword;
 import com.mandywebdesign.impromptu.Models.CheckInGuest;
+import com.mandywebdesign.impromptu.Models.DeleteDraftRespose;
 import com.mandywebdesign.impromptu.Models.GetAdminEmail;
 import com.mandywebdesign.impromptu.Models.RetroPostcode;
 import com.mandywebdesign.impromptu.Models.SendContactUSmesg;
@@ -602,5 +603,11 @@ public interface RegisterApiInterface {
     @GET("savedcard")
     Call<SavedCardsResponse> savedCard(
             @Header("Authorization") String token
+    );
+
+    @POST("deleteDraftEvent")
+    Call<DeleteDraftRespose> deleteDraft(
+            @Header("Authorization") String token,
+            @Query("event_id") String event_id
     );
 }

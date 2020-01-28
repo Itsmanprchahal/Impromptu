@@ -78,6 +78,7 @@
                 android:id="@+id/screenshot"></ImageView>
 
             <RelativeLayout
+                android:id="@+id/layoutimage"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:layout_below="@id/perview_progress_bar"
@@ -286,6 +287,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
                     android:button="@drawable/custom_star_check_box" />
+
             </RelativeLayout>
 
 
@@ -294,7 +296,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/defaultmargin"
                 android:layout_marginRight="@dimen/defaultmargin"
-                android:layout_marginBottom="@dimen/defaultmargin"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/cardcorners"
                 app:cardElevation="5dp">
 
@@ -302,6 +304,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/eventid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginRight="@dimen/defaultmargin"
+                        android:textSize="@dimen/_10sdp"
+                        android:fontFamily="@font/sfuitextlight"
+                        android:text=""></TextView>
 
                     <LinearLayout
                         android:id="@+id/main_linearlayout"
@@ -439,7 +453,7 @@
                             android:id="@+id/organiser_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="16dp"
                             android:orientation="horizontal">
 
                             <com.makeramen.roundedimageview.RoundedImageView
@@ -485,7 +499,7 @@
                                 <ImageButton
                                     android:id="@+id/follow_button"
                                     android:layout_width="wrap_content"
-                                    android:src="@drawable/ic_staractive"
+                                    android:src="@drawable/ic_heart_outline"
                                     android:background="@drawable/transperent"
                                     android:layout_centerVertical="true"
                                     android:layout_toLeftOf="@id/book_message"
@@ -513,7 +527,6 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="3dp"
-                        android:layout_marginTop="@dimen/_15sdp"
                         android:layerType="software"
                         android:layout_marginLeft="@dimen/defaultmargin"
                         android:layout_marginRight="@dimen/defaultmargin"
@@ -558,7 +571,7 @@
                             android:layout_marginTop="15dp"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="10dp"
-                            android:src="@drawable/userlogo" />
+                            android:src="@drawable/addfriend" />
 
                     </RelativeLayout>
 

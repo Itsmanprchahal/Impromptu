@@ -51,10 +51,12 @@ public class HelpActivity extends AppCompatActivity {
 
         if (!user.equalsIgnoreCase(""))
         {
-            help(user);
+//            help(user);
+            help.setText("Coming soon");
         }else if (!social_token.equalsIgnoreCase(""))
         {
-            help(social_token);
+//            help(social_token);
+            help.setText("Coming soon");
         }
 
 

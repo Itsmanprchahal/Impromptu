@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -19,7 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mandywebdesign.impromptu.Adapters.Business_DraftsEventAdapter;
+import com.mandywebdesign.impromptu.Adapters.deletedraftIF;
+import com.mandywebdesign.impromptu.Home_Screen_Fragments.Home;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
+import com.mandywebdesign.impromptu.Models.DeleteDraftRespose;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.RetroDraftsEvents;
 import com.mandywebdesign.impromptu.Utils.Constants;
@@ -67,6 +71,8 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
     public static ArrayList<String> categois = new ArrayList<>();
     public static ArrayList<String> draftsimages = new ArrayList<>();
     public static ArrayList<String> event_id = new ArrayList<>();
+    public  ArrayList<RetroDraftsEvents.Datum> events = new ArrayList<>();
+    FragmentManager manager;
 
 
     @Override
@@ -77,7 +83,7 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
         fragmentManager = getFragmentManager();
         progressDialog = ProgressBarClass.showProgressDialog(getContext());
         progressDialog.dismiss();
-
+        manager= getFragmentManager();
         sharedPreferences = getContext().getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         itemPositionPref = getContext().getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);
         sharedPreferences1 = getActivity().getSharedPreferences("BusinessProfile1", Context.MODE_PRIVATE);
@@ -101,14 +107,13 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
         recyclerView = (DiscreteScrollView) view.findViewById(R.id.business_drafts__recyclerview);
         recyclerView.setOrientation(DSVOrientation.HORIZONTAL);
         recyclerView.addOnItemChangedListener(this);
-        infiniteAdapter = InfiniteScrollAdapter.wrap(new Business_DraftsEventAdapter(getContext(), fragmentManager));
+        infiniteAdapter = InfiniteScrollAdapter.wrap(new Business_DraftsEventAdapter(getContext(), fragmentManager,events));
         recyclerView.setAdapter(infiniteAdapter);
         recyclerView.setItemTransitionTimeMillis(DiscreteScrollViewOptions.getTransitionTime());
         recyclerView.setItemTransformer(new ScaleTransformer.Builder()
                 .setMinScale(0.8f)
 
                 .build());
-
 
         return view;
     }
@@ -136,6 +141,7 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
 
                         for (RetroDraftsEvents.Datum datum : datumArrayList) {
 
+                            events.add(datum);
                             name1.add(datum.getBEventHostname());
                             title.add(datum.getTitle());
                             draftsimages.add(datum.getFile().toString());
@@ -191,9 +197,34 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
                             categois.add(datum.getCategory());
                             event_id.add(datum.getEventId().toString());
 
-                            adapter = new Business_DraftsEventAdapter(getContext(), fragmentManager);
+                            adapter = new Business_DraftsEventAdapter(getContext(), fragmentManager,events);
                             recyclerView.setAdapter(adapter);
                             recyclerView.getLayoutManager().scrollToPosition(Integer.parseInt(itemPosition));
+                            adapter.DeleteDraft(new deletedraftIF() {
+                                @Override
+                                public void onSucess(String Id,int i) {
+
+                                    int pos = i;
+                                    Call<DeleteDraftRespose> call1 = WebAPI.getInstance().getApi().deleteDraft("Bearer "+bToken,Id);
+                                    call1.enqueue(new Callback<DeleteDraftRespose>() {
+                                        @Override
+                                        public void onResponse(Call<DeleteDraftRespose> call, Response<DeleteDraftRespose> response) {
+                                            if (response.body().getStatus().equals("200"))
+                                            {
+                                                deleteItem(i);
+                                            }else {
+                                                Toast.makeText(getContext(), ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<DeleteDraftRespose> call, Throwable t) {
+                                            Toast.makeText(getContext(), ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+                                }
+                            });
                             SharedPreferences.Editor editor = itemPositionPref.edit();
                             editor.clear();
                             editor.commit();
@@ -248,6 +279,21 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
 
     }
 
+    void deleteItem(final int position) {
+
+        events.remove(position);
+        name1.remove(position);
+        title.remove(position);
+        prices.remove(position);
+        eventTIme.remove(position);
+        addres.remove(position);
+        categois.remove(position);
+        draftsimages.remove(position);
+        event_id.remove(position);
+        adapter.notifyItemRemoved(position);
+        adapter.notifyItemRangeChanged(position,events.size());
+    }
+
 
     private void init() {
         Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
@@ -267,7 +313,6 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
         Collections.reverse(prices);
         Collections.reverse(addres);
         Collections.reverse(categois);
-        Collections.reverse(event_id);
         Collections.reverse(eventTIme);
         Collections.reverse(draftsimages);
     }

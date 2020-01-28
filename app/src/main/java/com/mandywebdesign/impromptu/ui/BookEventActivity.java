@@ -110,7 +110,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     FragmentManager fragmentManager;
     Button mBookEvent, askforrefund;
     ImageButton follow_button;
-    TextView organiserName, eventdistance, book_time,book_time2, book_categry, peoplegoing, seeAll, remainingTicketTV, invitefriends, dialogtickttype, link1, link2, link3;
+    TextView organiserName, eventdistance, book_time, book_time2, book_categry, peoplegoing, seeAll, remainingTicketTV, invitefriends, dialogtickttype, link1, link2, link3;
     ViewPager viewPager;
     RecyclerView users;
     ReadMoreTextView descri;
@@ -140,7 +140,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     static String timeFrom;
     String timeTo, usertype, eventType, event_book, tickettypedialog;
     String itemPos, event_status;
-    static String value, S_token,BToken, fav_id, hostname, payvalue, spinnerposition, tickettypespinnerposintion, tickettypeS;
+    static String value, S_token, BToken, fav_id, hostname, payvalue, spinnerposition, tickettypespinnerposintion, tickettypeS;
     public static ArrayList<String> image = new ArrayList<>();
     public static String id, cate, host_image, transaction_id, tickets_booked_by_user, date, decs, follow_status, postcode, ticktType, ticktprice, timefrom, hostimage, timeto, title, location, location2, city, gender, andendeenumber, numberoftickts, freeEvent, username;
     int CurrentPage = 0;
@@ -151,8 +151,10 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     static String tickettypeposition, getSpinnerposition = "1";
     static String currentlat, currenlng, eventlat, eventlng;
     ArrayAdapter<String> adapter;
-
-
+    Dialog dialog, dialog1;
+    TextView dailog_ticket_type1,dailog_ticket_price1,eventid;
+    Spinner spinner1;
+    Button dialogButoon1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -230,7 +232,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                     invite_layouit.setVisibility(View.GONE);
                     askforrefund.setVisibility(View.VISIBLE);
                     mBookEvent.setVisibility(View.VISIBLE);
-                }  else {
+                } else {
                     mBookEvent.setVisibility(View.GONE);
                     invite_layouit.setVisibility(View.GONE);
                     askforrefund.setVisibility(View.GONE);
@@ -262,21 +264,21 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                     String[] evetdata = path.split("/");
                                     String eventID = evetdata[2];
                                     Log.d("deeplink", eventID);
-                                    getEventData(S_token,eventID);
+                                    getEventData(S_token, eventID);
 
-                                    addFav(S_token,eventID);
+                                    addFav(S_token, eventID);
                                     getRaminingEvents(S_token, eventID);
                                     getUsers(S_token, eventID);
                                     bookevent(eventID);
-                                    gotoEventMesg(S_token,eventID);
+                                    gotoEventMesg(S_token, eventID);
                                     askforrefund("Bearer " + S_token, eventID);
                                 } else {
-                                    getEventData(S_token,value);
-                                    addFav(S_token,value);
+                                    getEventData(S_token, value);
+                                    addFav(S_token, value);
                                     getRaminingEvents(S_token, value);
                                     getUsers(S_token, value);
                                     bookevent(value);
-                                    gotoEventMesg(S_token,value);
+                                    gotoEventMesg(S_token, value);
                                     askforrefund("Bearer " + S_token, value);
                                 }
 
@@ -293,14 +295,14 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                         Uri.parse("https://play.google.com/store")));
             }
 
-        } else if (!BToken.equalsIgnoreCase("")){
-            getEventData(BToken,value);
+        } else if (!BToken.equalsIgnoreCase("")) {
+            getEventData(BToken, value);
             addtoFavCheck_box.setVisibility(View.GONE);
             mBookEvent.setVisibility(View.GONE);
             follow_button.setVisibility(View.GONE);
             getRaminingEvents(BToken, value);
             getUsers(BToken, value);
-        }else {
+        } else {
             Intent intent = new Intent(this, Join_us.class);
             startActivity(intent);
             finish();
@@ -424,10 +426,198 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                     //dialogUpdate();
                     updateProfiledialog();
                 } else {
-                    dialog(value);
+
+                    if (!tickettypedialog.equals("Free"))
+                    {
+                        dialog(value);
+                    }else {
+                        dialog1(value);
+                    }
+
                 }
             }
         });
+
+    }
+
+    public void dialog(final String value) {
+        String ticketNum[] = new String[]{"1", "2"};
+        String ticketNum1[] = new String[]{"1"};
+
+        dialog = new Dialog(BookEventActivity.this);
+        dialog.setContentView(R.layout.custom_dialog_book_ticket);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+        FindId(dialog);
+
+        ticketype_spinner.setVisibility(View.VISIBLE);
+        dialogtickttype.setVisibility(View.GONE);
+        if (tickettypes.size() >= 2) {
+            tickettype.setText("Ticket Types");
+        }
+        //Todo: ticket type spinner
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(BookEventActivity.this, android.R.layout.simple_spinner_item, tickettypes);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ticketype_spinner.setAdapter(arrayAdapter);
+        ticketype_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                tickettypespinnerposintion = parent.getItemAtPosition(position).toString();
+                tickettypeposition = String.valueOf(position);
+
+                ticktprice = ticketprice.get(Integer.parseInt(tickettypeposition)).toString();
+
+                Float a = Float.valueOf((getSpinnerposition));
+                total_ticket = String.valueOf(a);
+
+                String tickt = ticktprice;
+                Float b = Float.valueOf((tickt));
+
+                Float total = a * b;
+
+                tot = String.valueOf(total);
+
+                ticketPrice.setText(ticktprice);
+                totalPrice.setText(tot);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+         if (tickets_booked_by_user.equals("0")) {
+            adapter = new ArrayAdapter<String>(BookEventActivity.this,
+                    android.R.layout.simple_spinner_item, ticketNum);
+        } else {
+            adapter = new ArrayAdapter<String>(BookEventActivity.this,
+                    android.R.layout.simple_spinner_item, ticketNum1);
+        }
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+        if (spinnerposition != null) {
+            spinner.setSelection(Integer.parseInt(spinnerposition) - 1);
+        }
+
+
+        if (ticktType != null) {
+            if (ticktType.equals("")) {
+                dailog_ticket_type.setText("Free");
+
+            } else {
+                dailog_ticket_type.setText(ticktType);
+            }
+        } else {
+
+        }
+
+        dialogButoon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String ticket = tickets_booked_by_user + ".0";
+
+                    if (total_ticket.equals(ticket)) {
+                        Intent intent = new Intent(BookEventActivity.this, PayActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        intent.putExtra("total_price", tot);
+                        intent.putExtra("event_id", value);
+                        intent.putExtra("event_Title", title);
+                        intent.putExtra("total_tickets", total_ticket);
+                        intent.putExtra("ticket_Price", ticktprice);
+                        intent.putExtra("imagesend", "BEA");
+                        intent.putExtra("tickettype", tickettypespinnerposintion);
+
+                        startActivity(intent);
+                        dialog.dismiss();
+                    } else if (ticket.equals("0.0")) {
+                        Intent intent = new Intent(BookEventActivity.this, PayActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        intent.putExtra("total_price", tot);
+                        intent.putExtra("event_id", value);
+                        intent.putExtra("event_Title", title);
+                        intent.putExtra("total_tickets", total_ticket);
+                        intent.putExtra("ticket_Price", ticktprice);
+                        intent.putExtra("imagesend", "BEA");
+                        intent.putExtra("tickettype", tickettypespinnerposintion);
+                        startActivity(intent);
+                        dialog.dismiss();
+                    } else {
+
+                        Toast.makeText(BookEventActivity.this, "You can buy one more ticket only", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+    }
+
+    private void dialog1(String value) {
+        String ticketNum[] = new String[]{"1", "2"};
+        String ticketNum1[] = new String[]{"1"};
+
+        dialog1 = new Dialog(BookEventActivity.this);
+        dialog1.setContentView(R.layout.freeeventdialog);
+        dialog1.setCanceledOnTouchOutside(true);
+        dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog1.show();
+        FindIdFree(dialog1);
+
+          if (tickets_booked_by_user.equals("0")) {
+            adapter = new ArrayAdapter<String>(BookEventActivity.this,
+                    android.R.layout.simple_spinner_item, ticketNum);
+        } else {
+            adapter = new ArrayAdapter<String>(BookEventActivity.this,
+                    android.R.layout.simple_spinner_item, ticketNum1);
+        }
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner1.setAdapter(adapter);
+        spinner1.setOnItemSelectedListener(this);
+        if (spinnerposition != null) {
+            spinner1.setSelection(Integer.parseInt(spinnerposition) - 1);
+        }
+
+
+        if (ticktType != null) {
+            if (ticktType.equals("")) {
+                dailog_ticket_type1.setText("Free");
+
+            } else {
+                dailog_ticket_type1.setText(ticktType);
+            }
+        } else {
+
+        }
+        dialogButoon1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Float TotalTIcket = Float.valueOf(((total_ticket)));
+
+                Float RemainingTIckets = Float.valueOf((remaini_tickets));
+                String ticket = tickets_booked_by_user + ".0";
+                String total_ticket = String.valueOf(TotalTIcket);
+
+                if (TotalTIcket > RemainingTIckets) {
+                    Toast.makeText(BookEventActivity.this, "Not Available enough tickets", Toast.LENGTH_SHORT).show();
+                } else {
+
+
+                    if (ticket.equals(total_ticket)) {
+                        freebookevent(dialog1);
+                    } else if (ticket.equals("0.0")) {
+                        freebookevent(dialog1);
+                    } else {
+
+                        Toast.makeText(BookEventActivity.this, "You can buy one more ticket only", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }
+        });
+            dialog1.show();
 
     }
 
@@ -501,6 +691,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     }
 
     private void init() {
+        eventid = findViewById(R.id.eventid);
         book_time2 = findViewById(R.id.book_time2);
         eventdistance = findViewById(R.id.eventdistance);
         follow_button = findViewById(R.id.follow_button);
@@ -541,11 +732,45 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         sharevent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String message = "https://play.google.com/store";
+              /*  String message = "https://play.google.com/store";
                 Intent share = new Intent(Intent.ACTION_SEND);
                 share.setType("text/plain");
                 share.putExtra(Intent.EXTRA_TEXT, message);
-                startActivity(Intent.createChooser(share, "Share Impromptu"));
+                startActivity(Intent.createChooser(share, "Share Impromptu"));*/
+
+                DynamicLink dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink()
+                        .setLink(Uri.parse("https://www.impromptusocial.com/" + "event_id/" + value))
+                        .setDomainUriPrefix("impromptusocial.page.link")
+                        // Open links with this app on Android  amitpandey12.page.link
+                        .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build())
+                        // Open links with com.example.ios on iOS
+                        .setIosParameters(new DynamicLink.IosParameters.Builder("impromptusocial.page.link").build())
+                        .buildDynamicLink();
+
+                Uri dynamicLinkUri = dynamicLink.getUri();
+
+                Log.d("hello123", "1" + dynamicLink.getUri());
+
+
+                Task<ShortDynamicLink> shortLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink()
+                        .setLongLink(Uri.parse("https://" + dynamicLink.getUri().toString()))
+                        .buildShortDynamicLink()
+                        .addOnCompleteListener(BookEventActivity.this, new OnCompleteListener<ShortDynamicLink>() {
+                            @Override
+                            public void onComplete(@NonNull Task<ShortDynamicLink> task) {
+                                if (task.isSuccessful()) {
+                                    // Short link created
+                                    Uri shortLink = task.getResult().getShortLink();
+                                    Uri flowchartLink = task.getResult().getPreviewLink();
+                                    Intent share = new Intent(Intent.ACTION_SEND);
+                                    share.setType("text/plain");
+                                    share.putExtra(Intent.EXTRA_TEXT, shortLink.toString());
+                                    startActivity(Intent.createChooser(share, "Share Event"));
+                                } else {
+
+                                }
+                            }
+                        });
             }
         });
 
@@ -679,9 +904,9 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                     public void onResponse(Call<FollowUnfollow> call, Response<FollowUnfollow> response) {
                         if (response.isSuccessful()) {
                             if (response.body().getMessage().equals("Follow successfully.")) {
-                                follow_button.setImageDrawable(getResources().getDrawable(R.drawable.ic_star));
+                                follow_button.setImageDrawable(getResources().getDrawable(R.drawable.ic_heart_filled));
                             } else {
-                                follow_button.setImageDrawable(getResources().getDrawable(R.drawable.ic_staractive));
+                                follow_button.setImageDrawable(getResources().getDrawable(R.drawable.ic_heart_outline));
                             }
                         }
                     }
@@ -712,168 +937,12 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         });
     }
 
+    private void FindIdFree(Dialog dialog) {
 
-    public void dialog(final String value) {
-        String ticketNum[] = new String[]{"1", "2"};
-        String ticketNum1[] = new String[]{"1"};
-
-        final Dialog dialog = new Dialog(BookEventActivity.this);
-        dialog.setContentView(R.layout.custom_dialog_book_ticket);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        FindId(dialog);
-
-        if (tickettypedialog.equals("Paid")) {
-            ticketPrice.setText("0");
-            ticketype_spinner.setVisibility(View.VISIBLE);
-            dialogtickttype.setVisibility(View.GONE);
-            if (tickettypes.size() >= 2) {
-                tickettype.setText("Ticket Types");
-            }
-            //Todo: ticket type spinner
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(BookEventActivity.this, android.R.layout.simple_spinner_item, tickettypes);
-            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            ticketype_spinner.setAdapter(arrayAdapter);
-            ticketype_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    tickettypespinnerposintion = parent.getItemAtPosition(position).toString();
-                    tickettypeposition = String.valueOf(position);
-
-                    ticktprice = ticketprice.get(Integer.parseInt(tickettypeposition)).toString();
-
-                    Float a = Float.valueOf((getSpinnerposition));
-                    total_ticket = String.valueOf(a);
-
-                    String tickt = ticktprice;
-                    Float b = Float.valueOf((tickt));
-
-                    Float total = a * b;
-
-                    tot = String.valueOf(total);
-
-                    ticketPrice.setText(ticktprice);
-                    totalPrice.setText(tot);
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
-
-
-        } else {
-            ticketPrice.setText(ticktprice);
-            tickettypespinnerposintion = "";
-            cal1.setVisibility(View.GONE);
-            cal2.setVisibility(View.GONE);
-            cal3.setVisibility(View.GONE);
-            cal4.setVisibility(View.GONE);
-            ticketype_spinner.setVisibility(View.GONE);
-            dialogtickttype.setText("Free");
-        }
-
-        if (ticktType != null) {
-            if (ticktType.equals("")) {
-                dialogtickttype.setText("Free");
-
-            } else {
-                dialogtickttype.setText(ticktType);
-            }
-        } else {
-
-        }
-
-        if (tickets_booked_by_user.equals("0")) {
-            adapter = new ArrayAdapter<String>(BookEventActivity.this,
-                    android.R.layout.simple_spinner_item, ticketNum);
-        } else {
-            adapter = new ArrayAdapter<String>(BookEventActivity.this,
-                    android.R.layout.simple_spinner_item, ticketNum1);
-        }
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
-        if (spinnerposition != null) {
-            spinner.setSelection(Integer.parseInt(spinnerposition) - 1);
-        }
-
-
-        if (ticktprice.equals("0")) {
-
-            dialogButoon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    Float TotalTIcket = Float.valueOf(((total_ticket)));
-
-                    Float RemainingTIckets = Float.valueOf((remaini_tickets));
-                    String ticket = tickets_booked_by_user + ".0";
-                    String total_ticket = String.valueOf(TotalTIcket);
-
-                    if (TotalTIcket > RemainingTIckets) {
-                        Toast.makeText(BookEventActivity.this, "Not Available enough tickets", Toast.LENGTH_SHORT).show();
-                    } else {
-
-
-                        if (ticket.equals(total_ticket)) {
-                            freebookevent(dialog);
-                        } else if (ticket.equals("0.0")) {
-                            freebookevent(dialog);
-                        } else {
-
-                            Toast.makeText(BookEventActivity.this, "You can buy one more ticket only", Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                }
-            });
-
-        } else {
-            dialogButoon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String ticket = tickets_booked_by_user + ".0";
-
-                    if (total_ticket.equals(ticket)) {
-                        Intent intent = new Intent(BookEventActivity.this, PayActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        intent.putExtra("total_price", tot);
-                        intent.putExtra("event_id", value);
-                        intent.putExtra("event_Title", title);
-                        intent.putExtra("total_tickets", total_ticket);
-                        intent.putExtra("ticket_Price", ticktprice);
-                        intent.putExtra("imagesend", "BEA");
-                        intent.putExtra("tickettype", tickettypespinnerposintion);
-
-                        startActivity(intent);
-                        dialog.dismiss();
-                    } else if (ticket.equals("0.0")) {
-                        Intent intent = new Intent(BookEventActivity.this, PayActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        intent.putExtra("total_price", tot);
-                        intent.putExtra("event_id", value);
-                        intent.putExtra("event_Title", title);
-                        intent.putExtra("total_tickets", total_ticket);
-                        intent.putExtra("ticket_Price", ticktprice);
-                        intent.putExtra("imagesend", "BEA");
-                        intent.putExtra("tickettype", tickettypespinnerposintion);
-                        startActivity(intent);
-                        dialog.dismiss();
-                    } else {
-
-                        Toast.makeText(BookEventActivity.this, "You can buy one more ticket only", Toast.LENGTH_SHORT).show();
-                    }
-
-
-                }
-            });
-        }
-
-        dialog.show();
+        dailog_ticket_type1 = dialog.findViewById(R.id.dailog_ticket_type1);
+        spinner1 = dialog.findViewById(R.id.dailog_spinner1);
+        dialogButoon1 = dialog.findViewById(R.id.dailog_button1);
+        dailog_ticket_price1 = dialog.findViewById(R.id.dailog_ticket_price1);
     }
 
     private void freebookevent(final Dialog dialog) {
@@ -968,14 +1037,20 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         Float a = Float.valueOf((spinnerposition));
         total_ticket = String.valueOf(a);
 
-        String tickt = ticketPrice.getText().toString();
-        Float b = Float.valueOf((tickt));
+        if (!tickettypedialog.equals("Free"))
+        {
+            String tickt = ticketPrice.getText().toString();
+            Float b = Float.valueOf((tickt));
 
-        Float total = a * b;
+            Float total = a * b;
 
-        tot = String.valueOf(total);
+            tot = String.valueOf(total);
 
-        totalPrice.setText(tot);
+            totalPrice.setText(tot);
+        }else {
+
+        }
+
 
     }
 
@@ -1014,7 +1089,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                         users.setVisibility(View.GONE);
                     }
 
-                    Booked_users adapter = new Booked_users(BookEventActivity.this, userImage, user_id,user_booked_tickets);
+                    Booked_users adapter = new Booked_users(BookEventActivity.this, userImage, user_id, user_booked_tickets);
                     users.setAdapter(adapter);
                 } else {
                     Intent intent = new Intent(BookEventActivity.this, NoInternetScreen.class);
@@ -1030,7 +1105,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         });
     }
 
-    public void getEventData(String token,final String value) {
+    public void getEventData(String token, final String value) {
         progressDialog.show();
 
         Call<RetroGetEventData> call = WebAPI.getInstance().getApi().getEvents("Bearer " + token, "application/json", value);
@@ -1053,33 +1128,32 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             location2 = datum.getAddressline2();
                             eventlat = datum.getLattitude();
                             eventlng = datum.getLongitude();
+                            eventid.setText("EID "+datum.getEventId().toString());
                             event_status = datum.getEvent_status();
-                             if (eventType != null) {
+                            if (eventType != null) {
                                 if (eventType.equals("fav")) {
 
                                 }
                             }
 
-                             if (event_status.equals("past"))
-                             {
-                                 mBookEvent.setVisibility(View.GONE);
-                                 askforrefund.setVisibility(View.GONE);
-                                 eventdistance.setVisibility(View.GONE);
-                                 invite_layouit.setVisibility(View.GONE);
-                                 peoplegoing.setVisibility(View.GONE);
-                                 remainingTicketTV.setVisibility(View.GONE);
-                             }else
-                             {
-                                 peoplegoing.setVisibility(View.VISIBLE);
-                             }
+                            if (event_status.equals("past")) {
+                                mBookEvent.setVisibility(View.GONE);
+                                askforrefund.setVisibility(View.GONE);
+                                eventdistance.setVisibility(View.GONE);
+                                invite_layouit.setVisibility(View.GONE);
+                                peoplegoing.setVisibility(View.GONE);
+                                remainingTicketTV.setVisibility(View.GONE);
+                            } else {
+                                peoplegoing.setVisibility(View.VISIBLE);
+                            }
 
                             getTickets_booked_by_user = datum.getTickets_booked_by_user();
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                if (currenlng != null && currentlat != null || !currenlng.equals("") && !currentlat.equals("")) {
+                                if (currenlng != null && currentlat != null ) {
                                     distance(Double.parseDouble(currentlat), Double.parseDouble(currenlng), Double.parseDouble(eventlat), Double.parseDouble(eventlng));
                                 }
 
-                            }else {
+                            } else {
                                 eventdistance.setVisibility(View.GONE);
                             }
 
@@ -1153,7 +1227,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             follow_status = String.valueOf(datum.getFollowStatus());
                             event_book = datum.getEventBook().toString();
                             if (follow_status.equals("1")) {
-                                follow_button.setImageDrawable(getResources().getDrawable(R.drawable.ic_star));
+                                follow_button.setImageDrawable(getResources().getDrawable(R.drawable.ic_heart_filled));
                             }
 
                             numberoftickts = datum.getNoOfTickets();
@@ -1225,15 +1299,15 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             String start_date = Util.convertTimeStampDate(Long.parseLong(datum.getEventStartDt()));
                             String end_date = Util.convertTimeStampDate(Long.parseLong(datum.getEventEndDt()));
 
-                            Log.d("timecheck",time_t+"  "+time_to);
-                             Calendar c = Calendar.getInstance();
+                            Log.d("timecheck", time_t + "  " + time_to);
+                            Calendar c = Calendar.getInstance();
 
                             DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                             Date date = null;
                             try {
                                 date = (Date) formatter.parse(formatter.format(c.getTime()));
                                 Log.d("TodayDate", String.valueOf(date.getTime()) + datum.getEventEndDt());
-                               String  formattedDate = String.valueOf(date.getTime());
+                                String formattedDate = String.valueOf(date.getTime());
 
                             } catch (ParseException e) {
                                 e.printStackTrace();
@@ -1246,20 +1320,18 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             }
 
                             String startTime = removeLeadingZeroes(time_t);
-                            if (startTime.contains(":00"))
-                            {
-                                startTime = removeLeadingZeroes(time_t).replace(":00","");
+                            if (startTime.contains(":00")) {
+                                startTime = removeLeadingZeroes(time_t).replace(":00", "");
                                 book_time.setText(startTime);
-                            }else {
+                            } else {
                                 book_time.setText(removeLeadingZeroes(time_t));
                             }
 
                             String endTime = removeLeadingZeroes(time_to);
-                            if (endTime.contains(":00"))
-                            {
-                                endTime = removeLeadingZeroes(time_to).replace(":00","");
+                            if (endTime.contains(":00")) {
+                                endTime = removeLeadingZeroes(time_to).replace(":00", "");
                                 book_time2.setText(endTime);
-                            }else {
+                            } else {
                                 book_time2.setText(removeLeadingZeroes(endTime));
                             }
 //                            ------------------------------------------------------------------
@@ -1366,7 +1438,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     String removeLeadingZeroes(String s) {
         StringBuilder sb = new StringBuilder(s);
         while (sb.length() > 0 && sb.charAt(0) == '0') {
-          sb.deleteCharAt(0);
+            sb.deleteCharAt(0);
         }
 
         return sb.toString();
