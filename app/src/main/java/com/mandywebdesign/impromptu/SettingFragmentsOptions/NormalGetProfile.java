@@ -132,9 +132,7 @@ public class NormalGetProfile extends AppCompatActivity {
                     getHostedEvents(userToken,userid);
                     getUsersattendingEvents(userid);
                     editprofile.setVisibility(View.GONE);
-                    user_profile_Event.setVisibility(View.VISIBLE);
                     pastEvents.setVisibility(View.VISIBLE);
-                    user_profile_Event_attend.setVisibility(View.VISIBLE);
                     hostRecycler.setVisibility(View.VISIBLE);
                     eventsAttendingRecycler.setVisibility(View.VISIBLE);
                     totlaEvents.setVisibility(View.VISIBLE);
@@ -144,9 +142,7 @@ public class NormalGetProfile extends AppCompatActivity {
                     getHostedEvents(BToken,userid);
                     getUsersattendingEvents(userid);
                     editprofile.setVisibility(View.GONE);
-                    user_profile_Event.setVisibility(View.VISIBLE);
                     pastEvents.setVisibility(View.VISIBLE);
-                    user_profile_Event_attend.setVisibility(View.VISIBLE);
                     hostRecycler.setVisibility(View.VISIBLE);
                     eventsAttendingRecycler.setVisibility(View.VISIBLE);
                     totlaEvents.setVisibility(View.VISIBLE);
@@ -169,18 +165,14 @@ public class NormalGetProfile extends AppCompatActivity {
                     getattendingEvents(userToken);
                 }
                 editprofile.setVisibility(View.VISIBLE);
-                user_profile_Event.setVisibility(View.VISIBLE);
                 pastEvents.setVisibility(View.VISIBLE);
-                user_profile_Event_attend.setVisibility(View.VISIBLE);
                 hostRecycler.setVisibility(View.VISIBLE);
                 eventsAttendingRecycler.setVisibility(View.VISIBLE);
                 totlaEvents.setVisibility(View.VISIBLE);
             }
         } else {
             editprofile.setVisibility(View.VISIBLE);
-            user_profile_Event.setVisibility(View.VISIBLE);
             pastEvents.setVisibility(View.VISIBLE);
-            user_profile_Event_attend.setVisibility(View.VISIBLE);
             hostRecycler.setVisibility(View.VISIBLE);
             eventsAttendingRecycler.setVisibility(View.VISIBLE);
             totlaEvents.setVisibility(View.VISIBLE);
@@ -220,6 +212,7 @@ public class NormalGetProfile extends AppCompatActivity {
                             NormalUserLiveEvents adapter = new NormalUserLiveEvents(NormalGetProfile.this);
                             hostRecycler.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
+                            user_profile_Event.setVisibility(View.VISIBLE);
                         }
 
                     }
@@ -313,6 +306,7 @@ public class NormalGetProfile extends AppCompatActivity {
 
                             UsersPastBookedEventsAdapter adapter = new UsersPastBookedEventsAdapter(NormalGetProfile.this, datumArrayList);
                             eventsAttendingRecycler.setAdapter(adapter);
+                            user_profile_Event_attend.setVisibility(View.VISIBLE);
                         }
                     } else if (response.body().getStatus().equals("400")) {
                         pastEvents.setText("( " + attentingTietle.size() + " )");
@@ -483,6 +477,7 @@ public class NormalGetProfile extends AppCompatActivity {
 
                             NormalUserAttendingEvents adapter = new NormalUserAttendingEvents(NormalGetProfile.this);
                             eventsAttendingRecycler.setAdapter(adapter);
+                            user_profile_Event_attend.setVisibility(View.VISIBLE);
                         }
                     } else if (response.body().getStatus().equals("400")) {
                         pastEvents.setText("( " + attentingTietle.size() + " )");
@@ -550,7 +545,7 @@ public class NormalGetProfile extends AppCompatActivity {
 
                             status.setText(getProfileStatus);
                             if (response.body().getData().get(0).getRating_points() != null) {
-                                totalpoints.setText(response.body().getData().get(0).getRating_points());
+                                totalpoints.setText(response.body().getData().get(0).getRating_points()+", points");
                             }
 
                             Glide.with(NormalGetProfile.this).load(getNormalUserImage).into(userImage);

@@ -1075,11 +1075,14 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
                             getTickets_booked_by_user = datum.getTickets_booked_by_user();
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                if (currenlng != null && currentlat != null) {
+                                if (currenlng != null && currentlat != null || !currenlng.equals("") && !currentlat.equals("")) {
                                     distance(Double.parseDouble(currentlat), Double.parseDouble(currenlng), Double.parseDouble(eventlat), Double.parseDouble(eventlng));
                                 }
 
+                            }else {
+                                eventdistance.setVisibility(View.GONE);
                             }
+
                             postcode = datum.getPostcode();
                             city = datum.getCity();
                             tickets_booked_by_user = datum.getTickets_booked_by_user().toString();

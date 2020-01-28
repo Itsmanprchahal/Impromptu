@@ -213,15 +213,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textAllCaps="false"
-            android:fontFamily="@font/circularstdblack"
+            android:fontFamily="@font/circularstdbold"
             android:background="@drawable/custom_next_bt"
             android:text="Done"
             android:textColor="@color/colortextwhite"
-            android:textSize="@dimen/_15sdp"
+            android:textSize="20dp"
             android:padding="10dp"/>
     </LinearLayout>
-
-
-
 
 </RelativeLayout>
