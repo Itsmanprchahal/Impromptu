@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".SettingFragmentsOptions.Contact_Us">
 
     <ScrollView
@@ -34,11 +35,15 @@
                         android:src="@drawable/back" />
 
 
-                    <ImageView
+                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="35dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/logoblack" />
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="Contact Us"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/toolbartext"
+                        android:textStyle="bold" />
+
                 </RelativeLayout>
 
 
@@ -51,16 +56,6 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/defaultmargin"
-                    android:layout_marginTop="20dp"
-                    android:gravity="start"
-                    android:text="Contact Us"
-                    android:textColor="@color/black"
-                    android:textSize="25dp"
-                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -109,7 +104,7 @@
                 android:layout_gravity="end"
                 android:layout_marginLeft="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_large"
-                android:layout_marginRight="@dimen/margin_large"
+                android:layout_marginRight="@dimen/_20sdp"
                 android:fontFamily="@font/sfuitextlight"
                 android:text="max 500 characters"
                 android:textColor="@color/black" />
@@ -121,9 +116,9 @@
                 android:layout_height="@dimen/_150sdp"
                 android:layout_below="@id/contactus_messagetv"
                 android:layout_gravity="start"
-                android:layout_marginLeft="@dimen/margin_large"
-                android:layout_marginTop="@dimen/defaultmargin"
-                android:layout_marginRight="@dimen/margin_large"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:layout_marginLeft="@dimen/defaultmargin"
+                android:layout_marginRight="@dimen/defaultmargin"
                 android:background="@drawable/custom_edittext"
                 android:gravity="start"
                 android:maxLength="500"
@@ -138,7 +133,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_margin="@dimen/margin_large"
+                android:layout_margin="@dimen/defaultmargin"
                 android:background="@drawable/custom_next_bt"
                 android:text="Submit"
                 android:textAllCaps="false"

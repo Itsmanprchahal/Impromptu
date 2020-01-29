@@ -115,9 +115,9 @@ public class EventDetailsActivity extends AppCompatActivity {
     int date1 = 0, totalTicket;
     SharedPreferences sharedPreferences;
     Dialog dialog1;
-    AutoCompleteAdapter adapter,autoCompleteAdapter;
+    AutoCompleteAdapter adapter, autoCompleteAdapter;
     PlacesClient placesClient;
-    long newChangeForDate=0;
+    long newChangeForDate = 0;
 
 
     EditText edt_tiketType;
@@ -535,7 +535,8 @@ public class EventDetailsActivity extends AppCompatActivity {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myFormat, Locale.US);
 
                 mDate.setText(simpleDateFormat.format(calendar.getTime()));
-
+                eventTime_from.setText("");
+                eventTime_to.setText("");
 
                 DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 Date date = null;
@@ -600,7 +601,6 @@ public class EventDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 calendar = Calendar.getInstance();
 //                calendar.setTimeZone(TimeZone.getTimeZone("Europe/London"));
-
                 final int hour = calendar.get(Calendar.AM_PM);
                 int minute = calendar.get(Calendar.MINUTE);
 
@@ -617,7 +617,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
                             if (date1 != 0) {
                                 if (date1 != calendar.get(Calendar.DAY_OF_MONTH)) {
-                                //if (newChangeForDate != calendar.getTimeInMillis() ||newChangeForDate != calendar.getTimeInMillis()) {
+                                    //if (newChangeForDate != calendar.getTimeInMillis() ||newChangeForDate != calendar.getTimeInMillis()) {
                                     if (hourOfDay < 10 && minute < 10) {
                                         eventTime_from.setText("0" + hourOfDay + ":" + "0" + minute);
                                     } else if (hourOfDay < 10) {
@@ -636,6 +636,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                                     } catch (ParseException e) {
                                         e.printStackTrace();
                                     }
+
                                     Calendar cal = Calendar.getInstance();
                                     cal.setTime(d);
                                     cal.add(Calendar.MINUTE, 60);
@@ -672,16 +673,46 @@ public class EventDetailsActivity extends AppCompatActivity {
                                         } catch (ParseException e) {
                                             e.printStackTrace();
                                         }
-                                        Calendar cal = Calendar.getInstance();
-                                        cal.setTime(d);
-                                        cal.add(Calendar.MINUTE, 60);
-                                        String newTime = df.format(cal.getTime());
-                                        eventTime_to.setText(newTime);
-                                        hour1 = hourOfDay;
-                                        minute1 = minute;
-                                        hour2 = hourOfDay;
-                                        minute2 = minute;
-                                        to_time_milles = eventTime_to.getText().toString();
+
+                                        if (mDate.getText().toString().equals(event_details_date_etto.getText().toString())) {
+                                            Calendar cal = Calendar.getInstance();
+                                            cal.setTime(d);
+
+                                            if (!eventTime_from.getText().toString().contains("23:")) {
+                                                cal.add(Calendar.MINUTE, 60);
+                                                String newTime = df.format(cal.getTime());
+                                                eventTime_to.setText(newTime);
+                                                hour1 = hourOfDay;
+                                                minute1 = minute;
+                                                hour2 = hourOfDay;
+                                                minute2 = minute;
+
+                                                to_time_milles = eventTime_to.getText().toString();
+                                            } else {
+                                                cal.add(Calendar.MINUTE, 0);
+                                                String newTime = df.format(cal.getTime());
+                                                eventTime_to.setText("23:59");
+                                                hour1 = hourOfDay;
+                                                minute1 = minute;
+                                                hour2 = hourOfDay;
+                                                minute2 = minute;
+
+                                                to_time_milles = eventTime_to.getText().toString();
+                                            }
+
+                                        } else {
+                                            Calendar cal = Calendar.getInstance();
+                                            cal.setTime(d);
+                                            cal.add(Calendar.MINUTE, 60);
+                                            String newTime = df.format(cal.getTime());
+                                            eventTime_to.setText(newTime);
+                                            hour1 = hourOfDay;
+                                            minute1 = minute;
+                                            hour2 = hourOfDay;
+                                            minute2 = minute;
+
+                                            to_time_milles = eventTime_to.getText().toString();
+                                        }
                                     } else {
                                         //it's before current'
                                         eventTime_to.setText("");
@@ -1272,10 +1303,9 @@ public class EventDetailsActivity extends AppCompatActivity {
             address = (List<Address>) geocoder.getFromLocation(Double.parseDouble(lat), Double.parseDouble(lng), 1);
             if (address != null) {
 
-                if (address.get(0).getPostalCode()!=null)
-                {
+                if (address.get(0).getPostalCode() != null) {
                     event_postcode.setText(address.get(0).getPostalCode());
-                }else {
+                } else {
                     event_postcode.setText("");
                 }
 
