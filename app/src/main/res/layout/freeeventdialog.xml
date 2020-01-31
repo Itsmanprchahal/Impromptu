@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/layout_radius_border"
+    android:padding="15dp">
+
+
+    <LinearLayout
+        android:id="@+id/layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tickettype"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/circularstdblack"
+                android:text="Ticket Type"
+                android:textColor="@color/colorLightBlack"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dailog_ticket_type1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/sfuitextlight"
+                android:gravity="end|center_horizontal"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:visibility="visible" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="Ticket Count"
+                android:fontFamily="@font/circularstdblack"
+                android:textStyle="bold"
+                android:gravity="end"
+                android:textColor="@color/colorLightBlack"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/dailog_spinner1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_alignParentRight="true"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="Ticket Count"
+                android:textSize="18sp" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/dailog_ticket_price1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:fontFamily="@font/sfuitextlight"
+        android:text="6"
+        android:visibility="gone"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/dailog_button1"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textAllCaps="false"
+        android:layout_below="@id/layout1"
+        android:fontFamily="@font/circularstdbold"
+        android:background="@drawable/custom_next_bt"
+        android:text="Done"
+        android:textColor="@color/colortextwhite"
+        android:textSize="20dp"
+        android:padding="10dp"/>
+
+</RelativeLayout>
