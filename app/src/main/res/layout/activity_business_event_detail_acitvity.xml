@@ -17,7 +17,6 @@
             android:id="@+id/details_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardElevation="2dp"
             tools:ignore="MissingConstraints">
 
             <androidx.appcompat.widget.Toolbar
@@ -301,8 +300,8 @@
                 android:layout_marginLeft="@dimen/defaultmargin"
                 android:layout_marginRight="@dimen/defaultmargin"
                 android:layout_marginBottom="@dimen/defaultmargin"
-                android:background="@drawable/cardcorners"
-                app:cardElevation="5dp">
+                app:cardElevation="0dp"
+                android:background="@drawable/cardcorners">
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -545,7 +545,12 @@ public class NormalGetProfile extends AppCompatActivity {
 
                             status.setText(getProfileStatus);
                             if (response.body().getData().get(0).getRating_points() != null) {
-                                totalpoints.setText(response.body().getData().get(0).getRating_points()+", points");
+                                if(response.body().getData().get(0).getRating_points().equals("1"))
+                                {
+                                    totalpoints.setText(response.body().getData().get(0).getRating_points()+" point");
+                                }else {
+                                    totalpoints.setText(response.body().getData().get(0).getRating_points()+" points");
+                                }
                             }
 
                             Glide.with(NormalGetProfile.this).load(getNormalUserImage).into(userImage);

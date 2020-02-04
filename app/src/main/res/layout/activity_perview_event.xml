@@ -262,7 +262,7 @@
                 android:background="@drawable/cardcorners"
                 android:layout_marginLeft="@dimen/defaultmargin"
                 android:layout_marginRight="@dimen/defaultmargin"
-                app:cardElevation="5dp">
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"

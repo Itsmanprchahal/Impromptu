@@ -147,6 +147,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+    implementation 'com.github.bluejamesbond:textjustify-android:2.1.6'
 }
 apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'

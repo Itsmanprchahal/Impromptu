@@ -49,10 +49,10 @@ public class PrivancyActivity extends AppCompatActivity {
 
         if (!user.equalsIgnoreCase(""))
         {
-            normalprivancy(user);
+//            normalprivancy(user);
         }else
         {
-            normalprivancy(social_token);
+//            normalprivancy(social_token);
         }
     }
 

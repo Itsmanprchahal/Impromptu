@@ -332,7 +332,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                         Intent share = new Intent(Intent.ACTION_SEND);
                         share.setType("text/plain");
                         share.putExtra(Intent.EXTRA_TEXT, message);
-                        startActivity(Intent.createChooser(share, "Testing Impromptu"));
+                        startActivity(Intent.createChooser(share, "Upload Event Details"));
                     }
 
                 }

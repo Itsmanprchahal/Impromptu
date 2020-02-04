@@ -22,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
+        android:padding="@dimen/_10sdp"
         android:fontFamily="@font/sfuitextlight"
         android:layout_below="@id/close_confirmdialog"
         android:text="We will sent you confirmation mail on your accout. Please Confirm"

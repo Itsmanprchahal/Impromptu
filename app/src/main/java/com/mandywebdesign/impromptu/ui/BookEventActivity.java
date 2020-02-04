@@ -110,6 +110,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     FragmentManager fragmentManager;
     Button mBookEvent, askforrefund;
     ImageButton follow_button;
+    ImageView dashline2;
     TextView organiserName, eventdistance, book_time, book_time2, book_categry, peoplegoing, seeAll, remainingTicketTV, invitefriends, dialogtickttype, link1, link2, link3;
     ViewPager viewPager;
     RecyclerView users;
@@ -691,6 +692,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     }
 
     private void init() {
+        dashline2 = findViewById(R.id.dashline2);
         eventid = findViewById(R.id.eventid);
         book_time2 = findViewById(R.id.book_time2);
         eventdistance = findViewById(R.id.eventdistance);
@@ -1341,13 +1343,13 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             if (event_book.equals("1") && count == 1) {
                                 peoplegoing.setText("You are going");
                             } else if (event_book.equals("1") && count == 2) {
-                                peoplegoing.setText("You and " + lesscount + " another person is going");
+                                peoplegoing.setText("You and " + lesscount + " other person is going");
                             } else if (event_book.equals("1") && count > 2) {
-                                peoplegoing.setText("You and " + lesscount + " another person are going");
+                                peoplegoing.setText("You and " + lesscount + " other people are going");
                             } else if (event_book.equals("0") && count == 1) {
                                 peoplegoing.setText("1 person is going");
                             } else if (event_book.equals("0") && count > 1) {
-                                peoplegoing.setText(count + " person are going");
+                                peoplegoing.setText(count + " people are going");
                             }
 
 
@@ -1405,12 +1407,14 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             if (loginUserId.equals(hostUserID)) {
                                 book_message.setVisibility(View.INVISIBLE);
                                 organiser_layout.setVisibility(View.GONE);
+                                dashline2.setVisibility(View.GONE);
                                 messagelayout.setVisibility(View.GONE);
                                 mBookEvent.setVisibility(View.GONE);
                             } else if (hostUserID == (null)) {
                                 book_message.setVisibility(View.INVISIBLE);
                             } else {
                                 book_message.setVisibility(View.VISIBLE);
+                                dashline2.setVisibility(View.GONE);
                             }
                             Log.d("Check_User", "" + loginUserId + "  " + hostUserID);
                         }

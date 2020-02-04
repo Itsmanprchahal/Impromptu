@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/recyler_question_close"
-        android:text="What Your Hobbies?"
+        android:text=""
         android:textSize="15sp"
         android:fontFamily="@font/circularstdblack"
         android:layout_marginRight="60dp"

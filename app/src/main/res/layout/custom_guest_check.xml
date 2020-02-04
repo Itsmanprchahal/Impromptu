@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:fontFamily="@font/circularstdbold"
-                    android:text="Event Name"
+                    android:text=""
                     android:textColor="#B7000000"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -54,7 +54,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_toRightOf="@id/custom_guest_image"
                     android:fontFamily="@font/sfuitextlight"
-                    android:text="Type of ticket"
+                    android:text=""
                     android:textColor="@color/colorTheme"
                     android:textSize="14sp" />
 

@@ -104,7 +104,7 @@
                 android:layout_gravity="end"
                 android:layout_marginLeft="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_large"
-                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_22sdp"
                 android:fontFamily="@font/sfuitextlight"
                 android:text="max 500 characters"
                 android:textColor="@color/black" />

@@ -45,6 +45,7 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:testOnly="false"
+        android:largeHeap="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:ignore="HardcodedDebugMode">

@@ -92,7 +92,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     private Button perviewButoon;
     Toolbar toolbar;
     SimpleDateFormat dateFormat;
-    Calendar calendar, calendar1;
+    Calendar calendar, calendar3;
     AutoCompleteTextView event_lcation_address1, event_lcation_address2;
     EditText event_postcode, event_city, event_attendees_no, mDate, event_details_date_etto, eventTime_from, eventTime_to;
     RadioButton event_radiobutton_all, event_radiobutton_female, event_radiobutton_male;
@@ -118,7 +118,6 @@ public class EventDetailsActivity extends AppCompatActivity {
     AutoCompleteAdapter adapter, autoCompleteAdapter;
     PlacesClient placesClient;
     long newChangeForDate = 0;
-
 
     EditText edt_tiketType;
     EditText edt_price;
@@ -529,10 +528,10 @@ public class EventDetailsActivity extends AppCompatActivity {
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-//                calendar.setTimeZone(TimeZone.getTimeZone("Europe/London"));
+                //calendar.setTimeZone(TimeZone.getTimeZone("GMT"));
                 newChangeForDate = calendar.getTimeInMillis();
                 myFormat = "dd/MM/yyyy";
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myFormat, Locale.US);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myFormat, Locale.UK);
 
                 mDate.setText(simpleDateFormat.format(calendar.getTime()));
                 eventTime_from.setText("");
@@ -559,18 +558,21 @@ public class EventDetailsActivity extends AppCompatActivity {
                 calendar.set(Calendar.YEAR, year1);
                 calendar.set(Calendar.MONTH, month1);
                 calendar.set(Calendar.DAY_OF_MONTH, date1);
-
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, month);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-//                calendar.setTimeZone(TimeZone.getTimeZone("Europe/London"));
+                //calendar.setTimeZone(TimeZone.getTimeZone("GMT"));
+                if (calendar3 == null) {
+                    calendar3 = Calendar.getInstance();
+                }
+                calendar3.set(Calendar.YEAR, year);
+                calendar3.set(Calendar.MONTH, month);
+                calendar3.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                //calendar3.setTimeZone(TimeZone.getTimeZone("GMT"));
                 myFormat = "dd/MM/yyyy";
 
 
                 DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 Date date = null;
                 try {
-                    date = (Date) formatter.parse(formatter.format(calendar.getTime()));
+                    date = (Date) formatter.parse(formatter.format(calendar3.getTime()));
                     Log.d("StartDate", String.valueOf(date.getTime()));
                     year2 = year;
                     month2 = month;
@@ -582,10 +584,10 @@ public class EventDetailsActivity extends AppCompatActivity {
                 Log.d("DATETEST", startdatemilli + "   " + enddatemilli);
 
 
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myFormat, Locale.US);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myFormat, Locale.UK);
 
                 if (startdatemilli <= enddatemilli) {
-                    event_details_date_etto.setText(simpleDateFormat.format(calendar.getTime()));
+                    event_details_date_etto.setText(simpleDateFormat.format(calendar3.getTime()));
                 } else {
                     eventTime_to.setText("");
                     event_details_date_etto.setText("");
@@ -599,10 +601,18 @@ public class EventDetailsActivity extends AppCompatActivity {
         eventTime_from.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calendar = Calendar.getInstance();
-//                calendar.setTimeZone(TimeZone.getTimeZone("Europe/London"));
-                final int hour = calendar.get(Calendar.AM_PM);
-                int minute = calendar.get(Calendar.MINUTE);
+                //calendar = Calendar.getInstance();
+
+                Calendar normal = Calendar.getInstance();
+                //normal.setTimeZone(TimeZone.getTimeZone("GMT"));
+                final int hour = normal.get(Calendar.HOUR_OF_DAY);
+                int minute = normal.get(Calendar.MINUTE);
+
+//                if (calendar!=null) {
+//                    //calendar.setTimeZone(TimeZone.getTimeZone("GMT"));
+//                    calendar.set(Calendar.HOUR_OF_DAY, hour);
+//                    calendar.set(Calendar.MINUTE, minute);
+//                }
 
                 if (TextUtils.isEmpty(mDate.getText().toString())) {
                     Toast.makeText(EventDetailsActivity.this, "Enter Start date", Toast.LENGTH_SHORT).show();
@@ -615,8 +625,15 @@ public class EventDetailsActivity extends AppCompatActivity {
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
+                            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                            calendar.set(Calendar.MINUTE, minute);
+
+                            Calendar startCalenderTime = Calendar.getInstance();
+                            //startCalenderTime.setTimeZone(TimeZone.getTimeZone("GMT"));
+
                             if (date1 != 0) {
-                                if (date1 != calendar.get(Calendar.DAY_OF_MONTH)) {
+//                               //if (date1 != calendar.get(Calendar.DAY_OF_MONTH)) {
+                                if (calendar.getTimeInMillis() >= startCalenderTime.getTimeInMillis() - 30000) {
                                     //if (newChangeForDate != calendar.getTimeInMillis() ||newChangeForDate != calendar.getTimeInMillis()) {
                                     if (hourOfDay < 10 && minute < 10) {
                                         eventTime_from.setText("0" + hourOfDay + ":" + "0" + minute);
@@ -637,7 +654,54 @@ public class EventDetailsActivity extends AppCompatActivity {
                                         e.printStackTrace();
                                     }
 
-                                    Calendar cal = Calendar.getInstance();
+                                    //=========================================================================================
+
+                                    if (mDate.getText().toString().equals(event_details_date_etto.getText().toString())) {
+                                        Calendar cal = Calendar.getInstance();
+                                        //cal.setTimeZone(TimeZone.getTimeZone("GMT"));
+                                        cal.setTime(d);
+
+                                        if (!eventTime_from.getText().toString().contains("23:")) {
+                                            cal.add(Calendar.MINUTE, 60);
+                                            String newTime = df.format(cal.getTime());
+                                            eventTime_to.setText(newTime);
+                                            hour1 = hourOfDay;
+                                            minute1 = minute;
+                                            hour2 = hourOfDay;
+                                            minute2 = minute;
+
+                                            to_time_milles = eventTime_to.getText().toString();
+                                        } else {
+                                            cal.add(Calendar.MINUTE, 0);
+                                            String newTime = df.format(cal.getTime());
+                                            eventTime_to.setText("23:59");
+                                            hour1 = hourOfDay;
+                                            minute1 = minute;
+                                            hour2 = hourOfDay;
+                                            minute2 = minute;
+
+                                            to_time_milles = eventTime_to.getText().toString();
+                                        }
+
+                                    } else {
+                                        Calendar cal = Calendar.getInstance();
+                                        cal.setTime(d);
+                                        cal.add(Calendar.MINUTE, 60);
+                                        String newTime = df.format(cal.getTime());
+                                        eventTime_to.setText(newTime);
+                                        hour1 = hourOfDay;
+                                        minute1 = minute;
+                                        hour2 = hourOfDay;
+                                        minute2 = minute;
+
+                                        to_time_milles = eventTime_to.getText().toString();
+                                    }
+
+                                    //=============================================================================
+
+
+                                /*    Calendar cal = Calendar.getInstance();
+                                    //cal.setTimeZone(TimeZone.getTimeZone("GMT"));
                                     cal.setTime(d);
                                     cal.add(Calendar.MINUTE, 60);
                                     String newTime = df.format(cal.getTime());
@@ -647,13 +711,18 @@ public class EventDetailsActivity extends AppCompatActivity {
                                     hour2 = hourOfDay;
                                     minute2 = minute;
 
-                                    to_time_milles = eventTime_to.getText().toString();
-                                } else {
-                                    Calendar datetime = Calendar.getInstance();
+                                    to_time_milles = eventTime_to.getText().toString();*/
+                                }
+                                else {
+                                    // calendar.set(Calendar.HOUR,hourOfDay);
+                                    // calendar.set(Calendar.MINUTE,minute);
+                                    /*Calendar datetime = Calendar.getInstance();
                                     Calendar c = Calendar.getInstance();
+                                    //c.setTimeZone(TimeZone.getTimeZone("GMT"));
                                     datetime.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                     datetime.set(Calendar.MINUTE, minute);
-                                    if (datetime.getTimeInMillis() + 1 >= c.getTimeInMillis()) {
+                                    //if (datetime.getTimeInMillis() + 1 >= c.getTimeInMillis()) {
+                                    if (calendar.getTimeInMillis() >= c.getTimeInMillis()) {
                                         //it's after current
                                         if (hourOfDay < 10 && minute < 10) {
                                             eventTime_from.setText("0" + hourOfDay + ":" + "0" + minute);
@@ -676,6 +745,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
                                         if (mDate.getText().toString().equals(event_details_date_etto.getText().toString())) {
                                             Calendar cal = Calendar.getInstance();
+                                            //cal.setTimeZone(TimeZone.getTimeZone("GMT"));
                                             cal.setTime(d);
 
                                             if (!eventTime_from.getText().toString().contains("23:")) {
@@ -713,13 +783,12 @@ public class EventDetailsActivity extends AppCompatActivity {
 
                                             to_time_milles = eventTime_to.getText().toString();
                                         }
-                                    } else {
+                                    } else {*/
                                         //it's before current'
                                         eventTime_to.setText("");
                                         eventTime_from.setText("");
                                         Toast.makeText(getApplicationContext(), "Invalid Time", Toast.LENGTH_SHORT).show();
-                                    }
-
+//                                    }
                                 }
                             } else {
                                 if (hourOfDay < 10 && minute < 10) {
@@ -757,7 +826,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                     }, hour, minute, true);
                     timePickerDialog.show();
 
-                    calendar.add(Calendar.HOUR, 1);
+                    //calendar.add(Calendar.HOUR, 1);
                 }
 
             }
@@ -779,10 +848,12 @@ public class EventDetailsActivity extends AppCompatActivity {
 
                     Toast.makeText(EventDetailsActivity.this, "Enter Event date", Toast.LENGTH_SHORT).show();
                 } else {
-                    calendar = Calendar.getInstance();
-//                    calendar.setTimeZone(TimeZone.getTimeZone("Europe/London"));
-                    int hour = calendar.get(Calendar.AM_PM);
-                    int minute = calendar.get(Calendar.MINUTE);
+                    //calendar = Calendar.getInstance();
+                    //calendar.setTimeZone(TimeZone.getTimeZone("GMT"));
+                    Calendar normal = Calendar.getInstance();
+                    //normal.setTimeZone(TimeZone.getTimeZone("GMT"));
+                    int hour = normal.get(Calendar.HOUR_OF_DAY);
+                    int minute = normal.get(Calendar.MINUTE);
 
                     final TimePickerDialog timePickerDialog = new TimePickerDialog(EventDetailsActivity.this, R.style.DialogTheme, new TimePickerDialog.OnTimeSetListener() {
                         @Override
@@ -790,19 +861,19 @@ public class EventDetailsActivity extends AppCompatActivity {
 
                             Calendar calendar1 = Calendar.getInstance();
                             calendar1.set(Calendar.MINUTE, minute1);
-                            calendar1.set(Calendar.HOUR, hour1);
+                            calendar1.set(Calendar.HOUR_OF_DAY, hour1);
                             calendar1.set(Calendar.MONTH, month1);
                             calendar1.set(Calendar.DAY_OF_MONTH, date1);
                             calendar1.set(Calendar.YEAR, year1);
-//                            calendar1.setTimeZone(TimeZone.getTimeZone("Europe/London"));
+                            //calendar1.setTimeZone(TimeZone.getTimeZone("GMT"));
 
                             Calendar calendar2 = Calendar.getInstance();
                             calendar2.set(Calendar.MINUTE, minute);
-                            calendar2.set(Calendar.HOUR, hourOfDay);
+                            calendar2.set(Calendar.HOUR_OF_DAY, hourOfDay);
                             calendar2.set(Calendar.MONTH, month2);
                             calendar2.set(Calendar.DAY_OF_MONTH, day2);
                             calendar2.set(Calendar.YEAR, year2);
-//                            calendar2.setTimeZone(TimeZone.getTimeZone("Europe/London"));
+                            //calendar2.setTimeZone(TimeZone.getTimeZone("GMT"));
 
                             Log.d("+++++++++", "++ calender1 ++" + date1 + month1 + year1 + hour1 + minute1);
                             Log.d("+++++++++", "++ calender1 ++" + day2 + month2 + year2 + hourOfDay + minute);
@@ -830,10 +901,11 @@ public class EventDetailsActivity extends AppCompatActivity {
                                     } else {
                                         Calendar datetime = Calendar.getInstance();
                                         Calendar c = Calendar.getInstance();
-//                                        c.setTimeZone(TimeZone.getTimeZone("Europe/London"));
+                                        //c.setTimeZone(TimeZone.getTimeZone("GMT"));
                                         datetime.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                         datetime.set(Calendar.MINUTE, minute);
-                                        if (datetime.getTimeInMillis() >= c.getTimeInMillis()) {
+                                        //if (datetime.getTimeInMillis() >= c.getTimeInMillis()) {
+                                        if (calendar3.getTimeInMillis() >= calendar.getTimeInMillis()) {
                                             //it's after current
                                             int hour = hourOfDay % 24;
                                             if (hourOfDay < 10 && minute < 10) {

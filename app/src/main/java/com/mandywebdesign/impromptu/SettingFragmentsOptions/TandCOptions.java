@@ -15,7 +15,7 @@ import com.mandywebdesign.impromptu.R;
 
 public class TandCOptions extends AppCompatActivity {
 
-    TextView setting_termsandconditions_option,setting_privancyStatement_option;
+    TextView setting_termsandconditions_option, setting_privancyStatement_option;
     ImageView back_on_help;
     SharedPreferences sharedPreferences, sharedPreferences1, socialpref;
     SharedPreferences.Editor editor;
@@ -42,8 +42,8 @@ public class TandCOptions extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                        Intent intent = new Intent(TandCOptions.this, PrivancyActivity.class);
-                        startActivity(intent);
+                Intent intent = new Intent(TandCOptions.this, PrivancyActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -59,7 +59,7 @@ public class TandCOptions extends AppCompatActivity {
         back_on_help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-onBackPressed();
+                onBackPressed();
             }
         });
     }

@@ -53,15 +53,476 @@
             android:layout_height="match_parent"
             android:background="@color/white">
 
-            <TextView
-                android:id="@+id/privacy"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/defaultmargin"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="@dimen/defaultmargin"
-                android:textColor="@color/colortextBlack"
-                android:textSize="@dimen/_12sdp" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="@dimen/defaultmargin">
+                <TextView
+                    android:id="@+id/privacy"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/defaultmargin"
+                    android:visibility="gone"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="@dimen/defaultmargin"
+                    android:textColor="@color/colortextBlack"
+                    android:textSize="@dimen/_12sdp" />
+
+                <com.bluejamesbond.text.DocumentView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    app:documentView_cacheConfig="auto_quality"
+                    app:documentView_hyphen="-"
+                    app:documentView_textAlignment="justified"
+                    app:documentView_textFormat="plain"
+                    app:documentView_antialias="true"
+                    app:documentView_textColor="@color/black"
+                    app:documentView_text="@string/privancytext1"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:text="This policy details;"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:textSize="@dimen/toolbartext"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"></TextView>
+
+                <com.bluejamesbond.text.DocumentView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:fontFamily="@font/sfuitextlight"
+                    app:documentView_cacheConfig="auto_quality"
+                    app:documentView_hyphen="-"
+                    app:documentView_textAlignment="justified"
+                    app:documentView_textFormat="plain"
+                    app:documentView_antialias="true"
+                    app:documentView_textColor="@color/black"
+                    app:documentView_text="•	The information we, Impromptu Social Limited, collect about you."
+                    android:textColor="@color/black"></com.bluejamesbond.text.DocumentView>
+
+                <com.bluejamesbond.text.DocumentView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:fontFamily="@font/sfuitextlight"
+                    app:documentView_cacheConfig="auto_quality"
+                    app:documentView_hyphen="-"
+                    app:documentView_textAlignment="justified"
+                    app:documentView_textFormat="plain"
+                    app:documentView_antialias="true"
+                    app:documentView_textColor="@color/black"
+                    app:documentView_text="•	How we utilise and share said information."
+                    android:textColor="@color/black"></com.bluejamesbond.text.DocumentView>
+
+                <com.bluejamesbond.text.DocumentView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:fontFamily="@font/sfuitextlight"
+                    app:documentView_cacheConfig="auto_quality"
+                    app:documentView_hyphen="-"
+                    app:documentView_textAlignment="justified"
+                    app:documentView_textFormat="plain"
+                    app:documentView_antialias="true"
+                    app:documentView_textColor="@color/black"
+                    app:documentView_text="•	The privacy options at your disposal."
+                    android:textColor="@color/black"></com.bluejamesbond.text.DocumentView>
+
+                <com.bluejamesbond.text.DocumentView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:fontFamily="@font/sfuitextlight"
+                    app:documentView_cacheConfig="auto_quality"
+                    app:documentView_hyphen="-"
+                    app:documentView_textAlignment="justified"
+                    app:documentView_textFormat="plain"
+                    app:documentView_antialias="true"
+                    app:documentView_textColor="@color/black"
+                    app:documentView_text="This Privacy Policy applies to information we collect when you (a) use our mobile application, (b) other online products/services (collectively referred to as the “Services”) or (c) when you otherwise interact with us. We may change the provisions of this Privacy Policy from time to time. We advise that you to review this Privacy Policy regularly to remain informed about our information practices and the ways you can help safeguard your privacy."
+                    ></com.bluejamesbond.text.DocumentView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:text="The Information We Collect When You Use Impromptu"
+                    android:textSize="@dimen/toolbartext"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:text="@string/privancytetx2"
+                    android:textSize="@dimen/toolbartext"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"></TextView>
+
+
+                <com.bluejamesbond.text.DocumentView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:fontFamily="@font/sfuitextlight"
+                    app:documentView_cacheConfig="auto_quality"
+                    app:documentView_hyphen="-"
+                    app:documentView_textAlignment="justified"
+                    app:documentView_textFormat="plain"
+                    app:documentView_antialias="true"
+                    app:documentView_textColor="@color/black"
+                    app:documentView_text="We collect information you provide to us, such as when you create an account, update your profile, use the interactive features of our Services, participate in contests, promotions or surveys, request customer support or otherwise communicate with us. "
+                    android:textColor="@color/black"></com.bluejamesbond.text.DocumentView>
+
+                <com.bluejamesbond.text.DocumentView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    app:documentView_cacheConfig="auto_quality"
+                    app:documentView_hyphen="-"
+                    app:documentView_textAlignment="justified"
+                    app:documentView_textFormat="plain"
+                    app:documentView_antialias="true"
+                    app:documentView_textColor="@color/black"
+                    app:documentView_text="@string/privancytetx3"
+                    android:textColor="@color/black"></com.bluejamesbond.text.DocumentView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:text="@string/privancytetx4"
+                    android:textSize="@dimen/toolbartext"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"></TextView>
+
+                <com.bluejamesbond.text.DocumentView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    app:documentView_cacheConfig="auto_quality"
+                    app:documentView_hyphen="-"
+                    app:documentView_textAlignment="justified"
+                    app:documentView_textFormat="plain"
+                    app:documentView_antialias="true"
+                    app:documentView_textColor="@color/black"
+                    app:documentView_text="@string/privancytetx5"></com.bluejamesbond.text.DocumentView>
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:text="@string/privancytetx6"
+                    android:textSize="@dimen/toolbartext"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"></TextView>
+
+                <com.bluejamesbond.text.DocumentView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    app:documentView_cacheConfig="auto_quality"
+                    app:documentView_hyphen="-"
+                    app:documentView_textAlignment="justified"
+                    app:documentView_textFormat="plain"
+                    app:documentView_antialias="true"
+                    app:documentView_textColor="@color/black"
+                    app:documentView_text="@string/privancytetx7"></com.bluejamesbond.text.DocumentView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:text="@string/privancytetx8"
+                    android:textSize="@dimen/toolbartext"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"></TextView>
+
+                <com.bluejamesbond.text.DocumentView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    app:documentView_cacheConfig="auto_quality"
+                    app:documentView_hyphen="-"
+                    app:documentView_textAlignment="justified"
+                    app:documentView_textFormat="plain"
+                    app:documentView_antialias="true"
+                    app:documentView_textColor="@color/black"
+                    app:documentView_text="@string/privancytetx9"></com.bluejamesbond.text.DocumentView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:text="@string/privancytetx10"
+                    android:textSize="@dimen/toolbartext"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"></TextView>
+
+                <com.bluejamesbond.text.DocumentView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    app:documentView_cacheConfig="auto_quality"
+                    app:documentView_hyphen="-"
+                    app:documentView_textAlignment="justified"
+                    app:documentView_textFormat="plain"
+                    app:documentView_antialias="true"
+                    app:documentView_textColor="@color/black"
+                    app:documentView_text="@string/privancytetx11"
+                    ></com.bluejamesbond.text.DocumentView>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:text="@string/privancytetx12"
+                    android:textSize="@dimen/toolbartext"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"></TextView>
+
+
+                <com.bluejamesbond.text.DocumentView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    app:documentView_cacheConfig="auto_quality"
+                    app:documentView_hyphen="-"
+                    app:documentView_textAlignment="justified"
+                    app:documentView_textFormat="plain"
+                    app:documentView_antialias="true"
+                    app:documentView_textColor="@color/black"
+                    app:documentView_text="@string/privancytetx13"></com.bluejamesbond.text.DocumentView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:text="@string/privancytetx14"
+                    android:textSize="@dimen/toolbartext"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"></TextView>
+
+
+                <com.bluejamesbond.text.DocumentView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    app:documentView_cacheConfig="auto_quality"
+                    app:documentView_hyphen="-"
+                    app:documentView_textAlignment="justified"
+                    app:documentView_textFormat="plain"
+                    app:documentView_antialias="true"
+                    app:documentView_textColor="@color/black"
+                    app:documentView_text="@string/privancytetx15"></com.bluejamesbond.text.DocumentView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:text="@string/privancytetx16"
+                    android:textSize="@dimen/toolbartext"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"></TextView>
+
+                <com.bluejamesbond.text.DocumentView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    app:documentView_cacheConfig="auto_quality"
+                    app:documentView_hyphen="-"
+                    app:documentView_textAlignment="justified"
+                    app:documentView_textFormat="plain"
+                    app:documentView_antialias="true"
+                    app:documentView_textColor="@color/black"
+                    app:documentView_text="@string/privancytetx17"></com.bluejamesbond.text.DocumentView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:text="@string/privancytetx18"
+                    android:textSize="@dimen/toolbartext"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"></TextView>
+
+                <com.bluejamesbond.text.DocumentView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    app:documentView_cacheConfig="auto_quality"
+                    app:documentView_hyphen="-"
+                    app:documentView_textAlignment="justified"
+                    app:documentView_textFormat="plain"
+                    app:documentView_antialias="true"
+                    app:documentView_textColor="@color/black"
+                    app:documentView_text="@string/privancytetx19"
+                   ></com.bluejamesbond.text.DocumentView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:text="@string/privancytetx20"
+                    android:textSize="@dimen/toolbartext"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"></TextView>
+
+                <com.bluejamesbond.text.DocumentView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    app:documentView_cacheConfig="auto_quality"
+                    app:documentView_hyphen="-"
+                    app:documentView_textAlignment="justified"
+                    app:documentView_textFormat="plain"
+                    app:documentView_antialias="true"
+                    app:documentView_textColor="@color/black"
+                    app:documentView_text="@string/privancytetx21"
+                    ></com.bluejamesbond.text.DocumentView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:text="@string/privancytetx22"
+                    android:textSize="@dimen/toolbartext"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:text="@string/privancytetx23"
+                    android:textSize="@dimen/toolbartext"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"></TextView>
+
+
+                <com.bluejamesbond.text.DocumentView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    app:documentView_cacheConfig="auto_quality"
+                    app:documentView_hyphen="-"
+                    app:documentView_textAlignment="justified"
+                    app:documentView_textFormat="plain"
+                    app:documentView_antialias="true"
+                    app:documentView_textColor="@color/black"
+                    app:documentView_text="@string/privancytetx24"
+                    ></com.bluejamesbond.text.DocumentView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:text="@string/privancytetx25"
+                    android:textSize="@dimen/toolbartext"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"></TextView>
+
+                <com.bluejamesbond.text.DocumentView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    app:documentView_cacheConfig="auto_quality"
+                    app:documentView_hyphen="-"
+                    app:documentView_textAlignment="justified"
+                    app:documentView_textFormat="plain"
+                    app:documentView_antialias="true"
+                    app:documentView_textColor="@color/black"
+                    app:documentView_text="@string/privancytetx26"
+                    ></com.bluejamesbond.text.DocumentView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:text="@string/privancytetx27"
+                    android:textSize="@dimen/toolbartext"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"></TextView>
+
+                <com.bluejamesbond.text.DocumentView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    app:documentView_cacheConfig="auto_quality"
+                    app:documentView_hyphen="-"
+                    app:documentView_textAlignment="justified"
+                    app:documentView_textFormat="plain"
+                    app:documentView_antialias="true"
+                    app:documentView_textColor="@color/black"
+                    app:documentView_text="@string/privancytetx28"
+                  ></com.bluejamesbond.text.DocumentView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:text="@string/privancytetx29"
+                    android:textSize="@dimen/toolbartext"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"></TextView>
+
+                <com.bluejamesbond.text.DocumentView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    app:documentView_cacheConfig="auto_quality"
+                    app:documentView_hyphen="-"
+                    app:documentView_textAlignment="justified"
+                    app:documentView_textFormat="plain"
+                    app:documentView_antialias="true"
+                    app:documentView_textColor="@color/black"
+                    app:documentView_text="@string/privancytetx30"
+                    android:textColor="@color/black"></com.bluejamesbond.text.DocumentView>
+
+            </LinearLayout>
+
+
         </ScrollView>
 
 

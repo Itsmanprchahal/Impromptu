@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:fitsSystemWindows="true"
-        app:cardElevation="16dp"
+        app:cardElevation="0dp"
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView

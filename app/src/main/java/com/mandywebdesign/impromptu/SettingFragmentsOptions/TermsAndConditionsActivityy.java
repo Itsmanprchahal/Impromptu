@@ -49,9 +49,9 @@ public class TermsAndConditionsActivityy extends AppCompatActivity {
 
 
         if (!user.equalsIgnoreCase("")) {
-            B_tandC(user);
+           // B_tandC(user);
         } else if (!social_token.equalsIgnoreCase("")){
-            B_tandC(social_token);
+            //B_tandC(social_token);
         }
 
 

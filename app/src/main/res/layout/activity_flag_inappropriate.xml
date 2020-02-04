@@ -11,7 +11,8 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:cardElevation="0dp">
 
 
         <androidx.appcompat.widget.Toolbar
@@ -29,7 +30,7 @@
                     android:textSize="@dimen/toolbartext"
                     android:fontFamily="@font/circularstdbold"
                     android:textColor="@color/colortextBlack"
-                    android:text="FlagInappropriate behaviour"
+                    android:text="Flag Inappropriate Behaviour"
                     android:gravity="center_horizontal"/>
 
                 <ImageView
@@ -154,22 +155,23 @@
                 android:layout_gravity="end"
                 android:textColor="@color/black"
                 android:fontFamily="@font/sfuitextlight"
-                android:layout_marginRight="@dimen/defaultmargin"></TextView>
+                android:layout_marginRight="@dimen/_22sdp"></TextView>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:textAlignment="viewStart"
-                android:padding="@dimen/_10sdp"
                 android:gravity="start"
+                android:layout_marginTop="@dimen/_2sdp"
                 android:background="@drawable/custom_edittext"
                 android:layout_marginLeft="@dimen/defaultmargin"
                 android:layout_marginRight="@dimen/defaultmargin"
                 android:layout_marginBottom="@dimen/defaultmargin"
                 android:id="@+id/complaint_et"
+                android:padding="@dimen/_7sdp"
+                android:textAlignment="viewStart"
                 android:fontFamily="@font/circularstdbold"
                 android:textColor="@color/black"
-                android:textSize="@dimen/normalText"></EditText>
+                android:textSize="20sp"></EditText>
 
             <Button
                 android:id="@+id/inappropriate_send"

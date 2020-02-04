@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.mandywebdesign.impromptu.Adapters.FAQ_Adapter;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
@@ -30,6 +31,7 @@ public class FAQs extends AppCompatActivity {
     ArrayList<FAQ.Datum> faqs = new ArrayList<>();
     Dialog progressDialog;
     ImageButton faq_back;
+    TextView help_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +49,11 @@ public class FAQs extends AppCompatActivity {
 
         if (!BToken.equalsIgnoreCase("")) {
 
-            getques(BToken);
+            help_text.setText("Coming soon");
+//            getques(BToken);
         } else if (!S_Token.equalsIgnoreCase("")) {
-            getques(S_Token);
+//            getques(S_Token);
+            help_text.setText("Coming soon");
         }
     }
 
@@ -103,6 +107,7 @@ public class FAQs extends AppCompatActivity {
     }
 
     private void init() {
+        help_text = findViewById(R.id.help_text);
         faq_recyclerview = findViewById(R.id.faq_recyclerview);
         faq_back = findViewById(R.id.faq_back);
     }
