@@ -149,7 +149,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
           relatedEventsRecyclerView = view.findViewById(R.id.home_frag_related_items);
 
         init();
-        shuffle = (CheckBox) view.findViewById(R.id.home_shuffle);
+        shuffle = view.findViewById(R.id.home_shuffle);
 
         statusCheck();
         lisnerters();
@@ -170,7 +170,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
     private void setMesgIcon() {
         if (MyFirebaseMessagingService.counter != null) {
-            String counter = MyFirebaseMessagingService.counter.toString();
+            String counter = MyFirebaseMessagingService.counter;
             if (!counter.equals("0")) {
                 Home_Screen.count = "1";
             }
@@ -185,10 +185,10 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
     private void init() {
         Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
-        textView = (TextView) view.findViewById(R.id.home_related);
-        filter = (RelativeLayout) view.findViewById(R.id.filter);
-        noevents = (TextView) view.findViewById(R.id.noevents);
-        see_related = (TextView) view.findViewById(R.id.see_related);
+        textView = view.findViewById(R.id.home_related);
+        filter = view.findViewById(R.id.filter);
+        noevents = view.findViewById(R.id.noevents);
+        see_related = view.findViewById(R.id.see_related);
     }
 
 
@@ -379,9 +379,9 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                             rel_Title.add(datum.getTitle());
                             rel_address1.add(datum.getAddressline1());
-                            rel_postcode.add(datum.getPostcode().toString());
+                            rel_postcode.add(datum.getPostcode());
                             if (datum.getPrice() != null) {
-                                rel_cost.add(datum.getPrice().toString());
+                                rel_cost.add(datum.getPrice());
                             } else {
                                 rel_cost.add("Paid");
                             }
@@ -585,7 +585,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                             event_count.add(normalGetEvent.getCategoriesCount());
                             if (normalGetEvent.getPrice() != null) {
-                                Cost.add(normalGetEvent.getPrice().toString());
+                                Cost.add(normalGetEvent.getPrice());
                             } else {
                                 Cost.add("Paid");
                             }
@@ -593,16 +593,16 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                             Title.add(normalGetEvent.getTitle());
                             cate.add(normalGetEvent.getCategory());
-                            Address.add(normalGetEvent.getAddressline1().toString());
+                            Address.add(normalGetEvent.getAddressline1());
                             Log.d("11212121", "  " + normalGetEvent.getAddressline1());
                             cate_id.add(normalGetEvent.getCategoryId().toString());
                             Image.add(normalGetEvent.getFile());
                             date.add(normalGetEvent.getDate());
                             event_id.add(normalGetEvent.getEventId().toString());
                             fav_id.add(normalGetEvent.getFavourite().toString());
-                            event_host_username.add(normalGetEvent.getUsername().toString());
+                            event_host_username.add(normalGetEvent.getUsername());
                             if (normalGetEvent.getPostcode() != null) {
-                                postcode.add(normalGetEvent.getPostcode().toString());
+                                postcode.add(normalGetEvent.getPostcode());
                             }
                             String time_t = Util.convertTimeStampToTime(Long.parseLong(normalGetEvent.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
 
@@ -707,7 +707,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
                         for (NormalGetEvent.Datum normalGetEvent : datumArrayList) {
 
                             if (normalGetEvent.getPrice() != null) {
-                                Cost.add(normalGetEvent.getPrice().toString());
+                                Cost.add(normalGetEvent.getPrice());
                             } else {
                                 Cost.add("Paid");
                             }
@@ -769,7 +769,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                             event_id.add(normalGetEvent.getEventId().toString());
                             fav_id.add(normalGetEvent.getFavourite().toString());
-                            event_host_username.add(normalGetEvent.getUsername().toString());
+                            event_host_username.add(normalGetEvent.getUsername());
 
                         }
                         progressDialog.dismiss();
@@ -910,7 +910,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_READ_LOCATION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {

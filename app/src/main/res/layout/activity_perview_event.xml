@@ -483,6 +483,7 @@
                             android:gravity="center"
                             android:fontFamily="@font/sfuitextlight"
                             android:padding="@dimen/editPadding"
+                            android:visibility="gone"
                             android:text="Invite Friends"
                             android:textColor="@color/colorTheme"
                             android:textSize="15sp"
@@ -496,7 +497,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/defaultmargin"
                             android:fontFamily="@font/circularstdbold"
-                            android:padding="@dimen/editPadding"
+                            android:paddingTop="@dimen/editPadding"
                             app:layout_constraintLeft_toRightOf="@id/male_female_invite"
                             android:text=""
                             android:textColor="@color/colorTheme"
@@ -510,6 +511,7 @@
                             android:layout_marginTop="@dimen/_5sdp"
                             app:layout_constraintTop_toTopOf="parent"
                             android:layout_marginRight="10dp"
+                            android:visibility="gone"
                             android:src="@drawable/userlogo"
                             tools:ignore="MissingConstraints" />
 

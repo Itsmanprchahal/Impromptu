@@ -54,7 +54,7 @@ public class HelpOptionsActivity extends AppCompatActivity {
     intent = getIntent();
     type = intent.getStringExtra("usertype");
 
-    setting_help_option = (TextView) findViewById(R.id.help_help_guide);
+    setting_help_option = findViewById(R.id.help_help_guide);
     deleteAccount = findViewById(R.id.setting_deleteAccount_option);
     back_on_help = findViewById(R.id.back_on_help);
     FAQ = findViewById(R.id.setting_FAQ_option);
@@ -183,12 +183,7 @@ public class HelpOptionsActivity extends AppCompatActivity {
     ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
     NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
-    if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
-
-      return false;
-    }
-
-    return true;
+      return netInfo != null && netInfo.isConnected() && netInfo.isAvailable();
   }
 
 

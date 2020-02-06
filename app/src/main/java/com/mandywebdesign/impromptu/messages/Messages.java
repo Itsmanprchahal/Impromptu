@@ -147,31 +147,31 @@ public class Messages extends Fragment {
                         clear();
 
                         for (RetroAllChats.Datum datum : datumList) {
-                            eventTitle.add(datum.getTitle().toString());
+                            eventTitle.add(datum.getTitle());
                             if (datum.getTicketType()==null )
                             {
                                 eventTicketType.add("");
                             }else {
-                                eventTicketType.add(datum.getTicketType().toString());
+                                eventTicketType.add(datum.getTicketType());
                             }
 
-                            eventImage.add(datum.getFile().toString());
-                            eventID.add(datum.getEventId().toString().toString());
-                            hostUserID.add(datum.getSenderId().toString().toString());
+                            eventImage.add(datum.getFile());
+                            eventID.add(datum.getEventId().toString());
+                            hostUserID.add(datum.getSenderId().toString());
 
-                            MesgCount.add(datum.getCount().toString().toString());
-                            lastMEsg.add(datum.getLastMessageShow().toString());
+                            MesgCount.add(datum.getCount().toString());
+                            lastMEsg.add(datum.getLastMessageShow());
                             if (!datum.getRatingStatus().equals(""))
                             {
                                 rating_status.add(Integer.valueOf(datum.getRatingStatus()));
                             }
 
-                            bookingstatus.add(datum.getBookingStatus().toString());
-                            event_status.add(datum.getEventStatus().toString());
-                            attendeename.add(datum.getBookedBy().toString());
-                            bookedeventname.add(datum.getEventName().toString());
+                            bookingstatus.add(datum.getBookingStatus());
+                            event_status.add(datum.getEventStatus());
+                            attendeename.add(datum.getBookedBy());
+                            bookedeventname.add(datum.getEventName());
 
-                            lastmesgtime.add(datum.getLastMessageDatetime().toString());
+                            lastmesgtime.add(datum.getLastMessageDatetime());
                             setData();
 
                             Search(token);
@@ -304,7 +304,7 @@ public class Messages extends Fragment {
                         rating_status.add(response.body().getData().get(i).getRatingStatus());
                         MesgCount.add(response.body().getData().get(i).getCount().toString());
                         bookingstatus.add(response.body().getData().get(i).getBookingStatus());
-                        lastmesgtime.add(response.body().getData().get(i).getLastMessageDatetime().toString());
+                        lastmesgtime.add(response.body().getData().get(i).getLastMessageDatetime());
                         Collections.reverse(eventTitle);
                         Collections.reverse(eventTicketType);
                         Collections.reverse(eventImage);

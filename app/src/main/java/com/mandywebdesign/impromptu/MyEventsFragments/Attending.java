@@ -75,8 +75,8 @@ public class Attending extends Fragment {
     }
 
     private void init() {
-        Upcoming = (Button)view.findViewById(R.id.myEvent_upcoming_btn);
-        Past=(Button)view.findViewById(R.id.myEvent_past_btn);
+        Upcoming = view.findViewById(R.id.myEvent_upcoming_btn);
+        Past= view.findViewById(R.id.myEvent_past_btn);
 
 
         Upcoming.setBackgroundColor(getResources().getColor(R.color.colorTheme));

@@ -92,7 +92,7 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
         init();
 
 
-        recyclerView = (DiscreteScrollView) view.findViewById(R.id.upcoming_booked_recycler_view);
+        recyclerView = view.findViewById(R.id.upcoming_booked_recycler_view);
         recyclerView.setOrientation(DSVOrientation.HORIZONTAL);
         recyclerView.addOnItemChangedListener(this);
         infiniteAdapter = InfiniteScrollAdapter.wrap(new Normal_upcoming_events_adpater(getContext(), fragmentManager));
@@ -148,7 +148,7 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
                             title.add(datum.getTitle());
                             book_tickets.add(datum.getBook_tickets().toString());
                             total_book_tickets.add(datum.getTotal_book_tickets().toString());
-                            usertype.add(datum.getUser_type().toString());
+                            usertype.add(datum.getUser_type());
                             hostname.add(datum.getBEventHostname());
                             if (datum.getPrice()!=null)
                             {
@@ -218,7 +218,6 @@ public class Upcoming extends Fragment implements DiscreteScrollView.OnItemChang
                             SharedPreferences.Editor editor = itemPositionPref.edit();
                             editor.clear();
                             editor.commit();
-                            ;
                         }
                     } else if (response.body().getStatus().equals("400")) {
                         noEvnets.setVisibility(View.VISIBLE);

@@ -282,7 +282,7 @@ public class Home_Screen extends AppCompatActivity {
 
     public void setMesgIcon() {
         if (MyFirebaseMessagingService.counter != null) {
-            counter = MyFirebaseMessagingService.counter.toString();
+            counter = MyFirebaseMessagingService.counter;
 
             if (!counter.equals("0") && count.equals("0")) {
                 Menu menu = bottomNavigationView.getMenu();
@@ -322,7 +322,7 @@ public class Home_Screen extends AppCompatActivity {
     private void init() {
         Intent intent = getIntent();
         refresh = intent.getStringExtra("refresh");
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomnavigation);
+        bottomNavigationView = findViewById(R.id.bottomnavigation);
         bottomNavigationView.setVisibility(View.VISIBLE);
         bottomNavigationView.setItemIconTintList(null);
         bottomNavigationView.setSelectedItemId(R.id.hometab);

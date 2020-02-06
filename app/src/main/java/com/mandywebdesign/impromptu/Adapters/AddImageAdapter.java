@@ -69,8 +69,8 @@ public class AddImageAdapter extends RecyclerView.Adapter<AddImageAdapter.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            imageView = (RoundedImageView) itemView.findViewById(R.id.add_image);
-            deleteImage = (ImageView) itemView.findViewById(R.id.delete_image);
+            imageView = itemView.findViewById(R.id.add_image);
+            deleteImage = itemView.findViewById(R.id.delete_image);
         }
     }
 }

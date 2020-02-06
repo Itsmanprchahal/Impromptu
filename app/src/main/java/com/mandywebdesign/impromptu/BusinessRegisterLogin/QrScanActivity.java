@@ -100,12 +100,11 @@ public class QrScanActivity extends AppCompatActivity {
                     if (ContextCompat.checkSelfPermission(QrScanActivity.this,
                             Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
 
-                        if (ActivityCompat.shouldShowRequestPermissionRationale((Activity)
-                                QrScanActivity.this, Manifest.permission.CAMERA)) {
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(QrScanActivity.this, Manifest.permission.CAMERA)) {
 
 
                         } else {
-                            ActivityCompat.requestPermissions((Activity) QrScanActivity.this,
+                            ActivityCompat.requestPermissions(QrScanActivity.this,
                                     new String[]{Manifest.permission.CAMERA},
                                     110);
                         }
@@ -256,7 +255,7 @@ public class QrScanActivity extends AppCompatActivity {
     private void init() {
         Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
         surfaceView = findViewById(R.id.cameraPerview);
-        textView = (TextView) findViewById(R.id.qr_text);
-        back = (ImageView) findViewById(R.id.back_on_QR);
+        textView = findViewById(R.id.qr_text);
+        back = findViewById(R.id.back_on_QR);
     }
 }

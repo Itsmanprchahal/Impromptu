@@ -184,7 +184,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
 
     private void setMesgIcon() {
         if (MyFirebaseMessagingService.counter != null) {
-            String counter = MyFirebaseMessagingService.counter.toString();
+            String counter = MyFirebaseMessagingService.counter;
             if (!counter.equals("0")) {
                 Home_Screen.count = "1";
             }
@@ -482,34 +482,34 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
 
 
     private void init() {
-        addEvent_progress = (ProgressBar) findViewById(R.id.add_event_progress_bar);
-        nextButton = (Button) findViewById(R.id.add_event_next);
-        back = (ImageView) findViewById(R.id.add_event_back);
-        spinner = (Spinner) findViewById(R.id.add_event_category);
-        mAddPhoto = (TextView) findViewById(R.id.your_event_add_picture);
-        recyclerView = (RecyclerView) findViewById(R.id.add_event_recyclerView);
-        your_event_title = (EditText) findViewById(R.id.your_event_title);
+        addEvent_progress = findViewById(R.id.add_event_progress_bar);
+        nextButton = findViewById(R.id.add_event_next);
+        back = findViewById(R.id.add_event_back);
+        spinner = findViewById(R.id.add_event_category);
+        mAddPhoto = findViewById(R.id.your_event_add_picture);
+        recyclerView = findViewById(R.id.add_event_recyclerView);
+        your_event_title = findViewById(R.id.your_event_title);
 
-        your_event_description = (EditText) findViewById(R.id.your_event_description);
-        add_event_close = (ImageView) findViewById(R.id.add_event_close);
-        createvent_addlink = (TextView) findViewById(R.id.createvent_addlink);
-        createvent_addlink1 = (TextView) findViewById(R.id.createvent_addlink1);
-        createvent_addlink2 = (TextView) findViewById(R.id.createvent_addlink2);
-        hyperlinkone = (EditText) findViewById(R.id.hyperlinkone);
-        hyperlinktwo = (EditText) findViewById(R.id.hyperlinktwo);
-        hyperlinkthree = (EditText) findViewById(R.id.hyperlinkthree);
-        valid_image = (ImageView) findViewById(R.id.valid_image);
-        valid_image1 = (ImageView) findViewById(R.id.valid_image1);
-        valid_image2 = (ImageView) findViewById(R.id.valid_image2);
-        invalid_image = (ImageView) findViewById(R.id.invalid_image);
-        invalid_image1 = (ImageView) findViewById(R.id.invalid_image1);
-        invalid_image2 = (ImageView) findViewById(R.id.invalid_image2);
-        deleteimage1 = (ImageView) findViewById(R.id.delete_hyperlinkone);
-        deleteimage2 = (ImageView) findViewById(R.id.delete_hyperlinktwo);
-        deleteimage3 = (ImageView) findViewById(R.id.delete_hyperlinkthree);
-        link_layoutone = (RelativeLayout) findViewById(R.id.link_layoutone);
-        link_layouttwo = (RelativeLayout) findViewById(R.id.link_layouttwo);
-        link_layoutthree = (RelativeLayout) findViewById(R.id.link_layoutthree);
+        your_event_description = findViewById(R.id.your_event_description);
+        add_event_close = findViewById(R.id.add_event_close);
+        createvent_addlink = findViewById(R.id.createvent_addlink);
+        createvent_addlink1 = findViewById(R.id.createvent_addlink1);
+        createvent_addlink2 = findViewById(R.id.createvent_addlink2);
+        hyperlinkone = findViewById(R.id.hyperlinkone);
+        hyperlinktwo = findViewById(R.id.hyperlinktwo);
+        hyperlinkthree = findViewById(R.id.hyperlinkthree);
+        valid_image = findViewById(R.id.valid_image);
+        valid_image1 = findViewById(R.id.valid_image1);
+        valid_image2 = findViewById(R.id.valid_image2);
+        invalid_image = findViewById(R.id.invalid_image);
+        invalid_image1 = findViewById(R.id.invalid_image1);
+        invalid_image2 = findViewById(R.id.invalid_image2);
+        deleteimage1 = findViewById(R.id.delete_hyperlinkone);
+        deleteimage2 = findViewById(R.id.delete_hyperlinktwo);
+        deleteimage3 = findViewById(R.id.delete_hyperlinkthree);
+        link_layoutone = findViewById(R.id.link_layoutone);
+        link_layouttwo = findViewById(R.id.link_layouttwo);
+        link_layoutthree = findViewById(R.id.link_layoutthree);
     }
 
 
@@ -765,7 +765,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
 
         if (v instanceof EditText) {
             View w = getCurrentFocus();
-            int scrcoords[] = new int[2];
+            int[] scrcoords = new int[2];
             w.getLocationOnScreen(scrcoords);
             float x = event.getRawX() + w.getLeft() - scrcoords[0];
             float y = event.getRawY() + w.getTop() - scrcoords[1];

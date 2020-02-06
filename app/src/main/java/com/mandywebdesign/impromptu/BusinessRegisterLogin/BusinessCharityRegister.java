@@ -81,13 +81,13 @@ public class BusinessCharityRegister extends AppCompatActivity {
 
     private void init() {
 
-        mLogin = (TextView) findViewById(R.id.business_login);
-        letStart = (Button) findViewById(R.id.business_register_letsstartBT);
-        mBusinessName = (EditText) findViewById(R.id.business_Name_Et);
-        mCharityNumber = (EditText) findViewById(R.id.business_CharityNumber_Et);
-        mEmail = (EditText) findViewById(R.id.business_Email_Et);
-        mPassword = (EditText) findViewById(R.id.business_Password_Et);
-        mConfirmPassword = (EditText) findViewById(R.id.business_Confirm_Password_Et);
+        mLogin = findViewById(R.id.business_login);
+        letStart = findViewById(R.id.business_register_letsstartBT);
+        mBusinessName = findViewById(R.id.business_Name_Et);
+        mCharityNumber = findViewById(R.id.business_CharityNumber_Et);
+        mEmail = findViewById(R.id.business_Email_Et);
+        mPassword = findViewById(R.id.business_Password_Et);
+        mConfirmPassword = findViewById(R.id.business_Confirm_Password_Et);
 
     }
 
@@ -398,12 +398,12 @@ public class BusinessCharityRegister extends AppCompatActivity {
         resetpopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         resetpopup.show();
 
-        requestemail_tv = (TextView) resetpopup.findViewById(R.id.requestemail_tv);
-        OTP = (EditText) resetpopup.findViewById(R.id.resetotp);
-        newpassword =(EditText) resetpopup.findViewById(R.id.resetpassword);
-        c_newpassword =(EditText) resetpopup.findViewById(R.id.resetc_password);
-        resetPassword_bt =(Button) resetpopup.findViewById(R.id.resetpassword_bt);
-        close = (ImageView) resetpopup.findViewById(R.id.imageView_close);
+        requestemail_tv = resetpopup.findViewById(R.id.requestemail_tv);
+        OTP = resetpopup.findViewById(R.id.resetotp);
+        newpassword = resetpopup.findViewById(R.id.resetpassword);
+        c_newpassword = resetpopup.findViewById(R.id.resetc_password);
+        resetPassword_bt = resetpopup.findViewById(R.id.resetpassword_bt);
+        close = resetpopup.findViewById(R.id.imageView_close);
 
         requestemail_tv.setText(email);
 
@@ -420,11 +420,7 @@ public class BusinessCharityRegister extends AppCompatActivity {
         ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
-        if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
-            //Toast.makeText(BusinessCharityRegister.this, "No Internet connection!,Unable to Register", Toast.LENGTH_LONG).show();
-            return false;
-        }
-
-        return true;
+        //Toast.makeText(BusinessCharityRegister.this, "No Internet connection!,Unable to Register", Toast.LENGTH_LONG).show();
+        return netInfo != null && netInfo.isConnected() && netInfo.isAvailable();
     }
 }

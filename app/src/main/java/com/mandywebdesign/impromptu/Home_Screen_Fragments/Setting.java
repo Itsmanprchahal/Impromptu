@@ -410,7 +410,7 @@ public class Setting extends Fragment {
 
     private void setMesgIcon() {
         if (MyFirebaseMessagingService.counter != null) {
-            String counter = MyFirebaseMessagingService.counter.toString();
+            String counter = MyFirebaseMessagingService.counter;
             if (!counter.equals("0")) {
                 Home_Screen.count = "1";
             }
@@ -504,12 +504,7 @@ public class Setting extends Fragment {
         ConnectivityManager conMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
-        if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
-
-            return false;
-        }
-
-        return true;
+        return netInfo != null && netInfo.isConnected() && netInfo.isAvailable();
     }
 
     private void NoInternetdialog() {

@@ -92,7 +92,7 @@ public class History extends Fragment implements DiscreteScrollView.OnItemChange
         S_Token = sharedPreferences.getString("Socailtoken", "");
         itemPosition = itemPositionPref.getString(Constants.itemPosition, String.valueOf(0));
 
-        recyclerView = (DiscreteScrollView) view.findViewById(R.id.business_history__recyclerview);
+        recyclerView = view.findViewById(R.id.business_history__recyclerview);
         recyclerView.setOrientation(DSVOrientation.HORIZONTAL);
         recyclerView.addOnItemChangedListener(this);
         infiniteAdapter = InfiniteScrollAdapter.wrap(new Business_History_adapter(getContext(), manager, S_Token));
@@ -144,11 +144,11 @@ public class History extends Fragment implements DiscreteScrollView.OnItemChange
                             images.add(datum.getFile());
                             event_id.add(datum.getEventId().toString());
                             if (datum.getRating() != null) {
-                                ratingstatus.add(datum.getRating().toString());
+                                ratingstatus.add(datum.getRating());
                             }
 
                             if (datum.getTotalRating() != null) {
-                                rating_overall.add(datum.getTotalRating().toString());
+                                rating_overall.add(datum.getTotalRating());
                             }
 
                             if (datum.getPrice() != null) {

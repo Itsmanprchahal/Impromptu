@@ -14,36 +14,36 @@
         android:orientation="vertical">
 
 
-            <androidx.appcompat.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:ignore="MissingConstraints">
+                android:layout_height="wrap_content">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+
+                <ImageView
+                    android:id="@+id/back_on_privacy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/transperent"
+                    android:gravity="center_vertical"
+                    android:src="@drawable/ic_arrow_back_black_24dp" />
+
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/circularstdbold"
+                    android:gravity="center_horizontal"
+                    android:text="Privacy Policy"
+                    android:textColor="@color/colortextBlack"
+                    android:textSize="@dimen/toolbartext" />
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <ImageView
-                        android:id="@+id/back_on_privacy"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/transperent"
-                        android:gravity="center_vertical"
-                        android:src="@drawable/ic_arrow_back_black_24dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/circularstdbold"
-                        android:gravity="center_horizontal"
-                        android:text="Privacy Policy"
-                        android:textColor="@color/colortextBlack"
-                        android:textSize="@dimen/toolbartext" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.appcompat.widget.Toolbar>
+        </androidx.appcompat.widget.Toolbar>
 
 
 
@@ -51,13 +51,14 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:nestedScrollingEnabled="false"
             android:background="@color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_margin="@dimen/defaultmargin">
+                android:layout_marginLeft="@dimen/_20sdp">
                 <TextView
                     android:id="@+id/privacy"
                     android:layout_width="match_parent"
@@ -69,85 +70,57 @@
                     android:textColor="@color/colortextBlack"
                     android:textSize="@dimen/_12sdp" />
 
-                <com.bluejamesbond.text.DocumentView
+                <me.biubiubiu.justifytext.library.JustifyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
-                    app:documentView_cacheConfig="auto_quality"
-                    app:documentView_hyphen="-"
-                    app:documentView_textAlignment="justified"
-                    app:documentView_textFormat="plain"
-                    app:documentView_antialias="true"
-                    app:documentView_textColor="@color/black"
-                    app:documentView_text="@string/privancytext1"
+                    android:text="@string/privancytext1"
                     android:fontFamily="@font/sfuitextlight"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black" >
+                </me.biubiubiu.justifytext.library.JustifyTextView>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
-                    android:text="This policy details;"
+                    android:text="This policy details:"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:textSize="@dimen/toolbartext"
                     android:textColor="@color/black"
                     android:textStyle="bold"></TextView>
 
-                <com.bluejamesbond.text.DocumentView
+                <me.biubiubiu.justifytext.library.JustifyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:fontFamily="@font/sfuitextlight"
-                    app:documentView_cacheConfig="auto_quality"
-                    app:documentView_hyphen="-"
-                    app:documentView_textAlignment="justified"
-                    app:documentView_textFormat="plain"
-                    app:documentView_antialias="true"
-                    app:documentView_textColor="@color/black"
-                    app:documentView_text="•	The information we, Impromptu Social Limited, collect about you."
-                    android:textColor="@color/black"></com.bluejamesbond.text.DocumentView>
+                    android:text="The information we, Impromptu Social Limited, collect about you."
+                    android:textColor="@color/black"></me.biubiubiu.justifytext.library.JustifyTextView>
 
-                <com.bluejamesbond.text.DocumentView
+                <me.biubiubiu.justifytext.library.JustifyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:fontFamily="@font/sfuitextlight"
-                    app:documentView_cacheConfig="auto_quality"
-                    app:documentView_hyphen="-"
-                    app:documentView_textAlignment="justified"
-                    app:documentView_textFormat="plain"
-                    app:documentView_antialias="true"
-                    app:documentView_textColor="@color/black"
-                    app:documentView_text="•	How we utilise and share said information."
-                    android:textColor="@color/black"></com.bluejamesbond.text.DocumentView>
+                    android:text="How we utilise and share said information."
+                    android:textColor="@color/black"></me.biubiubiu.justifytext.library.JustifyTextView>
 
-                <com.bluejamesbond.text.DocumentView
+                <me.biubiubiu.justifytext.library.JustifyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:fontFamily="@font/sfuitextlight"
-                    app:documentView_cacheConfig="auto_quality"
-                    app:documentView_hyphen="-"
-                    app:documentView_textAlignment="justified"
-                    app:documentView_textFormat="plain"
-                    app:documentView_antialias="true"
-                    app:documentView_textColor="@color/black"
-                    app:documentView_text="•	The privacy options at your disposal."
-                    android:textColor="@color/black"></com.bluejamesbond.text.DocumentView>
+                    android:text="The privacy options at your disposal."
+                    android:textColor="@color/black"></me.biubiubiu.justifytext.library.JustifyTextView>
 
-                <com.bluejamesbond.text.DocumentView
+                <me.biubiubiu.justifytext.library.JustifyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:fontFamily="@font/sfuitextlight"
-                    app:documentView_cacheConfig="auto_quality"
-                    app:documentView_hyphen="-"
-                    app:documentView_textAlignment="justified"
-                    app:documentView_textFormat="plain"
-                    app:documentView_antialias="true"
-                    app:documentView_textColor="@color/black"
-                    app:documentView_text="This Privacy Policy applies to information we collect when you (a) use our mobile application, (b) other online products/services (collectively referred to as the “Services”) or (c) when you otherwise interact with us. We may change the provisions of this Privacy Policy from time to time. We advise that you to review this Privacy Policy regularly to remain informed about our information practices and the ways you can help safeguard your privacy."
-                    ></com.bluejamesbond.text.DocumentView>
+                    android:textColor="@color/black"
+                    android:text="This Privacy Policy applies to information we collect when you (a) use our mobile application, (b) other online products/services (collectively referred to as the “Services”) or (c) when you otherwise interact with us. We may change the provisions of this Privacy Policy from time to time. We advise that you to review this Privacy Policy regularly to remain informed about our information practices and the ways you can help safeguard your privacy."
+                    ></me.biubiubiu.justifytext.library.JustifyTextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -170,33 +143,21 @@
                     android:textStyle="bold"></TextView>
 
 
-                <com.bluejamesbond.text.DocumentView
+                <me.biubiubiu.justifytext.library.JustifyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:fontFamily="@font/sfuitextlight"
-                    app:documentView_cacheConfig="auto_quality"
-                    app:documentView_hyphen="-"
-                    app:documentView_textAlignment="justified"
-                    app:documentView_textFormat="plain"
-                    app:documentView_antialias="true"
-                    app:documentView_textColor="@color/black"
-                    app:documentView_text="We collect information you provide to us, such as when you create an account, update your profile, use the interactive features of our Services, participate in contests, promotions or surveys, request customer support or otherwise communicate with us. "
-                    android:textColor="@color/black"></com.bluejamesbond.text.DocumentView>
+                    android:text="We collect information you provide to us, such as when you create an account, update your profile, use the interactive features of our Services, participate in contests, promotions or surveys, request customer support or otherwise communicate with us. "
+                    android:textColor="@color/black"></me.biubiubiu.justifytext.library.JustifyTextView>
 
-                <com.bluejamesbond.text.DocumentView
+                <me.biubiubiu.justifytext.library.JustifyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
-                    app:documentView_cacheConfig="auto_quality"
-                    app:documentView_hyphen="-"
-                    app:documentView_textAlignment="justified"
-                    app:documentView_textFormat="plain"
-                    app:documentView_antialias="true"
-                    app:documentView_textColor="@color/black"
-                    app:documentView_text="@string/privancytetx3"
-                    android:textColor="@color/black"></com.bluejamesbond.text.DocumentView>
+                    android:text="@string/privancytetx3"
+                    android:textColor="@color/black"></me.biubiubiu.justifytext.library.JustifyTextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -208,18 +169,13 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"></TextView>
 
-                <com.bluejamesbond.text.DocumentView
+                <me.biubiubiu.justifytext.library.JustifyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
-                    app:documentView_cacheConfig="auto_quality"
-                    app:documentView_hyphen="-"
-                    app:documentView_textAlignment="justified"
-                    app:documentView_textFormat="plain"
-                    app:documentView_antialias="true"
-                    app:documentView_textColor="@color/black"
-                    app:documentView_text="@string/privancytetx5"></com.bluejamesbond.text.DocumentView>
+                    android:textColor="@color/black"
+                    android:text="@string/privancytetx5"></me.biubiubiu.justifytext.library.JustifyTextView>
 
 
 
@@ -233,18 +189,13 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"></TextView>
 
-                <com.bluejamesbond.text.DocumentView
+                <me.biubiubiu.justifytext.library.JustifyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
-                    app:documentView_cacheConfig="auto_quality"
-                    app:documentView_hyphen="-"
-                    app:documentView_textAlignment="justified"
-                    app:documentView_textFormat="plain"
-                    app:documentView_antialias="true"
-                    app:documentView_textColor="@color/black"
-                    app:documentView_text="@string/privancytetx7"></com.bluejamesbond.text.DocumentView>
+                    android:textColor="@color/black"
+                    android:text="@string/privancytetx7"></me.biubiubiu.justifytext.library.JustifyTextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -256,18 +207,13 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"></TextView>
 
-                <com.bluejamesbond.text.DocumentView
+                <me.biubiubiu.justifytext.library.JustifyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
-                    app:documentView_cacheConfig="auto_quality"
-                    app:documentView_hyphen="-"
-                    app:documentView_textAlignment="justified"
-                    app:documentView_textFormat="plain"
-                    app:documentView_antialias="true"
-                    app:documentView_textColor="@color/black"
-                    app:documentView_text="@string/privancytetx9"></com.bluejamesbond.text.DocumentView>
+                    android:textColor="@color/black"
+                    android:text="@string/privancytetx9"></me.biubiubiu.justifytext.library.JustifyTextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -279,19 +225,14 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"></TextView>
 
-                <com.bluejamesbond.text.DocumentView
+                <me.biubiubiu.justifytext.library.JustifyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
-                    app:documentView_cacheConfig="auto_quality"
-                    app:documentView_hyphen="-"
-                    app:documentView_textAlignment="justified"
-                    app:documentView_textFormat="plain"
-                    app:documentView_antialias="true"
-                    app:documentView_textColor="@color/black"
-                    app:documentView_text="@string/privancytetx11"
-                    ></com.bluejamesbond.text.DocumentView>
+                    android:text="@string/privancytetx11"
+                    android:textColor="@color/black"
+                    ></me.biubiubiu.justifytext.library.JustifyTextView>
 
 
                 <TextView
@@ -305,18 +246,13 @@
                     android:textStyle="bold"></TextView>
 
 
-                <com.bluejamesbond.text.DocumentView
+                <me.biubiubiu.justifytext.library.JustifyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
-                    app:documentView_cacheConfig="auto_quality"
-                    app:documentView_hyphen="-"
-                    app:documentView_textAlignment="justified"
-                    app:documentView_textFormat="plain"
-                    app:documentView_antialias="true"
-                    app:documentView_textColor="@color/black"
-                    app:documentView_text="@string/privancytetx13"></com.bluejamesbond.text.DocumentView>
+                    android:textColor="@color/black"
+                    android:text="@string/privancytetx13"></me.biubiubiu.justifytext.library.JustifyTextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -329,18 +265,13 @@
                     android:textStyle="bold"></TextView>
 
 
-                <com.bluejamesbond.text.DocumentView
+                <me.biubiubiu.justifytext.library.JustifyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
-                    app:documentView_cacheConfig="auto_quality"
-                    app:documentView_hyphen="-"
-                    app:documentView_textAlignment="justified"
-                    app:documentView_textFormat="plain"
-                    app:documentView_antialias="true"
-                    app:documentView_textColor="@color/black"
-                    app:documentView_text="@string/privancytetx15"></com.bluejamesbond.text.DocumentView>
+                    android:textColor="@color/black"
+                    android:text="@string/privancytetx15"></me.biubiubiu.justifytext.library.JustifyTextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -352,18 +283,13 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"></TextView>
 
-                <com.bluejamesbond.text.DocumentView
+                <me.biubiubiu.justifytext.library.JustifyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
-                    app:documentView_cacheConfig="auto_quality"
-                    app:documentView_hyphen="-"
-                    app:documentView_textAlignment="justified"
-                    app:documentView_textFormat="plain"
-                    app:documentView_antialias="true"
-                    app:documentView_textColor="@color/black"
-                    app:documentView_text="@string/privancytetx17"></com.bluejamesbond.text.DocumentView>
+                    android:textColor="@color/black"
+                    android:text="@string/privancytetx17"></me.biubiubiu.justifytext.library.JustifyTextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -375,19 +301,14 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"></TextView>
 
-                <com.bluejamesbond.text.DocumentView
+                <me.biubiubiu.justifytext.library.JustifyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
-                    app:documentView_cacheConfig="auto_quality"
-                    app:documentView_hyphen="-"
-                    app:documentView_textAlignment="justified"
-                    app:documentView_textFormat="plain"
-                    app:documentView_antialias="true"
-                    app:documentView_textColor="@color/black"
-                    app:documentView_text="@string/privancytetx19"
-                   ></com.bluejamesbond.text.DocumentView>
+                    android:textColor="@color/black"
+                    android:text="@string/privancytetx19"
+                    ></me.biubiubiu.justifytext.library.JustifyTextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -399,19 +320,14 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"></TextView>
 
-                <com.bluejamesbond.text.DocumentView
+                <me.biubiubiu.justifytext.library.JustifyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
-                    app:documentView_cacheConfig="auto_quality"
-                    app:documentView_hyphen="-"
-                    app:documentView_textAlignment="justified"
-                    app:documentView_textFormat="plain"
-                    app:documentView_antialias="true"
-                    app:documentView_textColor="@color/black"
-                    app:documentView_text="@string/privancytetx21"
-                    ></com.bluejamesbond.text.DocumentView>
+                    android:textColor="@color/black"
+                    android:text="@string/privancytetx21"
+                    ></me.biubiubiu.justifytext.library.JustifyTextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -434,19 +350,14 @@
                     android:textStyle="bold"></TextView>
 
 
-                <com.bluejamesbond.text.DocumentView
+                <me.biubiubiu.justifytext.library.JustifyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
-                    app:documentView_cacheConfig="auto_quality"
-                    app:documentView_hyphen="-"
-                    app:documentView_textAlignment="justified"
-                    app:documentView_textFormat="plain"
-                    app:documentView_antialias="true"
-                    app:documentView_textColor="@color/black"
-                    app:documentView_text="@string/privancytetx24"
-                    ></com.bluejamesbond.text.DocumentView>
+                    android:textColor="@color/black"
+                    android:text="@string/privancytetx24"
+                    ></me.biubiubiu.justifytext.library.JustifyTextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -458,19 +369,14 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"></TextView>
 
-                <com.bluejamesbond.text.DocumentView
+                <me.biubiubiu.justifytext.library.JustifyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
-                    app:documentView_cacheConfig="auto_quality"
-                    app:documentView_hyphen="-"
-                    app:documentView_textAlignment="justified"
-                    app:documentView_textFormat="plain"
-                    app:documentView_antialias="true"
-                    app:documentView_textColor="@color/black"
-                    app:documentView_text="@string/privancytetx26"
-                    ></com.bluejamesbond.text.DocumentView>
+                    android:textColor="@color/black"
+                    android:text="@string/privancytetx26"
+                    ></me.biubiubiu.justifytext.library.JustifyTextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -482,19 +388,14 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"></TextView>
 
-                <com.bluejamesbond.text.DocumentView
+                <me.biubiubiu.justifytext.library.JustifyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
-                    app:documentView_cacheConfig="auto_quality"
-                    app:documentView_hyphen="-"
-                    app:documentView_textAlignment="justified"
-                    app:documentView_textFormat="plain"
-                    app:documentView_antialias="true"
-                    app:documentView_textColor="@color/black"
-                    app:documentView_text="@string/privancytetx28"
-                  ></com.bluejamesbond.text.DocumentView>
+                    android:textColor="@color/black"
+                    android:text="@string/privancytetx28"
+                    ></me.biubiubiu.justifytext.library.JustifyTextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -506,20 +407,13 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"></TextView>
 
-                <com.bluejamesbond.text.DocumentView
+                <me.biubiubiu.justifytext.library.JustifyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
-                    app:documentView_cacheConfig="auto_quality"
-                    app:documentView_hyphen="-"
-                    app:documentView_textAlignment="justified"
-                    app:documentView_textFormat="plain"
-                    app:documentView_antialias="true"
-                    app:documentView_textColor="@color/black"
-                    app:documentView_text="@string/privancytetx30"
-                    android:textColor="@color/black"></com.bluejamesbond.text.DocumentView>
-
+                    android:text="@string/privancytetx30"
+                    android:textColor="@color/black"></me.biubiubiu.justifytext.library.JustifyTextView>
             </LinearLayout>
 
 

@@ -78,11 +78,11 @@ public class RegisterSlideActivity extends AppCompatActivity {
 
     private void init() {
 
-        layout = (ConstraintLayout) findViewById(R.id.register_conststraint);
-        mBack = (Button) findViewById(R.id.back_bussiness_bt);
-        mRegister = (Button) findViewById(R.id.Register_bussiness_bt);
-        dotsLayout = (LinearLayout) findViewById(R.id.registerlayoutDots);
-        viewPager = (ViewPager) findViewById(R.id.register_viewpager);
+        layout = findViewById(R.id.register_conststraint);
+        mBack = findViewById(R.id.back_bussiness_bt);
+        mRegister = findViewById(R.id.Register_bussiness_bt);
+        dotsLayout = findViewById(R.id.registerlayoutDots);
+        viewPager = findViewById(R.id.register_viewpager);
 
     }
 

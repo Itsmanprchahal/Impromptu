@@ -132,12 +132,7 @@ public class PayActivity extends AppCompatActivity {
         savethiscard.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
-                {
-                    saveStatus = true;
-                }else {
-                    saveStatus = false;
-                }
+                saveStatus = isChecked;
 
             }
         });
@@ -306,16 +301,16 @@ public class PayActivity extends AppCompatActivity {
 
     private void init() {
         savethiscard = findViewById(R.id.savethiscard);
-        pay = (Button) findViewById(R.id.pay_button);
-        CardNumber = (EditText) findViewById(R.id.pay_card_number);
-        CardName = (EditText) findViewById(R.id.pay_card_name);
-        Card_ExpiryDate = (EditText) findViewById(R.id.pay_expiry_date);
-        Card_CSV = (EditText) findViewById(R.id.pay_csv);
-        total_price = (TextView) findViewById(R.id.pay_total_price);
-        close = (ImageView) findViewById(R.id.pay_close);
-        ticket_price = (TextView) findViewById(R.id.pay_ticket_price);
-        tickt_num = (TextView) findViewById(R.id.pay_ticket_type);
-        event_Titletv = (TextView)findViewById(R.id.event_Title);
+        pay = findViewById(R.id.pay_button);
+        CardNumber = findViewById(R.id.pay_card_number);
+        CardName = findViewById(R.id.pay_card_name);
+        Card_ExpiryDate = findViewById(R.id.pay_expiry_date);
+        Card_CSV = findViewById(R.id.pay_csv);
+        total_price = findViewById(R.id.pay_total_price);
+        close = findViewById(R.id.pay_close);
+        ticket_price = findViewById(R.id.pay_ticket_price);
+        tickt_num = findViewById(R.id.pay_ticket_type);
+        event_Titletv = findViewById(R.id.event_Title);
         pay_expiry_year = findViewById(R.id.pay_expiry_year);
     }
 
@@ -331,9 +326,9 @@ public class PayActivity extends AppCompatActivity {
                     {
                         if (response.body().getData().getCardNumber()!=null && response.body().getData().getCardEdate()!=null && response.body().getData().getCardSdate()!=null&& response.body().getData().getCard_holder_name()!=null)
                         {
-                            CardNumber.setText(response.body().getData().getCardNumber().toString());
+                            CardNumber.setText(response.body().getData().getCardNumber());
                             Card_ExpiryDate.setText(response.body().getData().getCardSdate());
-                            pay_expiry_year.setText(response.body().getData().getCardEdate().toString());
+                            pay_expiry_year.setText(response.body().getData().getCardEdate());
                            savethiscard.setChecked(true);
                         CardName.setText(response.body().getData().getCard_holder_name());
                         }

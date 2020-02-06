@@ -132,7 +132,7 @@ public class Contact_Us extends AppCompatActivity {
             public void onResponse(Call<GetAdminEmail> call, Response<GetAdminEmail> response) {
                 if (response.body()!=null) {
                     if (response.body().getStatus().equals("200")) {
-                        contactus_emialet.setText(response.body().getData().toString());
+                        contactus_emialet.setText(response.body().getData());
                     }
                 }
             }

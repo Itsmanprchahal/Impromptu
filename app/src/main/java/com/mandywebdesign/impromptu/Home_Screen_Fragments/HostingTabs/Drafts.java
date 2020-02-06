@@ -104,7 +104,7 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
         } else {
             progressDialog.dismiss();
         }
-        recyclerView = (DiscreteScrollView) view.findViewById(R.id.business_drafts__recyclerview);
+        recyclerView = view.findViewById(R.id.business_drafts__recyclerview);
         recyclerView.setOrientation(DSVOrientation.HORIZONTAL);
         recyclerView.addOnItemChangedListener(this);
         infiniteAdapter = InfiniteScrollAdapter.wrap(new Business_DraftsEventAdapter(getContext(), fragmentManager,events));
@@ -144,7 +144,7 @@ public class Drafts extends Fragment implements DiscreteScrollView.OnItemChanged
                             events.add(datum);
                             name1.add(datum.getBEventHostname());
                             title.add(datum.getTitle());
-                            draftsimages.add(datum.getFile().toString());
+                            draftsimages.add(datum.getFile());
                             if (datum.getPrice() != null) {
                                 if (datum.getPrice().equals("")) {
 

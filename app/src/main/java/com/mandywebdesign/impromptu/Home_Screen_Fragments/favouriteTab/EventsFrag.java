@@ -84,7 +84,7 @@ public class EventsFrag extends Fragment implements DiscreteScrollView.OnItemCha
         init();
         GetFavEvents(S_Token);
 
-        recyclerView = (DiscreteScrollView) view.findViewById(R.id.favourite_event_recycler_view);
+        recyclerView = view.findViewById(R.id.favourite_event_recycler_view);
         recyclerView.setOrientation(DSVOrientation.HORIZONTAL);
         recyclerView.addOnItemChangedListener(this);
         infiniteAdapter = InfiniteScrollAdapter.wrap(new FavouriteEventAdapter(getContext(), fragmentManager));
@@ -102,7 +102,7 @@ public class EventsFrag extends Fragment implements DiscreteScrollView.OnItemCha
     private void init() {
         Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
         recyclerView = view.findViewById(R.id.favourite_event_recycler_view);
-        noEvnets = (TextView) view.findViewById(R.id.noEnets);
+        noEvnets = view.findViewById(R.id.noEnets);
     }
 
     public void GetFavEvents(String token) {

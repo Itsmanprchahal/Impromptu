@@ -114,6 +114,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorTheme"
+                    android:textSize="@dimen/_12sdp"
                     android:buttonTint="@color/colorTheme"></RadioButton>
 
 
@@ -124,6 +125,7 @@
                     android:textColor="@color/colorTheme"
                     android:fontFamily="@font/circularstdbold"
                     android:layout_width="wrap_content"
+                    android:textSize="@dimen/_12sdp"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/colorTheme"></RadioButton>
 
@@ -136,6 +138,7 @@
                     android:fontFamily="@font/circularstdbold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/_12sdp"
                     android:buttonTint="@color/colorTheme"></RadioButton>
             </RadioGroup>
 

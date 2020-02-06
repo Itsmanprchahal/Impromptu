@@ -299,9 +299,9 @@ public class BussinessProfileActivity2 extends AppCompatActivity {
         facebook_button = findViewById(R.id.businessProfile1_facebookbt);
         insta_button = findViewById(R.id.businessProfile1_instabt);
         twitter_bt = findViewById(R.id.businessProfile1_twitterbt);
-        enter_web_url = (EditText) findViewById(R.id.add_webpage_edittext);
-        BName = (TextView) findViewById(R.id.business_profile1_user_Name);
-        imageView = (RoundedImageView) findViewById(R.id.business_profile1_user_Image);
+        enter_web_url = findViewById(R.id.add_webpage_edittext);
+        BName = findViewById(R.id.business_profile1_user_Name);
+        imageView = findViewById(R.id.business_profile1_user_Image);
     }
 
     // method for base64 to bitmap

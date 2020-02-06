@@ -107,7 +107,7 @@ public class Business_DraftsEventAdapter extends RecyclerView.Adapter<Business_D
 
         viewHolder.category.setText(datum.getCategory());
         viewHolder.date.setText(Drafts.eventTIme.get(i));
-        Glide.with(context).load(datum.getFile().toString()).into(viewHolder.eventImage);
+        Glide.with(context).load(datum.getFile()).into(viewHolder.eventImage);
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

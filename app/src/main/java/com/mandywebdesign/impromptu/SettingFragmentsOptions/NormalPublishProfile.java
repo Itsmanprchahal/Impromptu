@@ -443,16 +443,16 @@ public class NormalPublishProfile extends AppCompatActivity {
 
     private void init() {
 
-        addQUES = (TextView) findViewById(R.id.normal_user_profile_question);
-        about = (EditText) findViewById(R.id.normal_user_about);
-        questionRecycler = (RecyclerView) findViewById(R.id.normal_user_profile_question_recycle);
-        username = (EditText) findViewById(R.id.normal_user_profile_username);
-        userImage = (RoundedImageView) findViewById(R.id.normal_user_profile_userimage);
-        age = (EditText) findViewById(R.id.normal_user_profile_age);
-        publish_profle = (Button) findViewById(R.id.normal_published_bt);
-        radioGroup = (RadioGroup)findViewById(R.id.gendergroup);
-        male = (RadioButton)findViewById(R.id.normal_user_male);
-        female = (RadioButton)findViewById(R.id.normal_user_female);
+        addQUES = findViewById(R.id.normal_user_profile_question);
+        about = findViewById(R.id.normal_user_about);
+        questionRecycler = findViewById(R.id.normal_user_profile_question_recycle);
+        username = findViewById(R.id.normal_user_profile_username);
+        userImage = findViewById(R.id.normal_user_profile_userimage);
+        age = findViewById(R.id.normal_user_profile_age);
+        publish_profle = findViewById(R.id.normal_published_bt);
+        radioGroup = findViewById(R.id.gendergroup);
+        male = findViewById(R.id.normal_user_male);
+        female = findViewById(R.id.normal_user_female);
         backonnormalpublish = findViewById(R.id.backonnormalpublish);
     }
 
@@ -467,8 +467,8 @@ public class NormalPublishProfile extends AppCompatActivity {
         dialog.setCanceledOnTouchOutside(false);
 
 
-        spinner = (Spinner) dialog.findViewById(R.id.user_profile_sppiner);
-        editText = (EditText) dialog.findViewById(R.id.user_profile_answer);
+        spinner = dialog.findViewById(R.id.user_profile_sppiner);
+        editText = dialog.findViewById(R.id.user_profile_answer);
         ImageView close =  dialog.findViewById(R.id.close_questtionDialog);
 
         final List<String> stringList = new ArrayList<String>(Arrays.asList(arryString));
@@ -479,7 +479,7 @@ public class NormalPublishProfile extends AppCompatActivity {
         adapter.notifyDataSetChanged();
 
 
-        Button dialogButton = (Button) dialog.findViewById(R.id.user_profile_button);
+        Button dialogButton = dialog.findViewById(R.id.user_profile_button);
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

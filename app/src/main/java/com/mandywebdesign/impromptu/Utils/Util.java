@@ -27,7 +27,7 @@ public class Util {
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("hh:mm");
             //SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-            Date date = (Date) formatter.parse(str_date);
+            Date date = formatter.parse(str_date);
             time_stamp = date.getTime();
         } catch (ParseException ex) {
             ex.printStackTrace();
@@ -48,7 +48,7 @@ public class Util {
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
             //SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-            Date date = (Date) formatter.parse(str_date);
+            Date date = formatter.parse(str_date);
             time_stamp = date.getTime();
         } catch (ParseException ex) {
             ex.printStackTrace();

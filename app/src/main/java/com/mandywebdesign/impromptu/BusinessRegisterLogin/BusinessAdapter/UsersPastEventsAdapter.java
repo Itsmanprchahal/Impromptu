@@ -44,10 +44,10 @@ public class UsersPastEventsAdapter extends RecyclerView.Adapter<UsersPastEvents
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.category.setText(datumArrayList.get(position).getTitle());
-        Log.d("imgUrl+++", "" + datumArrayList.get(position).getFile().toString());
+        Log.d("imgUrl+++", "" + datumArrayList.get(position).getFile());
 
         Glide.with(context)
-                .load(datumArrayList.get(position).getFile().toString())
+                .load(datumArrayList.get(position).getFile())
                 .centerCrop()
                 .into(holder.business_event_thumb);
 
@@ -58,7 +58,7 @@ public class UsersPastEventsAdapter extends RecyclerView.Adapter<UsersPastEvents
                 intent.putExtra("event_id", datumArrayList.get(position).getEventId().toString());
                 intent.putExtra("eventType", "past");
                  context.startActivity(intent);
-                Log.d("image+++++++", datumArrayList.get(position).getFile().toString());
+                Log.d("image+++++++", datumArrayList.get(position).getFile());
             }
         });
     }

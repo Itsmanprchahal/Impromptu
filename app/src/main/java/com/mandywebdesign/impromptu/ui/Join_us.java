@@ -227,7 +227,7 @@ public class Join_us extends AppCompatActivity {
             @Override
             public void onResponse(Call<NormalRetrologin> call, Response<NormalRetrologin> response) {
 
-                String status = response.body().getStatus().toString();
+                String status = response.body().getStatus();
 
                 if (response.body()!=null)
                 {
@@ -283,11 +283,11 @@ public class Join_us extends AppCompatActivity {
     private void initIDs() {
 
         // mContinue = (Button) findViewById(R.id.join_us_continue_bt);
-        facebooklogin = (LoginButton) findViewById(R.id.join_us_facebook);
-        mfacebook = (Button) findViewById(R.id.join_us_facebookbt);
-        mGmail = (Button) findViewById(R.id.join_us_google);
-        signInButton = (SignInButton) findViewById(R.id.join_us_goolesignIn);
-        registerHere = (Button) findViewById(R.id.registerHere);
+        facebooklogin = findViewById(R.id.join_us_facebook);
+        mfacebook = findViewById(R.id.join_us_facebookbt);
+        mGmail = findViewById(R.id.join_us_google);
+        signInButton = findViewById(R.id.join_us_goolesignIn);
+        registerHere = findViewById(R.id.registerHere);
 
 
     }

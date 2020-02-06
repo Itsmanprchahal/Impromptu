@@ -259,7 +259,7 @@ public class ChatBoxActivity extends AppCompatActivity {
         sendmessg = findViewById(R.id.send_mesg);
         view = findViewById(R.id.root_view);
         recyclerView = findViewById(R.id.chats_recycler);
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.pullToRefresh);
+        swipeRefreshLayout = findViewById(R.id.pullToRefresh);
 
         emojIcon = new EmojIconActions(this, view, typemess, add_smuiley);
         emojIcon.ShowEmojIcon();
@@ -341,7 +341,7 @@ public class ChatBoxActivity extends AppCompatActivity {
 
         if (v instanceof EditText) {
             View w = getCurrentFocus();
-            int scrcoords[] = new int[2];
+            int[] scrcoords = new int[2];
             w.getLocationOnScreen(scrcoords);
             float x = event.getRawX() + w.getLeft() - scrcoords[0];
             float y = event.getRawY() + w.getTop() - scrcoords[1];

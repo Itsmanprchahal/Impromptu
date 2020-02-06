@@ -23,6 +23,7 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -30,6 +31,7 @@ import android.widget.Button;
 import android.widget.Filter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
@@ -110,6 +112,7 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
     SharedPreferences sharedPreferences;
     int step = 1;
     int min = 0;
+    LinearLayout femalelayout,malelayout,alllayout;
     Intent intent;
 
     @SuppressLint("ResourceAsColor")
@@ -130,7 +133,7 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Date date = null;
         try {
-            date = (Date) formatter.parse(formatter.format(c.getTime()));
+            date = formatter.parse(formatter.format(c.getTime()));
             Log.d("TodayDate", String.valueOf(date.getTime()));
             formattedDate = String.valueOf(date.getTime());
         } catch (ParseException e) {
@@ -158,8 +161,10 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
 
         if (getGender.equals("Male")) {
             female.setVisibility(View.GONE);
+            femalelayout.setVisibility(View.GONE);
         } else if (getGender.equals("Female")) {
             male.setVisibility(View.GONE);
+            malelayout.setVisibility(View.GONE);
         }
 
 
@@ -218,7 +223,7 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
 
 
         mapView.onCreate(savedInstanceState);
-        mapView.getMapAsync((OnMapReadyCallback) FilterActivity.this);
+        mapView.getMapAsync(FilterActivity.this);
         MapsInitializer.initialize(this);
 
 
@@ -282,6 +287,9 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
         searchLoc.setOnItemClickListener(autocompleteClickListener);
         adapter = new AutoCompleteAdapter(this, placesClient);
         searchLoc.setAdapter(adapter);
+        femalelayout = findViewById(R.id.femalelayout);
+        malelayout = findViewById(R.id.malelayout);
+        alllayout = findViewById(R.id.alllayout);
 
         mapView = findViewById(R.id.mapview);
         today = findViewById(R.id.filter_today);
@@ -386,7 +394,7 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
 
             Date date = null;
             try {
-                date = (Date) formatter.parse(formatter.format(c.getTime()));
+                date = formatter.parse(formatter.format(c.getTime()));
                 Log.d("TodayDate", String.valueOf(date.getTime()));
                 formattedDate = String.valueOf(date.getTime());
 
@@ -421,7 +429,7 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
             DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             Date date = null;
             try {
-                date = (Date) formatter.parse(formatter.format(c.getTime()));
+                date = formatter.parse(formatter.format(c.getTime()));
                 Log.d("Tommorow", String.valueOf(date.getTime()));
                 formattedDate = String.valueOf(date.getTime());
             } catch (ParseException e) {
@@ -532,7 +540,7 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
                                 Log.d("Location", "" + lat + "" + lng);
                                 Geocoder geocoder = new Geocoder(FilterActivity.this, Locale.getDefault());
                                 try {
-                                    List<Address> address = (List<Address>) geocoder.getFromLocation(Double.parseDouble(lat), Double.parseDouble(lng), 1);
+                                    List<Address> address = geocoder.getFromLocation(Double.parseDouble(lat), Double.parseDouble(lng), 1);
 
                                     if (address != null) {
                                         city = address.get(0).getAdminArea();
@@ -544,7 +552,7 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
                                     if (mapView != null) {
                                         mapView.onCreate(null);
                                         mapView.onResume();
-                                        mapView.getMapAsync((OnMapReadyCallback) FilterActivity.this);
+                                        mapView.getMapAsync(FilterActivity.this);
                                     }
 
                                 } catch (IOException e) {
@@ -608,7 +616,7 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
                 public void onClick(View view) {
                     Geocoder geocoder = new Geocoder(FilterActivity.this, Locale.getDefault());
                     try {
-                        List<Address> address = (List<Address>) geocoder.getFromLocation(Double.valueOf(latt), Double.valueOf(lnng), 1);
+                        List<Address> address = geocoder.getFromLocation(Double.valueOf(latt), Double.valueOf(lnng), 1);
                         city = address.get(0).getLocality();
                         if (address != null) {
                             city = address.get(0).getAddressLine(0);
@@ -634,7 +642,7 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
         Geocoder geocoder = new Geocoder(FilterActivity.this, Locale.getDefault());
         List<Address> address = null;
         try {
-            address = (List<Address>) geocoder.getFromLocation(Double.parseDouble(lat), Double.parseDouble(lng), 1);
+            address = geocoder.getFromLocation(Double.parseDouble(lat), Double.parseDouble(lng), 1);
             if (address != null) {
 
                 if (address.size() == 0) {
@@ -656,7 +664,7 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
 
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_READ_LOCATION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -681,7 +689,7 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
 
         Geocoder geocoder = new Geocoder(FilterActivity.this, Locale.getDefault());
         try {
-            List<Address> address = (List<Address>) geocoder.getFromLocation(Double.valueOf(lat), Double.valueOf(lng), 1);
+            List<Address> address = geocoder.getFromLocation(Double.valueOf(lat), Double.valueOf(lng), 1);
             city = address.get(0).getLocality();
 
             if (address != null) {

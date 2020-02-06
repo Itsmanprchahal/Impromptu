@@ -48,7 +48,7 @@ public class Booked_users extends RecyclerView.Adapter<Booked_users.ViewHolder> 
     public void onBindViewHolder(@NonNull Booked_users.ViewHolder viewHolder, final int i) {
         Glide.with(context).load(usersImage.get(i)).into(viewHolder.userImage);
 //        Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
-        int count = Integer.parseInt(total_tickets.get(i).toString());
+        int count = Integer.parseInt(total_tickets.get(i));
         int count1 = count-1;
 
         if (total_tickets.get(i).equals("1"))

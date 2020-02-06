@@ -167,10 +167,10 @@ public class CheckGuestActivity extends AppCompatActivity {
 
     private void init() {
         Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
-        recyclerView = (RecyclerView) findViewById(R.id.check_guest_recycler);
-        scanner = (ImageView) findViewById(R.id.check_guest_qrcode);
-        close = (ImageButton) findViewById(R.id.check_guest_close);
-        QRData = (TextView) findViewById(R.id.QRData);
+        recyclerView = findViewById(R.id.check_guest_recycler);
+        scanner = findViewById(R.id.check_guest_qrcode);
+        close = findViewById(R.id.check_guest_close);
+        QRData = findViewById(R.id.QRData);
         checkInguset = findViewById(R.id.check_guest_text);
 
     }

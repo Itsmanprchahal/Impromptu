@@ -15,11 +15,7 @@ public class Helper {
     public static boolean checkPermissionForExternalStorage(Activity activity) {
         int result =
                 ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (result == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        } else {
-            return false;
-        }
+        return result == PackageManager.PERMISSION_GRANTED;
     }
 
     public static boolean requestStoragePermission(Activity activity, int READ_STORAGE_PERMISSION) {

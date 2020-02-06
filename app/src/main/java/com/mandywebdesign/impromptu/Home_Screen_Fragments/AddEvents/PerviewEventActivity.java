@@ -374,7 +374,7 @@ public class PerviewEventActivity extends AppCompatActivity {
                     timeTo = time_to.substring(1);
                     perview_time.setText( timeFrom + " - " + timeTo);
                 } else {
-                    timeTo = time_to.substring(0);
+                    timeTo = time_to;
                     perview_time.setText( timeFrom + " - " + timeTo);
                 }
             } else if (time_to.startsWith("0")) {
@@ -383,12 +383,12 @@ public class PerviewEventActivity extends AppCompatActivity {
                     timeFrom = time_t.substring(1);
                     perview_time.setText( timeFrom + " - " + timeTo);
                 } else {
-                    timeFrom = time_t.substring(0);
+                    timeFrom = time_t;
                     perview_time.setText( timeFrom + " - " + timeTo);
                 }
             } else if (!time_t.startsWith("0") && !time_to.startsWith("0")) {
-                timeFrom = time_t.substring(0);
-                timeTo = time_to.substring(0);
+                timeFrom = time_t;
+                timeTo = time_to;
                 perview_time.setText( timeFrom + " - " + timeTo);
             }
 
@@ -567,31 +567,31 @@ public class PerviewEventActivity extends AppCompatActivity {
 
         perview_time = findViewById(R.id.perview_time);
         event_price = findViewById(R.id.event_price);
-        progressBar = (ProgressBar) findViewById(R.id.perview_progress_bar);
-        viewPager = (ViewPager) findViewById(R.id.perview_viewpager);
+        progressBar = findViewById(R.id.perview_progress_bar);
+        viewPager = findViewById(R.id.perview_viewpager);
         //indicator = (CircleIndicator) findViewById(R.id.perview_indicator);
-        toolbar = (Toolbar) findViewById(R.id.perview_toolbar);
-        dotsLayout = (LinearLayout) findViewById(R.id.perview_indicator);
-        perview_date = (TextView) findViewById(R.id.perview_date);
-        perview_description = (ReadMoreTextView) findViewById(R.id.perview_description);
-        perview_categry = (TextView) findViewById(R.id.perview_categry);
-        perview_location = (TextView) findViewById(R.id.perview_location);
-        value_text = (TextView) findViewById(R.id.value_text);
-        readmore = (TextView) findViewById(R.id.readmore);
-        perview_publish = (Button) findViewById(R.id.perview_publish);
-        perview_organiser_name = (TextView) findViewById(R.id.perview_organiser_name);
-        perview_save_draft = (TextView) findViewById(R.id.perview_save_draft);
-        back = (ImageView) findViewById(R.id.back_eventpublish);
-        close = (ImageView) findViewById(R.id.event_close_puublis);
-        perview_message = (ImageView) findViewById(R.id.perview_message);
-        host_image = (RoundedImageView) findViewById(R.id.perview_user_picture);
+        toolbar = findViewById(R.id.perview_toolbar);
+        dotsLayout = findViewById(R.id.perview_indicator);
+        perview_date = findViewById(R.id.perview_date);
+        perview_description = findViewById(R.id.perview_description);
+        perview_categry = findViewById(R.id.perview_categry);
+        perview_location = findViewById(R.id.perview_location);
+        value_text = findViewById(R.id.value_text);
+        readmore = findViewById(R.id.readmore);
+        perview_publish = findViewById(R.id.perview_publish);
+        perview_organiser_name = findViewById(R.id.perview_organiser_name);
+        perview_save_draft = findViewById(R.id.perview_save_draft);
+        back = findViewById(R.id.back_eventpublish);
+        close = findViewById(R.id.event_close_puublis);
+        perview_message = findViewById(R.id.perview_message);
+        host_image = findViewById(R.id.perview_user_picture);
         perviewTitle = findViewById(R.id.perview_tittle);
         setSupportActionBar(toolbar);
         perview_message.setVisibility(View.GONE);
-        perview_link1 = (TextView) findViewById(R.id.perview_link1);
-        perview_link2 = (TextView) findViewById(R.id.perview_link2);
-        perview_link3 = (TextView) findViewById(R.id.perview_link3);
-        invitefriendslayout = (ConstraintLayout) findViewById(R.id.invitefriendslayout);
+        perview_link1 = findViewById(R.id.perview_link1);
+        perview_link2 = findViewById(R.id.perview_link2);
+        perview_link3 = findViewById(R.id.perview_link3);
+        invitefriendslayout = findViewById(R.id.invitefriendslayout);
     }
 
     public void PublishEvent(final String token,String count,String title,String desc,String cate,ArrayList<MultipartBody.Part> part,String address1,String address2,String postcode,String city,String date,String FromTime,String to_time_milles,String sex,String attendeesNo,String freeevent,String ticketType,String Tic_Price,String numbersTickets,String username,String publish,String link1,String link2,String link3,String frommilles,String tomilles,String type,String getTic_Price,String getNumbersTickets) {

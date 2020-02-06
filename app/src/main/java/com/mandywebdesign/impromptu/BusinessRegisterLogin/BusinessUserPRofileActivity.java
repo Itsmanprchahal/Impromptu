@@ -118,21 +118,21 @@ public class BusinessUserPRofileActivity extends AppCompatActivity implements Vi
 
     private void init() {
         Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
-        editProfile = (ImageView) findViewById(R.id._UserPRofile_edit_busines_publish_profile);
-        UserName = (TextView) findViewById(R.id.UserProfile_business__publishprofile_user_Name);
-        Address = (TextView) findViewById(R.id.UserProfile_business__publishprofile_address1);
-        Address2 = (TextView) findViewById(R.id.UserProfile_business__publishprofile_address2);
-        AboutUs = (ReadMoreTextView) findViewById(R.id.userProfile_aboutUs_Desc_TV);
-        webUrl = (ImageButton) findViewById(R.id.UserPRofile_web_url_bt);
-        facebookUrl = (ImageButton) findViewById(R.id.userProfile_fb_url_bt);
-        InstagramUrl = (ImageButton) findViewById(R.id.UserProfile_insta_url_bt);
-        TwitterUrl = (ImageButton) findViewById(R.id.UserProfile_twiter_url_bt);
-        UserImage = (RoundedImageView) findViewById(R.id.UserProfile_business_profilepublish_user_Image);
-        totalliveevents = (TextView) findViewById(R.id.UserProfile_live_event_texttotal);
-        recyclerView = (RecyclerView) findViewById(R.id.UserProfile_business_publish_live_events_recylerview);
-        pastevnets = (TextView) findViewById(R.id.UserProfile_past_events_tv_totall);
+        editProfile = findViewById(R.id._UserPRofile_edit_busines_publish_profile);
+        UserName = findViewById(R.id.UserProfile_business__publishprofile_user_Name);
+        Address = findViewById(R.id.UserProfile_business__publishprofile_address1);
+        Address2 = findViewById(R.id.UserProfile_business__publishprofile_address2);
+        AboutUs = findViewById(R.id.userProfile_aboutUs_Desc_TV);
+        webUrl = findViewById(R.id.UserPRofile_web_url_bt);
+        facebookUrl = findViewById(R.id.userProfile_fb_url_bt);
+        InstagramUrl = findViewById(R.id.UserProfile_insta_url_bt);
+        TwitterUrl = findViewById(R.id.UserProfile_twiter_url_bt);
+        UserImage = findViewById(R.id.UserProfile_business_profilepublish_user_Image);
+        totalliveevents = findViewById(R.id.UserProfile_live_event_texttotal);
+        recyclerView = findViewById(R.id.UserProfile_business_publish_live_events_recylerview);
+        pastevnets = findViewById(R.id.UserProfile_past_events_tv_totall);
         UserProfile_past_events_tv = findViewById(R.id.UserProfile_past_events_tv);
-        pasteventsrecyles = (RecyclerView) findViewById(R.id.UserProfile_business_publish__pastevents_recylerview);
+        pasteventsrecyles = findViewById(R.id.UserProfile_business_publish__pastevents_recylerview);
         UserProfie_live_event_text = findViewById(R.id.UserProfie_live_event_text);
         bacck_obviewbusnessprofile = findViewById(R.id.bacck_obviewbusnessprofile);
         UserProfie_live_event_text.setVisibility(View.VISIBLE);
@@ -189,7 +189,7 @@ public class BusinessUserPRofileActivity extends AppCompatActivity implements Vi
                                 TwitteURL = response.body().getData().get(0).getTwitterUrl().toString();
                             }
 
-                            charity_number = response.body().getData().get(0).getCharityNumber().toString();
+                            charity_number = response.body().getData().get(0).getCharityNumber();
                             // Toast.makeText(getContext(), ""+charity_number, Toast.LENGTH_SHORT).show();
 
                             if (userName != null) {
@@ -308,12 +308,8 @@ public class BusinessUserPRofileActivity extends AppCompatActivity implements Vi
         ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
-        if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
-            //Toast.makeText(BusinessCharityRegister.this, "No Internet connection!,Unable to Register", Toast.LENGTH_LONG).show();
-            return false;
-        }
-
-        return true;
+        //Toast.makeText(BusinessCharityRegister.this, "No Internet connection!,Unable to Register", Toast.LENGTH_LONG).show();
+        return netInfo != null && netInfo.isConnected() && netInfo.isAvailable();
     }
 
     private void NoInternetdialog() {
@@ -373,7 +369,7 @@ public class BusinessUserPRofileActivity extends AppCompatActivity implements Vi
                             Collections.reverse(profilePastEvents_id);
 
                             String total = String.valueOf(profilePastEvents.size());
-                            pastevnets.setText("(" + String.valueOf(profilePastEvents.size()) + ")");
+                            pastevnets.setText("(" + profilePastEvents.size() + ")");
                         }
 
 
@@ -432,11 +428,11 @@ public class BusinessUserPRofileActivity extends AppCompatActivity implements Vi
                         for (UsersLiveEvent.Datum datum : datumArrayList) {
                             profileliveevents.add(datum.getTitle());
                             profileliveevents_id.add(String.valueOf(datum.getEventId()));
-                            images.add(datum.getFile().toString());
+                            images.add(datum.getFile());
                             Collections.reverse(images);
                             Collections.reverse(profileliveevents);
                             String total = String.valueOf(profileliveevents.size());
-                            totalliveevents.setText("(" + String.valueOf(profileliveevents.size()) + ")");
+                            totalliveevents.setText("(" + profileliveevents.size() + ")");
                             progressDialog.dismiss();
 
                         }

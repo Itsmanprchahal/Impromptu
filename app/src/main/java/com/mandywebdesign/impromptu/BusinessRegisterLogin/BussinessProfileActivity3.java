@@ -110,21 +110,21 @@ public class BussinessProfileActivity3 extends AppCompatActivity {
     private void init() {
 
         Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
-        mLiveEventsThumbs = (RecyclerView) findViewById(R.id.business_publish_live_events_recylerview);
-        mPastEventsThumbs = (RecyclerView) findViewById(R.id.business_publish__pastevents_recylerview);
-        LiveEventtv = (TextView) findViewById(R.id.live_event_texttotal);
-        PaseventTv = (TextView) findViewById(R.id.past_events_tv_totall);
-        fb_url_bt = (ImageView) findViewById(R.id.fb_url_bt);
-        twitter_url_bt = (ImageView) findViewById(R.id.twiter_url_bt);
+        mLiveEventsThumbs = findViewById(R.id.business_publish_live_events_recylerview);
+        mPastEventsThumbs = findViewById(R.id.business_publish__pastevents_recylerview);
+        LiveEventtv = findViewById(R.id.live_event_texttotal);
+        PaseventTv = findViewById(R.id.past_events_tv_totall);
+        fb_url_bt = findViewById(R.id.fb_url_bt);
+        twitter_url_bt = findViewById(R.id.twiter_url_bt);
         instagram_url_bt = findViewById(R.id.insta_url_bt);
         web_url_bt = findViewById(R.id.web_url_bt);
-        BName = (TextView) findViewById(R.id.business__publishprofile_user_Name);
-        address1 = (TextView) findViewById(R.id.business__publishprofile_address1);
-        address2 = (TextView) findViewById(R.id.business__publishprofile_address2);
-        aboutus = (TextView) findViewById(R.id.aboutUs_Desc_TV);
-        userImage = (RoundedImageView) findViewById(R.id.business_profilepublish_user_Image);
-        publishprofile_bt = (Button) findViewById(R.id.publish_profile);
-        mBack = (Button) findViewById(R.id.business_publish_profile_back_bt);
+        BName = findViewById(R.id.business__publishprofile_user_Name);
+        address1 = findViewById(R.id.business__publishprofile_address1);
+        address2 = findViewById(R.id.business__publishprofile_address2);
+        aboutus = findViewById(R.id.aboutUs_Desc_TV);
+        userImage = findViewById(R.id.business_profilepublish_user_Image);
+        publishprofile_bt = findViewById(R.id.publish_profile);
+        mBack = findViewById(R.id.business_publish_profile_back_bt);
     }
 
     private void listeners() {

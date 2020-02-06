@@ -94,10 +94,10 @@ public class MainActivity extends AppCompatActivity {
 
     //find ids here
     private void init() {
-        mSkip = (Button) findViewById(R.id.mainActivity_skip);
-        viewPager = (ViewPager) findViewById(R.id.main_viewpager);
-        dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
-        layout = (RelativeLayout) findViewById(R.id.mainActivity_layout);
+        mSkip = findViewById(R.id.mainActivity_skip);
+        viewPager = findViewById(R.id.main_viewpager);
+        dotsLayout = findViewById(R.id.layoutDots);
+        layout = findViewById(R.id.mainActivity_layout);
     }
 
 

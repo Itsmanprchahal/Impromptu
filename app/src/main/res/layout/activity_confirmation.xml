@@ -98,7 +98,7 @@
                         android:text="14dp"
                         android:visibility="gone"
                         android:scaleType="fitXY"
-                        android:fontFamily="@font/circularstdbold"
+                        android:fontFamily="@font/circularstdblack"
                         android:textColor="@color/colorTheme"
                         android:padding="4dp"/>
                 </androidx.cardview.widget.CardView>
@@ -108,10 +108,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="Olympic WeightLifting"
+                    android:text=" "
                     android:textColor="@color/colortextwhite"
                     android:layout_marginLeft="@dimen/_10sdp"
-                    android:fontFamily="@font/circularstdbold"
+                    android:fontFamily="@font/circularstdblack"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintVertical_bias="0.75"
@@ -135,7 +135,6 @@
                     android:fontFamily="@font/sfuitextlight"
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:textColor="@color/colortextwhite"
-                    android:text="@string/eventname"
                     android:id="@+id/confirm_address"
                     android:textSize="@dimen/_12sdp"
                     tools:ignore="MissingConstraints" />
@@ -168,7 +167,7 @@
                     android:id="@+id/confirm_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$10"
+                    android:text=""
                     android:textSize="@dimen/_12sdp"
                     android:textColor="@color/colortextwhite"
                     app:layout_constraintRight_toRightOf="parent"

@@ -102,7 +102,7 @@ public class ConfirmationActivity extends AppCompatActivity {
 
                             title = datum.getTitle();
                             timeto = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt()));
-                            image = String.valueOf(datum.getFile().get(0).getImg().toString());
+                            image = datum.getFile().get(0).getImg().toString();
 
                             timeFrom = removeLeadingZeroes(timeto);
                             if (timeFrom.contains(":00"))
@@ -214,13 +214,13 @@ public class ConfirmationActivity extends AppCompatActivity {
     }
 
     private void init() {
-        QRIMAge = (ImageView) findViewById(R.id.confirm_qrCode);
-        gotomyEvents = (Button) findViewById(R.id.confirm_button);
-        confirm_image = (ImageView) findViewById(R.id.confirm_image);
-        eventTitle = (TextView) findViewById(R.id.confirm_name);
-        eventAddress = (TextView) findViewById(R.id.confirm_address);
-        eventPrice = (TextView) findViewById(R.id.confirm_price);
-        confirm_close = (ImageView) findViewById(R.id.confirm_close);
+        QRIMAge = findViewById(R.id.confirm_qrCode);
+        gotomyEvents = findViewById(R.id.confirm_button);
+        confirm_image = findViewById(R.id.confirm_image);
+        eventTitle = findViewById(R.id.confirm_name);
+        eventAddress = findViewById(R.id.confirm_address);
+        eventPrice = findViewById(R.id.confirm_price);
+        confirm_close = findViewById(R.id.confirm_close);
         confirm_date = findViewById(R.id.confirm_date);
         confirm_category = findViewById(R.id.confirm_category);
     }

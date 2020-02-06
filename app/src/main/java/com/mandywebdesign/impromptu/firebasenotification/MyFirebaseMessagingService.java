@@ -28,8 +28,7 @@ import org.json.JSONObject;
 
 import java.util.Map;
 import java.util.Random;
-
-import me.leolin.shortcutbadger.ShortcutBadger;
+;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -45,7 +44,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Log.d("remotedata1", "" + remoteMessage.getData());
 
          count = String.valueOf(remoteMessage.getData().size());
-        ShortcutBadger.applyCount(this, Integer.parseInt(count));
         Log.d("count", count);
 
         try {
@@ -74,6 +72,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notificationChannel.enableLights(true);
             notificationChannel.setLightColor(getResources().getColor(R.color.colorTheme));
             notificationChannel.enableVibration(true);
+            notificationChannel.setShowBadge(false);
             notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
             notificationManager.createNotificationChannel(notificationChannel);
         }

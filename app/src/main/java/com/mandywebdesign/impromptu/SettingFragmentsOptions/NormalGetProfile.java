@@ -204,7 +204,7 @@ public class NormalGetProfile extends AppCompatActivity {
                             Collections.reverse(event_status);
                             Collections.reverse(liveevent_id);
 
-                            totlaEvents.setText("( " + String.valueOf(images.size()) + " )");
+                            totlaEvents.setText("( " + images.size() + " )");
 
                             LinearLayoutManager layoutManager = new LinearLayoutManager(NormalGetProfile.this, LinearLayoutManager.HORIZONTAL, false);
                             hostRecycler.setLayoutManager(layoutManager);
@@ -250,7 +250,7 @@ public class NormalGetProfile extends AppCompatActivity {
                             Log.d("cates", "" + datum.getCategory());
 
                             attendingimage.add(datum.getFile());
-                            attentingTietle.add(datum.getTitle().toString());
+                            attentingTietle.add(datum.getTitle());
                             attentingevent_id.add(String.valueOf(datum.getEventId()));
 
                             Collections.reverse(attendingimage);
@@ -296,7 +296,7 @@ public class NormalGetProfile extends AppCompatActivity {
 
                             Log.d("cates", "" + datum.getCategory());
                             attendingimage.add(datum.getFile().toString());
-                            attentingTietle.add(datum.getTitle().toString());
+                            attentingTietle.add(datum.getTitle());
                             attentingevent_id.add(String.valueOf(datum.getEventId()));
                             pastEvents.setText("( " + attentingTietle.size() + " )");
 
@@ -360,7 +360,7 @@ public class NormalGetProfile extends AppCompatActivity {
                             Collections.reverse(images);
                             Collections.reverse(liveevent_id);
 
-                            totlaEvents.setText("( " + String.valueOf(images.size()) + " )");
+                            totlaEvents.setText("( " + images.size() + " )");
 
                             LinearLayoutManager layoutManager = new LinearLayoutManager(NormalGetProfile.this, LinearLayoutManager.HORIZONTAL, false);
                             hostRecycler.setLayoutManager(layoutManager);
@@ -409,7 +409,7 @@ public class NormalGetProfile extends AppCompatActivity {
                             eventTitle.add(datum.getTitle());
                             images.add(datum.getFile());
                             liveevent_id.add(String.valueOf(datum.getEventId()));
-                            totlaEvents.setText("( " + String.valueOf(images.size()) + " )");
+                            totlaEvents.setText("( " + images.size() + " )");
 
                             LinearLayoutManager layoutManager = new LinearLayoutManager(NormalGetProfile.this, LinearLayoutManager.HORIZONTAL, false);
                             hostRecycler.setLayoutManager(layoutManager);
@@ -464,7 +464,7 @@ public class NormalGetProfile extends AppCompatActivity {
                             Log.d("cates", "" + datum.getCategory());
 
                             attendingimage.add(datum.getFile().get(0));
-                            attentingTietle.add(datum.getTitle().toString());
+                            attentingTietle.add(datum.getTitle());
                             attentingevent_id.add(String.valueOf(datum.getEventId()));
 
                             Collections.reverse(attendingimage);
@@ -631,16 +631,16 @@ public class NormalGetProfile extends AppCompatActivity {
     }
 
     private void init() {
-        questionRecycler = (RecyclerView) findViewById(R.id.user_profile_question_recycle);
-        username = (TextView) findViewById(R.id.user_profile_username);
-        userImage = (RoundedImageView) findViewById(R.id.user_profile_userimage);
-        editprofile = (ImageView) findViewById(R.id.user_profile_edit_toolbar);
-        user_profile_age = (TextView) findViewById(R.id.user_profile_age);
-        status = (TextView) findViewById(R.id.user_profile_staus);
-        back = (ImageView) findViewById(R.id.back_user_profile);
-        hostRecycler = (RecyclerView) findViewById(R.id.user_profile_events_recycler);
-        totlaEvents = (TextView) findViewById(R.id.normal_user_total_live_events);
-        eventsAttendingRecycler = (RecyclerView) findViewById(R.id.user_profile_eventAttend_recycler);
+        questionRecycler = findViewById(R.id.user_profile_question_recycle);
+        username = findViewById(R.id.user_profile_username);
+        userImage = findViewById(R.id.user_profile_userimage);
+        editprofile = findViewById(R.id.user_profile_edit_toolbar);
+        user_profile_age = findViewById(R.id.user_profile_age);
+        status = findViewById(R.id.user_profile_staus);
+        back = findViewById(R.id.back_user_profile);
+        hostRecycler = findViewById(R.id.user_profile_events_recycler);
+        totlaEvents = findViewById(R.id.normal_user_total_live_events);
+        eventsAttendingRecycler = findViewById(R.id.user_profile_eventAttend_recycler);
         pastEvents = findViewById(R.id.normal_user_total_past_events);
         normal_user_gender = findViewById(R.id.normal_user_gender);
         totalpoints = findViewById(R.id.totalpoints);
@@ -653,12 +653,8 @@ public class NormalGetProfile extends AppCompatActivity {
         ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
-        if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
-            //Toast.makeText(BusinessCharityRegister.this, "No Internet connection!,Unable to Register", Toast.LENGTH_LONG).show();
-            return false;
-        }
-
-        return true;
+        //Toast.makeText(BusinessCharityRegister.this, "No Internet connection!,Unable to Register", Toast.LENGTH_LONG).show();
+        return netInfo != null && netInfo.isConnected() && netInfo.isAvailable();
     }
 
     private void NoInternetdialog() {

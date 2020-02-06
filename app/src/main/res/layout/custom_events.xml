@@ -2,267 +2,262 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="@dimen/_220sdp"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:layout_marginTop="@dimen/_6sdp"
     android:layout_marginBottom="@dimen/_6sdp">
 
-    <RelativeLayout
-        android:id="@+id/layout"
-        android:layout_width="@dimen/_220sdp"
-        android:layout_height="wrap_content">
+    <androidx.cardview.widget.CardView
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardview"
+        android:id="@+id/cardview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_300sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        app:cardCornerRadius="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_300sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/event_image"
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/event"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp">
 
-                android:layout_height="match_parent">
+            </ImageView>
 
-                <ImageView
-                    android:id="@+id/event_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/event"
-                    tools:layout_editor_absoluteX="0dp"
-                    tools:layout_editor_absoluteY="0dp">
+            <Button
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/colorTheme"
+                android:text="Relist"
+                android:textAllCaps="false"
+                android:visibility="gone"
+                android:textSize="10sp"
+                android:textColor="@color/white"
+                android:id="@+id/relist"></Button>
 
-                </ImageView>
+            <CheckBox
+                android:id="@+id/book_event_favourite_checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:button="@drawable/custom_star_check_box" />
 
-                <Button
-                    android:id="@+id/relist"
-                    android:layout_width="60dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@color/colorTheme"
-                    android:text="Relist"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="10sp"
-                    android:visibility="gone"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"></Button>
 
-                <CheckBox
-                    android:id="@+id/book_event_favourite_checkBox"
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:background="#00FFFFFF"
+                app:cardCornerRadius="5dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints">
+
+                <TextView
+                    android:id="@+id/custom_category_name1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:layout_marginRight="@dimen/_15sdp"
-                    android:button="@drawable/custom_star_check_box"
-                    android:visibility="gone"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:fontFamily="@font/circularstdbold"
+                    android:padding="4dp"
+                    android:text="14dp"
+                    android:textColor="@color/colorTheme"
+                    android:visibility="gone" />
 
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_10sdp"
-                    android:background="#00FFFFFF"
-                    app:cardCornerRadius="5dp"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="MissingConstraints">
-
-                    <TextView
-                        android:id="@+id/custom_category_name1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/circularstdbold"
-                        android:padding="4dp"
-                        android:text="14dp"
-                        android:textColor="@color/colorTheme"
-                        android:visibility="gone" />
+            </androidx.cardview.widget.CardView>
 
 
-                </androidx.cardview.widget.CardView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="#4F000000"
+                android:orientation="vertical">
 
 
-                <LinearLayout
+
+                <TextView
+                    android:id="@+id/event_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#4F000000"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent">
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:shadowColor="#A90A0A0A"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:layout_gravity="end"
+                    android:shadowRadius="3"
+                    android:fontFamily="@font/circularstdbold"
+                    android:text="Olympic WeightLifting"
+                    android:textColor="@color/colortextwhite"
+                    android:textSize="26sp"
+                    tools:ignore="MissingConstraints" />
 
+
+
+
+                <View
+                    android:id="@+id/eventview"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="5dp"
+                    android:shadowColor="#A90A0A0A"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="3"
+                    android:background="@color/colortextwhite"></View>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/event_name"
+                        android:id="@+id/custom_text1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_gravity="end"
-                        android:layout_marginLeft="@dimen/_8sdp"
-                        android:fontFamily="@font/circularstdbold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:fontFamily="@font/sfuitextlight"
+                        app:layout_constraintRight_toLeftOf="@id/event_price"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_50sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="@string/eventname"
                         android:shadowColor="#A90A0A0A"
                         android:shadowDx="2"
                         android:shadowDy="2"
                         android:shadowRadius="3"
-                        android:text="Olympic WeightLifting"
                         android:textColor="@color/colortextwhite"
-                        android:textSize="26sp"
+                        android:textSize="@dimen/_12sdp"
                         tools:ignore="MissingConstraints" />
 
-
-                    <View
-                        android:id="@+id/eventview"
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@color/colortextwhite"
+                    <TextView
+                        android:id="@+id/event_price"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:gravity="end"
                         android:shadowColor="#A90A0A0A"
                         android:shadowDx="2"
                         android:shadowDy="2"
-                        android:shadowRadius="3"></View>
+                        android:shadowRadius="3"
+                        android:text="$10"
+                        android:fontFamily="@font/sfuitextlight"
+                        android:layout_marginRight="@dimen/_15sdp"
+                        android:textColor="@color/colortextwhite"
+                        android:textSize="@dimen/_12sdp"/>
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:text="@string/eventDate"
+                        android:shadowColor="#A90A0A0A"
+                        android:shadowDx="2"
+                        android:shadowDy="2"
+                        android:shadowRadius="3"
+                        android:fontFamily="@font/sfuitextlight"
+                        android:textColor="@color/colortextwhite"
+                        android:textSize="@dimen/_12sdp"
+                        tools:ignore="MissingConstraints" />
+
+
+                    <TextView
+                        android:id="@+id/custom_category_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:gravity="start"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:text="category"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:textSize="@dimen/_12sdp"
+                        android:shadowColor="#A90A0A0A"
+                        android:shadowDx="2"
+                        android:shadowDy="2"
+                        android:shadowRadius="3"
+                        android:fontFamily="@font/sfuitextlight"
+                        android:textColor="@color/colortextwhite"
+                        android:visibility="visible" />
 
-                        <TextView
-                            android:id="@+id/custom_text1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:layout_marginRight="@dimen/_50sdp"
-                            android:fontFamily="@font/sfuitextlight"
-                            android:shadowColor="#A90A0A0A"
-                            android:shadowDx="2"
-                            android:shadowDy="2"
-                            android:shadowRadius="3"
-                            android:text="@string/eventname"
-                            android:textColor="@color/colortextwhite"
-                            android:textSize="@dimen/_12sdp"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toLeftOf="@id/event_price"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:ignore="MissingConstraints" />
-
-                        <TextView
-                            android:id="@+id/event_price"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:layout_marginRight="@dimen/_15sdp"
-                            android:fontFamily="@font/sfuitextlight"
-                            android:gravity="end"
-                            android:shadowColor="#A90A0A0A"
-                            android:shadowDx="2"
-                            android:shadowDy="2"
-                            android:shadowRadius="3"
-                            android:text="$10"
-                            android:textColor="@color/colortextwhite"
-                            android:textSize="@dimen/_12sdp"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <RatingBar
+                        android:id="@+id/overall_rating"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_20sdp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_marginTop="@dimen/_2sdp"
-                            android:fontFamily="@font/sfuitextlight"
-                            android:shadowColor="#A90A0A0A"
-                            android:shadowDx="2"
-                            android:shadowDy="2"
-                            android:shadowRadius="3"
-                            android:text="@string/eventDate"
-                            android:textColor="@color/colortextwhite"
-                            android:textSize="@dimen/_12sdp"
-                            tools:ignore="MissingConstraints" />
-
-
-                        <TextView
-                            android:id="@+id/custom_category_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_marginTop="@dimen/_2sdp"
-                            android:fontFamily="@font/sfuitextlight"
-                            android:gravity="start"
-                            android:shadowColor="#A90A0A0A"
-                            android:shadowDx="2"
-                            android:shadowDy="2"
-                            android:shadowRadius="3"
-                            android:text="category"
-                            android:textColor="@color/colortextwhite"
-                            android:textSize="@dimen/_12sdp"
-                            android:visibility="visible" />
-
-                        <RatingBar
-                            android:id="@+id/overall_rating"
-                            style="@style/Widget.AppCompat.RatingBar.Small"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_marginTop="5dp"
-                            android:numStars="5"
-                            android:progressTint="@color/colorTheme"
-                            android:rating="5"
-                            android:stepSize="1.0"
-                            android:visibility="gone"></RatingBar>
-                    </LinearLayout>
+                        android:numStars="5"
+                        android:stepSize="1.0"
+                        android:rating="5"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:visibility="gone"
+                        android:progressTint="@color/colorTheme"
+                        android:layout_marginTop="5dp"
+                        style="@style/Widget.AppCompat.RatingBar.Small"></RatingBar>
                 </LinearLayout>
+            </LinearLayout>
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/delete_draft_bt"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/colorTheme"
+            android:text="Delete"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:visibility="gone"
+            android:textSize="10sp"
+            android:layout_gravity="end">
 
-            <Button
-                android:id="@+id/delete_draft_bt"
-                android:layout_width="60dp"
-                android:layout_height="30dp"
-                android:background="@color/colorTheme"
-                android:text="Delete"
-                android:textColor="@color/white"
-                android:textAllCaps="false"
-                android:layout_margin="@dimen/_5sdp"
-                android:visibility="gone"
-                android:layout_gravity="end"
-                android:src="@drawable/ic_closetheme">
+        </Button>
 
-            </Button>
-        </androidx.cardview.widget.CardView>
-
-
-
-    </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/related_events_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/layout"
+        android:layout_below="@id/cardview"
         android:layout_centerHorizontal="true"
         android:background="@color/colorTrans"
-        android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp"
         android:fontFamily="@font/sfuitextlight"
-        android:gravity="center"
+        android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp"
         android:text="See related events"
+        android:gravity="center"
         android:textColor="@color/colorTheme"
         android:textSize="@dimen/normalText"
         android:visibility="gone" />

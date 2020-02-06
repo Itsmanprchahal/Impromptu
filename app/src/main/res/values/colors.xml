@@ -12,6 +12,9 @@
     <color name="colordialog">#008577</color>
     <color name="colorGold">#B6A119</color>
     <color name="colorLightBlack">#646161</color>
+    <color name="shadowColor">#A90A0A0A</color>
+    <color name="black">#0A0A0A</color>
+    <color name="white">#FFFFFF</color>
 
     <string-array name="movie_serial_bg">
         <item>#24c6d5</item>

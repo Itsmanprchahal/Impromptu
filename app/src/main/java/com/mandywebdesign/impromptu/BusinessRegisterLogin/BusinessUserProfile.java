@@ -127,20 +127,20 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
 
     private void init() {
         Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
-        editProfile = (ImageView) view.findViewById(R.id._UserPRofile_edit_busines_publish_profile);
-        UserName = (TextView) view.findViewById(R.id.UserProfile_business__publishprofile_user_Name);
-        Address = (TextView) view.findViewById(R.id.UserProfile_business__publishprofile_address1);
-        Address2 = (TextView) view.findViewById(R.id.UserProfile_business__publishprofile_address2);
-        AboutUs = (ReadMoreTextView) view.findViewById(R.id.userProfile_aboutUs_Desc_TV);
-        webUrl = (ImageButton) view.findViewById(R.id.UserPRofile_web_url_bt);
-        facebookUrl = (ImageButton) view.findViewById(R.id.userProfile_fb_url_bt);
-        InstagramUrl = (ImageButton) view.findViewById(R.id.UserProfile_insta_url_bt);
-        TwitterUrl = (ImageButton) view.findViewById(R.id.UserProfile_twiter_url_bt);
-        UserImage = (RoundedImageView) view.findViewById(R.id.UserProfile_business_profilepublish_user_Image);
-        totalliveevents = (TextView) view.findViewById(R.id.UserProfile_live_event_texttotal);
-        recyclerView = (RecyclerView) view.findViewById(R.id.UserProfile_business_publish_live_events_recylerview);
-        pastevnets = (TextView) view.findViewById(R.id.UserProfile_past_events_tv_totall);
-        pasteventsrecyles = (RecyclerView) view.findViewById(R.id.UserProfile_business_publish__pastevents_recylerview);
+        editProfile = view.findViewById(R.id._UserPRofile_edit_busines_publish_profile);
+        UserName = view.findViewById(R.id.UserProfile_business__publishprofile_user_Name);
+        Address = view.findViewById(R.id.UserProfile_business__publishprofile_address1);
+        Address2 = view.findViewById(R.id.UserProfile_business__publishprofile_address2);
+        AboutUs = view.findViewById(R.id.userProfile_aboutUs_Desc_TV);
+        webUrl = view.findViewById(R.id.UserPRofile_web_url_bt);
+        facebookUrl = view.findViewById(R.id.userProfile_fb_url_bt);
+        InstagramUrl = view.findViewById(R.id.UserProfile_insta_url_bt);
+        TwitterUrl = view.findViewById(R.id.UserProfile_twiter_url_bt);
+        UserImage = view.findViewById(R.id.UserProfile_business_profilepublish_user_Image);
+        totalliveevents = view.findViewById(R.id.UserProfile_live_event_texttotal);
+        recyclerView = view.findViewById(R.id.UserProfile_business_publish_live_events_recylerview);
+        pastevnets = view.findViewById(R.id.UserProfile_past_events_tv_totall);
+        pasteventsrecyles = view.findViewById(R.id.UserProfile_business_publish__pastevents_recylerview);
     }
 
     private void getUserPRofileData() {
@@ -189,7 +189,7 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
                                 TwitteURL = response.body().getData().get(0).getTwitterUrl().toString();
                             }
 
-                            charity_number = response.body().getData().get(0).getCharityNumber().toString();
+                            charity_number = response.body().getData().get(0).getCharityNumber();
                             // Toast.makeText(getContext(), ""+charity_number, Toast.LENGTH_SHORT).show();
 
                             if (userName != null) {
@@ -277,9 +277,9 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
                         for (RetroLiveEvents.Datum datum : datumArrayList) {
                             profileliveevents.add(datum.getTitle());
                             profileliveevents_id.add(String.valueOf(datum.getEventId()));
-                            images.add(datum.getFile().toString());
+                            images.add(datum.getFile());
                             String total = String.valueOf(profileliveevents.size());
-                            totalliveevents.setText("(" + String.valueOf(profileliveevents.size()) + ")");
+                            totalliveevents.setText("(" + profileliveevents.size() + ")");
                             progressDialog.dismiss();
                         }
 
@@ -339,7 +339,7 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
 //                            Collections.reverse(profilePastEvents_id);
 
                             String total = String.valueOf(profilePastEvents.size());
-                            pastevnets.setText("(" + String.valueOf(profilePastEvents.size()) + ")");
+                            pastevnets.setText("(" + profilePastEvents.size() + ")");
                         }
 
 
@@ -437,12 +437,8 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
         ConnectivityManager conMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
-        if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
-            //Toast.makeText(BusinessCharityRegister.this, "No Internet connection!,Unable to Register", Toast.LENGTH_LONG).show();
-            return false;
-        }
-
-        return true;
+        //Toast.makeText(BusinessCharityRegister.this, "No Internet connection!,Unable to Register", Toast.LENGTH_LONG).show();
+        return netInfo != null && netInfo.isConnected() && netInfo.isAvailable();
     }
 
     private void NoInternetdialog() {

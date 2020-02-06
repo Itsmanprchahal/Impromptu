@@ -17,7 +17,7 @@ import com.mandywebdesign.impromptu.R;
 public class Event_RecyclerAdapter extends RecyclerView.Adapter<Event_RecyclerAdapter.ViewHolder> {
 
     Context context;
-    int images[];
+    int[] images;
     CardAdapterHelper cardAdapterHelper= new CardAdapterHelper();
 
     public Event_RecyclerAdapter(Context context, int[] images) {

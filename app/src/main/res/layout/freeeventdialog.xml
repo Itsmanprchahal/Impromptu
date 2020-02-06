@@ -66,13 +66,13 @@
 
             <Spinner
                 android:id="@+id/dailog_spinner1"
-                android:layout_width="match_parent"
+                android:layout_width="@dimen/_98sdp"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
+                android:textAlignment="viewStart"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_alignParentRight="true"
-                android:layout_weight="1"
-                android:gravity="end"
+                android:layout_gravity="end"
+                android:gravity="start"
                 android:text="Ticket Count"
                 android:textSize="18sp" />
 

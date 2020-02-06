@@ -91,7 +91,7 @@ public class Live extends Fragment implements DiscreteScrollView.OnItemChangedLi
         init();
 
 
-        recyclerView = (DiscreteScrollView) view.findViewById(R.id.business_events__recyclerview);
+        recyclerView = view.findViewById(R.id.business_events__recyclerview);
         recyclerView.setOrientation(DSVOrientation.HORIZONTAL);
         recyclerView.addOnItemChangedListener(this);
         infiniteAdapter = InfiniteScrollAdapter.wrap(new Business_LiveEventAdapter(getContext(), fragmentManager));

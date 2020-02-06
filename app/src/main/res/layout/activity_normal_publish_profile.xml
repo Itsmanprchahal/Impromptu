@@ -74,7 +74,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_toLeftOf="@id/normal_user_profile_age"
                         android:fontFamily="@font/sfuitextlight"
-                        android:hint="Name"
+                        android:hint=""
                         android:background="@drawable/custom_edittext"
                         android:padding="5dp"
                         android:textColor="@color/colortextBlack"
@@ -91,7 +91,7 @@
                         android:background="@drawable/custom_edittext"
                         android:fontFamily="@font/sfuitextlight"
                         android:gravity="center"
-                        android:hint="(21)"
+                        android:hint=""
                         android:textSize="@dimen/_12sdp"
                         android:inputType="number"
                         android:padding="5dp"
@@ -141,7 +141,6 @@
                         android:paddingBottom="10dp"
                         android:paddingRight="10dp"
                         android:id="@+id/normal_user_about"
-                        android:hint="@string/userProfileStatus"
                         android:textSize="@dimen/_12sdp" />
 
 

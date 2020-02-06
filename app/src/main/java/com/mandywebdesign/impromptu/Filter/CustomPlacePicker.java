@@ -141,7 +141,7 @@ public class CustomPlacePicker extends AppCompatActivity {
                                         startActivity(intent);
                                         finish();
 
-                                        Log.d("checkplace", "" + String.valueOf(a.getLatitude()));
+                                        Log.d("checkplace", "" + a.getLatitude());
 
 
                                     }

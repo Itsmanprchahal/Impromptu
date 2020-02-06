@@ -101,11 +101,11 @@ public class Hosting extends Fragment {
 
     private void initlization() {
 
-        liveButton = (Button) view.findViewById(R.id.myEvent_Live_btn);
-        draftButton = (Button) view.findViewById(R.id.myEvent_Draft_btn);
-        historyButton = (Button) view.findViewById(R.id.myEvent_History_btn);
-        title = (TextView) view.findViewById(R.id.hosting_title);
-        linearLayout = (LinearLayout) view.findViewById(R.id.tabs_layout);
+        liveButton = view.findViewById(R.id.myEvent_Live_btn);
+        draftButton = view.findViewById(R.id.myEvent_Draft_btn);
+        historyButton = view.findViewById(R.id.myEvent_History_btn);
+        title = view.findViewById(R.id.hosting_title);
+        linearLayout = view.findViewById(R.id.tabs_layout);
 
         liveButton.setBackgroundColor(getResources().getColor(R.color.colorTheme));
         liveButton.setTextColor(getResources().getColor(R.color.colortextwhite));

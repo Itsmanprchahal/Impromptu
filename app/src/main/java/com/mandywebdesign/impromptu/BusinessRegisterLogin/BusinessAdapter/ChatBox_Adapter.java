@@ -47,7 +47,7 @@ public class ChatBox_Adapter extends RecyclerView.Adapter<ChatBox_Adapter.ViewHo
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         RetroGetMessages.Datum datum = arrayList.get(i);
         String id = datum.getUserId().toString();
-        String hostid = datum.getHost_id().toString();
+        String hostid = datum.getHost_id();
         Log.e("USERID", id );
         String mesg = arrayList.get(i).getMessage();
 

@@ -89,7 +89,7 @@ public class Hosts extends Fragment implements DiscreteScrollView.OnItemChangedL
         GetFavEvents(S_Token);
 
 
-        recyclerView = (DiscreteScrollView) view.findViewById(R.id.host_favourite_event_recycler_view);
+        recyclerView = view.findViewById(R.id.host_favourite_event_recycler_view);
         recyclerView.setOrientation(DSVOrientation.HORIZONTAL);
         recyclerView.addOnItemChangedListener(this);
         infiniteAdapter = InfiniteScrollAdapter.wrap(new Hosting_fav_events_Adapter(getContext(), fragmentManager));
@@ -107,7 +107,7 @@ public class Hosts extends Fragment implements DiscreteScrollView.OnItemChangedL
     private void initi() {
         Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
         recyclerView = view.findViewById(R.id.host_favourite_event_recycler_view);
-        noEvnets = (TextView) view.findViewById(R.id.noEvetntshost);
+        noEvnets = view.findViewById(R.id.noEvetntshost);
     }
 
     private void GetFavEvents(final String s_token) {

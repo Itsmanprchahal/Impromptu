@@ -90,7 +90,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                 dialog.setCanceledOnTouchOutside(false);
 
                 String answer = viewHolder.answerText.getText().toString();
-                editText = (EditText) dialog.findViewById(R.id.user_profile_answer);
+                editText = dialog.findViewById(R.id.user_profile_answer);
                 spinner = dialog.findViewById(R.id.user_profile_sppiner);
                 ImageView close = dialog.findViewById(R.id.close_questtionDialog);
                 editText.setText(answer);

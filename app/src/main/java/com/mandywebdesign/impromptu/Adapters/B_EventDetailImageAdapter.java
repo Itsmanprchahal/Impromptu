@@ -38,7 +38,7 @@ public class B_EventDetailImageAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object o) {
-        return view == ((RelativeLayout) o);
+        return view == o;
     }
 
     @Override
@@ -53,13 +53,13 @@ public class B_EventDetailImageAdapter extends PagerAdapter {
 
         Glide.with(context).load(images.get(position)).into(trailimg);
 
-        ((ViewPager) container).addView(itemview);
+        container.addView(itemview);
 
         return itemview;
     }
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        ((ViewPager) container).removeView((RelativeLayout) object);
+        container.removeView((RelativeLayout) object);
     }
 }

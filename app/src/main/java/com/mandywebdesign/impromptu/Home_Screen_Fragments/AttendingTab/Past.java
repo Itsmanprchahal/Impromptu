@@ -90,7 +90,7 @@ public class Past extends Fragment implements DiscreteScrollView.OnItemChangedLi
         past_EVnets(S_Token);
 
 
-        recyclerView = (DiscreteScrollView) view.findViewById(R.id.past_booked_recycler_view);
+        recyclerView = view.findViewById(R.id.past_booked_recycler_view);
         recyclerView.setOrientation(DSVOrientation.HORIZONTAL);
         recyclerView.addOnItemChangedListener(this);
         infiniteAdapter = InfiniteScrollAdapter.wrap(new Normal_pastbooked(getContext(), fragmentManager, S_Token));

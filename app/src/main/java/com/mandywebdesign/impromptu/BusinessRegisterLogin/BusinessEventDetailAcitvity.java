@@ -374,7 +374,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
 
                 if (response.body() != null) {
                     if (response.body().getStatus().equals("200")) {
-                        attendess = response.body().getData().get(0).getTotalTickets().toString();
+                        attendess = response.body().getData().get(0).getTotalTickets();
 //                        numberofTickets.setText(attendess);
                         if (response.body().getData().get(0).getPrice() != null) {
                             ticktprice = response.body().getData().get(0).getPrice();
@@ -387,7 +387,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                         numberofTickets.setText(response.body().getData().get(0).getTotalTickets());
                         Float totalprice = TicketPrice * TotalAttendess;
 
-                        totalPrice.setText("£ " + String.valueOf(totalprice));
+                        totalPrice.setText("£ " + totalprice);
 
                     } else if (response.body().getStatus().equals("400")) {
                         numberofTickets.setText("0");
@@ -512,9 +512,9 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                             gender = datum.getAttendeesGender();
                             andendeenumber = datum.getAttendeesNo();
                             freeEvent = datum.getFreeEvent();
-                            tickets_booked_by_user = datum.getTickets_booked_by_user().toString();
+                            tickets_booked_by_user = datum.getTickets_booked_by_user();
                             ticktType = datum.getTicketType();
-                            bookstatus = datum.getEventBook().toString();
+                            bookstatus = datum.getEventBook();
                             getTickets_booked_by_user = datum.getTickets_booked_by_user();
                             event_status = datum.getEvent_status();
 
@@ -539,7 +539,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
 
                                     Float totalprice = TicketPrice * TotalAttendess;
 
-                                    totalPrice.setText("£ " + String.valueOf(totalprice));
+                                    totalPrice.setText("£ " + totalprice);
                                 }
                                 if (datum.getTicketsType().size() == 2) {
                                     ticktprice = datum.getTicketsType().get(0).getValue();
@@ -550,7 +550,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
 
                                     Float totalprice = TicketPrice * TotalAttendess;
 
-                                    totalPrice.setText("£ " + String.valueOf(totalprice));
+                                    totalPrice.setText("£ " + totalprice);
                                     Toast.makeText(BusinessEventDetailAcitvity.this, "" + totalprice, Toast.LENGTH_SHORT).show();
                                     //-----------------------++++++++++++++++++++++++----------------------
 
@@ -559,7 +559,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
 
                                     Float totalprice1 = TicketPrice1 * TotalAttendess1;
 
-                                    totalPrice1.setText("£ " + String.valueOf(totalprice1));
+                                    totalPrice1.setText("£ " + totalprice1);
 
                                 }
                                 if (datum.getTicketsType().size() == 3) {
@@ -581,7 +581,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
 
                                     Float totalprice = TicketPrice * TotalAttendess;
 
-                                    totalPrice.setText("£ " + String.valueOf(totalprice));
+                                    totalPrice.setText("£ " + totalprice);
                                     //-----------------------++++++++++++++++++++++++----------------------
 
                                     Float TicketPrice1 = Float.valueOf((ticketprice1));
@@ -589,7 +589,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
 
                                     Float totalprice1 = TicketPrice1 * TotalAttendess1;
 
-                                    totalPrice1.setText("£ " + String.valueOf(totalprice1));
+                                    totalPrice1.setText("£ " + totalprice1);
 
                                     //----------------------------++++++++++++++++++--------------------------
 
@@ -598,7 +598,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
 
                                     Float totalprice2 = TicketPrice2 * TotalAttendess2;
 
-                                    totalPrice2.setText("£ " + String.valueOf(totalprice2));
+                                    totalPrice2.setText("£ " + totalprice2);
                                 }
 
                             }
@@ -661,7 +661,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                             }
 
 
-                            String imageurl = image.get(0).toString();
+                            String imageurl = image.get(0);
                             Glide.with(BusinessEventDetailAcitvity.this).load(imageurl).into(bannerImage);
 
                             //Check Event Fav Status
@@ -807,7 +807,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
     }
 
     public void dialog(final String value) {
-        String ticketNum[] = new String[]{"1", "2"};
+        String[] ticketNum = new String[]{"1", "2"};
 
         final Dialog dialog = new Dialog(BusinessEventDetailAcitvity.this);
         dialog.setContentView(R.layout.custom_dialog_book_ticket);
@@ -830,7 +830,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                     tickettypespinnerposintion = parent.getItemAtPosition(position).toString();
                     tickettypeposition = String.valueOf(position);
 
-                    ticktprice = ticketprice.get(Integer.parseInt(tickettypeposition)).toString();
+                    ticktprice = ticketprice.get(Integer.parseInt(tickettypeposition));
 
                     Float a = Float.valueOf((getSpinnerposition));
                     total_ticket = String.valueOf(a);
@@ -1123,33 +1123,33 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
         event_price = findViewById(R.id.event_price);
         editevent = findViewById(R.id.editevent);
         eventdetail_favbt = findViewById(R.id.eventdetail_favbt);
-        dotsLayout = (LinearLayout) findViewById(R.id.BusinessEvent_detailsFragment_book_indicator);
-        checkInGuest = (Button) findViewById(R.id.BusinessEvent_detailsFragment_book_event_book_bt);
-        category = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_categry);
-        descri = (ReadMoreTextView) findViewById(R.id.BusinessEvent_detailsFragment_book_description);
-        datetime = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_date);
-        loc = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_location);
-        viewPager = (ViewPager) findViewById(R.id.BusinessEvent_detailsFragment_book_viewpager);
+        dotsLayout = findViewById(R.id.BusinessEvent_detailsFragment_book_indicator);
+        checkInGuest = findViewById(R.id.BusinessEvent_detailsFragment_book_event_book_bt);
+        category = findViewById(R.id.BusinessEvent_detailsFragment_book_categry);
+        descri = findViewById(R.id.BusinessEvent_detailsFragment_book_description);
+        datetime = findViewById(R.id.BusinessEvent_detailsFragment_book_date);
+        loc = findViewById(R.id.BusinessEvent_detailsFragment_book_location);
+        viewPager = findViewById(R.id.BusinessEvent_detailsFragment_book_viewpager);
         BusinessEvent_detailsFragment_book_time = findViewById(R.id.BusinessEvent_detailsFragment_book_time);
-        publish = (Button) findViewById(R.id.publish_on_eventsdetails);
-        linearLayout = (LinearLayout) findViewById(R.id.bulletin_layout);
-        peoplecoming = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_attendess_people);
-        users = (RecyclerView) findViewById(R.id.BusinessEvent_detailsFragment_book_recyclerView);
-        ticketPrice = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_price);
-        ticketPrice1 = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_price1);
-        ticketPrice2 = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_price2);
-        numberofTickets = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_ticket_number);
-        totalPrice = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_total_price);
-        totalPrice1 = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_total_price1);
-        totalPrice2 = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_total_price2);
-        priceLayput = (LinearLayout) findViewById(R.id.pricelayout);
-        event_title = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_tittle);
-        freetext = (TextView) findViewById(R.id.freeText);
-        see_all = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_seeAll);
-        bannerImage = (RoundedImageView) findViewById(R.id.BusinessEvent_detailsFragment_book_bulletin);
-        BusinessEvent_detailsFragment_book_link1 = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_link1);
-        BusinessEvent_detailsFragment_book_link2 = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_link2);
-        BusinessEvent_detailsFragment_book_link3 = (TextView) findViewById(R.id.BusinessEvent_detailsFragment_book_link3);
+        publish = findViewById(R.id.publish_on_eventsdetails);
+        linearLayout = findViewById(R.id.bulletin_layout);
+        peoplecoming = findViewById(R.id.BusinessEvent_detailsFragment_book_attendess_people);
+        users = findViewById(R.id.BusinessEvent_detailsFragment_book_recyclerView);
+        ticketPrice = findViewById(R.id.BusinessEvent_detailsFragment_book_price);
+        ticketPrice1 = findViewById(R.id.BusinessEvent_detailsFragment_book_price1);
+        ticketPrice2 = findViewById(R.id.BusinessEvent_detailsFragment_book_price2);
+        numberofTickets = findViewById(R.id.BusinessEvent_detailsFragment_book_ticket_number);
+        totalPrice = findViewById(R.id.BusinessEvent_detailsFragment_book_total_price);
+        totalPrice1 = findViewById(R.id.BusinessEvent_detailsFragment_book_total_price1);
+        totalPrice2 = findViewById(R.id.BusinessEvent_detailsFragment_book_total_price2);
+        priceLayput = findViewById(R.id.pricelayout);
+        event_title = findViewById(R.id.BusinessEvent_detailsFragment_book_tittle);
+        freetext = findViewById(R.id.freeText);
+        see_all = findViewById(R.id.BusinessEvent_detailsFragment_book_seeAll);
+        bannerImage = findViewById(R.id.BusinessEvent_detailsFragment_book_bulletin);
+        BusinessEvent_detailsFragment_book_link1 = findViewById(R.id.BusinessEvent_detailsFragment_book_link1);
+        BusinessEvent_detailsFragment_book_link2 = findViewById(R.id.BusinessEvent_detailsFragment_book_link2);
+        BusinessEvent_detailsFragment_book_link3 = findViewById(R.id.BusinessEvent_detailsFragment_book_link3);
         seemessagesforthisevent = findViewById(R.id.seemessagesforthisevent);
         backon_b_eventdetail = findViewById(R.id.backon_b_eventdetail);
         priceLayput1 = findViewById(R.id.pricelayout1);

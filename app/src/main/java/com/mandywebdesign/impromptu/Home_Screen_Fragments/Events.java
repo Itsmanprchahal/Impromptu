@@ -118,7 +118,7 @@ public class Events extends Fragment {
 
     private void setMesgIcon() {
         if (MyFirebaseMessagingService.counter != null) {
-            String counter = MyFirebaseMessagingService.counter.toString();
+            String counter = MyFirebaseMessagingService.counter;
             if (!counter.equals("0")) {
                 Home_Screen.count = "1";
             }
@@ -212,10 +212,10 @@ public class Events extends Fragment {
 
     private void initlization() {
         Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
-        attending = (Button) view.findViewById(R.id.myEvent_attending_btn);
-        hosting = (Button) view.findViewById(R.id.myEvent_hosting_btn);
-        favourites = (Button) view.findViewById(R.id.myEvent_favorite_btn);
-        upComing = (Button) view.findViewById(R.id.myEvent_upcoming_btn);
+        attending = view.findViewById(R.id.myEvent_attending_btn);
+        hosting = view.findViewById(R.id.myEvent_hosting_btn);
+        favourites = view.findViewById(R.id.myEvent_favorite_btn);
+        upComing = view.findViewById(R.id.myEvent_upcoming_btn);
 
     }
 }

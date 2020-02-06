@@ -219,41 +219,41 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     private void init() {
 
-        progressBar = (ProgressBar) findViewById(R.id.event_progress_bar);
-        perviewButoon = (Button) findViewById(R.id.event_preview);
-        toolbar = (Toolbar) findViewById(R.id.event_toolbar);
-        mDate = (EditText) findViewById(R.id.event_details_date_et);
+        progressBar = findViewById(R.id.event_progress_bar);
+        perviewButoon = findViewById(R.id.event_preview);
+        toolbar = findViewById(R.id.event_toolbar);
+        mDate = findViewById(R.id.event_details_date_et);
         event_details_date_etto = findViewById(R.id.event_details_date_etto);
-        eventTime_from = (EditText) findViewById(R.id.event_from);
-        eventTime_to = (EditText) findViewById(R.id.event_to);
-        addTicket = (TextView) findViewById(R.id.event_tickettype);
+        eventTime_from = findViewById(R.id.event_from);
+        eventTime_to = findViewById(R.id.event_to);
+        addTicket = findViewById(R.id.event_tickettype);
         if (!BToken.equals("")) {
             addTicket.setText("+ Add ticket type");
         } else {
             addTicket.setText("+ Add ticket");
         }
 
-        event_lcation_address1 = (AutoCompleteTextView) findViewById(R.id.event_lcation_address1);
+        event_lcation_address1 = findViewById(R.id.event_lcation_address1);
         event_lcation_address1.setThreshold(1);
         event_lcation_address1.setOnItemClickListener(autocompleteClickListener);
         adapter = new AutoCompleteAdapter(this, placesClient);
         event_lcation_address1.setAdapter(adapter);
 
-        event_lcation_address2 = (AutoCompleteTextView) findViewById(R.id.event_lcation_address2);
+        event_lcation_address2 = findViewById(R.id.event_lcation_address2);
         event_lcation_address2.setThreshold(1);
         event_lcation_address2.setOnItemClickListener(autocompleteClickListener1);
         autoCompleteAdapter = new AutoCompleteAdapter(this, placesClient);
         event_lcation_address2.setAdapter(autoCompleteAdapter);
 
-        event_postcode = (EditText) findViewById(R.id.event_postcode);
+        event_postcode = findViewById(R.id.event_postcode);
         event_postcode.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
-        event_city = (EditText) findViewById(R.id.event_city);
-        event_radiobutton_all = (RadioButton) findViewById(R.id.event_radiobutton_all);
-        event_radiobutton_female = (RadioButton) findViewById(R.id.event_radiobutton_female);
-        event_radiobutton_male = (RadioButton) findViewById(R.id.event_radiobutton_male);
-        event_attendees_no = (EditText) findViewById(R.id.event_attendees_no);
-        freeevent_checkbox = (CheckBox) findViewById(R.id.freeevent_checkbox);
-        close = (ImageView) findViewById(R.id.event_close);
+        event_city = findViewById(R.id.event_city);
+        event_radiobutton_all = findViewById(R.id.event_radiobutton_all);
+        event_radiobutton_female = findViewById(R.id.event_radiobutton_female);
+        event_radiobutton_male = findViewById(R.id.event_radiobutton_male);
+        event_attendees_no = findViewById(R.id.event_attendees_no);
+        freeevent_checkbox = findViewById(R.id.freeevent_checkbox);
+        close = findViewById(R.id.event_close);
         setSupportActionBar(toolbar);
 
     }
@@ -428,17 +428,20 @@ public class EventDetailsActivity extends AppCompatActivity {
                 } else if (!freeevent_checkbox.isChecked() && addTicket.getText().equals("+Add ticket type")) {
                     Toast.makeText(EventDetailsActivity.this, "Select event type", Toast.LENGTH_SHORT).show();
                 } else if (event_radiobutton_male.isChecked() | event_radiobutton_female.isChecked() | event_radiobutton_all.isChecked()) {
-
                     String postcode;
                     if (event_postcode.getText().toString().contains(" ")) {
                         postcode = event_postcode.getText().toString().replace(" ", "");
                     } else {
                         postcode = event_postcode.getText().toString();
                     }
+
+                    progressDialog.show();
+                    progressDialog.setTitle("Checking Poscode...");
                     Call<PostCode> call = WebAPI1.getInstance().getApi().postcode(postcode);
                     call.enqueue(new Callback<PostCode>() {
                         @Override
                         public void onResponse(Call<PostCode> call, Response<PostCode> response) {
+                            progressDialog.dismiss();
                             if (response.body() != null) {
                                 if (response.code() == 200) {
 
@@ -448,7 +451,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                                     DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                                     Date date = null;
                                     try {
-                                        date = (Date) formatter.parse(givenDateString);
+                                        date = formatter.parse(givenDateString);
                                     } catch (ParseException e) {
                                         e.printStackTrace();
                                     }
@@ -461,7 +464,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                                     DateFormat formatter1 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                                     Date date1 = null;
                                     try {
-                                        date1 = (Date) formatter1.parse(givenDateString1);
+                                        date1 = formatter1.parse(givenDateString1);
                                     } catch (ParseException e) {
                                         e.printStackTrace();
                                     }
@@ -505,7 +508,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<PostCode> call, Throwable t) {
-
+                        progressDialog.dismiss();
                         }
                     });
                 } else {
@@ -540,7 +543,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                 DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 Date date = null;
                 try {
-                    date = (Date) formatter.parse(formatter.format(calendar.getTime()));
+                    date = formatter.parse(formatter.format(calendar.getTime()));
                     Log.d("StartDate", String.valueOf(date.getTime()));
                     startdatemilli = date.getTime();
                 } catch (ParseException e) {
@@ -572,7 +575,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                 DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 Date date = null;
                 try {
-                    date = (Date) formatter.parse(formatter.format(calendar3.getTime()));
+                    date = formatter.parse(formatter.format(calendar3.getTime()));
                     Log.d("StartDate", String.valueOf(date.getTime()));
                     year2 = year;
                     month2 = month;
@@ -905,7 +908,12 @@ public class EventDetailsActivity extends AppCompatActivity {
                                         datetime.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                         datetime.set(Calendar.MINUTE, minute);
                                         //if (datetime.getTimeInMillis() >= c.getTimeInMillis()) {
-                                        if (calendar3.getTimeInMillis() >= calendar.getTimeInMillis()) {
+                                        if (calendar3 == null) {
+                                            calendar3 = Calendar.getInstance();
+                                            calendar3.set(Calendar.YEAR,year2);
+
+                                        }
+                                        if (calendar1.getTimeInMillis() < calendar2.getTimeInMillis()) {
                                             //it's after current
                                             int hour = hourOfDay % 24;
                                             if (hourOfDay < 10 && minute < 10) {
@@ -1032,7 +1040,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         if (v instanceof EditText) {
             View w = getCurrentFocus();
-            int scrcoords[] = new int[2];
+            int[] scrcoords = new int[2];
             w.getLocationOnScreen(scrcoords);
             float x = event.getRawX() + w.getLeft() - scrcoords[0];
             float y = event.getRawY() + w.getTop() - scrcoords[1];
@@ -1052,13 +1060,13 @@ public class EventDetailsActivity extends AppCompatActivity {
         dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog1.show();
         arryList = new ArrayList<>();
-        edt_tiketType = (EditText) dialog1.findViewById(R.id.edt_tiketType);
-        edt_price = (EditText) dialog1.findViewById(R.id.edt_price);
-        edt_numbersOfTicket = (EditText) dialog1.findViewById(R.id.edt_numbersOfTicket);
+        edt_tiketType = dialog1.findViewById(R.id.edt_tiketType);
+        edt_price = dialog1.findViewById(R.id.edt_price);
+        edt_numbersOfTicket = dialog1.findViewById(R.id.edt_numbersOfTicket);
         type1 = dialog1.findViewById(R.id.type1);
         type2 = dialog1.findViewById(R.id.type2);
         type3 = dialog1.findViewById(R.id.type3);
-        btn_done = (Button) dialog1.findViewById(R.id.btn_done);
+        btn_done = dialog1.findViewById(R.id.btn_done);
         ticketET = event_attendees_no.getText().toString();
         totalticketsnumber = Integer.parseInt(event_attendees_no.getText().toString());
         totalTicket = Integer.parseInt(ticketET);
@@ -1186,10 +1194,10 @@ public class EventDetailsActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.ticket_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         TextView tickettext = dialog.findViewById(R.id.tickettext);
-        numbersTicketET = (TextView) dialog.findViewById(R.id.numbers_of_tickets_et);
+        numbersTicketET = dialog.findViewById(R.id.numbers_of_tickets_et);
         tickettype_et = dialog.findViewById(R.id.tickettypename_et);
-        price_et = (EditText) dialog.findViewById(R.id.price_et_ticketdialog);
-        okayDialog = (Button) dialog.findViewById(R.id.okaydialog);
+        price_et = dialog.findViewById(R.id.price_et_ticketdialog);
+        okayDialog = dialog.findViewById(R.id.okaydialog);
         tickettext.setVisibility(View.GONE);
         tickettype_et.setVisibility(View.GONE);
         dialog.show();
@@ -1372,7 +1380,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         Geocoder geocoder = new Geocoder(EventDetailsActivity.this, Locale.getDefault());
         List<Address> address = null;
         try {
-            address = (List<Address>) geocoder.getFromLocation(Double.parseDouble(lat), Double.parseDouble(lng), 1);
+            address = geocoder.getFromLocation(Double.parseDouble(lat), Double.parseDouble(lng), 1);
             if (address != null) {
 
                 if (address.get(0).getPostalCode() != null) {

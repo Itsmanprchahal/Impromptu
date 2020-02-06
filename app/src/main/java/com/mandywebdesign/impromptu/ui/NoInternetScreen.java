@@ -34,6 +34,6 @@ public class NoInternetScreen extends AppCompatActivity {
 
     private void init() {
 
-        nointernetBt = (Button)findViewById(R.id.notinternetretry);
+        nointernetBt = findViewById(R.id.notinternetretry);
     }
 }

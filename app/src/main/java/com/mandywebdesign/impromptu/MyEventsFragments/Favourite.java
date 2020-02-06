@@ -114,8 +114,8 @@ public class Favourite extends Fragment {
 
 
     private void initlization() {
-        Events = (Button) view.findViewById(R.id.myEvent_events_btn);
-        Hosts = (Button) view.findViewById(R.id.myEvent_hosting_btn);
+        Events = view.findViewById(R.id.myEvent_events_btn);
+        Hosts = view.findViewById(R.id.myEvent_hosting_btn);
 
         Events.setBackgroundColor(getResources().getColor(R.color.colorTheme));
         Events.setTextColor(getResources().getColor(R.color.colortextwhite));

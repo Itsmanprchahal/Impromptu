@@ -65,10 +65,10 @@ public class PaymentDetailActivity extends AppCompatActivity {
                     {
                         if (response.body().getData().getCardNumber()!=null && response.body().getData().getCardEdate()!=null && response.body().getData().getCardSdate()!=null&& response.body().getData().getCard_holder_name()!=null)
                         {
-                            CardNumber.setText(response.body().getData().getCardNumber().toString());
+                            CardNumber.setText(response.body().getData().getCardNumber());
                             Card_ExpiryDate.setText(response.body().getData().getCardSdate());
-                            pay_expiry_year.setText(response.body().getData().getCardEdate().toString());
-                            pay_card_name.setText(response.body().getData().getCard_holder_name().toString());
+                            pay_expiry_year.setText(response.body().getData().getCardEdate());
+                            pay_card_name.setText(response.body().getData().getCard_holder_name());
                         }
 
                     }

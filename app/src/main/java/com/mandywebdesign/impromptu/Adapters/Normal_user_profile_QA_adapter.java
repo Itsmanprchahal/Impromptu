@@ -76,7 +76,7 @@ public class Normal_user_profile_QA_adapter extends RecyclerView.Adapter<Normal_
 
         viewHolder.ques.setText(ques1.get(i));
         viewHolder.answer.setText(ansewer1.get(i));
-        QuesID = NormalPublishProfile.QA_id.get(i).toString();
+        QuesID = NormalPublishProfile.QA_id.get(i);
 
         viewHolder.edit_Q.setOnClickListener(new View.OnClickListener() {
             @Override
