@@ -501,6 +501,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                     android.R.layout.simple_spinner_item, ticketNum1);
         }
 
+        ticketPrice.setText(ticktprice);
         //============================88888888888888888888888888=====================================
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -790,9 +791,9 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                         .setLink(Uri.parse("https://www.impromptusocial.com/" + "event_id/" + value))
                         .setDomainUriPrefix("impromptusocial.page.link")
                         // Open links with this app on Android  amitpandey12.page.link
-                        .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build()).setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().setDescription("Hey! Would you like to join me at this Impromptu event?").build())
+                        .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build()).setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().setDescription("Hi! Check out this Impromptu event.").build())
                         // Open links with com.example.ios on iOS
-                        .setIosParameters(new DynamicLink.IosParameters.Builder("impromptusocial.page.link").build()).setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().setDescription("Hey! Would you like to join me at this Impromptu event?").build())
+                        .setIosParameters(new DynamicLink.IosParameters.Builder("impromptusocial.page.link").build()).setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().setDescription("Hi! Check out this Impromptu event.").build())
                         .buildDynamicLink();
 
                 Uri dynamicLinkUri = dynamicLink.getUri();
@@ -845,7 +846,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                         .setLink(Uri.parse("https://www.impromptusocial.com/" + "event_id/" + value))
                         .setDomainUriPrefix("impromptusocial.page.link")
                         // Open links with this app on Android  amitpandey12.page.link
-                        .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build())
+                        .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build()).setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().setDescription("Hey! Would you like to join me at this Impromptu event?").build())
                         // Open links with com.example.ios on iOS
                         .setIosParameters(new DynamicLink.IosParameters.Builder("impromptusocial.page.link").build())
                         .buildDynamicLink();

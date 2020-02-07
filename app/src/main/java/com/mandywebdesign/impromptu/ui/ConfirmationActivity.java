@@ -94,7 +94,7 @@ public class ConfirmationActivity extends AppCompatActivity {
                                 {
                                     ticktprice = "Free";
                                 }else {
-                                    ticktprice ="$ "+datum.getPrice();
+                                    ticktprice ="£ "+datum.getPrice();
                                 }
                             }else {
                                 ticktprice = "Paid";

@@ -111,7 +111,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                 viewHolder.mesgCount.setVisibility(View.GONE);
                 viewHolder.linearLayout1.setVisibility(View.VISIBLE);
                 viewHolder.linearLayout.setVisibility(View.GONE);
-                viewHolder.bookedeventname.setText("'" + Messages.bookedeventname.get(i) + "'");
+                viewHolder.bookedeventname.setText(" '" + Messages.bookedeventname.get(i) + "'");
                 viewHolder.attendeename.setText(Messages.attendeename.get(i));
             } else {
                 setMessagedata(viewHolder,i);

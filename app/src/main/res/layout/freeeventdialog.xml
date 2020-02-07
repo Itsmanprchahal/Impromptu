@@ -15,7 +15,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
@@ -47,7 +47,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
@@ -66,11 +66,10 @@
 
             <Spinner
                 android:id="@+id/dailog_spinner1"
-                android:layout_width="@dimen/_98sdp"
+                android:layout_width="@dimen/_90sdp"
                 android:layout_height="wrap_content"
                 android:textAlignment="viewStart"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:layout_alignParentRight="true"
                 android:layout_gravity="end"
                 android:gravity="start"
                 android:text="Ticket Count"

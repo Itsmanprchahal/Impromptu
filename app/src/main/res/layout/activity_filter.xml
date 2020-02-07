@@ -228,7 +228,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="18dp"
                     android:fontFamily="@font/sfuitextlight"
-                    android:text="£100"
+                    android:text="£50+"
                     android:textColor="@color/colortextBlack"
                     app:layout_constraintRight_toLeftOf="@id/plus"
                     app:layout_constraintTop_toBottomOf="@id/costseekbar" />
