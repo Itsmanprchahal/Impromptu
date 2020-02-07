@@ -58,7 +58,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginLeft="@dimen/_20sdp">
+                android:layout_marginLeft="@dimen/defaultmargin"
+                android:layout_marginRight="@dimen/defaultmargin">
                 <TextView
                     android:id="@+id/privacy"
                     android:layout_width="match_parent"
@@ -70,14 +71,16 @@
                     android:textColor="@color/colortextBlack"
                     android:textSize="@dimen/_12sdp" />
 
-                <me.biubiubiu.justifytext.library.JustifyTextView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/text1"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:justificationMode="inter_word"
                     android:text="@string/privancytext1"
                     android:fontFamily="@font/sfuitextlight"
                     android:textColor="@color/black" >
-                </me.biubiubiu.justifytext.library.JustifyTextView>
+                </TextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -89,38 +92,40 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"></TextView>
 
-                <me.biubiubiu.justifytext.library.JustifyTextView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/text2"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:fontFamily="@font/sfuitextlight"
                     android:text="The information we, Impromptu Social Limited, collect about you."
-                    android:textColor="@color/black"></me.biubiubiu.justifytext.library.JustifyTextView>
+                    android:textColor="@color/black"></TextView>
 
-                <me.biubiubiu.justifytext.library.JustifyTextView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:fontFamily="@font/sfuitextlight"
                     android:text="How we utilise and share said information."
-                    android:textColor="@color/black"></me.biubiubiu.justifytext.library.JustifyTextView>
+                    android:textColor="@color/black"></TextView>
 
-                <me.biubiubiu.justifytext.library.JustifyTextView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:fontFamily="@font/sfuitextlight"
                     android:text="The privacy options at your disposal."
-                    android:textColor="@color/black"></me.biubiubiu.justifytext.library.JustifyTextView>
+                    android:textColor="@color/black"></TextView>
 
-                <me.biubiubiu.justifytext.library.JustifyTextView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/text3"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:fontFamily="@font/sfuitextlight"
                     android:textColor="@color/black"
                     android:text="This Privacy Policy applies to information we collect when you (a) use our mobile application, (b) other online products/services (collectively referred to as the “Services”) or (c) when you otherwise interact with us. We may change the provisions of this Privacy Policy from time to time. We advise that you to review this Privacy Policy regularly to remain informed about our information practices and the ways you can help safeguard your privacy."
-                    ></me.biubiubiu.justifytext.library.JustifyTextView>
+                    ></TextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -143,21 +148,23 @@
                     android:textStyle="bold"></TextView>
 
 
-                <me.biubiubiu.justifytext.library.JustifyTextView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/text4"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:fontFamily="@font/sfuitextlight"
-                    android:text="We collect information you provide to us, such as when you create an account, update your profile, use the interactive features of our Services, participate in contests, promotions or surveys, request customer support or otherwise communicate with us. "
-                    android:textColor="@color/black"></me.biubiubiu.justifytext.library.JustifyTextView>
+                    android:text="We collect information you provide to us,such as when you create an account,update your profile,use the interactive features of our Services,participate in contests,promotions or surveys,request customer support or otherwise communicate with us."
+                    android:textColor="@color/black"></TextView>
 
-                <me.biubiubiu.justifytext.library.JustifyTextView
+                <TextView
+                    android:id="@+id/text5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:text="@string/privancytetx3"
-                    android:textColor="@color/black"></me.biubiubiu.justifytext.library.JustifyTextView>
+                    android:textColor="@color/black"></TextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -169,13 +176,14 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"></TextView>
 
-                <me.biubiubiu.justifytext.library.JustifyTextView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/text6"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:textColor="@color/black"
-                    android:text="@string/privancytetx5"></me.biubiubiu.justifytext.library.JustifyTextView>
+                    android:text="@string/privancytetx5"></TextView>
 
 
 
@@ -189,13 +197,14 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"></TextView>
 
-                <me.biubiubiu.justifytext.library.JustifyTextView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/text7"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:textColor="@color/black"
-                    android:text="@string/privancytetx7"></me.biubiubiu.justifytext.library.JustifyTextView>
+                    android:text="@string/privancytetx7"></TextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -207,13 +216,14 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"></TextView>
 
-                <me.biubiubiu.justifytext.library.JustifyTextView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/text8"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:textColor="@color/black"
-                    android:text="@string/privancytetx9"></me.biubiubiu.justifytext.library.JustifyTextView>
+                    android:text="@string/privancytetx9"></TextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -225,14 +235,15 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"></TextView>
 
-                <me.biubiubiu.justifytext.library.JustifyTextView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/text9"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:text="@string/privancytetx11"
                     android:textColor="@color/black"
-                    ></me.biubiubiu.justifytext.library.JustifyTextView>
+                    ></TextView>
 
 
                 <TextView
@@ -246,13 +257,14 @@
                     android:textStyle="bold"></TextView>
 
 
-                <me.biubiubiu.justifytext.library.JustifyTextView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/text10"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:textColor="@color/black"
-                    android:text="@string/privancytetx13"></me.biubiubiu.justifytext.library.JustifyTextView>
+                    android:text="@string/privancytetx13"></TextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -265,13 +277,14 @@
                     android:textStyle="bold"></TextView>
 
 
-                <me.biubiubiu.justifytext.library.JustifyTextView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/text11"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:textColor="@color/black"
-                    android:text="@string/privancytetx15"></me.biubiubiu.justifytext.library.JustifyTextView>
+                    android:text="@string/privancytetx15"></TextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -283,13 +296,14 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"></TextView>
 
-                <me.biubiubiu.justifytext.library.JustifyTextView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/text12"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:textColor="@color/black"
-                    android:text="@string/privancytetx17"></me.biubiubiu.justifytext.library.JustifyTextView>
+                    android:text="@string/privancytetx17"></TextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -301,14 +315,15 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"></TextView>
 
-                <me.biubiubiu.justifytext.library.JustifyTextView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/text13"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:textColor="@color/black"
                     android:text="@string/privancytetx19"
-                    ></me.biubiubiu.justifytext.library.JustifyTextView>
+                    ></TextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -320,14 +335,15 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"></TextView>
 
-                <me.biubiubiu.justifytext.library.JustifyTextView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/text14"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:textColor="@color/black"
                     android:text="@string/privancytetx21"
-                    ></me.biubiubiu.justifytext.library.JustifyTextView>
+                    ></TextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -350,14 +366,15 @@
                     android:textStyle="bold"></TextView>
 
 
-                <me.biubiubiu.justifytext.library.JustifyTextView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/text15"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:textColor="@color/black"
                     android:text="@string/privancytetx24"
-                    ></me.biubiubiu.justifytext.library.JustifyTextView>
+                    ></TextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -369,14 +386,15 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"></TextView>
 
-                <me.biubiubiu.justifytext.library.JustifyTextView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/text16"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:textColor="@color/black"
                     android:text="@string/privancytetx26"
-                    ></me.biubiubiu.justifytext.library.JustifyTextView>
+                    ></TextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -388,14 +406,15 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"></TextView>
 
-                <me.biubiubiu.justifytext.library.JustifyTextView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/text17"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:textColor="@color/black"
                     android:text="@string/privancytetx28"
-                    ></me.biubiubiu.justifytext.library.JustifyTextView>
+                    ></TextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -407,13 +426,14 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"></TextView>
 
-                <me.biubiubiu.justifytext.library.JustifyTextView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/text18"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfuitextlight"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:text="@string/privancytetx30"
-                    android:textColor="@color/black"></me.biubiubiu.justifytext.library.JustifyTextView>
+                    android:textColor="@color/black"></TextView>
             </LinearLayout>
 
 

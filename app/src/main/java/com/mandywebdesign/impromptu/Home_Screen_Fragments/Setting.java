@@ -251,6 +251,8 @@ public class Setting extends Fragment {
 
         } else if (!user.equalsIgnoreCase("")) {
 
+            View view1 = view.findViewById(R.id.paymentview);
+            view1.setVisibility(View.GONE);
             setting_paymentdetails_option.setVisibility(View.GONE);
             logout.setOnClickListener(new View.OnClickListener() {
                 @Override

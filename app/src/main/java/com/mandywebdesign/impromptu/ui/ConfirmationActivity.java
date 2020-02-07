@@ -100,6 +100,8 @@ public class ConfirmationActivity extends AppCompatActivity {
                                 ticktprice = "Paid";
                             }
 
+                            Toast.makeText(ConfirmationActivity.this, ""+datum.getPrice(), Toast.LENGTH_SHORT).show();
+
                             title = datum.getTitle();
                             timeto = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt()));
                             image = datum.getFile().get(0).getImg().toString();

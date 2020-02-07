@@ -133,6 +133,7 @@
             android:textColor="@color/colortextBlack" />
 
         <View
+            android:id="@+id/paymentview"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
             android:background="@color/colorgrey">

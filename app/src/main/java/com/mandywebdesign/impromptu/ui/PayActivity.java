@@ -233,6 +233,7 @@ public class PayActivity extends AppCompatActivity {
 
         card.validateNumber();
         card.validateCVC();
+        //pk_test_NUze3lWY5JhW6P0xmCebM00s000LALfIfF,,,,,,,,,,,,,pk_live_7M5piE9lr63i8sIn6Km4uzL700iuLHEESD
 
         Stripe stripe = new Stripe(PayActivity.this, "pk_live_7M5piE9lr63i8sIn6Km4uzL700iuLHEESD");
         stripe.createToken(card, new TokenCallback() {

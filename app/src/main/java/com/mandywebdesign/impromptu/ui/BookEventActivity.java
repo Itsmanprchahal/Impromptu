@@ -453,6 +453,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         dialog.show();
         FindId(dialog);
 
+        dailog_ticket_type.setVisibility(View.GONE);
         ticketype_spinner.setVisibility(View.VISIBLE);
         dialogtickttype.setVisibility(View.GONE);
         if (tickettypes.size() >= 2) {
@@ -464,6 +465,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(BookEventActivity.this, android.R.layout.simple_spinner_item, tickettypes);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ticketype_spinner.setAdapter(arrayAdapter);
+//        ticketype_spinner.setSelection(0);
         ticketype_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -1191,8 +1193,11 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                 peoplegoing.setVisibility(View.GONE);
                                 remainingTicketTV.setVisibility(View.GONE);
                                 dashline2.setVisibility(View.GONE);
+                                book_location.setClickable(false);
                             } else {
                                 peoplegoing.setVisibility(View.VISIBLE);
+                                book_location.setPaintFlags(book_location.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+                            book_location.setShadowLayer(3,2,2,getResources().getColor(R.color.shadowColor));
                             }
 
                             getTickets_booked_by_user = datum.getTickets_booked_by_user();

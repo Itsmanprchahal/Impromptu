@@ -54,19 +54,20 @@
 
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:text="Ticket Count"
                 android:fontFamily="@font/circularstdblack"
                 android:textStyle="bold"
                 android:gravity="end"
+                android:layout_gravity="end"
                 android:textColor="@color/colorLightBlack"
                 android:textSize="18sp" />
 
             <Spinner
                 android:id="@+id/dailog_spinner1"
-                android:layout_width="@dimen/_90sdp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:textAlignment="viewStart"
                 android:layout_marginTop="@dimen/_10sdp"

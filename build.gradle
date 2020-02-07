@@ -36,6 +36,8 @@ allprojects {
             url 'https://jitpack.io'
 
         }
+
+
     }
 }
 

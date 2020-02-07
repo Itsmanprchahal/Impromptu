@@ -241,6 +241,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
         });
 
         if (!S_Token.equalsIgnoreCase("")) {
+
             createvent_addlink.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -252,13 +253,21 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
             });
 
         } else {
+
             createvent_addlink.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    link_layoutone.setVisibility(View.VISIBLE);
-                    hyperlinkone.setVisibility(View.VISIBLE);
-                    createvent_addlink.setVisibility(View.VISIBLE);
-                    deleteimage1.setVisibility(View.VISIBLE);
+
+                    if (!TextUtils.isEmpty(hyperlinkone.getText().toString()) ||!TextUtils.isEmpty(hyperlinktwo.getText().toString()) || !TextUtils.isEmpty(hyperlinkthree.getText().toString()))
+                    {
+                        createvent_addlink.setClickable(false);
+                    }else {
+                        link_layoutone.setVisibility(View.VISIBLE);
+                        hyperlinkone.setVisibility(View.VISIBLE);
+                        createvent_addlink.setVisibility(View.VISIBLE);
+                        deleteimage1.setVisibility(View.VISIBLE);
+                    }
+
                 }
             });
 
@@ -392,6 +401,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
                 createvent_addlink2.setVisibility(View.GONE);
                 link_layoutone.setVisibility(View.GONE);
                 hyperlinkone.setText("");
+                createvent_addlink.setClickable(true);
             }
         });
 

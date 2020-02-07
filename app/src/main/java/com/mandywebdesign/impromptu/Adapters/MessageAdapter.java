@@ -118,6 +118,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
             }
 
+            if (Messages.event_status.get(i).equals("past"))
+            {
+                viewHolder.bookedeventname.setVisibility(View.GONE);
+                viewHolder.attendeename.setVisibility(View.GONE);
+            }
+
         } else {
             if (Messages.rating_status.get(i).equals(1))
             {
@@ -126,6 +132,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             viewHolder.leavefeedback.setVisibility(View.GONE);
             viewHolder.time.setVisibility(View.VISIBLE);
 
+            if (Messages.event_status.get(i).equals("past"))
+            {
+                viewHolder.bookedeventname.setVisibility(View.GONE);
+                viewHolder.attendeename.setVisibility(View.GONE);
+            }
             if (Messages.bookingstatus.get(i).equals("No")) {
                 viewHolder.leavefeedback.setVisibility(View.GONE);
                 viewHolder.time.setVisibility(View.VISIBLE);

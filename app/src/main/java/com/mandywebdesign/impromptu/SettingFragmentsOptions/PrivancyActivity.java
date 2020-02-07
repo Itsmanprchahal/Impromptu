@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.Layout;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -41,6 +43,24 @@ public class PrivancyActivity extends AppCompatActivity {
     String user,social_token;
     Dialog progressDialog;
     ImageView back;
+    TextView text1;
+    TextView text2;
+    TextView text3;
+    TextView text4;
+    TextView text5;
+    TextView text6;
+    TextView text7;
+    TextView text8;
+    TextView text9;
+    TextView text10;
+    TextView text11;
+    TextView text12;
+    TextView text13;
+    TextView text14;
+    TextView text15;
+    TextView text16;
+    TextView text17;
+    TextView text18;
 
 
     @Override
@@ -58,6 +78,26 @@ public class PrivancyActivity extends AppCompatActivity {
         init();
         listerners();
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            text1.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+            text2.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+            text3.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+            text4.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+            text5.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+            text6.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+            text7.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+            text8.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+            text9.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+            text10.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+            text11.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+            text12.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+            text13.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+            text14.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+            text15.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+            text16.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+            text17.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+            text18.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+        }
         if (!user.equalsIgnoreCase(""))
         {
 //            normalprivancy(user);
@@ -112,6 +152,25 @@ public class PrivancyActivity extends AppCompatActivity {
     }
 
     private void init() {
+        text1 = findViewById(R.id.text1);
+        text2 = findViewById(R.id.text2);
+        text2 = findViewById(R.id.text2);
+        text3 = findViewById(R.id.text3);
+        text4 = findViewById(R.id.text4);
+        text5 = findViewById(R.id.text5);
+        text6 = findViewById(R.id.text6);
+        text7 = findViewById(R.id.text7);
+        text8 = findViewById(R.id.text8);
+        text9 = findViewById(R.id.text9);
+        text10 = findViewById(R.id.text10);
+        text11= findViewById(R.id.text11);
+        text12 = findViewById(R.id.text12);
+        text13 = findViewById(R.id.text13);
+        text14 = findViewById(R.id.text14);
+        text15 = findViewById(R.id.text15);
+        text16 = findViewById(R.id.text16);
+        text17 = findViewById(R.id.text17);
+        text18 = findViewById(R.id.text18);
         privacy = findViewById(R.id.privacy);
         back = findViewById(R.id.back_on_privacy);
 

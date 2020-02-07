@@ -30,9 +30,8 @@
 
             <TextView
                 android:id="@+id/dailog_ticket_type"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:visibility="visible"
                 android:gravity="end|center_horizontal"
                 android:fontFamily="@font/sfuitextlight"
@@ -47,7 +46,6 @@
                 android:textAlignment="center"
                 android:layout_alignParentRight="true"
                 android:layout_weight="1"
-                android:visibility="gone"
                 android:gravity="end|center_horizontal"
                 android:textSize="18sp" />
 
@@ -100,7 +98,6 @@
                     android:layout_alignParentRight="true"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Ticket Count"
                     android:textSize="18sp" />
 
                 <TextView
