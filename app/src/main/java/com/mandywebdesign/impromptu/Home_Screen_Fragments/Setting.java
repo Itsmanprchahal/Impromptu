@@ -17,11 +17,14 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.core.content.ContextCompat;
+
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +47,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.dynamiclinks.DynamicLink;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.Models.ChangePassword;
 import com.mandywebdesign.impromptu.Retrofit.RetroLogout;
@@ -52,11 +60,13 @@ import com.mandywebdesign.impromptu.SettingFragmentsOptions.FAQs;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.HelpActivity;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.HelpOptionsActivity;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalGetProfile;
+import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalPublishProfile;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.PaymentDetailActivity;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.PrivancyActivity;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.TandCOptions;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.TermsAndConditionsActivityy;
 import com.mandywebdesign.impromptu.firebasenotification.MyFirebaseMessagingService;
+import com.mandywebdesign.impromptu.ui.BookEventActivity;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.Join_us;
 import com.mandywebdesign.impromptu.R;
@@ -72,7 +82,7 @@ import retrofit2.Response;
 public class Setting extends Fragment {
 
 
-    TextView logout, setting_help_option, terms, setting_paymentdetails_option, changepassword, contactus,  invite, setting_verification_option;
+    TextView logout, setting_help_option, terms, setting_paymentdetails_option, changepassword, contactus, invite, setting_verification_option;
     GoogleApiClient googleApiClient;
     boolean loggedOut;
     GoogleSignInAccount account;
@@ -82,10 +92,11 @@ public class Setting extends Fragment {
     String user, token, socialtoken;
     Dialog progressDialog;
     AlertDialog.Builder builder;
-    Dialog  changepasswordpopup;
+    Dialog changepasswordpopup;
     EditText oldepassword, newpassword, confirmpass;
     Button changepasswordbt;
     ImageView imageView_close;
+    Boolean profilSTATUS;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -108,6 +119,7 @@ public class Setting extends Fragment {
         user = sharedPreferences.getString("Usertoken", "");
         token = "Bearer " + sharedPreferences.getString("Usertoken", "");
         socialtoken = "Bearer " + sharedPreferences.getString("Socailtoken", "");
+        profilSTATUS = sharedPreferences.getBoolean("profileStatus", false);
 
         account = GoogleSignIn.getLastSignedInAccount(getContext());
         //facebook check
@@ -134,9 +146,17 @@ public class Setting extends Fragment {
                 @Override
                 public void onClick(View v) {
 
-                    Intent intent = new Intent(getContext(), NormalGetProfile.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    startActivity(intent);
+                    if (profilSTATUS.booleanValue() == true) {
+                        Intent intent = new Intent(getContext(), NormalGetProfile.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(getContext(), NormalPublishProfile.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        intent.putExtra("normal_edit", "0");
+                        startActivity(intent);
+                        //finish();
+                    }
                 }
             });
 
@@ -166,7 +186,6 @@ public class Setting extends Fragment {
             });
 
 
-
             terms.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -174,9 +193,6 @@ public class Setting extends Fragment {
                     startActivity(intent);
                 }
             });
-
-
-
 
 
             contactus.setOnClickListener(new View.OnClickListener() {
@@ -189,13 +205,15 @@ public class Setting extends Fragment {
             });
 
 
-
             invite.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.infrasoft.uboi"));
-                    startActivity(intent);
+                public void onClick(View view) {
+
+                    Intent share = new Intent(Intent.ACTION_SEND);
+                    share.setType("text/plain");
+                    share.putExtra(Intent.EXTRA_TEXT, "Thought you might like this app. Check it out!" + "\n" + "\n" + "https://play.google.com/store/apps");
+                    startActivity(Intent.createChooser(share, "Impromptu Invite"));
+
                 }
             });
 
@@ -203,7 +221,7 @@ public class Setting extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getContext(), HelpOptionsActivity.class);
-                    intent.putExtra("usertype","0");
+                    intent.putExtra("usertype", "0");
                     startActivity(intent);
                 }
             });
@@ -309,7 +327,7 @@ public class Setting extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getContext(), HelpOptionsActivity.class);
-                    intent.putExtra("usertype","1");
+                    intent.putExtra("usertype", "1");
                     startActivity(intent);
                 }
             });
@@ -362,7 +380,6 @@ public class Setting extends Fragment {
                     startActivity(intent);
                 }
             });
-
 
 
             invite.setOnClickListener(new View.OnClickListener() {
@@ -531,8 +548,6 @@ public class Setting extends Fragment {
 
         dialog.show();
     }
-
-
 
 
     public int getWifiLevel() {

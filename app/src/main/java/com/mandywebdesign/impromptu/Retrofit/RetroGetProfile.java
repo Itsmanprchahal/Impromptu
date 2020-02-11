@@ -49,6 +49,18 @@ public class RetroGetProfile {
         @SerializedName("email")
         @Expose
         private String email;
+
+        public String getRating_points() {
+            return rating_points;
+        }
+
+        public void setRating_points(String rating_points) {
+            this.rating_points = rating_points;
+        }
+
+        @SerializedName("rating_points")
+        @Expose
+        private String rating_points;
         @SerializedName("type")
         @Expose
         private Object type;

@@ -505,10 +505,20 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
 
+
+                                <TextView
+                                    android:id="@+id/tickettype1"
+                                    android:fontFamily="@font/sfuitextlight"
+                                    android:layout_width="wrap_content"
+                                    android:textStyle="bold"
+                                    android:layout_height="wrap_content"
+                                    android:text=""></TextView>
+
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
+                                    android:layout_marginTop="5dp"
                                     android:layout_marginBottom="10dp"
                                     android:orientation="horizontal"
                                     android:weightSum="5">
@@ -654,10 +664,17 @@
                                 android:visibility="gone"
                                 android:orientation="vertical">
 
+                                <TextView
+                                    android:id="@+id/tickettype2"
+                                    android:fontFamily="@font/sfuitextlight"
+                                    android:layout_width="wrap_content"
+                                    android:textStyle="bold"
+                                    android:layout_height="wrap_content"
+                                    android:text=""></TextView>
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
+                                    android:layout_marginTop="5dp"
                                     android:layout_marginBottom="10dp"
                                     android:orientation="horizontal"
                                     android:weightSum="5">
@@ -798,15 +815,22 @@
 
                             <LinearLayout
                                 android:id="@+id/pricelayout2"
-                                android:visibility="gone"
+                                android:visibility="visible"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
 
+                                <TextView
+                                    android:id="@+id/tickettype3"
+                                    android:fontFamily="@font/sfuitextlight"
+                                    android:layout_width="wrap_content"
+                                    android:textStyle="bold"
+                                    android:layout_height="wrap_content"
+                                    android:text=""></TextView>
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
+                                    android:layout_marginTop="5dp"
                                     android:layout_marginBottom="10dp"
                                     android:orientation="horizontal"
                                     android:weightSum="5">

@@ -16,7 +16,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardElevation="2dp">
+            app:cardElevation="0.1dp">
 
             <TextView
                 android:layout_width="wrap_content"

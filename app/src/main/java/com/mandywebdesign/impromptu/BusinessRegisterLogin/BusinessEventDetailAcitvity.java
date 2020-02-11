@@ -138,6 +138,8 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
     String tickettypedialog, tickettypespinnerposintion;
     ArrayList<String> tickettypes = new ArrayList<>();
     ArrayList<String> ticketprice = new ArrayList<>();
+    String currentUser;
+    TextView tickettype1, tickettype2, tickettype3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,6 +156,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
         sharedPreferences1 = getSharedPreferences("BusinessProfile1", Context.MODE_PRIVATE);
         profileupdatedPref = getSharedPreferences("profileupdated", Context.MODE_PRIVATE);
 
+        currentUser = sharedPreferences.getString("userID", "").toString();
 
         progressDialog = ProgressBarClass.showProgressDialog(this);
         Drawable drawable = new ProgressBar(this).getIndeterminateDrawable().mutate();
@@ -437,13 +440,11 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
 
                         }
 
-                        if (event_status!=null)
-                        {
+                        if (event_status != null) {
                             if (event_status.equals("past")) {
                                 peoplecoming.setVisibility(View.GONE);
 
-                            }else
-                            {
+                            } else {
                                 peoplecoming.setVisibility(View.VISIBLE);
                             }
                         }
@@ -461,7 +462,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                                 peoplecoming.setText("No one booked this event yet");
                             }
                         }
-                        Booked_users adapter = new Booked_users(BusinessEventDetailAcitvity.this, userImage, user_id,total_tickets);
+                        Booked_users adapter = new Booked_users(BusinessEventDetailAcitvity.this, userImage, user_id, total_tickets);
                         users.setAdapter(adapter);
 
                     } else if (response.body().getStatus().equals("400")) {
@@ -530,82 +531,89 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                                 numberofTickets.setText(datum.getTickets_booked_by_user());
                                 ticketPrice.setText("£ " + ticktprice);
                             }
-                            {
-
-                                if (datum.getTicketsType().size() == 1) {
-                                    ticktprice = datum.getTicketsType().get(0).getValue();
-                                    Float TicketPrice = Float.valueOf((ticktprice));
-                                    Float TotalAttendess = Float.valueOf((datum.getTicketsType().get(0).getBooked_tickets().toString()));
-
-                                    Float totalprice = TicketPrice * TotalAttendess;
-
-                                    totalPrice.setText("£ " + totalprice);
-                                }
-                                if (datum.getTicketsType().size() == 2) {
-                                    ticktprice = datum.getTicketsType().get(0).getValue();
-                                    ticketprice1 = datum.getTicketsType().get(1).getValue();
-                                    priceLayput1.setVisibility(View.VISIBLE);
-                                    Float TicketPrice = Float.valueOf((ticktprice));
-                                    Float TotalAttendess = Float.valueOf((datum.getTicketsType().get(0).getBooked_tickets().toString()));
-
-                                    Float totalprice = TicketPrice * TotalAttendess;
-
-                                    totalPrice.setText("£ " + totalprice);
-                                    Toast.makeText(BusinessEventDetailAcitvity.this, "" + totalprice, Toast.LENGTH_SHORT).show();
-                                    //-----------------------++++++++++++++++++++++++----------------------
-
-                                    Float TicketPrice1 = Float.valueOf((ticketprice1));
-                                    Float TotalAttendess1 = Float.valueOf((datum.getTicketsType().get(1).getBooked_tickets().toString()));
-
-                                    Float totalprice1 = TicketPrice1 * TotalAttendess1;
-
-                                    totalPrice1.setText("£ " + totalprice1);
-
-                                }
-                                if (datum.getTicketsType().size() == 3) {
-                                    ticktprice = datum.getTicketsType().get(0).getValue();
-                                    priceLayput2.setVisibility(View.VISIBLE);
-                                    priceLayput1.setVisibility(View.VISIBLE);
-                                    numberofTickets.setText(datum.getTicketsType().get(0).getBooked_tickets().toString());
-                                    numberofTickets1.setText(datum.getTicketsType().get(1).getBooked_tickets().toString());
-                                    numberofTickets2.setText(datum.getTicketsType().get(2).getBooked_tickets().toString());
-                                    ticketprice1 = datum.getTicketsType().get(1).getValue();
-                                    ticketprice2 = datum.getTicketsType().get(2).getValue();
-                                    ticketPrice.setText("£ " + ticktprice);
-                                    ticketPrice1.setText("£ " + ticketprice1);
-                                    ticketPrice2.setText("£ " + ticketprice2);
 
 
-                                    Float TicketPrice = Float.valueOf((ticktprice));
-                                    Float TotalAttendess = Float.valueOf((datum.getTicketsType().get(0).getBooked_tickets().toString()));
+                            if (datum.getTicketsType().size() == 1) {
+                                ticktprice = datum.getTicketsType().get(0).getValue();
+                                Float TicketPrice = Float.valueOf((ticktprice));
+                                Float TotalAttendess = Float.valueOf((datum.getTicketsType().get(0).getBooked_tickets().toString()));
 
-                                    Float totalprice = TicketPrice * TotalAttendess;
+                                Float totalprice = TicketPrice * TotalAttendess;
 
-                                    totalPrice.setText("£ " + totalprice);
-                                    //-----------------------++++++++++++++++++++++++----------------------
+                                totalPrice.setText("£ " + totalprice);
+                                tickettype1.setText(datum.getTicketsType().get(0).getTicketType());
+                            }
+                            if (datum.getTicketsType().size() == 2) {
+                                ticktprice = datum.getTicketsType().get(0).getValue();
+                                ticketprice1 = datum.getTicketsType().get(1).getValue();
+                                priceLayput1.setVisibility(View.VISIBLE);
+                                Float TicketPrice = Float.valueOf((ticktprice));
+                                Float TotalAttendess = Float.valueOf((datum.getTicketsType().get(0).getBooked_tickets().toString()));
 
-                                    Float TicketPrice1 = Float.valueOf((ticketprice1));
-                                    Float TotalAttendess1 = Float.valueOf((datum.getTicketsType().get(1).getBooked_tickets().toString()));
+                                Float totalprice = TicketPrice * TotalAttendess;
 
-                                    Float totalprice1 = TicketPrice1 * TotalAttendess1;
+                                totalPrice.setText("£ " + totalprice);
+                                tickettype1.setText(datum.getTicketsType().get(0).getTicketType());
+                                Toast.makeText(BusinessEventDetailAcitvity.this, "" + totalprice, Toast.LENGTH_SHORT).show();
+                                //-----------------------++++++++++++++++++++++++----------------------
 
-                                    totalPrice1.setText("£ " + totalprice1);
+                                Float TicketPrice1 = Float.valueOf((ticketprice1));
+                                Float TotalAttendess1 = Float.valueOf((datum.getTicketsType().get(1).getBooked_tickets().toString()));
 
-                                    //----------------------------++++++++++++++++++--------------------------
+                                Float totalprice1 = TicketPrice1 * TotalAttendess1;
 
-                                    Float TicketPrice2 = Float.valueOf((ticketprice2));
-                                    Float TotalAttendess2 = Float.valueOf((datum.getTicketsType().get(2).getBooked_tickets().toString()));
+                                totalPrice1.setText("£ " + totalprice1);
+                                tickettype2.setText(datum.getTicketsType().get(1).getTicketType());
 
-                                    Float totalprice2 = TicketPrice2 * TotalAttendess2;
+                            }
+                            if (datum.getTicketsType().size() == 3) {
+                                ticktprice = datum.getTicketsType().get(0).getValue();
+                                priceLayput2.setVisibility(View.VISIBLE);
+                                priceLayput1.setVisibility(View.VISIBLE);
+                                numberofTickets.setText(datum.getTicketsType().get(0).getBooked_tickets().toString());
+                                numberofTickets1.setText(datum.getTicketsType().get(1).getBooked_tickets().toString());
+                                numberofTickets2.setText(datum.getTicketsType().get(2).getBooked_tickets().toString());
+                                ticketprice1 = datum.getTicketsType().get(1).getValue();
+                                ticketprice2 = datum.getTicketsType().get(2).getValue();
+                                ticketPrice.setText("£ " + ticktprice);
+                                ticketPrice1.setText("£ " + ticketprice1);
+                                ticketPrice2.setText("£ " + ticketprice2);
 
-                                    totalPrice2.setText("£ " + totalprice2);
-                                }
 
+                                Float TicketPrice = Float.valueOf((ticktprice));
+                                Float TotalAttendess = Float.valueOf((datum.getTicketsType().get(0).getBooked_tickets().toString()));
+
+                                Float totalprice = TicketPrice * TotalAttendess;
+
+                                totalPrice.setText("£ " + totalprice);
+                                tickettype1.setText(datum.getTicketsType().get(0).getTicketType());
+                                //-----------------------++++++++++++++++++++++++----------------------
+
+                                Float TicketPrice1 = Float.valueOf((ticketprice1));
+                                Float TotalAttendess1 = Float.valueOf((datum.getTicketsType().get(1).getBooked_tickets().toString()));
+
+                                Float totalprice1 = TicketPrice1 * TotalAttendess1;
+
+                                totalPrice1.setText("£ " + totalprice1);
+                                tickettype2.setText(datum.getTicketsType().get(1).getTicketType());
+
+                                //----------------------------++++++++++++++++++--------------------------
+
+                                Float TicketPrice2 = Float.valueOf((ticketprice2));
+                                Float TotalAttendess2 = Float.valueOf((datum.getTicketsType().get(2).getBooked_tickets().toString()));
+
+                                Float totalprice2 = TicketPrice2 * TotalAttendess2;
+
+                                totalPrice2.setText("£ " + totalprice2);
+                                tickettype3.setText(datum.getTicketsType().get(2).getTicketType());
                             }
 
 
                             if (ticktprice.equals("0")) {
                                 event_price.setText("Free");
+                                priceLayput.setVisibility(View.GONE);
+                                priceLayput2.setVisibility(View.GONE);
+                                priceLayput1.setVisibility(View.GONE);
                                 tickettypedialog = event_price.getText().toString();
                             } else if (!ticktprice.equals("0") && !ticktprice.equals("Paid")) {
                                 event_price.setText("£ " + ticktprice);
@@ -658,6 +666,10 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                                 BusinessEvent_detailsFragment_book_time2.setText(endTime);
                             } else {
                                 BusinessEvent_detailsFragment_book_time2.setText(removeLeadingZeroes(endTime));
+                            }
+
+                            if (currentUser.equals(hostUserID)) {
+                                eventdetail_favbt.setVisibility(View.GONE);
                             }
 
 
@@ -1119,6 +1131,9 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
         BusinessEvent_detailsFragment_book_time2 = findViewById(R.id.BusinessEvent_detailsFragment_book_time2);
         BusinessEvent_detailsFragment_book_button = findViewById(R.id.BusinessEvent_detailsFragment_book_button);
         ticketview = findViewById(R.id.ticketview);
+        tickettype1 = findViewById(R.id.tickettype1);
+        tickettype2 = findViewById(R.id.tickettype2);
+        tickettype3 = findViewById(R.id.tickettype3);
         revenue = findViewById(R.id.revenue);
         event_price = findViewById(R.id.event_price);
         editevent = findViewById(R.id.editevent);

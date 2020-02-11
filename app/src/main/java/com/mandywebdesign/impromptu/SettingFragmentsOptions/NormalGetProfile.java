@@ -129,7 +129,7 @@ public class NormalGetProfile extends AppCompatActivity {
                 if (!userToken.equals("")) {
                     getProfile(userToken, userid);
 //                    getUsersLiveEvents(userid); //here new work
-                    getHostedEvents(userToken,userid);
+                    getHostedEvents(userToken, userid);
                     getUsersattendingEvents(userid);
                     editprofile.setVisibility(View.GONE);
                     pastEvents.setVisibility(View.VISIBLE);
@@ -139,7 +139,7 @@ public class NormalGetProfile extends AppCompatActivity {
                 } else {
                     getProfile(BToken, userid);
 //                    getUsersLiveEvents(userid); //here new work
-                    getHostedEvents(BToken,userid);
+                    getHostedEvents(BToken, userid);
                     getUsersattendingEvents(userid);
                     editprofile.setVisibility(View.GONE);
                     pastEvents.setVisibility(View.VISIBLE);
@@ -149,17 +149,16 @@ public class NormalGetProfile extends AppCompatActivity {
                 }
 
 
-
             } else {
                 if (!userToken.equals("")) {
                     getProfile(userToken, userid);
 //                    getLiveEvents(userToken);
-                    getHostedEvents(userToken,"");
+                    getHostedEvents(userToken, "");
                     getattendingEvents(userToken);
 //                    getHistoryEvents(userToken);
                 } else {
                     getProfile(BToken, userid);
-                    getHostedEvents(userToken,"");
+                    getHostedEvents(userToken, "");
 //                    getLiveEvents(userToken);
 //                    getHistoryEvents(userToken);
                     getattendingEvents(userToken);
@@ -179,12 +178,11 @@ public class NormalGetProfile extends AppCompatActivity {
         }
     }
 
-    private void getHostedEvents(String userToken,String user_id) {
-        Call<HostedEvents> call = WebAPI.getInstance().getApi().hostedEvents("Bearer "+userToken,user_id);
+    private void getHostedEvents(String userToken, String user_id) {
+        Call<HostedEvents> call = WebAPI.getInstance().getApi().hostedEvents("Bearer " + userToken, user_id);
         call.enqueue(new Callback<HostedEvents>() {
             @Override
             public void onResponse(Call<HostedEvents> call, Response<HostedEvents> response) {
-
                 if (response.body() != null) {
                     if (response.body().getStatus().equals("200")) {
                         HostedEvents retroLiveEvents = response.body();
@@ -204,6 +202,7 @@ public class NormalGetProfile extends AppCompatActivity {
                             Collections.reverse(event_status);
                             Collections.reverse(liveevent_id);
 
+
                             totlaEvents.setText("( " + images.size() + " )");
 
                             LinearLayoutManager layoutManager = new LinearLayoutManager(NormalGetProfile.this, LinearLayoutManager.HORIZONTAL, false);
@@ -215,8 +214,10 @@ public class NormalGetProfile extends AppCompatActivity {
                             user_profile_Event.setVisibility(View.VISIBLE);
                         }
 
+                    }else if (response.body().getStatus().equals("400")){
+
                     }
-                }else {
+                } else {
                     Intent intent = new Intent(NormalGetProfile.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
@@ -232,7 +233,7 @@ public class NormalGetProfile extends AppCompatActivity {
     }
 
     private void getHistoryEvents(final String userToken) {
-        Call<RetroHistoryEvents> call = WebAPI.getInstance().getApi().history("Bearer "+userToken,"application/json");
+        Call<RetroHistoryEvents> call = WebAPI.getInstance().getApi().history("Bearer " + userToken, "application/json");
         call.enqueue(new Callback<RetroHistoryEvents>() {
             @Override
             public void onResponse(Call<RetroHistoryEvents> call, Response<RetroHistoryEvents> response) {
@@ -291,7 +292,6 @@ public class NormalGetProfile extends AppCompatActivity {
                         List<UsersBookedPastEvent.Datum> datumArrayList = data.getData();
 
 
-
                         for (UsersBookedPastEvent.Datum datum : datumArrayList) {
 
                             Log.d("cates", "" + datum.getCategory());
@@ -309,7 +309,7 @@ public class NormalGetProfile extends AppCompatActivity {
                             user_profile_Event_attend.setVisibility(View.VISIBLE);
                         }
                     } else if (response.body().getStatus().equals("400")) {
-                        pastEvents.setText("( " + attentingTietle.size() + " )");
+                        pastEvents.setVisibility(View.GONE);
                     }
                     progressDialog.dismiss();
                 } else {
@@ -481,6 +481,7 @@ public class NormalGetProfile extends AppCompatActivity {
                         }
                     } else if (response.body().getStatus().equals("400")) {
                         pastEvents.setText("( " + attentingTietle.size() + " )");
+                        pastEvents.setVisibility(View.GONE);
                     }
                     progressDialog.dismiss();
                 } else {
@@ -545,11 +546,10 @@ public class NormalGetProfile extends AppCompatActivity {
 
                             status.setText(getProfileStatus);
                             if (response.body().getData().get(0).getRating_points() != null) {
-                                if(response.body().getData().get(0).getRating_points().equals("1"))
-                                {
-                                    totalpoints.setText(response.body().getData().get(0).getRating_points()+" point");
-                                }else {
-                                    totalpoints.setText(response.body().getData().get(0).getRating_points()+" points");
+                                if (response.body().getData().get(0).getRating_points().equals("1")) {
+                                    totalpoints.setText(response.body().getData().get(0).getRating_points() + " point");
+                                } else {
+                                    totalpoints.setText(response.body().getData().get(0).getRating_points() + " points");
                                 }
                             }
 

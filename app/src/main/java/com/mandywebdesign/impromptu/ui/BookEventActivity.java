@@ -1185,6 +1185,11 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                 }
                             }
 
+                            if (loginUserId.equals(hostUserID))
+                            {
+                                addtoFavCheck_box.setVisibility(View.GONE);
+                            }
+
                             if (event_status.equals("past")) {
                                 mBookEvent.setVisibility(View.GONE);
                                 askforrefund.setVisibility(View.GONE);
@@ -1196,8 +1201,9 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                 book_location.setClickable(false);
                             } else {
                                 peoplegoing.setVisibility(View.VISIBLE);
+                                book_location.setTextColor(getResources().getColor(R.color.colorTheme));
                                 book_location.setPaintFlags(book_location.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
-                            book_location.setShadowLayer(3,2,2,getResources().getColor(R.color.shadowColor));
+                            book_location.setShadowLayer(3,2,2,getResources().getColor(R.color.colorTheme));
                             }
 
                             getTickets_booked_by_user = datum.getTickets_booked_by_user();

@@ -104,9 +104,7 @@ public class PerviewEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_perview_event);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         manager = getSupportFragmentManager();
-        dialog = new ProgressDialog(this);
-        dialog.setMessage("Please wait... System is taking time...");
-        dialog.setCancelable(false);
+
         init();
 
         sharedPreferences1 = getSharedPreferences("BusinessProfile1", Context.MODE_PRIVATE);
@@ -209,8 +207,10 @@ public class PerviewEventActivity extends AppCompatActivity {
         if (!B_token.equalsIgnoreCase("")) {
 
             getUSerData("Bearer " + B_token);
+            progressDialog.show();
         } else {
             getUSerData("Bearer " + S_Token);
+            progressDialog.show();
         }
 
 
@@ -508,6 +508,7 @@ public class PerviewEventActivity extends AppCompatActivity {
         call.enqueue(new Callback<RetroUsernameiMage>() {
             @Override
             public void onResponse(Call<RetroUsernameiMage> call, Response<RetroUsernameiMage> response) {
+                progressDialog.dismiss();
                 if (response.body() != null) {
                     {
                         if (response.body().getStatus().equals("200")) {
@@ -529,6 +530,7 @@ public class PerviewEventActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<RetroUsernameiMage> call, Throwable t) {
+                dialog.dismiss();
                 Toast.makeText(PerviewEventActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

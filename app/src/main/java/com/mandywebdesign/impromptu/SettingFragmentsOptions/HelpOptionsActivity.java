@@ -144,7 +144,7 @@ public class HelpOptionsActivity extends AppCompatActivity {
                 editor.clear();
                 editor.commit();
 
-                Toast.makeText(HelpOptionsActivity.this, "Your account removed succussfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HelpOptionsActivity.this, "Account Deleted Successfully", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(HelpOptionsActivity.this, Join_us.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);

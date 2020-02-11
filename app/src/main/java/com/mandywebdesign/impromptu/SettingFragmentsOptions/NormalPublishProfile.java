@@ -253,6 +253,9 @@ public class NormalPublishProfile extends AppCompatActivity {
             });
         }else {
             username.setText(Socai_user);
+            age.setHint("Age");
+            about.setHint("Write a bit about yourself");
+            
             Glide.with(NormalPublishProfile.this)
 
                     .load(userimage)
@@ -357,6 +360,7 @@ public class NormalPublishProfile extends AppCompatActivity {
                                             Toast.makeText(NormalPublishProfile.this, "Profile Updated", Toast.LENGTH_SHORT).show();
                                             editor =  sharedPreferences.edit();
                                             editor.putString("profilegender",Gender);
+                                            editor.putBoolean("profileStatus",true);
                                             editor.apply();
                                             Intent intent = new Intent(NormalPublishProfile.this,NormalGetProfile.class);
                                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

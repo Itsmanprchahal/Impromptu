@@ -150,7 +150,6 @@ public class Join_us extends AppCompatActivity {
 
                 //getFaceBookUserProfile(AccessToken.getCurrentAccessToken());
 
-
                 //==============================get Facebook Information============================
 
                 GraphRequest request = GraphRequest.newMeRequest(
@@ -244,6 +243,7 @@ public class Join_us extends AppCompatActivity {
                         editor.putString("userID",response.body().getData().getId().toString());
                         editor.putString("Socailtoken", response.body().getData().getToken());
                         editor.putString("SocailuserId", response.body().getData().getId().toString());
+                        editor.putBoolean("profileStatus",response.body().getData().getProfileStatus());
                         editor.apply();
 
                         Intent intent = new Intent(Join_us.this, Home_Screen.class);
@@ -375,6 +375,7 @@ public class Join_us extends AppCompatActivity {
                         editor.putString("userID",response.body().getData().getId().toString());
                         editor.putString("Socailtoken", response.body().getData().getToken());
                         editor.putString("SocailuserId", response.body().getData().getId().toString());
+                        editor.putBoolean("profileStatus",response.body().getData().getProfileStatus());
                         editor.apply();
                         Intent intent = new Intent(Join_us.this, Home_Screen.class);
                         startActivity(intent);

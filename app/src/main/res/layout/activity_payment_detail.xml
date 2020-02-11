@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/circularstdbold"
-                android:text="Make Payment"
+                android:text="Payment Details"
                 android:layout_centerInParent="true"
                 android:textColor="@color/colortextBlack"
                 android:textSize="18sp"
@@ -41,145 +41,187 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingTop="15dp"
-        android:layout_marginTop="@dimen/_55sdp"
-        android:visibility="visible"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <TextView
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Card number"
-            android:fontFamily="@font/circularstdbold"
-            android:textStyle="bold"
-            android:textSize="@dimen/normalText"
-            android:textColor="@color/colortextBlack"/>
-
-        <EditText
-            android:id="@+id/pay_card_number"
-            android:layout_marginTop="7dp"
-            android:layout_width="match_parent"
-            android:inputType="number"
-            android:textSize="18sp"
-            android:padding="12dp"
-            android:fontFamily="@font/sfuitextlight"
-            android:maxLength="16"
-            android:gravity="start"
-            android:layout_height="wrap_content"
-            android:background="@drawable/custom_edittext"
-            android:hint="Card Number"/>
-
-        <TextView
-            android:layout_marginTop="7dp"
-            android:fontFamily="@font/circularstdbold"
-            android:textStyle="bold"
-            android:textSize="@dimen/normalText"
-            android:textColor="@color/colortextBlack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name on card"/>
-
-        <EditText
-            android:id="@+id/pay_card_name"
-            android:layout_marginTop="7dp"
-            android:padding="12dp"
-            android:gravity="start"
-            android:textSize="18sp"
-            android:fontFamily="@font/sfuitextlight"
-            android:inputType="textPersonName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/custom_edittext"
-            android:hint="Card Holder"/>
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false">
 
         <LinearLayout
-            android:layout_marginTop="7dp"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
+            android:layout_marginTop="@dimen/_55sdp"
+            android:visibility="visible"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
+
 
             <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Card number"
+                android:fontFamily="@font/circularstdbold"
+                android:textStyle="bold"
+                android:textSize="@dimen/normalText"
+                android:textColor="@color/colortextBlack"/>
+
+            <EditText
+                android:id="@+id/pay_card_number"
+                android:layout_marginTop="7dp"
+                android:layout_width="match_parent"
+                android:inputType="number"
+                android:textSize="18sp"
+                android:padding="12dp"
+                android:singleLine="true"
+                android:fontFamily="@font/sfuitextlight"
+                android:maxLength="16"
+                android:gravity="start"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_edittext"
+                android:hint="Card Number"/>
+
+            <TextView
+                android:layout_marginTop="7dp"
                 android:fontFamily="@font/circularstdbold"
                 android:textStyle="bold"
                 android:textSize="@dimen/normalText"
                 android:textColor="@color/colortextBlack"
-                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Expiry Date"/>
+                android:text="Name on card"/>
 
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_marginTop="7dp"
-            android:layout_width="@dimen/_150sdp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/pay_card_name"
+                android:layout_marginTop="7dp"
+                android:padding="12dp"
+                android:gravity="start"
+                android:textSize="18sp"
+                android:singleLine="true"
+                android:fontFamily="@font/sfuitextlight"
+                android:inputType="textPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_edittext"
+                android:hint="Card Holder"/>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_marginRight="35dp"
-                android:background="@drawable/custom_edittext"
                 android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/pay_expiry_date"
-                    android:padding="12dp"
-                    android:textSize="18sp"
-                    android:gravity="start"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="MM"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:background="@drawable/custom_edittext"
-                    android:imeOptions="actionNext"
-                    android:textAlignment="center"
-                    android:fontFamily="@font/sfuitextlight"
-                    android:clickable="true"
-                    android:focusable="true"/>
-
                 <TextView
+                    android:fontFamily="@font/circularstdbold"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/normalText"
+                    android:textColor="@color/colortextBlack"
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="/"
-                    android:background="@color/colorgrey"
-                    android:textColor="@color/black"></TextView>
+                    android:text="Expiry Date"/>
 
-                <EditText
-                    android:id="@+id/pay_expiry_year"
-                    android:padding="12dp"
-                    android:textSize="18sp"
-                    android:gravity="start"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="YY"
-                    android:maxLength="2"
-                    android:background="@drawable/custom_edittext"
-                    android:inputType="number"
-                    android:textAlignment="center"
-                    android:fontFamily="@font/sfuitextlight"
-                    android:clickable="true"
-                    android:focusable="true"/>
             </LinearLayout>
 
 
+            <LinearLayout
+                android:layout_marginTop="7dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginRight="35dp"
+                    android:background="@drawable/custom_edittext"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/pay_expiry_date"
+                        android:padding="12dp"
+                        android:textSize="18sp"
+                        android:gravity="start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="MM"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:maxLength="2"
+                        android:background="@drawable/custom_edittext"
+                        android:imeOptions="actionNext"
+                        android:textAlignment="center"
+                        android:fontFamily="@font/sfuitextlight"
+                        android:clickable="true"
+                        android:focusable="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/"
+                        android:background="@color/colorgrey"
+                        android:textColor="@color/black"></TextView>
+
+                    <EditText
+                        android:id="@+id/pay_expiry_year"
+                        android:padding="12dp"
+                        android:textSize="18sp"
+                        android:gravity="start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="YY"
+                        android:singleLine="true"
+                        android:maxLength="2"
+                        android:background="@drawable/custom_edittext"
+                        android:inputType="number"
+                        android:textAlignment="center"
+                        android:fontFamily="@font/sfuitextlight"
+                        android:clickable="true"
+                        android:focusable="true"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_edittext">
+
+                    <EditText
+                        android:id="@+id/csv_number"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:textSize="18sp"
+                        android:gravity="start"
+                        android:hint="CSV"
+                        android:maxLength="3"
+                        android:maxEms="3"
+                        android:background="@drawable/custom_edittext"
+                        android:inputType="number"
+                        android:textAlignment="center"
+                        android:fontFamily="@font/sfuitextlight"
+                        android:clickable="true"
+                        android:focusable="true"></EditText>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/save_payment_bt"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginTop="@dimen/defaultmargin"
+                android:background="@drawable/custom_next_bt"
+                android:text="Save"
+                android:fontFamily="@font/circularstdblack"
+                android:textAllCaps="false"
+                android:textColor="@color/colortextwhite"
+                android:layout_alignParentBottom="true"
+                android:textSize="20sp" />
 
         </LinearLayout>
-
-
-    </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

@@ -56,6 +56,7 @@ import com.mandywebdesign.impromptu.Retrofit.RetroRegisterPojo;
 import com.mandywebdesign.impromptu.Retrofit.RetroTerms;
 import com.mandywebdesign.impromptu.Retrofit.RetroUploadProfilePojo;
 import com.mandywebdesign.impromptu.Retrofit.RetroUsernameiMage;
+import com.mandywebdesign.impromptu.Retrofit.SaveNewCard;
 import com.mandywebdesign.impromptu.Retrofit.SavedCardsResponse;
 import com.mandywebdesign.impromptu.Retrofit.SearchMessages;
 import com.mandywebdesign.impromptu.Retrofit.TotalTickets;
@@ -609,5 +610,14 @@ public interface RegisterApiInterface {
     Call<DeleteDraftRespose> deleteDraft(
             @Header("Authorization") String token,
             @Query("event_id") String event_id
+    );
+
+    @POST("save-card")
+    Call<SaveNewCard> savenewcard(
+            @Header("Authorization") String token,
+            @Query("card_number") String card_number,
+            @Query("card_holder_name") String card_holder_name,
+            @Query("card_sdate") String card_sdate,
+            @Query("card_edate") String card_edate
     );
 }

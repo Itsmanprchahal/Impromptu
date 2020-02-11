@@ -99,10 +99,10 @@ public class Contact_Us extends AppCompatActivity {
 
                     if (response.body().getStatus().equals("200"))
                     {
-                        Toast.makeText(Contact_Us.this, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Contact_Us.this, "Message Sent", Toast.LENGTH_SHORT).show();
                         contactus_messageet.setText("");
                     }else {
-
+                        Toast.makeText(Contact_Us.this, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
 
                 }

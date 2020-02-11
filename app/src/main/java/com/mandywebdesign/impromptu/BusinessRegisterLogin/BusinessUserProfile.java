@@ -65,7 +65,7 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
 
     public RecyclerView recyclerView, pasteventsrecyles;
     ImageView editProfile;
-    TextView UserName, Address, Address2, totalliveevents, pastevnets;
+    TextView UserName, Address, Address2, totalliveevents, pastevnets,UserProfie_live_event_text,UserProfile_live_event_texttotal,UserProfile_past_events_tv_totall,UserProfile_past_events_tv;
     ReadMoreTextView AboutUs;
     ImageButton webUrl, facebookUrl, InstagramUrl, TwitterUrl;
     RoundedImageView UserImage;
@@ -84,6 +84,7 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
     public static ArrayList<String> images = new ArrayList<>();
     public static ArrayList<String> pastImages = new ArrayList<>();
     Context context;
+    TextView totalpoints,points;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -110,7 +111,7 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
         user = "Bearer " + sharedPreferences.getString("Usertoken", "");
 
         init();
-        getUserPRofileData();
+//        getUserPRofileData();
         listerners();
 
 
@@ -127,7 +128,13 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
 
     private void init() {
         Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
+        UserProfie_live_event_text = view.findViewById(R.id.UserProfie_live_event_text);
+        UserProfile_live_event_texttotal = view.findViewById(R.id.UserProfile_live_event_texttotal);
+        UserProfile_past_events_tv_totall = view.findViewById(R.id.UserProfile_past_events_tv_totall);
+        UserProfile_past_events_tv = view.findViewById(R.id.UserProfile_past_events_tv);
         editProfile = view.findViewById(R.id._UserPRofile_edit_busines_publish_profile);
+        totalpoints = view.findViewById(R.id.totalpoints);
+        points = view.findViewById(R.id.points);
         UserName = view.findViewById(R.id.UserProfile_business__publishprofile_user_Name);
         Address = view.findViewById(R.id.UserProfile_business__publishprofile_address1);
         Address2 = view.findViewById(R.id.UserProfile_business__publishprofile_address2);
@@ -166,27 +173,42 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
                             city = response.body().getData().get(0).getCity().toString();
                             webURL = response.body().getData().get(0).getWebUrl().toString();
 
-                            if (response.body().getData().get(0).getFacebookUrl()==null)
+                            if (response.body().getData().get(0).getWebUrl()==null || response.body().getData().get(0).getWebUrl().equals(""))
+                            {
+                                webUrl.setVisibility(View.GONE);
+                            }
+                            if (response.body().getData().get(0).getFacebookUrl()==null || response.body().getData().get(0).getFacebookUrl().equals(""))
                             {
                                 facebookURL = "";
+                                facebookUrl.setVisibility(View.GONE);
                             }else {
                                 facebookURL = response.body().getData().get(0).getFacebookUrl().toString();
                             }
 
-                            if (response.body().getData().get(0).getInstagramUrl()==null)
+                            if (response.body().getData().get(0).getInstagramUrl()==null || response.body().getData().get(0).getInstagramUrl().equals(""))
                             {
                                 instaGramURL ="";
+                                InstagramUrl.setVisibility(View.GONE);
                             }else {
 
                                 instaGramURL = response.body().getData().get(0).getInstagramUrl().toString();
                             }
 
-                            if (response.body().getData().get(0).getTwitterUrl()==null)
+                            if (response.body().getData().get(0).getTwitterUrl()==null || response.body().getData().get(0).getTwitterUrl().equals(""))
                             {
                                 TwitteURL = "";
+                                TwitterUrl.setVisibility(View.GONE);
                             }else
                             {
                                 TwitteURL = response.body().getData().get(0).getTwitterUrl().toString();
+                            }
+
+                            if (response.body().getData().get(0).getRating_points() != null) {
+                                if (response.body().getData().get(0).getRating_points().equals("1")) {
+                                    totalpoints.setText(response.body().getData().get(0).getRating_points() + " point");
+                                } else {
+                                    totalpoints.setText(response.body().getData().get(0).getRating_points() + " points");
+                                }
                             }
 
                             charity_number = response.body().getData().get(0).getCharityNumber();
@@ -265,12 +287,13 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
             @Override
             public void onResponse(Call<RetroLiveEvents> call, Response<RetroLiveEvents> response) {
 
+                UserProfie_live_event_text.setVisibility(View.VISIBLE);
+                UserProfile_live_event_texttotal.setVisibility(View.VISIBLE);
                 if (response.body() != null)
                 {
                     progressDialog.dismiss();
                     if (response.body().getStatus().equals("200")) {
                         RetroLiveEvents data = response.body();
-
                         List<RetroLiveEvents.Datum> datumArrayList = data.getData();
                         profileliveevents.clear();
                         images.clear();
@@ -324,6 +347,8 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
                 {
                     progressDialog.dismiss();
                     if (response.body().getStatus().equals("200")) {
+                        UserProfile_past_events_tv_totall.setVisibility(View.VISIBLE);
+                        UserProfile_past_events_tv.setVisibility(View.VISIBLE);
                         RetroHistoryEvents data = response.body();
 
                         List<RetroHistoryEvents.Datum> datumArrayList = data.getData();
@@ -400,6 +425,7 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
         if (v == facebookUrl) {
 
             if (!facebookURL.equals("") && Patterns.WEB_URL.matcher(facebookURL).matches()) {
+
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(facebookURL)));
             } else {
                 Toast.makeText(getActivity(), "No valid Facebook Page added", Toast.LENGTH_SHORT).show();

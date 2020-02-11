@@ -16,6 +16,7 @@
             android:id="@+id/cardview"
             android:layout_width="match_parent"
             android:layout_height="55dp"
+            app:cardElevation="0.1dp"
             tools:ignore="MissingConstraints">
 
 
@@ -67,6 +68,32 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="MissingConstraints" />
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/pointslayout"
+                    app:layout_constraintTop_toBottomOf="@id/UserProfile_business__publishprofile_user_Name"
+                    tools:ignore="MissingConstraints">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorGold"
+                        android:layout_marginLeft="2dp"
+                        android:textSize="12sp"
+                        android:id="@+id/totalpoints"></TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/colorGold"
+                        android:text=""
+                        android:textSize="12sp"
+                        android:id="@+id/points"></TextView>
+                </LinearLayout>
+
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/UserProfile_business_profilepublish_user_Image"
                     android:layout_width="@dimen/_120sdp"
@@ -88,7 +115,7 @@
                     android:maxLines="5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/UserProfile_business_profilepublish_user_Image"
-                    app:layout_constraintTop_toBottomOf="@id/UserProfile_business__publishprofile_user_Name"
+                    app:layout_constraintTop_toBottomOf="@id/pointslayout"
                     tools:ignore="MissingConstraints" />
 
                 <TextView
@@ -185,6 +212,7 @@
                     android:layout_marginTop="@dimen/_20sdp"
                     android:fontFamily="@font/circularstdbold"
                     android:text="Live Events"
+                    android:visibility="gone"
                     android:textColor="@color/colortextBlack"
                     app:layout_constraintTop_toBottomOf="@id/social_layout"
                     tools:ignore="MissingConstraints" />
@@ -195,6 +223,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="365dp"
                     android:layout_marginLeft="365dp"
+                    android:visibility="gone"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:fontFamily="@font/circularstdbold"
                     android:text="0"
@@ -219,6 +248,7 @@
                     android:layout_marginTop="@dimen/_7sdp"
                     android:fontFamily="@font/circularstdbold"
                     android:text="Past Events"
+                    android:visibility="gone"
                     android:textColor="@color/colortextBlack"
                     app:layout_constraintTop_toBottomOf="@id/UserProfile_business_publish_live_events_recylerview"
                     tools:ignore="MissingConstraints" />
@@ -228,6 +258,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_7sdp"
+                    android:visibility="gone"
                     android:fontFamily="@font/circularstdbold"
                     android:gravity="end"
                     android:text="0"

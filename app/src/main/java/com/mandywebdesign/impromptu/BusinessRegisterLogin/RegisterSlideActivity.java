@@ -83,14 +83,14 @@ public class RegisterSlideActivity extends AppCompatActivity {
         mRegister = findViewById(R.id.Register_bussiness_bt);
         dotsLayout = findViewById(R.id.registerlayoutDots);
         viewPager = findViewById(R.id.register_viewpager);
-
+        mBack.setVisibility(View.GONE);
     }
 
 
     //add dots at bottom
     private void addBottomDots(int currentPage) {
 
-        dots = new TextView[3];
+        dots = new TextView[2];
         dotsLayout.removeAllViews();
         for (int i = 0; i < dots.length; i++) {
 

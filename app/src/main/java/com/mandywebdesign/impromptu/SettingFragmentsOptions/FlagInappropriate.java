@@ -138,7 +138,7 @@ public class FlagInappropriate extends AppCompatActivity {
                         AttendeeRB.setChecked(false);
                         OtherRB.setChecked(false);
                         progressDialog.dismiss();
-                        Toast.makeText(FlagInappropriate.this, "Successfully Sent", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FlagInappropriate.this, "Report Sent", Toast.LENGTH_SHORT).show();
                     }
                 }
 

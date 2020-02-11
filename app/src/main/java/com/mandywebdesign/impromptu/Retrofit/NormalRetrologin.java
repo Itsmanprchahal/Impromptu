@@ -61,6 +61,9 @@ public class NormalRetrologin {
         @SerializedName("social_id")
         @Expose
         private String socialId;
+        @SerializedName("profile_status")
+        @Expose
+        private Boolean profileStatus;
 
         public String getToken() {
             return token;
@@ -108,6 +111,14 @@ public class NormalRetrologin {
 
         public void setSocialId(String socialId) {
             this.socialId = socialId;
+        }
+
+        public Boolean getProfileStatus() {
+            return profileStatus;
+        }
+
+        public void setProfileStatus(Boolean profileStatus) {
+            this.profileStatus = profileStatus;
         }
 
     }

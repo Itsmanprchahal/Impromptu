@@ -134,6 +134,7 @@
                         android:layout_marginTop="@dimen/_10sdp"
                         android:paddingTop="10dp"
                         android:padding="5dp"
+                        android:hint=""
                         android:fontFamily="@font/sfuitextlight"
                         android:textColor="@color/colortextBlack"
                         android:maxLines="3"

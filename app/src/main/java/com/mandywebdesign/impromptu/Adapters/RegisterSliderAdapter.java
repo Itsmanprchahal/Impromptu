@@ -16,7 +16,6 @@ public class RegisterSliderAdapter extends PagerAdapter {
     // Arrays
     public int[] slide_text = {
             R.string.bussDesc1,
-            R.string.bussDesc2,
             R.string.bussDesc2
     };
 
@@ -24,19 +23,16 @@ public class RegisterSliderAdapter extends PagerAdapter {
     LayoutInflater layoutInflater;
     public int[] slide_images = {
             R.drawable.busineesimage,
-            R.drawable.busineesimage,
             R.drawable.busineesimage
     };
 
     public int[] logo_ = {
-            R.drawable.logo,
             R.drawable.logo,
             R.drawable.logo
     };
 
     public int[] slide_descs = {
             R.string.businesstext1,
-            R.string.businesstext2,
             R.string.businesstext2
     };
 
