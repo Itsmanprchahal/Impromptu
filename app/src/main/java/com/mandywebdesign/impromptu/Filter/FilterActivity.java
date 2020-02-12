@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -714,6 +715,11 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
     private AdapterView.OnItemClickListener autocompleteClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (null != getCurrentFocus())
+                imm.hideSoftInputFromWindow(getCurrentFocus()
+                        .getApplicationWindowToken(), 0);
 
             try {
                 final AutocompletePrediction item = adapter.getItem(i);

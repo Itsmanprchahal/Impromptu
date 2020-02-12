@@ -94,6 +94,18 @@ public class RetroGetEventData {
         @SerializedName("postcode")
         @Expose
         private String postcode;
+
+        public String getEvent_host_type() {
+            return event_host_type;
+        }
+
+        public void setEvent_host_type(String event_host_type) {
+            this.event_host_type = event_host_type;
+        }
+
+        @SerializedName("event_host_type")
+        @Expose
+        private String event_host_type;
         @SerializedName("lattitude")
         @Expose
         private String lattitude;

@@ -139,7 +139,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
     ArrayList<String> tickettypes = new ArrayList<>();
     ArrayList<String> ticketprice = new ArrayList<>();
     String currentUser;
-    TextView tickettype1, tickettype2, tickettype3;
+    TextView tickettype1, tickettype2, tickettype3,eventid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -331,11 +331,39 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                         intent.putExtra("value", value);
                         startActivity(intent);
                     } else {
-                        String message = "https://play.google.com/store";
-                        Intent share = new Intent(Intent.ACTION_SEND);
-                        share.setType("text/plain");
-                        share.putExtra(Intent.EXTRA_TEXT, message);
-                        startActivity(Intent.createChooser(share, "Upload Event Details"));
+                        DynamicLink dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink()
+                                .setLink(Uri.parse("https://www.impromptusocial.com/" + "event_id/" + value))
+                                .setDomainUriPrefix("impromptusocial.page.link")
+                                // Open links with this app on Android  amitpandey12.page.link
+                                .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build()).setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().setDescription("I am hosting this Impromptu event, fancy coming?").build())
+                                // Open links with com.example.ios on iOS
+                                .setIosParameters(new DynamicLink.IosParameters.Builder("impromptusocial.page.link").build()).setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().setDescription("I am hosting this Impromptu event, fancy coming?").build())
+                                .buildDynamicLink();
+
+                        Uri dynamicLinkUri = dynamicLink.getUri();
+
+                        Log.d("hello123", "1" + dynamicLink.getUri());
+
+
+                        Task<ShortDynamicLink> shortLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink().setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().setDescription("Hey! Would you like to join me at this Impromptu event?").build())
+                                .setLongLink(Uri.parse("https://" + dynamicLink.getUri().toString()))
+                                .buildShortDynamicLink()
+                                .addOnCompleteListener(BusinessEventDetailAcitvity.this, new OnCompleteListener<ShortDynamicLink>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<ShortDynamicLink> task) {
+                                        if (task.isSuccessful()) {
+                                            // Short link created
+                                            Uri shortLink = task.getResult().getShortLink();
+                                            Uri flowchartLink = task.getResult().getPreviewLink();
+                                            Intent share = new Intent(Intent.ACTION_SEND);
+                                            share.setType("text/plain");
+                                            share.putExtra(Intent.EXTRA_TEXT, "I am hosting this Impromptu event, fancy coming?" + "\n" + "\n" + shortLink.toString());
+                                            startActivity(Intent.createChooser(share, "Share Event"));
+                                        } else {
+
+                                        }
+                                    }
+                                });
                     }
 
                 }
@@ -456,7 +484,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                             if (bookedUsersList.size() == 1) {
                                 peoplecoming.setText("1 Person is coming");
                             } else if (bookedUsersList.size() >= 2) {
-                                peoplecoming.setText(bookedUsersList.size() + " People are coming");
+                                peoplecoming.setText(bookedUsersList.size() + " people are coming");
 
                             } else {
                                 peoplecoming.setText("No one booked this event yet");
@@ -467,7 +495,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
 
                     } else if (response.body().getStatus().equals("400")) {
 
-                        peoplecoming.setText("0 People  coming");
+                        peoplecoming.setText("0 people coming");
 
 
                         users.setVisibility(View.GONE);
@@ -539,10 +567,13 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                                 Float TotalAttendess = Float.valueOf((datum.getTicketsType().get(0).getBooked_tickets().toString()));
 
                                 Float totalprice = TicketPrice * TotalAttendess;
-
+                                numberofTickets.setText(datum.getTicketsType().get(0).getBooked_tickets().toString());
                                 totalPrice.setText("£ " + totalprice);
+                                ticketPrice.setText("£ " + ticktprice);
                                 tickettype1.setText(datum.getTicketsType().get(0).getTicketType());
-                            }
+                                priceLayput1.setVisibility(View.GONE);
+
+                            }else
                             if (datum.getTicketsType().size() == 2) {
                                 ticktprice = datum.getTicketsType().get(0).getValue();
                                 ticketprice1 = datum.getTicketsType().get(1).getValue();
@@ -553,10 +584,12 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                                 Float totalprice = TicketPrice * TotalAttendess;
 
                                 totalPrice.setText("£ " + totalprice);
+                                ticketPrice.setText("£ "+ticktprice);
+                                ticketPrice1.setText("£ "+ticketprice1);
                                 tickettype1.setText(datum.getTicketsType().get(0).getTicketType());
-                                Toast.makeText(BusinessEventDetailAcitvity.this, "" + totalprice, Toast.LENGTH_SHORT).show();
                                 //-----------------------++++++++++++++++++++++++----------------------
-
+                                numberofTickets.setText(datum.getTicketsType().get(0).getBooked_tickets().toString());
+                                numberofTickets1.setText(datum.getTicketsType().get(1).getBooked_tickets().toString());
                                 Float TicketPrice1 = Float.valueOf((ticketprice1));
                                 Float TotalAttendess1 = Float.valueOf((datum.getTicketsType().get(1).getBooked_tickets().toString()));
 
@@ -565,7 +598,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                                 totalPrice1.setText("£ " + totalprice1);
                                 tickettype2.setText(datum.getTicketsType().get(1).getTicketType());
 
-                            }
+                            }else
                             if (datum.getTicketsType().size() == 3) {
                                 ticktprice = datum.getTicketsType().get(0).getValue();
                                 priceLayput2.setVisibility(View.VISIBLE);
@@ -609,6 +642,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                             }
 
 
+                            eventid.setText("EID " + datum.getEventId().toString());
                             if (ticktprice.equals("0")) {
                                 event_price.setText("Free");
                                 priceLayput.setVisibility(View.GONE);
@@ -1135,6 +1169,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
         tickettype2 = findViewById(R.id.tickettype2);
         tickettype3 = findViewById(R.id.tickettype3);
         revenue = findViewById(R.id.revenue);
+        eventid = findViewById(R.id.eventid);
         event_price = findViewById(R.id.event_price);
         editevent = findViewById(R.id.editevent);
         eventdetail_favbt = findViewById(R.id.eventdetail_favbt);

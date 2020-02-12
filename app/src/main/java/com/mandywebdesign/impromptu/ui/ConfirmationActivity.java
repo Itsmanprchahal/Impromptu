@@ -101,7 +101,7 @@ public class ConfirmationActivity extends AppCompatActivity {
                             }
 
                             title = datum.getTitle();
-                            timeto = Util.convertTimeStampToTime(Long.parseLong(datum.getEventStartDt()));
+                            timeto = Util.convertTimeStampToTime1(Long.parseLong(datum.getEventStartDt())).replaceFirst("a.m.", "am").replaceFirst("p.m.", "pm").replaceFirst("AM", "am").replaceFirst("PM", "pm");
                             image = datum.getFile().get(0).getImg().toString();
 
                             timeFrom = removeLeadingZeroes(timeto);

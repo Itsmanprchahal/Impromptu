@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
@@ -32,9 +33,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PaymentDetailActivity extends AppCompatActivity {
+public class PaymentDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ImageButton back_on_paymentdetail_activity;
+
 
     EditText CardNumber, Card_ExpiryDate, pay_expiry_year, pay_card_name, csv_number;
     SharedPreferences preferences;
@@ -42,6 +43,8 @@ public class PaymentDetailActivity extends AppCompatActivity {
     String userToken;
     Button save;
     Dialog dialog;
+
+    ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,25 +55,22 @@ public class PaymentDetailActivity extends AppCompatActivity {
         dialog.dismiss();
         preferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         userToken = preferences.getString("Socailtoken", "");
-        back_on_paymentdetail_activity = findViewById(R.id.back_on_paymentdetail_activity);
         CardNumber = findViewById(R.id.pay_card_number);
         Card_ExpiryDate = findViewById(R.id.pay_expiry_date);
         pay_expiry_year = findViewById(R.id.pay_expiry_year);
         pay_card_name = findViewById(R.id.pay_card_name);
+
+        back=(ImageView)findViewById(R.id.back);
         save = findViewById(R.id.save_payment_bt);
         csv_number = findViewById(R.id.csv_number);
         GetSavdCards(userToken);
-
+        back.setOnClickListener(this);
         listerners();
     }
 
     private void listerners() {
-        back_on_paymentdetail_activity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+
+
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,7 +149,6 @@ public class PaymentDetailActivity extends AppCompatActivity {
     }
 
     private void setData(String s, String cardNumber, String cardExpMonth, String cardExpYear, String cardCVC, String cardholdername) {
-
         Call<SaveNewCard> saveNewCardCall = WebAPI.getInstance().getApi().savenewcard(s,cardNumber,cardholdername,cardExpMonth,cardExpYear);
         saveNewCardCall.enqueue(new Callback<SaveNewCard>() {
             @Override
@@ -196,5 +195,20 @@ public class PaymentDetailActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.back:
+                onBackPressed();
+                break;
+        }
     }
 }

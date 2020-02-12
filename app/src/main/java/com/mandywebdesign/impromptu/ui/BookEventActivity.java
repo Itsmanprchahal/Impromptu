@@ -158,6 +158,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     TextView dailog_ticket_type1, dailog_ticket_price1, eventid;
     Spinner spinner1;
     Button dialogButoon1;
+    String event_user_type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,7 +166,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         setContentView(R.layout.activity_book_event);
         builder = new AlertDialog.Builder(BookEventActivity.this);
         builder.setMessage("Coming soon...");
-
+        spinnerposition = "1";
         fragmentManager = getSupportFragmentManager();
         sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         itemPositionPref = getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);
@@ -388,7 +389,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                     @Override
                     public void onResponse(Call<RefundAPI> call, Response<RefundAPI> response) {
                         progressDialog.dismiss();
-                        if (response != null) {
+                        if (response.isSuccessful()) {
                             if (response.body().getStatus().equals("200")) {
                                 Toast.makeText(BookEventActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(BookEventActivity.this, Home_Screen.class);
@@ -397,6 +398,8 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             } else {
                                 Toast.makeText(BookEventActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             }
+                        }else {
+                            Toast.makeText(BookEventActivity.this, ""+response.message(), Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -443,6 +446,10 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     }
 
     public void dialog(final String value) {
+
+        ArrayList<Integer> ticketNums = new ArrayList<>();
+        String[] ar = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+
         String[] ticketNum = new String[]{"1", "2"};
         String[] ticketNum1 = new String[]{"1"};
 
@@ -495,13 +502,23 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             }
         });
 
-        if (tickets_booked_by_user.equals("0")) {
-            adapter = new ArrayAdapter<String>(BookEventActivity.this,
-                    android.R.layout.simple_spinner_item, ticketNum);
-        } else {
-            adapter = new ArrayAdapter<String>(BookEventActivity.this,
-                    android.R.layout.simple_spinner_item, ticketNum1);
-        }
+//        if (!event_user_type.equals("normal"))
+//        {
+//            adapter = new ArrayAdapter<String>(BookEventActivity.this,
+//                    android.R.layout.simple_spinner_item, ar);
+//        }else {
+            if (tickets_booked_by_user.equals("0")) {
+
+                adapter = new ArrayAdapter<String>(BookEventActivity.this,
+                        android.R.layout.simple_spinner_item, ticketNum);
+
+
+            } else {
+                adapter = new ArrayAdapter<String>(BookEventActivity.this,
+                        android.R.layout.simple_spinner_item, ticketNum1);
+            }
+//        }
+
 
         ticketPrice.setText(ticktprice);
         //============================88888888888888888888888888=====================================
@@ -560,8 +577,9 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             @Override
             public void onClick(View v) {
                 String ticket = tickets_booked_by_user + ".0";
+                String totalTicket = total_ticket+".0";
 
-                if (total_ticket.equals(ticket)) {
+                if (totalTicket.equals(ticket)) {
                     Intent intent = new Intent(BookEventActivity.this, PayActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     intent.putExtra("total_price", tot);
@@ -588,7 +606,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                     tickettypes.clear();
                     dialog.dismiss();
                 } else {
-
                     Toast.makeText(BookEventActivity.this, "You can buy one more ticket only", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -596,6 +613,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     }
 
     private void dialog1(String value) {
+        String[] ar = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
         String[] ticketNum = new String[]{"1", "2"};
         String[] ticketNum1 = new String[]{"1"};
 
@@ -606,13 +624,21 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         dialog1.show();
         FindIdFree(dialog1);
 
-        if (tickets_booked_by_user.equals("0")) {
-            adapter = new ArrayAdapter<String>(BookEventActivity.this,
-                    android.R.layout.simple_spinner_item, ticketNum);
-        } else {
-            adapter = new ArrayAdapter<String>(BookEventActivity.this,
-                    android.R.layout.simple_spinner_item, ticketNum1);
-        }
+//        if (!event_user_type.equals("normal"))
+//        {
+//            adapter = new ArrayAdapter<String>(BookEventActivity.this,
+//                    android.R.layout.simple_spinner_item, ar);
+//        }else{
+            if (tickets_booked_by_user.equals("0")) {
+                adapter = new ArrayAdapter<String>(BookEventActivity.this,
+                        android.R.layout.simple_spinner_item, ticketNum);
+            } else {
+                adapter = new ArrayAdapter<String>(BookEventActivity.this,
+                        android.R.layout.simple_spinner_item, ticketNum1);
+            }
+//        }
+
+
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(adapter);
@@ -645,7 +671,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                 if (TotalTIcket > RemainingTIckets) {
                     Toast.makeText(BookEventActivity.this, "Not Available enough tickets", Toast.LENGTH_SHORT).show();
                 } else {
-
 
                     if (ticket.equals(total_ticket)) {
                         freebookevent(dialog1);
@@ -772,16 +797,20 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
     private void listeners() {
 
-        book_location.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String url = "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lng + "&travelmode=driving";
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(intent);
-            }
-        });
+       /* if (!getTickets_booked_by_user.equals("0"))
+        {
+            book_location.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String url = "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lng + "&travelmode=driving";
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(intent);
+                }
+            });
+        }*/
 
-         sharevent.setOnClickListener(new View.OnClickListener() {
+
+        sharevent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
               /*  String message = "https://play.google.com/store";
@@ -815,8 +844,8 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                     Uri flowchartLink = task.getResult().getPreviewLink();
                                     Intent share = new Intent(Intent.ACTION_SEND);
                                     share.setType("text/plain");
-                                    share.putExtra(Intent.EXTRA_TEXT,"Hi! Check out this Impromptu event."+"\n"+"\n" +shortLink.toString());
-                                    startActivity(Intent.createChooser(share, "Share Event"));
+                                    share.putExtra(Intent.EXTRA_TEXT, "Hi! Check out this Impromptu event." + "\n" + "\n" + shortLink.toString());
+                                    startActivity(Intent.createChooser(share, "Event Invite"));
                                 } else {
 
                                 }
@@ -870,8 +899,8 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                     Uri flowchartLink = task.getResult().getPreviewLink();
                                     Intent share = new Intent(Intent.ACTION_SEND);
                                     share.setType("text/plain");
-                                    share.putExtra(Intent.EXTRA_TEXT, "Hey! Would you like to join me at this Impromptu event?"+"\n"+"\n"+shortLink.toString());
-                                    startActivity(Intent.createChooser(share, "Share Event"));
+                                    share.putExtra(Intent.EXTRA_TEXT, "Hey! Would you like to join me at this Impromptu event?" + "\n" + "\n" + shortLink.toString());
+                                    startActivity(Intent.createChooser(share, "Event Invite"));
                                 } else {
 
                                 }
@@ -1176,6 +1205,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             eventlat = datum.getLattitude();
                             eventlng = datum.getLongitude();
                             lat = datum.getLattitude();
+                            event_user_type = datum.getEvent_host_type();
                             lng = datum.getLongitude();
                             eventid.setText("EID " + datum.getEventId().toString());
                             event_status = datum.getEvent_status();
@@ -1185,8 +1215,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                 }
                             }
 
-                            if (loginUserId.equals(hostUserID))
-                            {
+                            if (loginUserId.equals(hostUserID)) {
                                 addtoFavCheck_box.setVisibility(View.GONE);
                             }
 
@@ -1199,12 +1228,8 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                 remainingTicketTV.setVisibility(View.GONE);
                                 dashline2.setVisibility(View.GONE);
                                 book_location.setClickable(false);
-                            } else {
-                                peoplegoing.setVisibility(View.VISIBLE);
-                                book_location.setTextColor(getResources().getColor(R.color.colorTheme));
-                                book_location.setPaintFlags(book_location.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
-                            book_location.setShadowLayer(3,2,2,getResources().getColor(R.color.colorTheme));
                             }
+
 
                             getTickets_booked_by_user = datum.getTickets_booked_by_user();
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -1221,6 +1246,27 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             tickets_booked_by_user = datum.getTickets_booked_by_user();
                             if (tickets_booked_by_user.equals("2")) {
                                 mBookEvent.setVisibility(View.GONE);
+                            }
+
+                            if(!tickets_booked_by_user.equals("0"))
+                            {
+                                peoplegoing.setVisibility(View.VISIBLE);
+                                book_location.setTextColor(getResources().getColor(R.color.aquagreen));
+                                book_location.setPaintFlags(book_location.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                                book_location.setShadowLayer(0, 0, 0, getResources().getColor(R.color.colorTrans));
+
+                                book_location.setText(location + ", " + postcode);
+                                book_location.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        String url = "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lng + "&travelmode=driving";
+                                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                                        startActivity(intent);
+                                    }
+                                });
+                            }else {
+
+                                book_location.setText(location);
                             }
 
                             gender = datum.getAttendeesGender();
@@ -1453,7 +1499,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             });
 
                             descri.setText(decs);
-                            book_location.setText(location + " , " + postcode);
 //                            book_location.setPaintFlags(book_location.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
 //                            book_location.setShadowLayer(3,2,2,getResources().getColor(R.color.shadowColor));
 

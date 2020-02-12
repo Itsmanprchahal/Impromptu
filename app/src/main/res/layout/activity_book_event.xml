@@ -15,6 +15,14 @@
             android:id="@+id/boobk_event_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:contentInsetLeft="0dp"
+            android:contentInsetStart="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            android:contentInsetRight="0dp"
+            android:contentInsetEnd="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetEnd="0dp"
             tools:ignore="MissingConstraints">
 
             <RelativeLayout
@@ -26,9 +34,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/back"
+                    android:layout_marginLeft="@dimen/_5sdp"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:id="@+id/backonbookevent"></ImageView>
+                    android:id="@+id/backonbookevent">
+                </ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -75,7 +85,8 @@
             <ImageView
                 android:layout_width="1sp"
                 android:layout_height="1sp"
-                android:id="@+id/screenshot"></ImageView>
+                android:id="@+id/screenshot">
+            </ImageView>
 
             <RelativeLayout
                 android:id="@+id/layoutimage"
