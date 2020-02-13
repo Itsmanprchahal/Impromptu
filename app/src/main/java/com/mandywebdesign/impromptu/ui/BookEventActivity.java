@@ -845,7 +845,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                     Intent share = new Intent(Intent.ACTION_SEND);
                                     share.setType("text/plain");
                                     share.putExtra(Intent.EXTRA_TEXT, "Hi! Check out this Impromptu event." + "\n" + "\n" + shortLink.toString());
-                                    startActivity(Intent.createChooser(share, "Event Invite"));
+                                    startActivity(Intent.createChooser(share, "Share Invite"));
                                 } else {
 
                                 }
@@ -1251,7 +1251,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             if(!tickets_booked_by_user.equals("0"))
                             {
                                 peoplegoing.setVisibility(View.VISIBLE);
-                                book_location.setTextColor(getResources().getColor(R.color.aquagreen));
+                                book_location.setTextColor(getResources().getColor(R.color.white));
                                 book_location.setPaintFlags(book_location.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
                                 book_location.setShadowLayer(0, 0, 0, getResources().getColor(R.color.colorTrans));
 

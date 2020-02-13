@@ -70,16 +70,18 @@
             app:layout_constraintRight_toRightOf="parent"
             app:cardCornerRadius="16dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:id="@+id/confirm_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"></ImageView>
+                    android:background="@drawable/screen1"
+                    android:scaleType="centerCrop">
+
+                </ImageView>
 
 
                 <androidx.cardview.widget.CardView
@@ -108,13 +110,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text=" "
+                    android:text=""
                     android:textColor="@color/colortextwhite"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:fontFamily="@font/circularstdblack"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintVertical_bias="0.75"
+                    android:layout_marginTop="@dimen/_180sdp"
                     android:textSize="@dimen/_25sdp"
                     tools:ignore="MissingConstraints" />
 
@@ -124,27 +124,31 @@
                     android:background="@color/colortextwhite"
                     android:layout_marginTop="5dp"
                     android:id="@+id/eventview"
-                    app:layout_constraintTop_toBottomOf="@id/confirm_name"></View>
+                    android:layout_below="@id/confirm_name"></View>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/eventview"
+                    android:layout_below="@id/eventview"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:fontFamily="@font/sfuitextlight"
-                    app:layout_constraintLeft_toLeftOf="parent"
                     android:textColor="@color/colortextwhite"
                     android:id="@+id/confirm_address"
+                    android:singleLine="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@id/confirm_price"
                     android:textSize="@dimen/_12sdp"
+                    android:text=""
                     tools:ignore="MissingConstraints" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/confirm_address"
+                android:layout_below="@id/confirm_address"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_12sdp"
+                    android:text=""
                     android:fontFamily="@font/sfuitextlight"
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:layout_marginLeft="@dimen/_10sdp"
@@ -155,9 +159,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/confirm_date"
+                    android:layout_below="@id/confirm_date"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_12sdp"
+                    android:text=""
                     android:fontFamily="@font/sfuitextlight"
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:layout_marginLeft="@dimen/_10sdp"
@@ -172,14 +177,14 @@
                     android:text=""
                     android:textSize="@dimen/_12sdp"
                     android:textColor="@color/colortextwhite"
-                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_5sdp"
-                    app:layout_constraintTop_toBottomOf="@id/eventview"/>
+                    android:layout_below="@id/eventview"/>
 
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
 

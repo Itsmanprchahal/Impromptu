@@ -84,7 +84,7 @@ public class Normal_upcoming_events_adpater extends RecyclerView.Adapter<Normal_
 
         viewHolder.eventAddress.setText(Upcoming.addres.get(i));
         if (Upcoming.usertype.get(i).equals("business")) {
-            int count = Integer.parseInt(Upcoming.total_book_tickets.get(i));
+            int count = Integer.parseInt(Upcoming.book_tickets.get(i));
 
             int count1 = count - 1;
             if (count1 == 0) {

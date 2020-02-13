@@ -151,7 +151,7 @@ public class Messages extends Fragment {
                             if (datum.getTicketType()==null )
                             {
                                 eventTicketType.add("");
-                            }else {
+                            }else{
                                 eventTicketType.add(datum.getTicketType());
                             }
 
@@ -170,8 +170,13 @@ public class Messages extends Fragment {
                             event_status.add(datum.getEventStatus());
                             attendeename.add(datum.getBookedBy());
                             bookedeventname.add(datum.getEventName());
+                            try {
+                                lastmesgtime.add(datum.getLastMessageDatetime());
+                                //go on as normal
+                            } catch (NumberFormatException e) {
+                                //handle error
+                            }
 
-                            lastmesgtime.add(datum.getLastMessageDatetime());
                             setData();
 
                             Search(token);

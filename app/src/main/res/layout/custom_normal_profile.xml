@@ -12,7 +12,7 @@
         android:text=""
         android:textSize="15sp"
         android:fontFamily="@font/circularstdblack"
-        android:layout_marginRight="60dp"
+        android:layout_marginRight="70dp"
         android:textColor="@color/colortextBlack"
         android:textStyle="bold" />
 

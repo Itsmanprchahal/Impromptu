@@ -164,6 +164,7 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             android:fontFamily="@font/sfuitextlight"
+                            android:textStyle="bold"
                             app:layout_constraintRight_toLeftOf="@id/event_price"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:layout_marginRight="@dimen/_50sdp"

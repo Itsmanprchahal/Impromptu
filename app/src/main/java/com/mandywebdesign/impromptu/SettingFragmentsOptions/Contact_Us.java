@@ -105,6 +105,8 @@ public class Contact_Us extends AppCompatActivity {
                         Toast.makeText(Contact_Us.this, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
 
+                }else {
+                    Toast.makeText(Contact_Us.this, ""+response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -134,12 +136,15 @@ public class Contact_Us extends AppCompatActivity {
                     if (response.body().getStatus().equals("200")) {
                         contactus_emialet.setText(response.body().getData());
                     }
+                }else {
+                    Toast.makeText(Contact_Us.this, ""+response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<GetAdminEmail> call, Throwable t) {
-
+                dialog.dismiss();
+                Toast.makeText(Contact_Us.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
