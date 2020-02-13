@@ -43,7 +43,6 @@ public class NormalUSerSetQues_answer extends RecyclerView.Adapter<NormalUSerSet
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Click "+ NormalGetProfile.QA_id.get(i), Toast.LENGTH_SHORT).show();
             }
         });
 

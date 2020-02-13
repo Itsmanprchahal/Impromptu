@@ -15,9 +15,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mandywebdesign.impromptu.Models.PojoQuestion;
 import com.mandywebdesign.impromptu.R;
+import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalGetProfile;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalPublishProfile;
 
 import java.util.ArrayList;
@@ -74,6 +76,13 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, pojoQuestions.size());
                 notifyDataSetChanged();
+            }
+        });
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 

@@ -4,8 +4,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,7 +24,9 @@ import android.widget.Toast;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.RetroDeleteQUEs;
+import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalGetProfile;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalPublishProfile;
+import com.mandywebdesign.impromptu.SettingFragmentsOptions.QuesIDIF;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,26 +45,28 @@ public class Normal_user_profile_QA_adapter extends RecyclerView.Adapter<Normal_
     EditText answerET;
     TextView qust_text;
     Spinner spinner;
-    String userToken,QuesID;
+    String userToken, QuesID;
+    QuesIDIF quesIDIF;
+
+    public void Normal_user_profile_QA_adapter(QuesIDIF quesIDIF) {
+        this.quesIDIF = quesIDIF;
+    }
 
     private QuestionAdapter.OnItemClickListener itemClickListener;
 
-
-    public interface OnItemClickListener {
-        void onItemClick(int position);
-    }
 
     public void setOnItemClickListener(QuestionAdapter.OnItemClickListener onItemClickListener) {
 
         itemClickListener = onItemClickListener;
     }
 
-    public Normal_user_profile_QA_adapter(Context context, ArrayList<String> ques1, ArrayList<String> ansewer1, String[] arryString,String userToken) {
+    public Normal_user_profile_QA_adapter(Context context, ArrayList<String> ques1, ArrayList<String> ansewer1, String[] arryString, String userToken,QuesIDIF quesIDIF) {
         this.context = context;
         this.ques1 = ques1;
         this.ansewer1 = ansewer1;
         this.arryString = arryString;
         this.userToken = userToken;
+        this.quesIDIF = quesIDIF;
     }
 
     @NonNull
@@ -77,6 +83,7 @@ public class Normal_user_profile_QA_adapter extends RecyclerView.Adapter<Normal_
         viewHolder.ques.setText(ques1.get(i));
         viewHolder.answer.setText(ansewer1.get(i));
         QuesID = NormalPublishProfile.QA_id.get(i);
+
 
         viewHolder.edit_Q.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,16 +123,15 @@ public class Normal_user_profile_QA_adapter extends RecyclerView.Adapter<Normal_
                     public void onClick(View v) {
                         String answer = answerET.getText().toString();
                         String ques_ = spinner.getSelectedItem().toString();
-                        if (TextUtils.isEmpty(answer))
-                        {
+                        if (TextUtils.isEmpty(answer)) {
                             answerET.setError("Write your Answer");
-                        }else {
+                        } else {
                             viewHolder.answer.setText(answer);
                             viewHolder.ques.setText(ques_);
                             NormalPublishProfile.ANSWER.remove(i);
                             NormalPublishProfile.QUES.remove(i);
-                            NormalPublishProfile.ANSWER.add(i,answer);
-                            NormalPublishProfile.QUES.add(i,ques_);
+                            NormalPublishProfile.ANSWER.add(i, answer);
+                            NormalPublishProfile.QUES.add(i, ques_);
                             notifyDataSetChanged();
                             dialog.dismiss();
 
@@ -142,64 +148,24 @@ public class Normal_user_profile_QA_adapter extends RecyclerView.Adapter<Normal_
                 });
                 dialog.show();
             }
-
         });
-        viewHolder.close_Q.setVisibility(View.GONE);
+        viewHolder.close_Q.setVisibility(View.VISIBLE);
         viewHolder.close_Q.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConfirmationDialog(i,userToken);
+                if (i==ques1.size())
+                {
+                    ques1.remove(ques1.size()-1);
+                    ansewer1.remove(ansewer1.size()-1);
+                    notifyDataSetChanged();
+                }
+                else
+                {
+                    quesIDIF.questID(String.valueOf(i), NormalGetProfile.QA_id.get(i));
+                }
             }
         });
 
-
-    }
-
-    public void ConfirmationDialog(final int position, final String usrToken)
-    {
-        final Dialog dialog = new Dialog(context);
-        dialog.setContentView(R.layout.confirmationdialog);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        Button yes = dialog.findViewById(R.id.yesdialog);
-        Button no = dialog.findViewById(R.id.nodialog);
-        yes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                dialog.show();
-                Log.d("147258",""+usrToken+"\n"+QuesID);
-                Call<RetroDeleteQUEs> call= WebAPI.getInstance().getApi().deleteQues("Bearer "+usrToken, QuesID);
-                call.enqueue(new Callback<RetroDeleteQUEs>() {
-                    @Override
-                    public void onResponse(Call<RetroDeleteQUEs> call, Response<RetroDeleteQUEs> response) {
-                        if (response.body()!=null)
-                        {
-
-                        }
-
-
-                        dialog.dismiss();
-                    }
-
-                    @Override
-                    public void onFailure(Call<RetroDeleteQUEs> call, Throwable t) {
-                        dialog.dismiss();
-                        Toast.makeText(context, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-
-        no.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
     }
 
     @Override
