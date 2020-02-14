@@ -69,8 +69,9 @@ public class PayActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     String userToken;
     String tokenPay, eventId, tot;
-    static String total_tickets, ticketprice, totalprice, paid, eventID,event_Title,tickettype,imagerecieve;
+    static String total_tickets, ticketprice, paid, eventID,event_Title,tickettype,imagerecieve;
     Intent intent;
+    Float totalprice;
     boolean saveStatus;
 
     @Override
@@ -109,7 +110,7 @@ public class PayActivity extends AppCompatActivity {
         init();
         listeners();
 
-        totalprice = intent.getStringExtra("total_price");
+        totalprice = Float.valueOf(intent.getStringExtra("total_price"));
 
         total_price.setText("£ " + intent.getStringExtra("total_price"));
         ticketprice = intent.getStringExtra("ticket_Price");
@@ -258,7 +259,7 @@ public class PayActivity extends AppCompatActivity {
     }
 
 
-    public void SetData(final String userToken, final String eventID, String totalprice, String tokenPay, String total_tickets,String tickettype,String card_number,String month,String year,String cardholdername,boolean savecard) {
+    public void SetData(final String userToken, final String eventID, Float totalprice, String tokenPay, String total_tickets,String tickettype,String card_number,String month,String year,String cardholdername,boolean savecard) {
 
         Call<NormalPayment> call = WebAPI.getInstance().getApi().normalPayment("Bearer " + userToken, eventID, totalprice, tokenPay, total_tickets,tickettype,card_number,month,year,cardholdername,savecard);
         call.enqueue(new Callback<NormalPayment>() {

@@ -168,6 +168,7 @@ public class BusinessCharityRegister extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<RetroRegisterPojo> call, Throwable t) {
+                            Toast.makeText(BusinessCharityRegister.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
                             if (isOnline() == false) {
                                 progressDialog.dismiss();
                                 NoInternet.dialog(BusinessCharityRegister.this);

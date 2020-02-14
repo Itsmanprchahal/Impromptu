@@ -84,7 +84,6 @@
                 android:layout_marginLeft="@dimen/defaultmargin"
                 android:layout_marginRight="@dimen/defaultmargin"
                 android:textColor="@color/black"
-                android:fontFamily="@font/circularstdbold"
                 android:inputType="number"
                 android:singleLine="true"
                 android:padding="10dp"></EditText>
@@ -172,7 +171,6 @@
                 android:id="@+id/complaint_et"
                 android:padding="@dimen/_7sdp"
                 android:textAlignment="viewStart"
-                android:fontFamily="@font/circularstdbold"
                 android:textColor="@color/black"
                 android:textSize="20sp"></EditText>
 

@@ -158,7 +158,7 @@ public class PaymentDetailActivity extends AppCompatActivity implements View.OnC
                 {
                     if (response.body().getStatus().equals("200"))
                     {
-                        Toast.makeText(PaymentDetailActivity.this, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PaymentDetailActivity.this, "Card Updated", Toast.LENGTH_SHORT).show();
                     }else {
                         Toast.makeText(PaymentDetailActivity.this, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -180,7 +180,7 @@ public class PaymentDetailActivity extends AppCompatActivity implements View.OnC
                 if (response.isSuccessful()) {
                     if (response.body().getStatus() == 200) {
                         if (response.body().getData().getCardNumber() != null && response.body().getData().getCardEdate() != null && response.body().getData().getCardSdate() != null && response.body().getData().getCard_holder_name() != null) {
-                            CardNumber.setText(response.body().getData().getCardNumber());
+                            CardNumber.setText("xxxx xxxx xxxx "+response.body().getData().getCardNumber().substring(12,16));
                             Card_ExpiryDate.setText(response.body().getData().getCardSdate());
                             pay_expiry_year.setText(response.body().getData().getCardEdate());
                             pay_card_name.setText(response.body().getData().getCard_holder_name());

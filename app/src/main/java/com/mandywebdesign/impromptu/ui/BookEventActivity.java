@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -576,38 +577,51 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         dialogButoon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String ticket = tickets_booked_by_user + ".0";
-                String totalTicket = total_ticket+".0";
 
-                if (totalTicket.equals(ticket)) {
-                    Intent intent = new Intent(BookEventActivity.this, PayActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    intent.putExtra("total_price", tot);
-                    intent.putExtra("event_id", value);
-                    intent.putExtra("event_Title", title);
-                    intent.putExtra("total_tickets", total_ticket);
-                    intent.putExtra("ticket_Price", ticktprice);
-                    intent.putExtra("imagesend", "BEA");
-                    intent.putExtra("tickettype", tickettypespinnerposintion);
-                    tickettypes.clear();
-                    startActivity(intent);
-                    dialog.dismiss();
-                } else if (ticket.equals("0.0")) {
-                    Intent intent = new Intent(BookEventActivity.this, PayActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    intent.putExtra("total_price", tot);
-                    intent.putExtra("event_id", value);
-                    intent.putExtra("event_Title", title);
-                    intent.putExtra("total_tickets", total_ticket);
-                    intent.putExtra("ticket_Price", ticktprice);
-                    intent.putExtra("imagesend", "BEA");
-                    intent.putExtra("tickettype", tickettypespinnerposintion);
-                    startActivity(intent);
-                    tickettypes.clear();
-                    dialog.dismiss();
-                } else {
-                    Toast.makeText(BookEventActivity.this, "You can buy one more ticket only", Toast.LENGTH_SHORT).show();
+                Float TotalTIcket = Float.valueOf(((total_ticket)));
+
+                Float RemainingTIckets = Float.valueOf((remaini_tickets));
+                String ticket1 = tickets_booked_by_user + ".0";
+                String total_ticket = String.valueOf(TotalTIcket);
+
+                if (TotalTIcket > RemainingTIckets) {
+                    adapter = new ArrayAdapter<String>(BookEventActivity.this,
+                            android.R.layout.simple_spinner_item, ticketNum1);
+                }else {
+                    String ticket = tickets_booked_by_user + ".0";
+                    String totalTicket = total_ticket+".0";
+
+//                    if (totalTicket.equals(ticket)) {
+//                        Intent intent = new Intent(BookEventActivity.this, PayActivity.class);
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                        intent.putExtra("total_price", tot);
+//                        intent.putExtra("event_id", value);
+//                        intent.putExtra("event_Title", title);
+//                        intent.putExtra("total_tickets", total_ticket);
+//                        intent.putExtra("ticket_Price", ticktprice);
+//                        intent.putExtra("imagesend", "BEA");
+//                        intent.putExtra("tickettype", tickettypespinnerposintion);
+//                        tickettypes.clear();
+//                        startActivity(intent);
+//                        dialog.dismiss();
+//                    } else if (ticket.equals("0.0")) {
+                        Intent intent = new Intent(BookEventActivity.this, PayActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        intent.putExtra("total_price", tot);
+                        intent.putExtra("event_id", value);
+                        intent.putExtra("event_Title", title);
+                        intent.putExtra("total_tickets", total_ticket);
+                        intent.putExtra("ticket_Price", ticktprice);
+                        intent.putExtra("imagesend", "BEA");
+                        intent.putExtra("tickettype", tickettypespinnerposintion);
+                        startActivity(intent);
+                        tickettypes.clear();
+                        dialog.dismiss();
+//                    } else {
+//                        Toast.makeText(BookEventActivity.this, "You can buy one more ticket only", Toast.LENGTH_SHORT).show();
+//                    }
                 }
+
             }
         });
     }
@@ -629,10 +643,10 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 //            adapter = new ArrayAdapter<String>(BookEventActivity.this,
 //                    android.R.layout.simple_spinner_item, ar);
 //        }else{
-            if (tickets_booked_by_user.equals("0")) {
+            if (tickets_booked_by_user.equals("0") &&  !remaini_tickets.equals("1")) {
                 adapter = new ArrayAdapter<String>(BookEventActivity.this,
                         android.R.layout.simple_spinner_item, ticketNum);
-            } else {
+            }else {
                 adapter = new ArrayAdapter<String>(BookEventActivity.this,
                         android.R.layout.simple_spinner_item, ticketNum1);
             }
@@ -668,8 +682,9 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                 String ticket = tickets_booked_by_user + ".0";
                 String total_ticket = String.valueOf(TotalTIcket);
 
-                if (TotalTIcket > RemainingTIckets) {
-                    Toast.makeText(BookEventActivity.this, "Not Available enough tickets", Toast.LENGTH_SHORT).show();
+                if (TotalTIcket >= RemainingTIckets) {
+                    adapter = new ArrayAdapter<String>(BookEventActivity.this,
+                            android.R.layout.simple_spinner_item, ticketNum1);
                 } else {
 
                     if (ticket.equals(total_ticket)) {
@@ -677,7 +692,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                     } else if (ticket.equals("0.0")) {
                         freebookevent(dialog1);
                     } else {
-
                         Toast.makeText(BookEventActivity.this, "You can buy one more ticket only", Toast.LENGTH_SHORT).show();
                     }
 
@@ -845,7 +859,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                     Intent share = new Intent(Intent.ACTION_SEND);
                                     share.setType("text/plain");
                                     share.putExtra(Intent.EXTRA_TEXT, "Hi! Check out this Impromptu event." + "\n" + "\n" + shortLink.toString());
-                                    startActivity(Intent.createChooser(share, "Share Invite"));
+                                    startActivity(Intent.createChooser(share, "Share Event"));
                                 } else {
 
                                 }
@@ -1254,6 +1268,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                 book_location.setTextColor(getResources().getColor(R.color.white));
                                 book_location.setPaintFlags(book_location.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
                                 book_location.setShadowLayer(0, 0, 0, getResources().getColor(R.color.colorTrans));
+                                book_location.setTypeface(null, Typeface.BOLD);
 
                                 book_location.setText(location + ", " + postcode);
                                 book_location.setOnClickListener(new View.OnClickListener() {

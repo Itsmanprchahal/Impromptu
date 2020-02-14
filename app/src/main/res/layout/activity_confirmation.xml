@@ -74,15 +74,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+
                 <ImageView
                     android:id="@+id/confirm_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/screen1"
                     android:scaleType="centerCrop">
 
                 </ImageView>
-
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"

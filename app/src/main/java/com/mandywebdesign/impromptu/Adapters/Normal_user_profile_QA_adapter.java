@@ -165,7 +165,6 @@ public class Normal_user_profile_QA_adapter extends RecyclerView.Adapter<Normal_
                 }
             }
         });
-
     }
 
     @Override

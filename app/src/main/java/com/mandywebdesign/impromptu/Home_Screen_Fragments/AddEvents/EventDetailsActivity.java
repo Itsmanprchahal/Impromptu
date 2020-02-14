@@ -1101,7 +1101,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                 String ticket_Type = edt_tiketType.getText().toString();
                 String ticket_Price = edt_price.getText().toString();
                 String number_of_Type = edt_numbersOfTicket.getText().toString();
-                ticketTypeModel = new TicketTypeModel(ticket_Type, ticket_Price, number_of_Type);
+                ticketTypeModel = new TicketTypeModel(ticket_Type, Float.valueOf(ticket_Price), number_of_Type);
 
                 arryList.add(ticketTypeModel);
 

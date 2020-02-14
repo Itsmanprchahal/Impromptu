@@ -171,13 +171,13 @@ public class QrScanActivity extends AppCompatActivity {
                                     //QR event ID
                                     guestCheckIn(BToken, event_id, "1", booked_user_id, qrcode.valueAt(0).displayValue);
                                 } else {
-                                    Toast.makeText(QrScanActivity.this, "Not Valid QR Code", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(QrScanActivity.this, "Not Valid", Toast.LENGTH_SHORT).show();
                                 }
                             } else if (!S_Token.equals("")) {
                                 if (id.equals(event_id)) {
                                     guestCheckIn(S_Token, event_id, "1", booked_user_id, qrcode.valueAt(0).displayValue);
                                 } else {
-                                    Toast.makeText(QrScanActivity.this, "Not Valid QR Code", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(QrScanActivity.this, "Not Valid", Toast.LENGTH_SHORT).show();
                                 }
 
                             }
@@ -218,8 +218,8 @@ public class QrScanActivity extends AppCompatActivity {
                     progressDialog.dismiss();
 
                     if (response.body().getStatus().equals("200")) {
-                        Toast.makeText(QrScanActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                        textView.setText(data);
+                        Toast.makeText(QrScanActivity.this, "Valid", Toast.LENGTH_SHORT).show();
+//                        textView.setText(data);
                         ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
                         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
 
@@ -247,7 +247,7 @@ public class QrScanActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<GusetCheckIns> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(QrScanActivity.this, "141 " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(QrScanActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class TicketTypeModel {
 
     String tikcettype;
-    int price;
+    Float price;
     int numberofticket;
 
 
-    public TicketTypeModel(String tikcettype, String price, String numberofticket) {
+    public TicketTypeModel(String tikcettype, Float price, String numberofticket) {
         this.tikcettype = tikcettype;
-        this.price = Integer.parseInt(price);
+        this.price = (price);
         this.numberofticket = Integer.parseInt(numberofticket);
     }
 
@@ -23,11 +23,11 @@ public class TicketTypeModel {
         this.tikcettype = tikcettype;
     }
 
-    public int getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 

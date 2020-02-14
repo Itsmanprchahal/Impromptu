@@ -86,7 +86,6 @@
                 android:padding="12dp"
                 android:singleLine="true"
                 android:fontFamily="@font/sfuitextlight"
-                android:maxLength="16"
                 android:gravity="start"
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_edittext"

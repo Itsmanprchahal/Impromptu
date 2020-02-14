@@ -432,7 +432,7 @@ public interface RegisterApiInterface {
     Call<NormalPayment> normalPayment(
             @Header("Authorization") String token,
             @Field("event_id") String event_id,
-            @Field("amount") String amount,
+            @Field("amount") Float amount,
             @Field("token") String stripe_token,
             @Field("total_tickets") String total_tickets,
             @Field("ticket_type") String tickettype,
