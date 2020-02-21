@@ -371,6 +371,23 @@ public class EventDetailsActivity extends AppCompatActivity {
             }
         });
 
+        event_postcode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
 
         perviewButoon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1096,94 +1113,99 @@ public class EventDetailsActivity extends AppCompatActivity {
             edt_numbersOfTicket.setError("Enter number of ticket");
         } else {
             int numofTicker1 = Integer.parseInt(edt_numbersOfTicket.getText().toString());
+            if (Float.valueOf(edt_price.getText().toString())<1)
+            {
+                edt_price.setError("Invalid Price");
+            }else {
+                if (totalTicket >= numofTicker1) {
+                    String ticket_Type = edt_tiketType.getText().toString();
+                    String ticket_Price = edt_price.getText().toString();
+                    String number_of_Type = edt_numbersOfTicket.getText().toString();
+                    ticketTypeModel = new TicketTypeModel(ticket_Type, Float.valueOf(ticket_Price), number_of_Type);
 
-            if (totalTicket >= numofTicker1) {
-                String ticket_Type = edt_tiketType.getText().toString();
-                String ticket_Price = edt_price.getText().toString();
-                String number_of_Type = edt_numbersOfTicket.getText().toString();
-                ticketTypeModel = new TicketTypeModel(ticket_Type, Float.valueOf(ticket_Price), number_of_Type);
+                    arryList.add(ticketTypeModel);
 
-                arryList.add(ticketTypeModel);
+                    for (int i = 0; i < arryList.size(); i++) {
+                        Log.d("type", arryList.get(i) + "  " + arryList.size());
+                        tickettyp.add(arryList.get(i).getTikcettype());
+                        ticketprice.add(String.valueOf(arryList.get(i).getPrice()));
+                        ticketnumber.add(String.valueOf(arryList.get(i).getNumberofticket()));
 
-                for (int i = 0; i < arryList.size(); i++) {
-                    Log.d("type", arryList.get(i) + "  " + arryList.size());
-                    tickettyp.add(arryList.get(i).getTikcettype());
-                    ticketprice.add(String.valueOf(arryList.get(i).getPrice()));
-                    ticketnumber.add(String.valueOf(arryList.get(i).getNumberofticket()));
+                        if (arryList.size() == 1) {
+                            type1.setVisibility(View.VISIBLE);
+                            type1.setText(arryList.get(0).getTikcettype() + " £ " + arryList.get(0).getPrice() + " (" + arryList.get(0).getNumberofticket() + ") ");
 
-                    if (arryList.size() == 1) {
-                        type1.setVisibility(View.VISIBLE);
-                        type1.setText(arryList.get(0).getTikcettype() + " £ " + arryList.get(0).getPrice() + " (" + arryList.get(0).getNumberofticket() + ") ");
+                            type = arryList.get(0).getTikcettype();
+                            values = String.valueOf(arryList.get(0).getPrice());
+                            numbertickets = String.valueOf(arryList.get(0).getNumberofticket());
 
-                        type = arryList.get(0).getTikcettype();
-                        values = String.valueOf(arryList.get(0).getPrice());
-                        numbertickets = String.valueOf(arryList.get(0).getNumberofticket());
+                            addTicket.setText("edit or delete ticket type");
+                            edt_tiketType.setText("");
+                            edt_price.setText("");
+                            edt_numbersOfTicket.setText("");
 
-                        addTicket.setText("edit or delete ticket type");
-                        edt_tiketType.setText("");
-                        edt_price.setText("");
-                        edt_numbersOfTicket.setText("");
+                        } else if (arryList.size() == 2) {
+                            type1.setVisibility(View.VISIBLE);
+                            type1.setText(arryList.get(0).getTikcettype() + " £ " + arryList.get(0).getPrice() + " (" + arryList.get(0).getNumberofticket() + ") ");
 
-                    } else if (arryList.size() == 2) {
-                        type1.setVisibility(View.VISIBLE);
-                        type1.setText(arryList.get(0).getTikcettype() + " £ " + arryList.get(0).getPrice() + " (" + arryList.get(0).getNumberofticket() + ") ");
+                            type2.setVisibility(View.VISIBLE);
+                            type2.setText(arryList.get(1).getTikcettype() + " £ " + arryList.get(1).getPrice() + " (" + arryList.get(1).getNumberofticket() + ") ");
 
-                        type2.setVisibility(View.VISIBLE);
-                        type2.setText(arryList.get(1).getTikcettype() + " £ " + arryList.get(1).getPrice() + " (" + arryList.get(1).getNumberofticket() + ") ");
+                            type = arryList.get(0).getTikcettype() + "," + arryList.get(1).getTikcettype();
+                            values = arryList.get(0).getPrice() + "," + arryList.get(1).getPrice();
+                            numbertickets = arryList.get(0).getNumberofticket() + "," + arryList.get(1).getNumberofticket();
 
-                        type = arryList.get(0).getTikcettype() + "," + arryList.get(1).getTikcettype();
-                        values = arryList.get(0).getPrice() + "," + arryList.get(1).getPrice();
-                        numbertickets = arryList.get(0).getNumberofticket() + "," + arryList.get(1).getNumberofticket();
-
-                        edt_tiketType.setText("");
-                        edt_price.setText("");
-                        edt_numbersOfTicket.setText("");
-                        addTicket.setText("edit or delete ticket type");
-                    } else {
-                        if (totalTicket > numofTicker1) {
-                            edt_numbersOfTicket.setError(totalTicket + " remaining tickets");
-                        } else if (totalTicket < numofTicker1) {
-                            edt_numbersOfTicket.setError("limit exceed. " + totalTicket + " are remaining tickets.");
+                            edt_tiketType.setText("");
+                            edt_price.setText("");
+                            edt_numbersOfTicket.setText("");
+                            addTicket.setText("edit or delete ticket type");
                         } else {
-                            if (arryList.size() == 3) {
-                                type1.setVisibility(View.VISIBLE);
-                                type1.setText(arryList.get(0).getTikcettype() + " £ " + arryList.get(0).getPrice() + " (" + arryList.get(0).getNumberofticket() + ") ");
+                            if (totalTicket > numofTicker1) {
+                                edt_numbersOfTicket.setError(totalTicket + " remaining tickets");
+                            } else if (totalTicket < numofTicker1) {
+                                edt_numbersOfTicket.setError("limit exceed. " + totalTicket + " are remaining tickets.");
+                            } else {
+                                if (arryList.size() == 3) {
+                                    type1.setVisibility(View.VISIBLE);
+                                    type1.setText(arryList.get(0).getTikcettype() + " £ " + arryList.get(0).getPrice() + " (" + arryList.get(0).getNumberofticket() + ") ");
 
-                                type2.setVisibility(View.VISIBLE);
-                                type2.setText(arryList.get(1).getTikcettype() + " £ " + arryList.get(1).getPrice() + " (" + arryList.get(1).getNumberofticket() + ") ");
+                                    type2.setVisibility(View.VISIBLE);
+                                    type2.setText(arryList.get(1).getTikcettype() + " £ " + arryList.get(1).getPrice() + " (" + arryList.get(1).getNumberofticket() + ") ");
 
-                                type3.setVisibility(View.VISIBLE);
-                                type3.setText(arryList.get(2).getTikcettype() + " £ " + arryList.get(2).getPrice() + " (" + arryList.get(2).getNumberofticket() + ") ");
+                                    type3.setVisibility(View.VISIBLE);
+                                    type3.setText(arryList.get(2).getTikcettype() + " £ " + arryList.get(2).getPrice() + " (" + arryList.get(2).getNumberofticket() + ") ");
 
 
-                                edt_tiketType.setText("");
-                                edt_price.setText("");
-                                edt_numbersOfTicket.setText("");
-                                getPrceET = "";
-                                getTickettype = "";
+                                    edt_tiketType.setText("");
+                                    edt_price.setText("");
+                                    edt_numbersOfTicket.setText("");
+                                    getPrceET = "";
+                                    getTickettype = "";
 
-                                Log.d("type1", arryList.get(0).getTikcettype() + " " + arryList.get(1).getTikcettype() + " " + arryList.get(2).getTikcettype());
-                                type = arryList.get(0).getTikcettype() + "," + arryList.get(1).getTikcettype() + "," + arryList.get(2).getTikcettype();
-                                values = arryList.get(0).getPrice() + "," + arryList.get(1).getPrice() + "," + arryList.get(2).getPrice();
-                                numbertickets = arryList.get(0).getNumberofticket() + "," + arryList.get(1).getNumberofticket() + "," + arryList.get(2).getNumberofticket();
-                                addTicket.setText("edit or delete ticket type");
-                                dialog1.dismiss();
+                                    Log.d("type1", arryList.get(0).getTikcettype() + " " + arryList.get(1).getTikcettype() + " " + arryList.get(2).getTikcettype());
+                                    type = arryList.get(0).getTikcettype() + "," + arryList.get(1).getTikcettype() + "," + arryList.get(2).getTikcettype();
+                                    values = arryList.get(0).getPrice() + "," + arryList.get(1).getPrice() + "," + arryList.get(2).getPrice();
+                                    numbertickets = arryList.get(0).getNumberofticket() + "," + arryList.get(1).getNumberofticket() + "," + arryList.get(2).getNumberofticket();
+                                    addTicket.setText("edit or delete ticket type");
+                                    dialog1.dismiss();
+                                }
                             }
                         }
                     }
-                }
-                pendingTicker = totalTicket - numofTicker1;
-                totalTicket = pendingTicker;
+                    pendingTicker = totalTicket - numofTicker1;
+                    totalTicket = pendingTicker;
 
-                if (totalTicket == 0) {
+                    if (totalTicket == 0) {
+                        dialog1.dismiss();
+                    }
+
+                } else if (totalTicket < numofTicker1) {
+                    edt_numbersOfTicket.setError("limit exceed. " + totalTicket + " are remaining tickets.");
+                } else {
                     dialog1.dismiss();
                 }
-
-            } else if (totalTicket < numofTicker1) {
-                edt_numbersOfTicket.setError("limit exceed. " + totalTicket + " are remaining tickets.");
-            } else {
-                dialog1.dismiss();
             }
+
         }
     }
 
@@ -1214,16 +1236,25 @@ public class EventDetailsActivity extends AppCompatActivity {
                 getTicketET = ticketET;
                 getTickettype = tickettype;
 
-                if (!TextUtils.isEmpty(prceET) && !TextUtils.isEmpty(ticketET) && !TextUtils.isEmpty(tickettype)) {
-                    dialog.cancel();
-                    Log.d("type", ticketET + "" + prceET + "" + tickettype);
-                    addTicket.setText("edit or delete ticket type");
 
-                } else {
-                    numbersTicketET.setError("Enter numbers of tickets");
-                    price_et.setError("Enter ticket price");
-                    tickettype_et.setError("Enter ticket type");
-                }
+                    if (!TextUtils.isEmpty(prceET) && !TextUtils.isEmpty(ticketET) && !TextUtils.isEmpty(tickettype)) {
+                        if (Float.valueOf(prceET)<1)
+                        {
+                            price_et.setError("Invalid Price");
+                        }else {
+                            dialog.cancel();
+                            Log.d("type", ticketET + "" + prceET + "" + tickettype);
+                            addTicket.setText("edit or delete ticket type");
+                        }
+
+
+                    } else {
+                        numbersTicketET.setError("Enter numbers of tickets");
+                        price_et.setError("Enter ticket price");
+                        tickettype_et.setError("Enter ticket type");
+                    }
+
+
             }
         });
     }
@@ -1385,6 +1416,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
                 if (address.get(0).getPostalCode() != null) {
                     event_postcode.setText(address.get(0).getPostalCode());
+                    event_postcode.setError(null);
                 } else {
                     event_postcode.setText("");
                 }

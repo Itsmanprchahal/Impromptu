@@ -404,6 +404,7 @@
 
 
                         <RelativeLayout
+                            android:id="@+id/attendeelayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/defaultmargin">
@@ -598,20 +599,20 @@
                         android:text="Book"
                         android:textAllCaps="false"
                         android:textColor="@color/colortextwhite"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <Button
                         android:visibility="gone"
                         android:id="@+id/askforrefund"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/_40sdp"
                         android:layout_margin="@dimen/defaultmargin"
                         android:background="@drawable/custom_next_bt"
                         android:fontFamily="@font/circularstdbold"
                         android:text="Ask for refund"
                         android:textAllCaps="false"
                         android:textColor="@color/colortextwhite"
-                        android:textSize="20dp"></Button>
+                        android:textSize="20sp"></Button>
                 </LinearLayout>
 
 

@@ -138,6 +138,7 @@
     <string name="privancytetx28">You have the ability to turn location-based services on and off by adjusting the settings of your mobile device and by following the standard uninstall process and removing Impromptu’s application from your device.Doing so,however,may mean that you cannot use all or a portion of our Services.</string>
     <string name="privancytetx29"><u>Contact Us</u></string>
     <string name="privancytetx30">If you have any questions about this Privacy Policy,please contact us via post at 257 Burlington Road,KT3 4NE,United Kingdom."\n""\n"In addition,EU members can direct privacy-related inquiries or complaints to support@impromptusocial.com.Any dispute,claim or controversy arising out of or relating to this Policy or previous Privacy Policy statements shall be resolved through negotiation,mediation and arbitration,as provided under our Terms of Service Agreement."\n""\n"This Privacy Policy is governed by the terms of Impromptu’s Terms and Conditions.""\n</string>
+    <string name="nointernettext">Something seems to have gone wrong. "\n"Please try again...</string>
 
 
 </resources>

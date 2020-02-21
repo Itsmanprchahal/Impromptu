@@ -160,6 +160,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     Spinner spinner1;
     Button dialogButoon1;
     String event_user_type;
+    RelativeLayout attendeelayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -510,14 +511,21 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 //        }else {
             if (tickets_booked_by_user.equals("0")) {
 
-                adapter = new ArrayAdapter<String>(BookEventActivity.this,
-                        android.R.layout.simple_spinner_item, ticketNum);
-
+                if (remaini_tickets.equals("1"))
+                {
+                    adapter = new ArrayAdapter<String>(BookEventActivity.this,
+                            android.R.layout.simple_spinner_item, ticketNum1);
+                }else {
+                    adapter = new ArrayAdapter<String>(BookEventActivity.this,
+                            android.R.layout.simple_spinner_item, ticketNum);
+                }
 
             } else {
                 adapter = new ArrayAdapter<String>(BookEventActivity.this,
                         android.R.layout.simple_spinner_item, ticketNum1);
             }
+
+
 //        }
 
 
@@ -685,6 +693,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                 if (TotalTIcket >= RemainingTIckets) {
                     adapter = new ArrayAdapter<String>(BookEventActivity.this,
                             android.R.layout.simple_spinner_item, ticketNum1);
+                    freebookevent(dialog1);
                 } else {
 
                     if (ticket.equals(total_ticket)) {
@@ -756,6 +765,10 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                 if (response.body() != null) {
                     remaini_tickets = String.valueOf(response.body().getData().getRemaining());
                     remainingTicketTV.setText("Tickets Remaining " + remaini_tickets);
+                    if (remaini_tickets.equals("0"))
+                    {
+                        mBookEvent.setVisibility(View.GONE);
+                    }
                 } else {
                     Intent intent = new Intent(BookEventActivity.this, NoInternetScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -772,6 +785,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     }
 
     private void init() {
+        attendeelayout = findViewById(R.id.attendeelayout);
         dashline2 = findViewById(R.id.dashline2);
         eventid = findViewById(R.id.eventid);
         book_time2 = findViewById(R.id.book_time2);
@@ -1039,7 +1053,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         dailog_ticket_price1 = dialog.findViewById(R.id.dailog_ticket_price1);
     }
 
-    private void freebookevent(final Dialog dialog) {
+    private void  freebookevent(final Dialog dialog) {
         progressDialog.show();
         Call<BookFreeEvents> call = WebAPI.getInstance().getApi().freebookevent("Bearer " + S_token, value, total_ticket);
         call.enqueue(new Callback<BookFreeEvents>() {
@@ -1234,6 +1248,8 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             }
 
                             if (event_status.equals("past")) {
+//                                attendeelayout.setVisibility(View.GONE);
+//                                users.setVisibility(View.GONE);
                                 mBookEvent.setVisibility(View.GONE);
                                 askforrefund.setVisibility(View.GONE);
                                 eventdistance.setVisibility(View.GONE);

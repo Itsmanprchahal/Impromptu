@@ -123,7 +123,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/circularstdbold"
-                    android:text="Price"
+                    android:text="Price (£1 min)"
                     android:textColor="@color/colortextBlack"
                     android:textSize="@dimen/_12sdp" />
 

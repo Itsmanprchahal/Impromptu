@@ -122,8 +122,10 @@ public class HelpOptionsActivity extends AppCompatActivity {
     dialog.setCanceledOnTouchOutside(true);
     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+    TextView textView = dialog.findViewById(R.id.deletedialogtext);
     Button yes = dialog.findViewById(R.id.yesdialog);
     Button no = dialog.findViewById(R.id.nodialog);
+    textView.setText("Do you want to delete this account?");
     yes.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
