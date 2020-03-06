@@ -147,6 +147,11 @@ public class BusinessCharityRegister extends AppCompatActivity {
                             if (response.body() != null) {
                                 if (response.body().getStatus().equals("200")) {
                                     progressDialog.dismiss();
+                                    mBusinessName.setText("");
+                                    mEmail.setText("");
+                                    mPassword.setText("");
+                                    mCharityNumber.setText("");
+                                    mConfirmPassword.setText("");
                                     confirmaccountdialog();
                                 } else if (response.body().getStatus().equals("400")) {
                                     progressDialog.dismiss();

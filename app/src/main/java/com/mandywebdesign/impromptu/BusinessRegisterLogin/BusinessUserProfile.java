@@ -166,16 +166,23 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
                                 !response.body().getData().get(0).getCity().equals("") || !response.body().getData().get(0).getAboutOrganisation().equals("")) {
                             userName = response.body().getData().get(0).getName();
                             address1 = response.body().getData().get(0).getAddress1().toString();
-                            address2 = response.body().getData().get(0).getAddress2().toString();
+                            if (response.body().getData().get(0).getAddress2()!=null)
+                            {
+                                address2 = response.body().getData().get(0).getAddress2().toString();
+                            }
+
                             desc = response.body().getData().get(0).getAboutOrganisation().toString();
                             avatar = response.body().getData().get(0).getAvatar();
                             postcode = response.body().getData().get(0).getPostcode().toString();
                             city = response.body().getData().get(0).getCity().toString();
-                            webURL = response.body().getData().get(0).getWebUrl().toString();
+
 
                             if (response.body().getData().get(0).getWebUrl()==null || response.body().getData().get(0).getWebUrl().equals(""))
                             {
                                 webUrl.setVisibility(View.GONE);
+                                webURL = "";
+                            }else {
+                                webURL = response.body().getData().get(0).getWebUrl().toString();
                             }
                             if (response.body().getData().get(0).getFacebookUrl()==null || response.body().getData().get(0).getFacebookUrl().equals(""))
                             {

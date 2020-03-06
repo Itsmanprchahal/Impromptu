@@ -514,10 +514,27 @@ public class PerviewEventActivity extends AppCompatActivity {
                         if (response.body().getStatus().equals("200")) {
                             Glide.with(PerviewEventActivity.this).load(response.body().getData().getUserImg()).into(host_image);
                             username = response.body().getData().getUserName();
-                            String[] name = username.split(" ");
+                           /* String[] name = username.split(" ");
                             String Fname = name[0];
                             String Lname = name[1];
                             perview_organiser_name.setText(Fname + " " + Lname.subSequence(0, 1));
+*/
+                            //================================
+                            if (username != null) {
+                                String[] name = username.split(" ");
+                                if (name.length == 1) {
+                                    String Fname = name[0];
+                                    perview_organiser_name.setText(Fname + " ");
+                                } else {
+                                    String Fname = name[0];
+                                    String Lname = name[1];
+                                    perview_organiser_name.setText(Fname + " " + Lname.subSequence(0, 1));
+                                }
+                            } else {
+                                perview_organiser_name.setText(username);
+                            }
+
+                            //=========================
                         }
                     }
 

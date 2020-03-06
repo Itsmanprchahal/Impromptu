@@ -238,7 +238,13 @@ public class BussinessProfileActivity2 extends AppCompatActivity {
                                         twitterUrl = enterURL.getText().toString();
                                         Toast.makeText(BussinessProfileActivity2.this, "" + twitterUrl, Toast.LENGTH_SHORT).show();
                                         dialog.dismiss();
-                                    }else {
+                                    }
+                                    else  if (enterURL.getText().toString().isEmpty())
+                                    {
+                                        enterURL.setText("");
+                                        dialog.dismiss();
+                                    }
+                                    else {
                                         enterURL.setError("Add valid URL");
                                     }
                                 }

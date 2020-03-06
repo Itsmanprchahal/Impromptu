@@ -91,6 +91,20 @@ public class BussinessProfileActivity3 extends AppCompatActivity {
         userToken = "Bearer " + preferences2.getString("Usertoken", "");
         Log.d("id1234", userToken + "\n" + id);
 
+        if (facebook.equals(""))
+        {
+         fb_url_bt.setVisibility(View.GONE);
+        }
+
+        if (instagram.equals(""))
+        {
+            instagram_url_bt.setVisibility(View.GONE);
+        }
+
+        if (twitter.equals(""))
+        {
+            twitter_url_bt.setVisibility(View.GONE);
+        }
 
         BName.setText(Bname);
         userImage.setImageBitmap(decodeBase64(image));

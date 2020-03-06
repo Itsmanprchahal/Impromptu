@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "941725030253-qgqmc80ddpnkgam1qs8buc4bp0japmk3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mandywebdesign.impromptu",
+            "certificate_hash": "2f80db6a9e300251658a84d9ea9131f7a620e371"
+          }
+        },
+        {
+          "client_id": "941725030253-f072m8kh19cumg0d3s14ltprkh81icmq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mandywebdesign.impromptu",
+            "certificate_hash": "bde39381faa2470b5d7deeb7672bb87ce6cc1182"
+          }
+        },
+        {
           "client_id": "941725030253-b7i1ajpvu8hkiattl915djtmkrsij6dt.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -29,7 +45,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDu_15mMQTAm8l8SeT5GncldwjxuczTYe4"
+          "current_key": "AIzaSyDxQOACb7Uht7hOx86LlI-jUJZDJkhUG7U"
         }
       ],
       "services": {

@@ -107,7 +107,7 @@ public class Join_us extends AppCompatActivity {
 
         googleSignInClient = GoogleSignIn.getClient(this, gso);
 
-//        getHashKey();
+        getHashKey();
 
 
     }
@@ -182,7 +182,7 @@ public class Join_us extends AppCompatActivity {
                                                 public void onSuccess(InstanceIdResult instanceIdResult) {
                                                     String device_token = instanceIdResult.getToken();
                                                     Log.e("token",device_token);
-                                                    NormalLogin("normal",fbToken,fbEmail,fbUsername,"facebook",device_token);
+                                                    NormalLogin("normal",fbToken,fbEmail,fbUsername,"facebook","");
 
                                                 }
                                             });
@@ -418,7 +418,6 @@ public class Join_us extends AppCompatActivity {
             Toast.makeText(this, "No Internet connection!", Toast.LENGTH_LONG).show();
             return false;
         }
-
         return true;
     }
 

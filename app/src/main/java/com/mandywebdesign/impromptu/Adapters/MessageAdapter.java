@@ -151,6 +151,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                         viewHolder.linearLayout.setVisibility(View.GONE);
                         viewHolder.linearLayout1.setVisibility(View.VISIBLE);
                         viewHolder.leavefeedback.setVisibility(View.GONE);
+//                        viewHolder.leavefeedback.setVisibility(View.VISIBLE);
                         viewHolder.time.setVisibility(View.VISIBLE);
                         viewHolder.mesgCount.setVisibility(View.GONE);
                         viewHolder.attendeename.setText(Messages.attendeename.get(i));
