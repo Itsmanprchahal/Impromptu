@@ -186,9 +186,14 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
 
+       <!-- <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="d8234e6b517958c46f3aa852b9d439ed3e223f06" />-->
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="d8234e6b517958c46f3aa852b9d439ed3e223f06" />
+            android:value="e7cb0c120552e5fe67620631e720a640b02409fc"
+            />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/googleclientId" />

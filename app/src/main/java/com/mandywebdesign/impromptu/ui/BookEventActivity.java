@@ -321,6 +321,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             @Override
             public void onClick(View v) {
 
+                //ToDO: ask for refund:
                 ConfirmationDialog(s_token, value);
             }
         });

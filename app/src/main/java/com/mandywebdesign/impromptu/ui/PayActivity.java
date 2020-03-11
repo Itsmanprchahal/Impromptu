@@ -236,7 +236,9 @@ public class PayActivity extends AppCompatActivity {
         card.validateCVC();
         //pk_test_NUze3lWY5JhW6P0xmCebM00s000LALfIfF,,,,,,,,,,,,,pk_live_7M5piE9lr63i8sIn6Km4uzL700iuLHEESD
 
-        Stripe stripe = new Stripe(PayActivity.this, "pk_live_7M5piE9lr63i8sIn6Km4uzL700iuLHEESD");
+        //ToDo: Stripe Connect Line Demo : https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_G9vPCANGPN4Jv1FJOOGjOOMcA9hbltKZ&scope=read_write&state="+userId
+
+        Stripe stripe = new Stripe(PayActivity.this, "pk_test_NUze3lWY5JhW6P0xmCebM00s000LALfIfF");
         stripe.createToken(card, new TokenCallback() {
             @Override
             public void onError(@NonNull Exception error) {

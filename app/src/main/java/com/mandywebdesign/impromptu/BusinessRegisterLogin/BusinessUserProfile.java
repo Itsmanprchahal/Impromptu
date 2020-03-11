@@ -359,14 +359,15 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
                         RetroHistoryEvents data = response.body();
 
                         List<RetroHistoryEvents.Datum> datumArrayList = data.getData();
+                        Collections.reverse(datumArrayList);
                         profilePastEvents.clear();
                         pastImages.clear();
                         profilePastEvents_id.clear();
                         for (RetroHistoryEvents.Datum datum : datumArrayList) {
                             profilePastEvents.add(datum.getTitle());
                             pastImages.add(datum.getFile());
-                            Collections.reverse(profilePastEvents);
-                            Collections.reverse(pastImages);
+//                            Collections.reverse(profilePastEvents);
+//                            Collections.reverse(pastImages);
                             profilePastEvents_id.add(String.valueOf(datum.getEventId()));
 //                            Collections.reverse(profilePastEvents_id);
 

@@ -114,7 +114,7 @@ public class PaymentDetailActivity extends AppCompatActivity implements View.OnC
         card.validateCVC();
         //pk_test_NUze3lWY5JhW6P0xmCebM00s000LALfIfF,,,,,,,,,,,,,pk_live_7M5piE9lr63i8sIn6Km4uzL700iuLHEESD
 
-        Stripe stripe = new Stripe(PaymentDetailActivity.this, "pk_live_7M5piE9lr63i8sIn6Km4uzL700iuLHEESD");
+        Stripe stripe = new Stripe(PaymentDetailActivity.this, "pk_test_NUze3lWY5JhW6P0xmCebM00s000LALfIfF");
         stripe.createToken(card, new TokenCallback() {
             @Override
             public void onError(@NonNull Exception error) {
@@ -141,8 +141,6 @@ public class PaymentDetailActivity extends AppCompatActivity implements View.OnC
                     Card_ExpiryDate.setError("Enter Valid details");
                     csv_number.setError("Enter Valid details");
                 }
-
-
             }
         });
 
