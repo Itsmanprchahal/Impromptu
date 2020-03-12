@@ -35,6 +35,11 @@ import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -82,6 +87,7 @@ import com.mandywebdesign.impromptu.Retrofit.RemainingTickets;
 import com.mandywebdesign.impromptu.Retrofit.RetroGetEventData;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalPublishProfile;
 import com.mandywebdesign.impromptu.Utils.Util;
+import com.mandywebdesign.impromptu.stripeconnect.ConnectStripe;
 import com.yarolegovich.mp.util.Utils;
 
 import java.io.File;
@@ -155,12 +161,15 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     static String tickettypeposition, getSpinnerposition = "1";
     static String currentlat, currenlng, eventlat, eventlng;
     ArrayAdapter<String> adapter;
-    Dialog dialog, dialog1;
+    Dialog dialog, dialog1, refundDialog,connectStipeDialog;
     TextView dailog_ticket_type1, dailog_ticket_price1, eventid;
     Spinner spinner1;
     Button dialogButoon1;
     String event_user_type;
     RelativeLayout attendeelayout;
+    Button oneTicket, TwoTicket, confirmrefund,connectOk,connectCancel;
+    String ticketCount = "1";
+     String stripeStatus="0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -322,9 +331,106 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             public void onClick(View v) {
 
                 //ToDO: ask for refund:
-                ConfirmationDialog(s_token, value);
+                if (stripeStatus.equals("0")) {
+
+                    ConnectStripeDialog();
+                } else {
+                    RefundDialog();
+                }
+
+//                ConfirmationDialog(s_token, value);
+
             }
         });
+    }
+
+    private void ConnectStripeDialog() {
+        connectStipeDialog = new Dialog(this);
+        Window window = connectStipeDialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+        connectStipeDialog.setContentView(R.layout.stripeconnectdialog);
+        connectStipeDialog.setCancelable(true);
+        connectStipeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        connectStipeDialog.show();
+
+        connectOk = connectStipeDialog.findViewById(R.id.okconnect);
+        connectCancel = connectStipeDialog.findViewById(R.id.cancelconnect);
+
+        connectOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                connectStipeDialog.dismiss();
+                Intent intent = new Intent(BookEventActivity.this, ConnectStripe.class);
+                intent.putExtra("loginUserId", loginUserId);
+                startActivity(intent);
+            }
+        });
+
+        connectCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                connectStipeDialog.dismiss();
+            }
+        });
+    }
+
+    private void RefundDialog() {
+        refundDialog = new Dialog(this);
+        Window window = refundDialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        refundDialog.setContentView(R.layout.refundticketdialog);
+        refundDialog.setCancelable(true);
+        refundDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        refundDialog.show();
+
+        oneTicket = refundDialog.findViewById(R.id.oneticket);
+        TwoTicket = refundDialog.findViewById(R.id.twoticket);
+        confirmrefund = refundDialog.findViewById(R.id.confirmrefund);
+
+        oneTicket.setBackground(getResources().getDrawable(R.drawable.button_color_theme));
+        oneTicket.setTextColor(getResources().getColor(R.color.colortextwhite));
+
+        TwoTicket.setBackground(getResources().getDrawable(R.drawable.linearback));
+        TwoTicket.setTextColor(getResources().getColor(R.color.colorTheme));
+
+        if (tickets_booked_by_user.equals("1")) {
+            TwoTicket.setVisibility(View.GONE);
+        } else {
+            TwoTicket.setVisibility(View.VISIBLE);
+        }
+
+        oneTicket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                oneTicket.setBackground(getResources().getDrawable(R.drawable.button_color_theme));
+                oneTicket.setTextColor(getResources().getColor(R.color.colortextwhite));
+
+                TwoTicket.setBackground(getResources().getDrawable(R.drawable.linearback));
+                TwoTicket.setTextColor(getResources().getColor(R.color.colorTheme));
+                ticketCount = "1";
+            }
+        });
+
+        TwoTicket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TwoTicket.setBackground(getResources().getDrawable(R.drawable.button_color_theme));
+                TwoTicket.setTextColor(getResources().getColor(R.color.colortextwhite));
+
+                oneTicket.setBackground(getResources().getDrawable(R.drawable.linearback));
+                oneTicket.setTextColor(getResources().getColor(R.color.colorTheme));
+                ticketCount = "2";
+            }
+        });
+
+        confirmrefund.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refundDialog.dismiss();
+                Toast.makeText(BookEventActivity.this, "" + ticketCount, Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void gotoEventMesg(final String token, final String value) {
@@ -401,8 +507,8 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             } else {
                                 Toast.makeText(BookEventActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             }
-                        }else {
-                            Toast.makeText(BookEventActivity.this, ""+response.message(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(BookEventActivity.this, "" + response.message(), Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -510,21 +616,20 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 //            adapter = new ArrayAdapter<String>(BookEventActivity.this,
 //                    android.R.layout.simple_spinner_item, ar);
 //        }else {
-            if (tickets_booked_by_user.equals("0")) {
+        if (tickets_booked_by_user.equals("0")) {
 
-                if (remaini_tickets.equals("1"))
-                {
-                    adapter = new ArrayAdapter<String>(BookEventActivity.this,
-                            android.R.layout.simple_spinner_item, ticketNum1);
-                }else {
-                    adapter = new ArrayAdapter<String>(BookEventActivity.this,
-                            android.R.layout.simple_spinner_item, ticketNum);
-                }
-
-            } else {
+            if (remaini_tickets.equals("1")) {
                 adapter = new ArrayAdapter<String>(BookEventActivity.this,
                         android.R.layout.simple_spinner_item, ticketNum1);
+            } else {
+                adapter = new ArrayAdapter<String>(BookEventActivity.this,
+                        android.R.layout.simple_spinner_item, ticketNum);
             }
+
+        } else {
+            adapter = new ArrayAdapter<String>(BookEventActivity.this,
+                    android.R.layout.simple_spinner_item, ticketNum1);
+        }
 
 
 //        }
@@ -596,9 +701,9 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                 if (TotalTIcket > RemainingTIckets) {
                     adapter = new ArrayAdapter<String>(BookEventActivity.this,
                             android.R.layout.simple_spinner_item, ticketNum1);
-                }else {
+                } else {
                     String ticket = tickets_booked_by_user + ".0";
-                    String totalTicket = total_ticket+".0";
+                    String totalTicket = total_ticket + ".0";
 
 //                    if (totalTicket.equals(ticket)) {
 //                        Intent intent = new Intent(BookEventActivity.this, PayActivity.class);
@@ -614,18 +719,18 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 //                        startActivity(intent);
 //                        dialog.dismiss();
 //                    } else if (ticket.equals("0.0")) {
-                        Intent intent = new Intent(BookEventActivity.this, PayActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        intent.putExtra("total_price", tot);
-                        intent.putExtra("event_id", value);
-                        intent.putExtra("event_Title", title);
-                        intent.putExtra("total_tickets", total_ticket);
-                        intent.putExtra("ticket_Price", ticktprice);
-                        intent.putExtra("imagesend", "BEA");
-                        intent.putExtra("tickettype", tickettypespinnerposintion);
-                        startActivity(intent);
-                        tickettypes.clear();
-                        dialog.dismiss();
+                    Intent intent = new Intent(BookEventActivity.this, PayActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    intent.putExtra("total_price", tot);
+                    intent.putExtra("event_id", value);
+                    intent.putExtra("event_Title", title);
+                    intent.putExtra("total_tickets", total_ticket);
+                    intent.putExtra("ticket_Price", ticktprice);
+                    intent.putExtra("imagesend", "BEA");
+                    intent.putExtra("tickettype", tickettypespinnerposintion);
+                    startActivity(intent);
+                    tickettypes.clear();
+                    dialog.dismiss();
 //                    } else {
 //                        Toast.makeText(BookEventActivity.this, "You can buy one more ticket only", Toast.LENGTH_SHORT).show();
 //                    }
@@ -652,15 +757,14 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 //            adapter = new ArrayAdapter<String>(BookEventActivity.this,
 //                    android.R.layout.simple_spinner_item, ar);
 //        }else{
-            if (tickets_booked_by_user.equals("0") &&  !remaini_tickets.equals("1")) {
-                adapter = new ArrayAdapter<String>(BookEventActivity.this,
-                        android.R.layout.simple_spinner_item, ticketNum);
-            }else {
-                adapter = new ArrayAdapter<String>(BookEventActivity.this,
-                        android.R.layout.simple_spinner_item, ticketNum1);
-            }
+        if (tickets_booked_by_user.equals("0") && !remaini_tickets.equals("1")) {
+            adapter = new ArrayAdapter<String>(BookEventActivity.this,
+                    android.R.layout.simple_spinner_item, ticketNum);
+        } else {
+            adapter = new ArrayAdapter<String>(BookEventActivity.this,
+                    android.R.layout.simple_spinner_item, ticketNum1);
+        }
 //        }
-
 
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -766,8 +870,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                 if (response.body() != null) {
                     remaini_tickets = String.valueOf(response.body().getData().getRemaining());
                     remainingTicketTV.setText("Tickets Remaining " + remaini_tickets);
-                    if (remaini_tickets.equals("0"))
-                    {
+                    if (remaini_tickets.equals("0")) {
                         mBookEvent.setVisibility(View.GONE);
                     }
                 } else {
@@ -1054,7 +1157,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         dailog_ticket_price1 = dialog.findViewById(R.id.dailog_ticket_price1);
     }
 
-    private void  freebookevent(final Dialog dialog) {
+    private void freebookevent(final Dialog dialog) {
         progressDialog.show();
         Call<BookFreeEvents> call = WebAPI.getInstance().getApi().freebookevent("Bearer " + S_token, value, total_ticket);
         call.enqueue(new Callback<BookFreeEvents>() {
@@ -1279,8 +1382,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                 mBookEvent.setVisibility(View.GONE);
                             }
 
-                            if(!tickets_booked_by_user.equals("0"))
-                            {
+                            if (!tickets_booked_by_user.equals("0")) {
                                 peoplegoing.setVisibility(View.VISIBLE);
                                 book_location.setTextColor(getResources().getColor(R.color.white));
                                 book_location.setPaintFlags(book_location.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -1296,7 +1398,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                         startActivity(intent);
                                     }
                                 });
-                            }else {
+                            } else {
 
                                 book_location.setText(location);
                             }
