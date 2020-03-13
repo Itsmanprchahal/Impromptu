@@ -74,7 +74,7 @@ public class BussinessProfileActivity2 extends AppCompatActivity {
                 }
             }
         } else {
-            enter_web_url.setText("https://");
+            enter_web_url.setText("");
         }
 
 
@@ -133,7 +133,10 @@ public class BussinessProfileActivity2 extends AppCompatActivity {
                                     if (Patterns.WEB_URL.matcher(enterURL.getText().toString()).matches())
                                     {
                                         facebookUrl = enterURL.getText().toString();
-                                        Toast.makeText(BussinessProfileActivity2.this, "" + facebookUrl, Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                    }else if (enterURL.getText().toString().equals(""))
+                                    {
+                                        facebookUrl = "";
                                         dialog.dismiss();
                                     }else {
                                         enterURL.setError("Add valid URL");
@@ -145,14 +148,26 @@ public class BussinessProfileActivity2 extends AppCompatActivity {
                         }
                     }
                 } else {
-                    enterURL.setText("https://www.facebook.com/");
+                    enterURL.setText("");
                     enterURL.setSelection(enterURL.getText().length());
                     facebookUrl = enterURL.getText().toString();
                     Done.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            facebookUrl = enterURL.getText().toString();
-                            dialog.dismiss();
+                            if (Patterns.WEB_URL.matcher(enterURL.getText().toString()).matches())
+                            {
+                                facebookUrl = enterURL.getText().toString();
+                               dialog.dismiss();
+                            }else if (enterURL.getText().toString().equals(""))
+                            {
+                                facebookUrl = "";
+                                dialog.dismiss();
+                            }else {
+                                enterURL.setError("Add valid URL");
+                            }
+
+//                            facebookUrl = enterURL.getText().toString();
+//                            dialog.dismiss();
                         }
                     });
                 }
@@ -184,7 +199,9 @@ public class BussinessProfileActivity2 extends AppCompatActivity {
                                     if (Patterns.WEB_URL.matcher(enterURL.getText().toString()).matches())
                                     {
                                         instURL = enterURL.getText().toString();
-                                        Toast.makeText(BussinessProfileActivity2.this, "" + instURL, Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                    }else if (enterURL.getText().toString().equals("")){
+                                        instURL = "";
                                         dialog.dismiss();
                                     }else {
                                         enterURL.setError("Add valid URL");
@@ -196,15 +213,25 @@ public class BussinessProfileActivity2 extends AppCompatActivity {
                         }
                     }
                 } else {
-                    enterURL.setText("https://www.instagram.com/");
+                    enterURL.setText("");
                     enterURL.setSelection(enterURL.getText().length());
                     instURL = enterURL.getText().toString();
                     Done.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            instURL = enterURL.getText().toString();
-                            Toast.makeText(BussinessProfileActivity2.this, "" + instURL, Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
+                            if (Patterns.WEB_URL.matcher(enterURL.getText().toString()).matches())
+                            {
+                                instURL = enterURL.getText().toString();
+                                dialog.dismiss();
+                            }else if (enterURL.getText().toString().equals("")){
+                                instURL = "";
+                                dialog.dismiss();
+                            }else {
+                                enterURL.setError("Add valid URL");
+                            }
+//                            instURL = enterURL.getText().toString();
+//                            Toast.makeText(BussinessProfileActivity2.this, "" + instURL, Toast.LENGTH_SHORT).show();
+//                            dialog.dismiss();
                         }
                     });
                 }
@@ -236,12 +263,11 @@ public class BussinessProfileActivity2 extends AppCompatActivity {
                                     if (Patterns.WEB_URL.matcher(enterURL.getText().toString()).matches())
                                     {
                                         twitterUrl = enterURL.getText().toString();
-                                        Toast.makeText(BussinessProfileActivity2.this, "" + twitterUrl, Toast.LENGTH_SHORT).show();
                                         dialog.dismiss();
                                     }
                                     else  if (enterURL.getText().toString().isEmpty())
                                     {
-                                        enterURL.setText("");
+                                        twitterUrl = "";
                                         dialog.dismiss();
                                     }
                                     else {
@@ -252,15 +278,29 @@ public class BussinessProfileActivity2 extends AppCompatActivity {
                         }
                     }
                 } else {
-                    enterURL.setText("https://www.twitter.com/");
+                    enterURL.setText("");
                     enterURL.setSelection(enterURL.getText().length());
                     twitterUrl = enterURL.getText().toString();
                     Done.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            twitterUrl = enterURL.getText().toString();
-                            Toast.makeText(BussinessProfileActivity2.this, "" + twitterUrl, Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
+                            if (Patterns.WEB_URL.matcher(enterURL.getText().toString()).matches())
+                            {
+                                twitterUrl = enterURL.getText().toString();
+                                dialog.dismiss();
+                            }
+                            else  if (enterURL.getText().toString().isEmpty())
+                            {
+                                twitterUrl = "";
+                                dialog.dismiss();
+                            }
+                            else {
+                                enterURL.setError("Add valid URL");
+                            }
+
+                          /*  twitterUrl = enterURL.getText().toString();
+                           // Toast.makeText(BussinessProfileActivity2.this, "" + twitterUrl, Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();*/
                         }
                     });
                 }
@@ -273,12 +313,11 @@ public class BussinessProfileActivity2 extends AppCompatActivity {
             public void onClick(View v) {
                 bundle = new Bundle();
                 String favebok = facebookUrl;
-                String webURL = enter_web_url.getText().toString();
-                if (webURL.isEmpty())
+                if (!Patterns.WEB_URL.matcher(enter_web_url.getText().toString()).matches() )
                 {
-                    enter_web_url.setError("Enter Web URL");
+                    enter_web_url.setError("Enter valid web URL");
                 }else {
-
+                    String webURL = enter_web_url.getText().toString();
                     Intent intent = new Intent(BussinessProfileActivity2.this,BussinessProfileActivity3.class);
                     intent.putExtra("facebook",favebok);
                     intent.putExtra("insta",instURL);

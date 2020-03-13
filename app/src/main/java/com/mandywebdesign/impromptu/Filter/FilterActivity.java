@@ -291,7 +291,6 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
         femalelayout = findViewById(R.id.femalelayout);
         malelayout = findViewById(R.id.malelayout);
         alllayout = findViewById(R.id.alllayout);
-
         mapView = findViewById(R.id.mapview);
         today = findViewById(R.id.filter_today);
         tomorrow = findViewById(R.id.filter_tomorrow);

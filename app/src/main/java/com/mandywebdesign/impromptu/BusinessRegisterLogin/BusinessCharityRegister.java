@@ -131,7 +131,7 @@ public class BusinessCharityRegister extends AppCompatActivity {
                 } else if (!Password.matches(ConfirmPassword)) {
                     mPassword.setError("passwords do not match");
                     mConfirmPassword.setError("passwords do not match");
-                } else if (mPassword.getText().toString().length()<8 &&!isValidPassword(mPassword.getText().toString()))
+                } else if (mPassword.getText().toString().length()<8)
                 {
                     mPassword.setError("Enter Strong Password");
                 }else if (!Patterns.EMAIL_ADDRESS.matcher(mEmail.getText().toString()).matches()) {

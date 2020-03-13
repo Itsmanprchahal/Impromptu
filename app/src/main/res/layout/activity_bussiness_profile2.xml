@@ -97,6 +97,7 @@
                     android:layout_marginTop="@dimen/_7sdp"
                     android:background="@drawable/custom_edittext"
                     android:hint="www.name.com"
+                    android:singleLine="true"
                     android:fontFamily="@font/sfuitextlight"
                     android:padding="@dimen/_7sdp"
                     android:textColor="@color/colortextBlack"

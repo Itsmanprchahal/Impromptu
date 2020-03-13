@@ -422,9 +422,18 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
         if (v == webUrl) {
 
             if (!webURL.equals("") && Patterns.WEB_URL.matcher(webURL).matches()) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(webURL));
-                startActivity(intent);
+                if (!webURL.startsWith("https://"))
+                {
+                    webURL = "https://"+webURL;
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(webURL));
+                    startActivity(intent);
+                }else {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(webURL));
+                    startActivity(intent);
+                }
+
             } else {
                 Toast.makeText(getActivity(), "No Web URL added", Toast.LENGTH_SHORT).show();
             }
@@ -434,7 +443,13 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
 
             if (!facebookURL.equals("") && Patterns.WEB_URL.matcher(facebookURL).matches()) {
 
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(facebookURL)));
+                if (!facebookURL.startsWith("https://"))
+                {
+                    facebookURL = "https://"+facebookURL;
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(facebookURL)));
+                }else {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(facebookURL)));
+                }
             } else {
                 Toast.makeText(getActivity(), "No valid Facebook Page added", Toast.LENGTH_SHORT).show();
             }
@@ -443,7 +458,14 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
         if (v == InstagramUrl) {
             if (!instaGramURL.equals("") && Patterns.WEB_URL.matcher(instaGramURL).matches())
             {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(instaGramURL)));
+                if (!instaGramURL.startsWith("https://"))
+                {
+                    instaGramURL = "https://"+instaGramURL;
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(instaGramURL)));
+                }else {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(instaGramURL)));
+                }
+
             }else {
                 Toast.makeText(getActivity(), "No valid Instagram Page added", Toast.LENGTH_SHORT).show();
             }
@@ -451,7 +473,13 @@ public class BusinessUserProfile extends Fragment implements View.OnClickListene
         if (v == TwitterUrl) {
             if (!TwitteURL.equals("") && Patterns.WEB_URL.matcher(TwitteURL).matches())
             {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(TwitteURL)));
+                if (!TwitteURL.startsWith("https://"))
+                {
+                    TwitteURL = "https://"+TwitteURL;
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(TwitteURL)));
+                }else {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(TwitteURL)));
+                }
             }else {
                 Toast.makeText(getActivity(), "No valid Twitter Page aaded", Toast.LENGTH_SHORT).show();
             }

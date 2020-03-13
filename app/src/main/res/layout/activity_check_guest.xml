@@ -55,6 +55,7 @@
             android:layout_margin="15dp"
             android:clickable="false"
             android:focusable="false"
+            android:visibility="gone"
             android:background="@drawable/custom_edittext"
             android:drawableLeft="@drawable/search"
             android:gravity="start"
@@ -86,6 +87,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:textColor="@color/colortextBlack"
             android:layout_marginTop="@dimen/_55sdp"
             android:textSize="@dimen/_20sdp"

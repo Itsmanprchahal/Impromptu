@@ -6,13 +6,22 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@drawable/ticketboxround"
-    android:orientation="vertical"
-    android:padding="@dimen/_15sdp">
+    android:orientation="vertical">
+
+    <ImageButton
+        android:id="@+id/close_ticket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:backgroundTint="#ECEAEA"
+        android:layout_gravity="end"
+        android:src="@drawable/close" />
 
     <TextView
         android:id="@+id/tickettext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_15sdp"
         android:fontFamily="@font/circularstdbold"
         android:text="Ticket Types"
         android:textColor="@color/colortextBlack"
@@ -23,17 +32,19 @@
         android:id="@+id/type1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_15sdp"
         android:fontFamily="@font/circularstdbold"
         android:text="Ticket Type1"
-        android:visibility="gone"
         android:textColor="@color/colortextBlack"
         android:textSize="@dimen/_12sdp"
+        android:visibility="gone"
         tools:ignore="MissingConstraints"></TextView>
 
     <TextView
         android:id="@+id/type2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_15sdp"
         android:fontFamily="@font/circularstdbold"
         android:text="Ticket Type2"
         android:textColor="@color/colortextBlack"
@@ -45,6 +56,7 @@
         android:id="@+id/type3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_15sdp"
         android:fontFamily="@font/circularstdbold"
         android:text="Ticket Type3"
         android:textColor="@color/colortextBlack"
@@ -57,6 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_2sdp"
+        android:paddingLeft="@dimen/_15sdp"
         android:fontFamily="@font/circularstdbold"
         android:textColor="@color/colortextBlack"
         android:textSize="@dimen/_12sdp"
@@ -68,6 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_2sdp"
+        android:paddingLeft="@dimen/_15sdp"
         android:fontFamily="@font/circularstdbold"
         android:textColor="@color/colortextBlack"
         android:textSize="@dimen/_12sdp"
@@ -79,6 +93,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_2sdp"
+        android:paddingLeft="@dimen/_15sdp"
         android:fontFamily="@font/circularstdbold"
         android:textColor="@color/colortextBlack"
         android:textSize="@dimen/_12sdp"
@@ -90,6 +105,8 @@
         android:id="@+id/ticketlayoutone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_15sdp"
         android:orientation="vertical">
 
 
@@ -175,14 +192,14 @@
     </LinearLayout>
 
 
-
-
-
     <Button
         android:id="@+id/btn_done"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginLeft="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
         android:background="@drawable/custom_next_bt"
         android:fontFamily="@font/circularstdblack"
         android:text="Done"

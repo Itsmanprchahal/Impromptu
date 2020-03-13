@@ -211,7 +211,7 @@ public class Setting extends Fragment {
 
                     Intent share = new Intent(Intent.ACTION_SEND);
                     share.setType("text/plain");
-                    share.putExtra(Intent.EXTRA_TEXT, "Thought you might like this app. Check it out!" + "\n" + "\n" + "https://play.google.com/store/apps");
+                    share.putExtra(Intent.EXTRA_TEXT, "Thought you might like this app. Check it out!" + "\n" + "\n" + "https://impromptusocial.page.link/QrT6");
                     startActivity(Intent.createChooser(share, "Impromptu Invite"));
 
                 }
@@ -385,9 +385,11 @@ public class Setting extends Fragment {
             invite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.infrasoft.uboi"));
-                    startActivity(intent);
+                    Intent share = new Intent(Intent.ACTION_SEND);
+                    share.setType("text/plain");
+                    share.putExtra(Intent.EXTRA_TEXT, "Thought you might like this app. Check it out!" + "\n" + "\n" + "https://impromptusocial.page.link/QrT6");
+                    startActivity(Intent.createChooser(share, "Impromptu Invite"));
+
                 }
             });
 

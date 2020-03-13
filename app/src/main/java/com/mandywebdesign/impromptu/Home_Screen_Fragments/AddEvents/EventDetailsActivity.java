@@ -38,6 +38,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -1075,8 +1076,12 @@ public class EventDetailsActivity extends AppCompatActivity {
         dialog1 = new Dialog(this);
         dialog1.setContentView(R.layout.tickettypedialog);
         dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog1.setCanceledOnTouchOutside(false);
+        dialog1.setCancelable(false);
         dialog1.show();
         arryList = new ArrayList<>();
+        ImageButton close_ticket ;
+        close_ticket = dialog1.findViewById(R.id.close_ticket);
         edt_tiketType = dialog1.findViewById(R.id.edt_tiketType);
         edt_price = dialog1.findViewById(R.id.edt_price);
         edt_numbersOfTicket = dialog1.findViewById(R.id.edt_numbersOfTicket);
@@ -1094,6 +1099,14 @@ public class EventDetailsActivity extends AppCompatActivity {
                 //ToDo Validation
                 validationOnDialogfrom();
 
+            }
+        });
+
+        close_ticket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog1.dismiss();
+                addTicket.setText("+ Add ticket type");
             }
         });
 
@@ -1161,10 +1174,24 @@ public class EventDetailsActivity extends AppCompatActivity {
                             addTicket.setText("edit or delete ticket type");
                         } else {
                             if (totalTicket > numofTicker1) {
+//                                pendingTicker = totalTicket + numofTicker1;
+                                totalTicket = pendingTicker;
+
+                                if (totalTicket == 0) {
+                                    dialog1.dismiss();
+                                }
                                 edt_numbersOfTicket.setError(totalTicket + " remaining tickets");
                             } else if (totalTicket < numofTicker1) {
+//                                pendingTicker = totalTicket + numofTicker1;
+                                totalTicket = pendingTicker;
+
+                                if (totalTicket == 0) {
+                                    dialog1.dismiss();
+                                }
                                 edt_numbersOfTicket.setError("limit exceed. " + totalTicket + " are remaining tickets.");
                             } else {
+
+
                                 if (arryList.size() == 3) {
                                     type1.setVisibility(View.VISIBLE);
                                     type1.setText(arryList.get(0).getTikcettype() + " £ " + arryList.get(0).getPrice() + " (" + arryList.get(0).getNumberofticket() + ") ");
@@ -1191,13 +1218,18 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 }
                             }
                         }
+
                     }
-                    pendingTicker = totalTicket - numofTicker1;
-                    totalTicket = pendingTicker;
+                    if (edt_numbersOfTicket.getError()==null)
+                    {
+                        pendingTicker = totalTicket - numofTicker1;
+                        totalTicket = pendingTicker;
+                    }
 
                     if (totalTicket == 0) {
                         dialog1.dismiss();
                     }
+
 
                 } else if (totalTicket < numofTicker1) {
                     edt_numbersOfTicket.setError("limit exceed. " + totalTicket + " are remaining tickets.");

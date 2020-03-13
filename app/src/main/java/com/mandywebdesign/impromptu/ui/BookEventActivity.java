@@ -277,7 +277,14 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                     String path = deepLink.getPath();
                                     Log.d("deeplink1", path);
                                     String[] evetdata = path.split("/");
-                                    String eventID = evetdata[2];
+                                    String eventID;
+                                    if (evetdata.length==1)
+                                    {
+                                        eventID = evetdata[1];
+                                    }else {
+                                        eventID = evetdata[2];
+                                    }
+
                                     Log.d("deeplink", eventID);
                                     getEventData(S_token, eventID);
 
