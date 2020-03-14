@@ -4,12 +4,15 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -39,6 +42,7 @@ import com.mandywebdesign.impromptu.ui.NoInternet;
 import com.mandywebdesign.impromptu.ui.NoInternetScreen;
 import com.mandywebdesign.impromptu.ui.ProgressBarClass;
 
+import java.net.URLEncoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -244,6 +248,7 @@ public class BusinessCharityRegister extends AppCompatActivity {
         closeLOginDialog = dialog.findViewById(R.id.close_logindialog);
         forgot_password = dialog.findViewById(R.id.forgot_password);
         showpassword = dialog.findViewById(R.id.showpassword);
+        showpassword.setVisibility(View.GONE);
 
         closeLOginDialog.setOnClickListener(new View.OnClickListener() {
             @Override

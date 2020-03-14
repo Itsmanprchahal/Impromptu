@@ -251,7 +251,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                     getRaminingEvents(S_Token, value);
                 }
             } else if (event_type.equals("history")) {
-
+                editevent.setVisibility(View.GONE);
                 if (!BToken.equalsIgnoreCase("")) {
                     getEventdata(BToken, value);
                     getUsers(BToken, value);
@@ -287,6 +287,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
                 }
             } else if (event_type.equals("past")) {
                 peoplecoming.setVisibility(View.GONE);
+                editevent.setVisibility(View.GONE);
                 if (!S_Token.equalsIgnoreCase("")) {
                     getEventdata(S_Token, value);
                     getUsers(S_Token, value);

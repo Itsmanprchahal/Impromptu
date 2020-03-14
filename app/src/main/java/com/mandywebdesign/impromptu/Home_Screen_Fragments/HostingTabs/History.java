@@ -201,7 +201,6 @@ public class History extends Fragment implements DiscreteScrollView.OnItemChange
                             }
 
 
-                            categois.add(datum.getCategory());
                             // Toast.makeText(getContext(), "Toast", Toast.LENGTH_SHORT).show();
 
                             adapter = new Business_History_adapter(getContext(), manager, S_Token);

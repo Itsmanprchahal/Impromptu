@@ -251,6 +251,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                     mBookEvent.setVisibility(View.GONE);
                     invite_layouit.setVisibility(View.GONE);
                     askforrefund.setVisibility(View.GONE);
+                    peoplegoing.setVisibility(View.GONE);
                 }
                 if (eventType.equals("fav")) {
                     eventdistance.setVisibility(View.GONE);
@@ -263,7 +264,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         }
 
         if (!S_token.equalsIgnoreCase("")) {
-
             try {
                 FirebaseDynamicLinks.getInstance()
                         .getDynamicLink(getIntent())
@@ -287,7 +287,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
                                     Log.d("deeplink", eventID);
                                     getEventData(S_token, eventID);
-
                                     addFav(S_token, eventID);
                                     getRaminingEvents(S_token, eventID);
                                     getUsers(S_token, eventID);
@@ -318,12 +317,66 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             }
 
         } else if (!BToken.equalsIgnoreCase("")) {
-            getEventData(BToken, value);
-            addtoFavCheck_box.setVisibility(View.GONE);
-            mBookEvent.setVisibility(View.GONE);
-            follow_button.setVisibility(View.GONE);
-            getRaminingEvents(BToken, value);
-            getUsers(BToken, value);
+
+            try {
+                FirebaseDynamicLinks.getInstance()
+                        .getDynamicLink(getIntent())
+                        .addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
+                            @Override
+                            public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
+                                // Get deep link from result (may be null if no link is found)
+                                Uri deepLink = null;
+                                if (pendingDynamicLinkData != null) {
+                                    deepLink = pendingDynamicLinkData.getLink();
+                                    String path = deepLink.getPath();
+                                    Log.d("deeplink1", path);
+                                    String[] evetdata = path.split("/");
+                                    String eventID;
+                                    if (evetdata.length==1)
+                                    {
+                                        eventID = evetdata[1];
+                                    }else {
+                                        eventID = evetdata[2];
+                                    }
+
+                                    Log.d("deeplink", eventID);
+                                    getEventData(BToken, eventID);
+                                    addtoFavCheck_box.setVisibility(View.GONE);
+                                    mBookEvent.setVisibility(View.GONE);
+                                    follow_button.setVisibility(View.GONE);
+                                    getRaminingEvents(BToken, eventID);
+                                    getUsers(BToken, eventID);
+
+                                   /* getEventData(S_token, eventID);
+                                    addFav(S_token, eventID);
+                                    getRaminingEvents(S_token, eventID);
+                                    getUsers(S_token, eventID);
+                                    bookevent(eventID);
+                                    gotoEventMesg(S_token, eventID);
+                                    askforrefund("Bearer " + S_token, eventID);*/
+                                } else {
+
+                                   /* getEventData(S_token, value);
+                                    addFav(S_token, value);
+                                    getRaminingEvents(S_token, value);
+                                    getUsers(S_token, value);
+                                    bookevent(value);
+                                    gotoEventMesg(S_token, value);
+                                    askforrefund("Bearer " + S_token, value);*/
+                                }
+
+                            }
+                        })
+                        .addOnFailureListener(this, new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w("dynamiclink", "getDynamicLink:onFailure", e);
+                            }
+                        });
+            } catch (android.content.ActivityNotFoundException anfe) {
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://play.google.com/store")));
+            }
         } else {
             Intent intent = new Intent(this, Join_us.class);
             startActivity(intent);
@@ -1442,9 +1495,12 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                                 mBookEvent.setVisibility(View.VISIBLE);
                                             } else {
                                                 mBookEvent.setVisibility(View.GONE);
+
+                                                //peoplegoing.setVisibility(View.GONE);
                                             }
                                         } else {
                                             mBookEvent.setVisibility(View.GONE);
+                                            peoplegoing.setVisibility(View.GONE);
                                         }
 //                                System.out.println ("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
                                     } catch (ParseException e) {
