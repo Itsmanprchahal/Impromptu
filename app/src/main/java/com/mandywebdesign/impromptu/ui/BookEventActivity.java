@@ -1495,8 +1495,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                                 mBookEvent.setVisibility(View.VISIBLE);
                                             } else {
                                                 mBookEvent.setVisibility(View.GONE);
-
-                                                //peoplegoing.setVisibility(View.GONE);
+                                                // peoplegoing.setVisibility(View.GONE);
                                             }
                                         } else {
                                             mBookEvent.setVisibility(View.GONE);
