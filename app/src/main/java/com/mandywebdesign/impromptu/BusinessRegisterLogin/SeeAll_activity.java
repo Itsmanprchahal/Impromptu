@@ -45,7 +45,7 @@ public class SeeAll_activity extends AppCompatActivity {
     public static ArrayList<String> userName = new ArrayList<>();
     public static ArrayList<String> userType = new ArrayList<>();
     public static ArrayList<String> userID = new ArrayList<>();
-    String BToken,S_Token;
+    String BToken,S_Token,isFrom;
     Intent intent;
 
     @Override
@@ -71,6 +71,10 @@ public class SeeAll_activity extends AppCompatActivity {
         recyclerView = findViewById(R.id.see_all_recycler_view);
 
         intent = getIntent();
+        if (intent.getStringExtra("isFrom")!=null)
+        {
+            isFrom = intent.getStringExtra("isFrom");
+        }
 
         String value = intent.getStringExtra("value");
 
@@ -127,7 +131,7 @@ public class SeeAll_activity extends AppCompatActivity {
 
                         }
 
-                        See_Add_adpater add_adpater = new See_Add_adpater(SeeAll_activity.this,manager,userImage,userName,totalticketbuy);
+                        See_Add_adpater add_adpater = new See_Add_adpater(SeeAll_activity.this,manager,userImage,userName,totalticketbuy,isFrom);
                         recyclerView.setAdapter(add_adpater);
 
                     }else {

@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,13 +31,15 @@ public class See_Add_adpater extends RecyclerView.Adapter<See_Add_adpater.ViewHo
     ArrayList<String> userIamge = new ArrayList<>();
     ArrayList<String> userName;
     ArrayList<String> totalticketbuy;
+    String isFrom;
 
-    public See_Add_adpater(Context context, FragmentManager manager, ArrayList<String> userIamge, ArrayList<String> userName, ArrayList<String> totalticketbuy) {
+    public See_Add_adpater(Context context, FragmentManager manager, ArrayList<String> userIamge, ArrayList<String> userName, ArrayList<String> totalticketbuy, String isFrom) {
         this.context = context;
         this.manager = manager;
         this.userIamge = userIamge;
         this.userName = userName;
         this.totalticketbuy = totalticketbuy;
+        this.isFrom = isFrom;
     }
 
     @NonNull
@@ -54,10 +57,14 @@ public class See_Add_adpater extends RecyclerView.Adapter<See_Add_adpater.ViewHo
         viewHolder.userName.setText(userName.get(i));
         viewHolder.bookedtickets.setText("Tickets: " + totalticketbuy.get(i));
 
+        if (isFrom.equals("OWNEVENT"))
+        {
+            viewHolder.refund_bt_layout.setVisibility(View.VISIBLE);
+        }
+
         viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(context, NormalGetProfile.class);
                 intent.putExtra("user_id", SeeAll_activity.userID.get(i));
                 context.startActivity(intent);
@@ -76,6 +83,7 @@ public class See_Add_adpater extends RecyclerView.Adapter<See_Add_adpater.ViewHo
 
         RoundedImageView imageView;
         TextView userName, bookedtickets;
+        LinearLayout refund_bt_layout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -83,6 +91,7 @@ public class See_Add_adpater extends RecyclerView.Adapter<See_Add_adpater.ViewHo
             imageView = itemView.findViewById(R.id.see_all_user_image);
             userName = itemView.findViewById(R.id.see_all_user_name);
             bookedtickets = itemView.findViewById(R.id.bookedticketnumber);
+            refund_bt_layout = itemView.findViewById(R.id.refund_bt_layout);
         }
     }
 }

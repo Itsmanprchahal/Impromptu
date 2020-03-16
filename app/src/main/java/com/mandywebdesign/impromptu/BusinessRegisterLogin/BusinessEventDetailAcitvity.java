@@ -1072,6 +1072,7 @@ public class BusinessEventDetailAcitvity extends AppCompatActivity implements Ad
 
                 Intent intent = new Intent(BusinessEventDetailAcitvity.this, SeeAll_activity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra("isFrom","OWNEVENT");
                 intent.putExtra("value", id);
                 startActivity(intent);
 

@@ -525,6 +525,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
             @Override
             public void onScroll(float scrollPosition, int currentPosition, int newPosition, @Nullable RecyclerView.ViewHolder currentHolder, @Nullable RecyclerView.ViewHolder newCurrent) {
+
             }
         });
     }

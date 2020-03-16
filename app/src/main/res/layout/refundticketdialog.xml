@@ -65,9 +65,23 @@
                     ></Button>
             </LinearLayout>
 
+
+            <EditText
+                android:id="@+id/reason_for_refund_et"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:hint="Reason for refund"
+                android:textAlignment="textStart"
+                android:gravity="start"
+                android:textSize="14sp"
+                android:padding="@dimen/_5sdp"
+                android:background="@drawable/custom_edittext"
+                android:layout_below="@id/ticketlayout"
+                android:layout_marginTop="@dimen/_10sdp"></EditText>
+
             <Button
                 android:id="@+id/confirmrefund"
-                android:layout_below="@id/ticketlayout"
+                android:layout_below="@id/reason_for_refund_et"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_weight="1"

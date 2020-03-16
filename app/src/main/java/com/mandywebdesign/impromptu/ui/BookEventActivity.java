@@ -45,6 +45,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -397,9 +398,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                 } else {
                     RefundDialog();
                 }
-
 //                ConfirmationDialog(s_token, value);
-
             }
         });
     }
@@ -446,6 +445,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         oneTicket = refundDialog.findViewById(R.id.oneticket);
         TwoTicket = refundDialog.findViewById(R.id.twoticket);
         confirmrefund = refundDialog.findViewById(R.id.confirmrefund);
+        EditText reason_for_refund_ET = refundDialog.findViewById(R.id.reason_for_refund_et);
 
         oneTicket.setBackground(getResources().getDrawable(R.drawable.button_color_theme));
         oneTicket.setTextColor(getResources().getColor(R.color.colortextwhite));
@@ -486,8 +486,15 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         confirmrefund.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                refundDialog.dismiss();
-                Toast.makeText(BookEventActivity.this, "" + ticketCount, Toast.LENGTH_SHORT).show();
+                if (reason_for_refund_ET.getText().toString().equals(""))
+                {
+                    reason_for_refund_ET.setError("Enter reasor for refund");
+                    reason_for_refund_ET.setFocusable(true);
+                }else {
+                    refundDialog.dismiss();
+                    Toast.makeText(BookEventActivity.this, "" + ticketCount, Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -1115,6 +1122,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             public void onClick(View v) {
                 Intent intent = new Intent(BookEventActivity.this, SeeAll_activity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra("isFrom","BookEvent");
                 intent.putExtra("value", id);
                 startActivity(intent);
             }
