@@ -13,6 +13,20 @@ public class RetroEventCategory {
     @SerializedName("message")
     @Expose
     private String message;
+
+
+
+    @SerializedName("stripe_connect_id")
+    @Expose
+    private boolean stripe_connect_id;
+
+    public boolean isStripe_connect_id() {
+        return stripe_connect_id;
+    }
+
+    public void setStripe_connect_id(boolean stripe_connect_id) {
+        this.stripe_connect_id = stripe_connect_id;
+    }
     @SerializedName("data")
     @Expose
     public List<Datum> data = null;

@@ -63,6 +63,7 @@ import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalGetProfile;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalPublishProfile;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.PaymentDetailActivity;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.PrivancyActivity;
+import com.mandywebdesign.impromptu.SettingFragmentsOptions.RefundRequests;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.TandCOptions;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.TermsAndConditionsActivityy;
 import com.mandywebdesign.impromptu.firebasenotification.MyFirebaseMessagingService;
@@ -82,7 +83,7 @@ import retrofit2.Response;
 public class Setting extends Fragment {
 
 
-    TextView logout, setting_help_option, terms, setting_paymentdetails_option, changepassword, contactus, invite, setting_verification_option;
+    TextView logout, setting_help_option, terms, setting_paymentdetails_option,setting_refund_request, changepassword, contactus, invite, setting_verification_option;
     GoogleApiClient googleApiClient;
     boolean loggedOut;
     GoogleSignInAccount account;
@@ -130,6 +131,7 @@ public class Setting extends Fragment {
         terms = view.findViewById(R.id.setting_termsandconditions_option);
         setting_help_option = view.findViewById(R.id.setting_help_option);
         contactus = view.findViewById(R.id.setting_contactUs_option);
+        setting_refund_request = view.findViewById(R.id.setting_refund_request);
 
         invite = view.findViewById(R.id.setting_inviteuser_option);
         setting_verification_option = view.findViewById(R.id.setting_verification_option);
@@ -167,6 +169,14 @@ public class Setting extends Fragment {
                 }
             });
 
+            setting_refund_request.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getContext(), RefundRequests.class);
+                    startActivity(intent);
+                }
+            });
+
             setting_paymentdetails_option.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -185,7 +195,6 @@ public class Setting extends Fragment {
                 }
             });
 
-
             terms.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -193,7 +202,6 @@ public class Setting extends Fragment {
                     startActivity(intent);
                 }
             });
-
 
             contactus.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -320,6 +328,15 @@ public class Setting extends Fragment {
                 @Override
                 public void onClick(View view) {
                     changepassswordpopup();
+                }
+            });
+
+
+            setting_refund_request.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getContext(), RefundRequests.class);
+                    startActivity(intent);
                 }
             });
 

@@ -162,7 +162,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     static String tickettypeposition, getSpinnerposition = "1";
     static String currentlat, currenlng, eventlat, eventlng;
     ArrayAdapter<String> adapter;
-    Dialog dialog, dialog1, refundDialog,connectStipeDialog;
+    Dialog dialog, dialog1, refundDialog;
     TextView dailog_ticket_type1, dailog_ticket_price1, eventid;
     Spinner spinner1;
     Button dialogButoon1;
@@ -170,7 +170,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     RelativeLayout attendeelayout;
     Button oneTicket, TwoTicket, confirmrefund,connectOk,connectCancel;
     String ticketCount = "1";
-     String stripeStatus="0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -391,47 +390,13 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             @Override
             public void onClick(View v) {
 
-                //ToDO: ask for refund:
-                if (stripeStatus.equals("0")) {
-
-                    ConnectStripeDialog();
-                } else {
-                    RefundDialog();
-                }
+               RefundDialog();
 //                ConfirmationDialog(s_token, value);
             }
         });
     }
 
-    private void ConnectStripeDialog() {
-        connectStipeDialog = new Dialog(this);
-        Window window = connectStipeDialog.getWindow();
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
-        connectStipeDialog.setContentView(R.layout.stripeconnectdialog);
-        connectStipeDialog.setCancelable(true);
-        connectStipeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        connectStipeDialog.show();
 
-        connectOk = connectStipeDialog.findViewById(R.id.okconnect);
-        connectCancel = connectStipeDialog.findViewById(R.id.cancelconnect);
-
-        connectOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                connectStipeDialog.dismiss();
-                Intent intent = new Intent(BookEventActivity.this, ConnectStripe.class);
-                intent.putExtra("loginUserId", loginUserId);
-                startActivity(intent);
-            }
-        });
-
-        connectCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                connectStipeDialog.dismiss();
-            }
-        });
-    }
 
     private void RefundDialog() {
         refundDialog = new Dialog(this);

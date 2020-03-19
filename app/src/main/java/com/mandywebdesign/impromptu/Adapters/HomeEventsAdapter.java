@@ -77,6 +77,7 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Vi
 
         sharedPreferences = context.getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        editor.clear();
 
         viewHolder.eventCategoryname.setText(Home.cate.get(i));
         viewHolder.eventName.setText(Home.Title.get(i));

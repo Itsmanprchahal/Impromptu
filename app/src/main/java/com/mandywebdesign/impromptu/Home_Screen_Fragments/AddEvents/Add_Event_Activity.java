@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
@@ -28,6 +30,8 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -48,6 +52,7 @@ import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.RetroEventCategory;
 import com.mandywebdesign.impromptu.Retrofit.RetroGetEventData;
 import com.mandywebdesign.impromptu.firebasenotification.MyFirebaseMessagingService;
+import com.mandywebdesign.impromptu.stripeconnect.ConnectStripe;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.NoInternetScreen;
 import com.mandywebdesign.impromptu.ui.ProgressBarClass;
@@ -100,6 +105,11 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
     RelativeLayout link_layoutone, link_layouttwo, link_layoutthree;
     String edit, value, edittitle, editdesc, editcate, republish;
     public static ArrayList<String> image_uris = new ArrayList<>();
+    Button oneTicket, TwoTicket, confirmrefund,connectOk,connectCancel;
+    String ticketCount = "1";
+    String loginUserId;
+    boolean stripeStatus;
+    Dialog connectStipeDialog;
 
 
     @Override
@@ -117,6 +127,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
         sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
 
         userToken = "Bearer " + sharedPreferences.getString("Usertoken", "");
+        loginUserId = sharedPreferences.getString("userID", "");
         BToken = sharedPreferences.getString("Usertoken", "");
         S_Token = sharedPreferences.getString("Socailtoken", "");
 
@@ -134,15 +145,12 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
         addEvent_progress.setProgress(35);
         addEvent_progress.getProgressDrawable().setColorFilter(getResources().getColor(R.color.colorTheme), PorterDuff.Mode.SRC_ATOP);
 
-
-        getCategories(userToken);
-
-
         listeners();
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
+
 
 
         if (edit!=null)
@@ -192,6 +200,17 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!BToken.equalsIgnoreCase(""))
+        {
+            getCategories("Bearer "+BToken);
+        }else {
+            getCategories("Bearer "+S_Token);
+        }
+    }
+
     private void getCategories(String userToken) {
         Call<RetroEventCategory> categoryCall = WebAPI.getInstance().getApi().Category(userToken);
         categoryCall.enqueue(new Callback<RetroEventCategory>() {
@@ -206,6 +225,13 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
                             Log.d("name", "" + datum.getName());
                             String categ = datum.getName();
                             cate.add(categ);
+                            stripeStatus = response.body().isStripe_connect_id();
+                            //ToDO: ask for refund:
+                        }
+
+                        if (stripeStatus == false) {
+
+                            ConnectStripeDialog();
                         }
                     }
                 }
@@ -226,6 +252,8 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
         spinner.setAdapter(adapter);
 
     }
+
+
 
     private static final int LIMIT = 5;
 
@@ -488,6 +516,37 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
         Fresco.initialize(getApplicationContext());
 
 
+    }
+
+    private void ConnectStripeDialog() {
+        connectStipeDialog = new Dialog(this);
+        Window window = connectStipeDialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+        connectStipeDialog.setContentView(R.layout.stripeconnectdialog);
+        connectStipeDialog.setCancelable(false);
+        connectStipeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        connectStipeDialog.show();
+
+        connectOk = connectStipeDialog.findViewById(R.id.okconnect);
+        connectCancel = connectStipeDialog.findViewById(R.id.cancelconnect);
+
+        connectOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                connectStipeDialog.dismiss();
+                Intent intent = new Intent(Add_Event_Activity.this, ConnectStripe.class);
+                intent.putExtra("loginUserId", loginUserId);
+                startActivity(intent);
+            }
+        });
+
+        connectCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                connectStipeDialog.dismiss();
+                finish();
+            }
+        });
     }
 
 

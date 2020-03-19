@@ -143,6 +143,27 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Refund Request"
+            android:drawableLeft="@drawable/ic_payment"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/sfuitextlight"
+            android:padding="@dimen/_8sdp"
+            android:textSize="14sp"
+            android:drawablePadding="15dp"
+            android:textColor="@color/colortextBlack"
+            android:id="@+id/setting_refund_request"/>
+
+        <View
+            android:id="@+id/setting_refund_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/colorgrey">
+
+        </View>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="Payment Details"
             android:drawableLeft="@drawable/ic_payment"
             android:gravity="center_vertical"

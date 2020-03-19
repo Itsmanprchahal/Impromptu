@@ -33,7 +33,7 @@ public class ConnectStripe extends AppCompatActivity {
         progressDialog.dismiss();
         intent = getIntent();
         loginUserId = intent.getStringExtra("loginUserId");
-        String urlWithId = "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_G9vPCANGPN4Jv1FJOOGjOOMcA9hbltKZ&scope=read_write&state="+loginUserId;
+        String urlWithId = "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_GvO1s7dJvTeIkAjkndR3q3cve13FJPuC&scope=read_write&state="+loginUserId;
 
         //webview.setListener(Main2Activity.this,this);
         webView.getSettings().setSupportMultipleWindows(true);

@@ -62,6 +62,7 @@ import com.mandywebdesign.impromptu.Home_Screen_Fragments.AddEvents.Add_Event_Ac
 import com.mandywebdesign.impromptu.MyEventsFragments.Hosting;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.RetroGetProfile;
+import com.mandywebdesign.impromptu.stripeconnect.ConnectStripe;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -78,7 +79,7 @@ public class Home_Screen extends AppCompatActivity {
     SharedPreferences.Editor editor;
     String userToken, refresh;
     Intent intent;
-    Dialog progressDialog;
+    Dialog progressDialog,connectStipeDialog;
     String accept = "application/json";
     public static String BprofileStatus, data;
     public static int countt = 0, newCount = 0;
@@ -86,6 +87,8 @@ public class Home_Screen extends AppCompatActivity {
     public static String count = "0";
     public static int framgposition, lastposition;
     String s;
+    SharedPreferences itemPositionPref;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +108,10 @@ public class Home_Screen extends AppCompatActivity {
         sharedPreferences1 = getSharedPreferences("BusinessProfile1", Context.MODE_PRIVATE);
         sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
         userToken = "Bearer " + sharedPreferences.getString("Usertoken", "");
+        itemPositionPref = getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);
+        editor = itemPositionPref.edit();
+        editor.clear();
+
         socailtoken = "Bearer " + sharedPreferences.getString("Socailtoken", "");
 
         profileupdatedPref1 = getSharedPreferences("profileupdated", Context.MODE_PRIVATE);
@@ -673,8 +680,12 @@ public class Home_Screen extends AppCompatActivity {
         addEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Home_Screen.this, Add_Event_Activity.class);
-                startActivity(intent);
+                //ToDO: ask for refund:
+                    Intent intent = new Intent(Home_Screen.this, Add_Event_Activity.class);
+                    startActivity(intent);
+//                    RefundDialog();
+
+
             }
         });
 

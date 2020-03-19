@@ -68,7 +68,7 @@ public class RelatedEventAdapter extends RecyclerView.Adapter<RelatedEventAdapte
 
         sharedPreferences = context.getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-
+        editor.clear();
         viewHolder.eventName.setText(Home.rel_Title.get(i));
         Glide.with(context).load(Home.rel_image.get(i)).into(viewHolder.eventImage);
         viewHolder.event_category.setText(Home.rel_category_name.get(i));

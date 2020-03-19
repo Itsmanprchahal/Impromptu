@@ -30,7 +30,6 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.mandywebdesign.impromptu.BusinessRegisterLogin.BusinessEventDetailAcitvity;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;

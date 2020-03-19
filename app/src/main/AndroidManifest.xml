@@ -49,7 +49,8 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:ignore="HardcodedDebugMode">
-        <activity android:name=".stripeconnect.ConnectStripe"></activity>
+        <activity android:name=".SettingFragmentsOptions.RefundRequests"></activity>
+        <activity android:name=".stripeconnect.ConnectStripe" />
         <activity android:name=".Filter.FilteredActivity" />
         <activity
             android:name=".Filter.FilterActivity"

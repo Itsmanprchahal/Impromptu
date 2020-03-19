@@ -36,6 +36,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.share.internal.VideoUploader;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -83,7 +84,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
     public static DiscreteScrollView relatedEventsRecyclerView;
     public static DiscreteScrollView recyclerView;
     public static TextView textView, see_related;
-    ImageView  swipeUp;
+    ImageView swipeUp;
     RelativeLayout filter;
     InfiniteScrollAdapter infiniteAdapter;
     View view;
@@ -122,6 +123,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
     FusedLocationProviderClient locationProviderClient;
     HomeEventsAdapter adapter;
     int current_Position;
+    SharedPreferences.Editor editor;
 
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -140,13 +142,15 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
 
         itemPositionPref = getContext().getSharedPreferences("ItemPosition", Context.MODE_PRIVATE);
+        editor = itemPositionPref.edit();
+        editor.clear();
 
 
         itemPosition = itemPositionPref.getString(Constants.itemPosition, "0");
         releatedposition = itemPositionPref.getString(Constants.eventType, String.valueOf(0));
         getCategory = itemPositionPref.getString(Constants.Category, "");
         recyclerView = view.findViewById(R.id.home_feed_recyclerview);
-          relatedEventsRecyclerView = view.findViewById(R.id.home_frag_related_items);
+        relatedEventsRecyclerView = view.findViewById(R.id.home_frag_related_items);
 
         init();
         shuffle = view.findViewById(R.id.home_shuffle);
@@ -198,7 +202,7 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
             public void onClick(View v) {
 //                fragmentManager.beginTransaction().replace(R.id.home_frame_layout, new FilterScreen()).addToBackStack(null).commit();
                 Intent intent = new Intent(getContext(), FilterActivity.class);
-                intent.putExtra("from","home");
+                intent.putExtra("from", "home");
                 startActivity(intent);
             }
         });
@@ -307,6 +311,8 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
                 if (event_count.get(newPosition) == 1) {
                     see_related.setVisibility(View.INVISIBLE);
+                } else {
+                    see_related.setVisibility(View.VISIBLE);
                 }
 
                 current_Position = event_count.get(newPosition);
@@ -407,10 +413,9 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
 
                             timeFrom = removeLeadingZeroes(time_t);
-                            if (timeFrom.contains(":00"))
-                            {
-                                timeFrom = removeLeadingZeroes(time_t).replace(":00","");
-                            }else {
+                            if (timeFrom.contains(":00")) {
+                                timeFrom = removeLeadingZeroes(time_t).replace(":00", "");
+                            } else {
                                 timeFrom = removeLeadingZeroes(time_t);
                             }
 
@@ -611,10 +616,9 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
 
 
                             timeFrom = removeLeadingZeroes(time_t);
-                            if (timeFrom.contains(":00"))
-                            {
-                                timeFrom = removeLeadingZeroes(time_t).replace(":00","");
-                            }else {
+                            if (timeFrom.contains(":00")) {
+                                timeFrom = removeLeadingZeroes(time_t).replace(":00", "");
+                            } else {
                                 timeFrom = removeLeadingZeroes(time_t);
                             }
                             Calendar c = Calendar.getInstance();
@@ -729,10 +733,9 @@ public class Home extends Fragment implements DiscreteScrollView.OnItemChangedLi
                                 time_t = new SimpleDateFormat("hh:mm aa").format(dateObj);
 
                                 timeFrom = removeLeadingZeroes(time_t);
-                                if (timeFrom.contains(":00"))
-                                {
-                                    timeFrom = removeLeadingZeroes(time_t).replace(":00","");
-                                }else {
+                                if (timeFrom.contains(":00")) {
+                                    timeFrom = removeLeadingZeroes(time_t).replace(":00", "");
+                                } else {
                                     timeFrom = removeLeadingZeroes(time_t);
                                 }
 
