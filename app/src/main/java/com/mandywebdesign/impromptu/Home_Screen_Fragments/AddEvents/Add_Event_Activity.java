@@ -216,7 +216,7 @@ public class Add_Event_Activity extends AppCompatActivity implements IPickResult
         categoryCall.enqueue(new Callback<RetroEventCategory>() {
             @Override
             public void onResponse(Call<RetroEventCategory> call, Response<RetroEventCategory> response) {
-
+                cate.clear();
                 if (response.body() != null) {
                     if (response.body().getStatus().equals("200")) {
                         RetroEventCategory category = response.body();

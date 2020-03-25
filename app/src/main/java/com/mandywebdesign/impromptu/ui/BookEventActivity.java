@@ -245,12 +245,12 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                 } else if (eventType.equals("upcoming")) {
                     mBookEvent.setVisibility(View.GONE);
                     invite_layouit.setVisibility(View.GONE);
-                    askforrefund.setVisibility(View.VISIBLE);
+//                    askforrefund.setVisibility(View.VISIBLE);
                     mBookEvent.setVisibility(View.VISIBLE);
                 } else {
                     mBookEvent.setVisibility(View.GONE);
                     invite_layouit.setVisibility(View.GONE);
-                    askforrefund.setVisibility(View.GONE);
+//                    askforrefund.setVisibility(View.GONE);
                     peoplegoing.setVisibility(View.GONE);
                 }
                 if (eventType.equals("fav")) {
@@ -1369,11 +1369,13 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             location2 = datum.getAddressline2();
                             eventlat = datum.getLattitude();
                             eventlng = datum.getLongitude();
+                            freeEvent = datum.getFreeEvent();
                             lat = datum.getLattitude();
                             event_user_type = datum.getEvent_host_type();
                             lng = datum.getLongitude();
                             eventid.setText("EID " + datum.getEventId().toString());
                             event_status = datum.getEvent_status();
+
                             if (eventType != null) {
                                 if (eventType.equals("fav")) {
 
@@ -1388,13 +1390,17 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 //                                attendeelayout.setVisibility(View.GONE);
 //                                users.setVisibility(View.GONE);
                                 mBookEvent.setVisibility(View.GONE);
-                                askforrefund.setVisibility(View.GONE);
-                                eventdistance.setVisibility(View.GONE);
+//                                eventdistance.setVisibility(View.GONE);
                                 invite_layouit.setVisibility(View.GONE);
                                 peoplegoing.setVisibility(View.GONE);
                                 remainingTicketTV.setVisibility(View.GONE);
                                 dashline2.setVisibility(View.GONE);
                                 book_location.setClickable(false);
+
+                                if(!freeEvent.equals("0"))
+                                {
+                                    askforrefund.setVisibility(View.VISIBLE);
+                                }
                             }
 
 
@@ -1439,14 +1445,14 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             gender = datum.getAttendeesGender();
                             hostUserID = datum.getUserid().toString();// host id
                             andendeenumber = datum.getAttendeesNo();
-                            freeEvent = datum.getFreeEvent();
+
                             if (eventType != null) {
                                 if (eventType.equals("upcoming")) {
-                                    if (freeEvent.equals("0")) {
+                                   /* if (freeEvent.equals("0")) {
                                         askforrefund.setVisibility(View.GONE);
                                     } else {
                                         askforrefund.setVisibility(View.VISIBLE);
-                                    }
+                                    }*/
                                 } else if (eventType.equals("past") || eventType.equals("fav")) {
 
                                     Calendar c = Calendar.getInstance();
@@ -1484,7 +1490,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             transaction_id = datum.getTransactionId();
 
                             usertype = datum.getUserType();
-
+                            tickettypes.clear();
                             //Todo: get tickets types
                             for (int i = 0; i < datum.getTicketsType().size(); i++) {
                                 tickettypes.add(datum.getTicketsType().get(i).getTicketType());
