@@ -110,7 +110,7 @@ import retrofit2.Response;
 
 public class BookEventActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private LinearLayout dotsLayout;
+    private LinearLayout dotsLayout,ticketnumberlayout;
     ImageView sharevent, screenshot;
     private TextView[] dots;
     ImageView book_message, backonbookevent;
@@ -120,7 +120,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     Button mBookEvent, askforrefund;
     ImageButton follow_button;
     ImageView dashline2;
-    TextView organiserName, eventdistance, book_time, book_time2, book_categry, peoplegoing, seeAll, remainingTicketTV, invitefriends, dialogtickttype, link1, link2, link3;
+    TextView organiserName,ticketnumbers, eventdistance, book_time, book_time2, book_categry, peoplegoing, seeAll, remainingTicketTV, invitefriends, dialogtickttype, link1, link2, link3;
     ViewPager viewPager;
     RecyclerView users;
     ReadMoreTextView descri;
@@ -162,14 +162,19 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     static String tickettypeposition, getSpinnerposition = "1";
     static String currentlat, currenlng, eventlat, eventlng;
     ArrayAdapter<String> adapter;
-    Dialog dialog, dialog1, refundDialog;
+    Dialog dialog, dialog1, refundDialog,refundBusinessDialog;
     TextView dailog_ticket_type1, dailog_ticket_price1, eventid;
     Spinner spinner1;
     Button dialogButoon1;
     String event_user_type;
+    int refundticketCount;
     RelativeLayout attendeelayout;
     Button oneTicket, TwoTicket, confirmrefund,connectOk,connectCancel;
     String ticketCount = "1";
+    ArrayList<String> refundTickets = new ArrayList<>();
+    ArrayList<String> refundBookedTickets = new ArrayList<>();
+    ArrayList<String> refundBookedTicketsCount = new ArrayList<>();
+    ArrayList<RetroGetEventData.TotalTicketsUser> bookedtictetdata = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -390,12 +395,139 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             @Override
             public void onClick(View v) {
 
+                if(event_user_type.equals("normal"))
+                {
                RefundDialog();
+                }else {
+
+                    BusinessRefundDialog();
+                }
+
 //                ConfirmationDialog(s_token, value);
             }
         });
     }
 
+    private void BusinessRefundDialog() {
+        refundBusinessDialog = new Dialog(BookEventActivity.this);
+        refundBusinessDialog.setContentView(R.layout.custom_dialog_book_ticket);
+        refundBusinessDialog.setCanceledOnTouchOutside(true);
+        refundBusinessDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        refundBusinessDialog.show();
+        FindId1(refundBusinessDialog);
+
+
+        dailog_ticket_type.setVisibility(View.GONE);
+        ticketype_spinner.setVisibility(View.VISIBLE);
+        dialogtickttype.setVisibility(View.GONE);
+        if (refundTickets.size() >= 2) {
+            tickettype.setText("Ticket Types");
+        }
+
+
+        //Todo: ticket type spinner
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(BookEventActivity.this, android.R.layout.simple_spinner_item, refundTickets);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ticketype_spinner.setAdapter(arrayAdapter);
+//        ticketype_spinner.setSelection(0);
+        Log.d("ticketCounts",""+refundBookedTickets);
+        refundticketCount = Integer.parseInt(refundBookedTickets.get(0));
+
+        ticketype_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                tickettypespinnerposintion = parent.getItemAtPosition(position).toString();
+                tickettypeposition = String.valueOf(position);
+
+                refundBookedTicketsCount.clear();
+                for (int i=0;i<Integer.valueOf(refundBookedTickets.get(Integer.parseInt(tickettypeposition)));i++)
+                {
+                    refundBookedTicketsCount.add(String.valueOf(i+1));
+                }
+                spinner.setSelection(0);
+                ticktprice = ticketprice.get(Integer.parseInt(tickettypeposition));
+//                ticketnumbers.setText(refundBookedTickets.get(Integer.parseInt(tickettypeposition)));
+
+                Float a = Float.valueOf((getSpinnerposition));
+                total_ticket = String.valueOf(a);
+
+                String tickt = ticktprice;
+                Float b = Float.valueOf((tickt));
+
+                Float total = a * b;
+
+                tot = String.valueOf(total);
+
+                ticketPrice.setText(ticktprice);
+                totalPrice.setText(tot);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+        //============================88888888888888888888888888=====================================
+        refundBookedTicketsCount.clear();
+        for (int i=0;i<refundticketCount;i++)
+        {
+            refundBookedTicketsCount.add(String.valueOf(i+1));
+        }
+
+        adapter = new ArrayAdapter<String>(BookEventActivity.this,
+                android.R.layout.simple_spinner_item, refundBookedTicketsCount);
+
+        ticketPrice.setText(ticktprice);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                int ticketCountposition = position + 1;
+
+                Float ticktprice1 = Float.valueOf(ticketPrice.getText().toString());
+                ticktprice = String.valueOf(ticktprice1);
+
+                Float a = Float.valueOf((ticketCountposition));
+                total_ticket = String.valueOf(ticketCountposition);
+
+                String tickt = String.valueOf(ticktprice);
+                Float b = Float.valueOf((tickt));
+
+                Float total = ticketCountposition * ticktprice1;
+
+                tot = String.valueOf(total);
+
+                ticketPrice.setText(String.valueOf(ticktprice1));
+                totalPrice.setText(tot);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void FindId1(Dialog refundBusinessDialog) {
+        ;
+            dailog_ticket_type = refundBusinessDialog.findViewById(R.id.dailog_ticket_type);
+            tickettype = refundBusinessDialog.findViewById(R.id.tickettype);
+            ticketPrice = refundBusinessDialog.findViewById(R.id.dailog_ticket_price);
+            totalPrice = refundBusinessDialog.findViewById(R.id.dailog_total_price);
+            spinner = refundBusinessDialog.findViewById(R.id.dailog_spinner);
+            ticketype_spinner = refundBusinessDialog.findViewById(R.id.ticketype_spinner);
+            dialogButoon = refundBusinessDialog.findViewById(R.id.dailog_button);
+            dialogtickttype = refundBusinessDialog.findViewById(R.id.dailog_ticket_type);
+            cal1 = refundBusinessDialog.findViewById(R.id.cal1);
+            cal2 = refundBusinessDialog.findViewById(R.id.cal2);
+            cal3 = refundBusinessDialog.findViewById(R.id.cal3);
+            cal4 = refundBusinessDialog.findViewById(R.id.cal4);
+    }
 
 
     private void RefundDialog() {
@@ -578,6 +710,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                         dialog(value);
                     } else {
                         dialog1(value);
+
                     }
 
                 }
@@ -1375,6 +1508,15 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             lng = datum.getLongitude();
                             eventid.setText("EID " + datum.getEventId().toString());
                             event_status = datum.getEvent_status();
+                            refundTickets.clear();
+                            refundBookedTickets.clear();
+                            for (int i=0;i<datum.getTotalTicketsUser().size();i++)
+                            {
+                                RetroGetEventData.TotalTicketsUser totalTicketsUser = datum.getTotalTicketsUser().get(i);
+                                bookedtictetdata.add(totalTicketsUser);
+                                refundTickets.add(totalTicketsUser.getTicketType());
+                                refundBookedTickets.add(String.valueOf(totalTicketsUser.getTotalTickets()));
+                            }
 
                             if (eventType != null) {
                                 if (eventType.equals("fav")) {
@@ -1438,7 +1580,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                     }
                                 });
                             } else {
-
                                 book_location.setText(location);
                             }
 

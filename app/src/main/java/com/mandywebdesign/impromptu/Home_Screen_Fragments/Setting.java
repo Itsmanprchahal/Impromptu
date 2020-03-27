@@ -82,7 +82,6 @@ import retrofit2.Response;
  */
 public class Setting extends Fragment {
 
-
     TextView logout, setting_help_option, terms, setting_paymentdetails_option,setting_refund_request, changepassword, contactus, invite, setting_verification_option;
     GoogleApiClient googleApiClient;
     boolean loggedOut;
@@ -278,7 +277,9 @@ public class Setting extends Fragment {
         } else if (!user.equalsIgnoreCase("")) {
 
             View view1 = view.findViewById(R.id.paymentview);
-            view1.setVisibility(View.GONE);
+            View view2 = view.findViewById(R.id.setting_refund_view);
+            view1.setVisibility(View.VISIBLE);
+            view2.setVisibility(View.GONE);
             setting_paymentdetails_option.setVisibility(View.GONE);
             logout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -373,22 +374,6 @@ public class Setting extends Fragment {
                     startActivity(intent);
                 }
             });
-
-//            privancy.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent intent = new Intent(getContext(), PrivancyActivity.class);
-//                    startActivity(intent);
-//                }
-//            });
-
-//            FAQ.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent intent = new Intent(getContext(), FAQs.class);
-//                    startActivity(intent);
-//                }
-//            });
 
             contactus.setOnClickListener(new View.OnClickListener() {
                 @Override

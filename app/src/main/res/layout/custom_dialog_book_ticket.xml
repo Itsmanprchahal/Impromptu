@@ -83,6 +83,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/ticketnumberlayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -98,7 +99,10 @@
                     android:layout_alignParentRight="true"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:visibility="visible"
                     android:textSize="18sp" />
+
+
 
                 <TextView
                     android:layout_width="wrap_content"

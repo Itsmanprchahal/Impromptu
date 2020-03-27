@@ -58,9 +58,19 @@ public class RetroGetEventData {
         @SerializedName("favourite")
         @Expose
         private Integer favourite;
-
+        @SerializedName("total_tickets_user")
+        @Expose
+        private List<TotalTicketsUser> totalTicketsUser = null;
         public String getEvent_status() {
             return event_status;
+        }
+
+        public List<TotalTicketsUser> getTotalTicketsUser() {
+            return totalTicketsUser;
+        }
+
+        public void setTotalTicketsUser(List<TotalTicketsUser> totalTicketsUser) {
+            this.totalTicketsUser = totalTicketsUser;
         }
 
         public void setEvent_status(String event_status) {
@@ -630,6 +640,44 @@ public class RetroGetEventData {
 
         public void setNoOfTickets(Integer noOfTickets) {
             this.noOfTickets = noOfTickets;
+        }
+
+    }
+
+    public class TotalTicketsUser {
+
+        @SerializedName("total_tickets")
+        @Expose
+        private Integer totalTickets;
+        @SerializedName("ticket_type")
+        @Expose
+        private String ticketType;
+        @SerializedName("amount")
+        @Expose
+        private String amount;
+
+        public String getAmount() {
+            return amount;
+        }
+
+        public void setAmount(String amount) {
+            this.amount = amount;
+        }
+
+        public Integer getTotalTickets() {
+            return totalTickets;
+        }
+
+        public void setTotalTickets(Integer totalTickets) {
+            this.totalTickets = totalTickets;
+        }
+
+        public String getTicketType() {
+            return ticketType;
+        }
+
+        public void setTicketType(String ticketType) {
+            this.ticketType = ticketType;
         }
 
     }
