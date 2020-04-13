@@ -380,7 +380,7 @@ public class Join_us extends AppCompatActivity {
                         Intent intent = new Intent(Join_us.this, Home_Screen.class);
                         startActivity(intent);
                         finish();
-                        Log.d("socailtoken",response.body().getData().getToken());
+                        Log.d("socailtoken",response.body().getData().getToken()+"\n"+response.body().getData().getId());
                         Toast.makeText(Join_us.this, "Login Successful", Toast.LENGTH_SHORT).show();
 
                     } else if (response.body().getStatus().equals("401")) {

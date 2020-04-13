@@ -255,62 +255,64 @@
                     android:orientation="horizontal"
                     android:id="@+id/radiogroup_filter">
 
-
-                    <LinearLayout
-                        android:id="@+id/femalelayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
+<!--                    <LinearLayout-->
+<!--                        android:id="@+id/femalelayout"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:layout_weight="1">-->
 
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Female Only"
+                            android:layout_weight="1"
                             android:fontFamily="@font/sfuitextlight"
                             android:buttonTint="@color/colorTheme"
                             android:textSize="@dimen/_12sdp"
                             android:id="@+id/filter_radio_female_only"/>
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
-                    <LinearLayout
-                        android:id="@+id/malelayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_gravity="left"
-                        android:layout_weight="1">
+<!--                    <LinearLayout-->
+<!--                        android:id="@+id/malelayout"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:layout_gravity="left"-->
+<!--                        android:layout_weight="1">-->
 
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Male Only"
+                            android:layout_weight="1"
                             android:layout_gravity="left|center_horizontal"
                             android:fontFamily="@font/sfuitextlight"
                             android:buttonTint="@color/colorTheme"
                             android:id="@+id/filter_male_only"
                             android:textSize="@dimen/_12sdp"/>
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
-                    <LinearLayout
-                        android:id="@+id/alllayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginRight="@dimen/defaultmargin"
-                        android:layout_weight="1">
+<!--                    <LinearLayout-->
+<!--                        android:id="@+id/alllayout"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:layout_marginRight="@dimen/defaultmargin"-->
+<!--                        android:layout_weight="1">-->
 
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="All"
+                            android:layout_weight="1"
                             android:layout_gravity="right"
                             android:fontFamily="@font/sfuitextlight"
                             android:textSize="@dimen/_12sdp"
                             android:buttonTint="@color/colorTheme"
                             android:id="@+id/filter_radio_all" />
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
 
                 </RadioGroup>

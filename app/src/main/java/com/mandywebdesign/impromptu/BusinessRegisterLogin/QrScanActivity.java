@@ -171,13 +171,15 @@ public class QrScanActivity extends AppCompatActivity {
                                     //QR event ID
                                     guestCheckIn(BToken, event_id, "1", booked_user_id, qrcode.valueAt(0).displayValue);
                                 } else {
-                                    Toast.makeText(QrScanActivity.this, "Not Valid", Toast.LENGTH_SHORT).show();
+                                    source.stop();
+                                    Toast.makeText(QrScanActivity.this, "Invalid Event", Toast.LENGTH_SHORT).show();
                                 }
                             } else if (!S_Token.equals("")) {
                                 if (id.equals(event_id)) {
                                     guestCheckIn(S_Token, event_id, "1", booked_user_id, qrcode.valueAt(0).displayValue);
                                 } else {
-                                    Toast.makeText(QrScanActivity.this, "Not Valid", Toast.LENGTH_SHORT).show();
+                                    source.stop();
+                                    Toast.makeText(QrScanActivity.this, "Invalid Event", Toast.LENGTH_SHORT).show();
                                 }
 
                             }

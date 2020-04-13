@@ -117,7 +117,6 @@ public class BusinessUserPRofileActivity extends AppCompatActivity implements Vi
     }
 
     private void init() {
-        Home_Screen.bottomNavigationView.setVisibility(View.VISIBLE);
         editProfile = findViewById(R.id._UserPRofile_edit_busines_publish_profile);
         UserName = findViewById(R.id.UserProfile_business__publishprofile_user_Name);
         Address = findViewById(R.id.UserProfile_business__publishprofile_address1);
@@ -159,7 +158,11 @@ public class BusinessUserPRofileActivity extends AppCompatActivity implements Vi
                                 !response.body().getData().get(0).getCity().equals("") || !response.body().getData().get(0).getAboutOrganisation().equals("")) {
                             userName = response.body().getData().get(0).getName();
                             address1 = response.body().getData().get(0).getAddress1().toString();
-                            address2 = response.body().getData().get(0).getAddress2().toString();
+                            if (response.body().getData().get(0).getAddress2()!=null)
+                            {
+                                address2 = response.body().getData().get(0).getAddress2().toString();
+                            }
+
                             desc = response.body().getData().get(0).getAboutOrganisation().toString();
                             avatar = response.body().getData().get(0).getAvatar();
                             postcode = response.body().getData().get(0).getPostcode().toString();

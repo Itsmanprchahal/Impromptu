@@ -121,7 +121,7 @@ public class EventsFrag extends Fragment implements DiscreteScrollView.OnItemCha
         call.enqueue(new Callback<NormalGetFavEvents>() {
             @Override
             public void onResponse(Call<NormalGetFavEvents> call, Response<NormalGetFavEvents> response) {
-
+                progressDialog.dismiss();
                 if (response.body() != null) {
                     if (response.body().getStatus().equals("200")) {
 
@@ -206,7 +206,7 @@ public class EventsFrag extends Fragment implements DiscreteScrollView.OnItemCha
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
-                progressDialog.dismiss();
+
                 reverse();
 
             }

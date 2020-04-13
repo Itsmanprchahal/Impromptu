@@ -113,46 +113,57 @@
         <activity android:name=".SettingFragmentsOptions.NormalPublishProfile" />
         <activity
             android:name=".SettingFragmentsOptions.FAQs"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".SettingFragmentsOptions.Contact_Us"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".ui.NoInternetScreen"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity android:name=".ui.PerviewAdverts" />
         <activity android:name=".ui.Add_Adverts" />
         <activity android:name=".BusinessRegisterLogin.RegisterSlideActivity" />
         <activity
             android:name=".BusinessRegisterLogin.BusinessCharityRegister"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".Home_Screen_Fragments.AddEvents.PerviewEventActivity"
             android:parentActivityName=".Home_Screen_Fragments.AddEvents.EventDetailsActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".Home_Screen_Fragments.AddEvents.EventDetailsActivity"
             android:parentActivityName=".Home_Screen_Fragments.AddEvents.Add_Event_Activity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing" />
+            android:windowSoftInputMode="adjustNothing"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.zfdang.multiple_images_selector.ImagesSelectorActivity"
             android:configChanges="orientation|screenSize"
             android:hardwareAccelerated="false" />
+
         <activity
             android:name=".Home_Screen_Fragments.AddEvents.Add_Event_Activity"
             android:parentActivityName=".ui.Home_Screen"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            tools:ignore="LockedOrientationActivity" />
+
         <activity
             android:name=".ui.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing" />
+            android:windowSoftInputMode="adjustNothing"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".ui.Home_Screen"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="com.mandywebdesign.impromptu.RATING_NOTIFY" />
 

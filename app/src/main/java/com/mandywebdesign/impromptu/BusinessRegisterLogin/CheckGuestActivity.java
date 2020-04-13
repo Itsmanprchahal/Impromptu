@@ -1,5 +1,6 @@
 package com.mandywebdesign.impromptu.BusinessRegisterLogin;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -72,11 +73,11 @@ public class CheckGuestActivity extends AppCompatActivity {
         if (!BToken.equalsIgnoreCase("")) {
 
             getBookedUSers(BToken);
-            getTotalCheckin(BToken, id);
+//            getTotalCheckin(BToken, id);
 
         } else if (!S_Token.equalsIgnoreCase("")) {
             getBookedUSers(S_Token);
-            getTotalCheckin(S_Token, id);
+//            getTotalCheckin(S_Token, id);
         }
 
 
@@ -111,6 +112,9 @@ public class CheckGuestActivity extends AppCompatActivity {
                 if (response.body()!=null) {
 
                     if (response.body().getStatus().equals("200")) {
+
+                        checkInguset.setText(response.body().getCheckin_total() + "/" + response.body().getTotal() + " Checked in");
+
                         for (int i = 0; i < response.body().getData().size(); i++) {
                             checkinguset.add(response.body().getData().get(i));
                             userID.add(String.valueOf(response.body().getData().get(i).getUserid()));
@@ -156,6 +160,7 @@ public class CheckGuestActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("WrongConstant")
     private void setDat(ArrayList<CheckInGuest.Datum> checkinguset) {
 
         adapter = new CheckGuestAdapter(this, checkinguset);

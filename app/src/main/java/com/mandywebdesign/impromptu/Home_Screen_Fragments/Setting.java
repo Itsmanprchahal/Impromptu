@@ -131,7 +131,7 @@ public class Setting extends Fragment {
         setting_help_option = view.findViewById(R.id.setting_help_option);
         contactus = view.findViewById(R.id.setting_contactUs_option);
         setting_refund_request = view.findViewById(R.id.setting_refund_request);
-
+        changepassword = view.findViewById(R.id.setting_changepassword_option);
         invite = view.findViewById(R.id.setting_inviteuser_option);
         setting_verification_option = view.findViewById(R.id.setting_verification_option);
         setting_paymentdetails_option = view.findViewById(R.id.setting_paymentdetails_option);

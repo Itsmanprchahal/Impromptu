@@ -215,7 +215,7 @@ public class Hosts extends Fragment implements DiscreteScrollView.OnItemChangedL
 
             @Override
             public void onFailure(Call<FollowerPublish> call, Throwable t) {
-
+progressDialog.dismiss();
             }
         });
     }

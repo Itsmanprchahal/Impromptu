@@ -57,10 +57,10 @@ public class See_Add_adpater extends RecyclerView.Adapter<See_Add_adpater.ViewHo
         viewHolder.userName.setText(userName.get(i));
         viewHolder.bookedtickets.setText("Tickets: " + totalticketbuy.get(i));
 
-        if (isFrom.equals("OWNEVENT"))
+       /* if (isFrom.equals("OWNEVENT"))
         {
             viewHolder.refund_bt_layout.setVisibility(View.VISIBLE);
-        }
+        }*/
 
         viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override

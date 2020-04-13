@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,8 +10,11 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colortextwhite">
+        android:layout_height="wrap_content"
+        android:background="@color/colortextwhite"
+        android:layout_above="@+id/view"
+        android:layout_alignParentTop="true"
+        tools:ignore="MissingConstraints">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/check_guest_toolbar"
@@ -96,12 +100,15 @@
     </RelativeLayout>
 
     <View
+        android:id="@+id/view"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="#C9C5C5"
-        android:layout_margin="@dimen/defaultmargin"
-        app:layout_constraintBottom_toTopOf="@id/check_guest_qrcode"/>
+        android:layout_marginLeft="@dimen/defaultmargin"
+        android:layout_marginRight="@dimen/defaultmargin"
+        android:layout_marginBottom="@dimen/defaultmargin"
+        android:layout_above="@id/check_guest_qrcode"/>
 
     <ImageView
         android:id="@+id/check_guest_qrcode"
@@ -117,4 +124,4 @@
         android:src="@drawable/ic_qrcode"
         tools:ignore="MissingConstraints"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

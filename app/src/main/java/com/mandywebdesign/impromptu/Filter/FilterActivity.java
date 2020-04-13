@@ -162,10 +162,10 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
 
         if (getGender.equals("Male")) {
             female.setVisibility(View.GONE);
-            femalelayout.setVisibility(View.GONE);
+//            femalelayout.setVisibility(View.GONE);
         } else if (getGender.equals("Female")) {
             male.setVisibility(View.GONE);
-            malelayout.setVisibility(View.GONE);
+//            malelayout.setVisibility(View.GONE);
         }
 
 
@@ -203,17 +203,25 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+
                 switch (checkedId) {
                     case R.id.filter_male_only:
                         gender = "male";
+                        female.setChecked(false);
+                        all.setChecked(false);
+
                         break;
 
                     case R.id.filter_radio_female_only:
                         gender = "female";
+                        male.setChecked(false);
+                        all.setChecked(false);
                         break;
 
                     case R.id.filter_radio_all:
                         gender = "all";
+                        male.setChecked(false);
+                        female.setChecked(false);
                         break;
                 }
             }
@@ -288,9 +296,9 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
         searchLoc.setOnItemClickListener(autocompleteClickListener);
         adapter = new AutoCompleteAdapter(this, placesClient);
         searchLoc.setAdapter(adapter);
-        femalelayout = findViewById(R.id.femalelayout);
+        /*femalelayout = findViewById(R.id.femalelayout);
         malelayout = findViewById(R.id.malelayout);
-        alllayout = findViewById(R.id.alllayout);
+        alllayout = findViewById(R.id.alllayout);*/
         mapView = findViewById(R.id.mapview);
         today = findViewById(R.id.filter_today);
         tomorrow = findViewById(R.id.filter_tomorrow);
