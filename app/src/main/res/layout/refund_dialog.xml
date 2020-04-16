@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/layout_radius_border"
+    android:padding="15dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/refund_tickettype"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Ticket Type"
+                android:fontFamily="@font/circularstdblack"
+                android:textColor="@color/colorLightBlack"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/refund_dailog_ticket_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:gravity="end|center_horizontal"
+                android:fontFamily="@font/sfuitextlight"
+                android:text="Standard"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/refund_ticketype_spinner"
+                android:layout_width="@dimen/_200sdp"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_alignParentRight="true"
+                android:layout_weight="1"
+                android:gravity="end|center_horizontal"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_weight="1"
+                android:text="Ticket Count"
+                android:fontFamily="@font/circularstdblack"
+                android:textStyle="bold"
+                android:textColor="@color/colorLightBlack"
+                android:textSize="18sp" />
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:weightSum="8"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/refund_ticketnumberlayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/refund_ticketCount_dailog_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_alignParentRight="true"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:visibility="visible"
+                    android:textSize="18sp" />
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:text="Total Tickets"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/refund_cal1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:fontFamily="@font/sfuitextlight"
+                android:text="X"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:id="@+id/refund_cal2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/refund_dailog_ticket_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:text="6"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:text="Tickets Price"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+
+
+            <TextView
+                android:id="@+id/refund_cal3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/sfuitextlight"
+                android:text="="
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="18sp" />
+
+
+            <LinearLayout
+                android:id="@+id/refund_cal4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/refund_dailog_total_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:text="£90"
+                    android:textColor="@color/colorTheme"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/sfuitextlight"
+                    android:text="Total Price"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ticket Refund in (%)"
+                android:textSize="18sp"
+                android:fontFamily="@font/circularstdblack"
+                android:textColor="@color/colorLightBlack"></TextView>
+
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:id="@+id/percentage_spinner">
+
+            </Spinner>
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reason"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:textSize="18sp"
+            android:fontFamily="@font/circularstdblack"
+            android:textColor="@color/colorLightBlack"></TextView>
+
+        <EditText
+            android:id="@+id/refundreason"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100sdp"
+            android:textAlignment="viewStart"
+            android:layout_gravity="start"
+            android:gravity="start"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/custom_edittext"></EditText>
+
+
+        <Button
+            android:id="@+id/refund_dailog_button"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAllCaps="false"
+            android:fontFamily="@font/circularstdbold"
+            android:background="@drawable/custom_next_bt"
+            android:text="Done"
+            android:textColor="@color/colortextwhite"
+            android:textSize="20dp"
+            android:padding="10dp"/>
+    </LinearLayout>
+
+</RelativeLayout>
