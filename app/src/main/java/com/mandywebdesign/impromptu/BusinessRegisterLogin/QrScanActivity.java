@@ -8,7 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
@@ -26,6 +28,7 @@ import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -38,6 +41,8 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.R;
 import com.mandywebdesign.impromptu.Retrofit.GusetCheckIns;
+import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalPublishProfile;
+import com.mandywebdesign.impromptu.ui.BookEventActivity;
 import com.mandywebdesign.impromptu.ui.Home_Screen;
 import com.mandywebdesign.impromptu.ui.NoInternetScreen;
 import com.mandywebdesign.impromptu.ui.ProgressBarClass;
@@ -58,7 +63,7 @@ public class QrScanActivity extends AppCompatActivity {
     ImageView back;
     SharedPreferences sharedPreferences;
     String BToken, S_Token, id;
-    Dialog progressDialog;
+    Dialog progressDialog,dialog;
     Intent intent;
 
     @Override
@@ -172,14 +177,14 @@ public class QrScanActivity extends AppCompatActivity {
                                     guestCheckIn(BToken, event_id, "1", booked_user_id, qrcode.valueAt(0).displayValue);
                                 } else {
                                     source.stop();
-                                    Toast.makeText(QrScanActivity.this, "Invalid Event", Toast.LENGTH_SHORT).show();
+                                   QR_Dialog(source);
                                 }
                             } else if (!S_Token.equals("")) {
                                 if (id.equals(event_id)) {
                                     guestCheckIn(S_Token, event_id, "1", booked_user_id, qrcode.valueAt(0).displayValue);
                                 } else {
                                     source.stop();
-                                    Toast.makeText(QrScanActivity.this, "Invalid Event", Toast.LENGTH_SHORT).show();
+                                   QR_Dialog(source);
                                 }
 
                             }
@@ -259,5 +264,23 @@ public class QrScanActivity extends AppCompatActivity {
         surfaceView = findViewById(R.id.cameraPerview);
         textView = findViewById(R.id.qr_text);
         back = findViewById(R.id.back_on_QR);
+    }
+
+    public void QR_Dialog(CameraSource source) {
+        final Dialog dialog = new Dialog(QrScanActivity.this);
+        dialog.setContentView(R.layout.invalidqr_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+
+        Button continue_bt = dialog.findViewById(R.id.done_on_invalidqr);
+        continue_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+//                source.release();
+            }
+        });
     }
 }

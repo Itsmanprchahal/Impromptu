@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -15,6 +17,8 @@ public class RefundRequests extends AppCompatActivity {
 
     RecyclerView refund_recycler;
     ImageButton back;
+    String socailtoken;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +27,10 @@ public class RefundRequests extends AppCompatActivity {
 
         back = findViewById(R.id.back_refund);
         refund_recycler = findViewById(R.id.refund_recycler);
-        RefundAdapter refundAdapter = new RefundAdapter(RefundRequests.this);
+        sharedPreferences = getSharedPreferences("UserToken", Context.MODE_PRIVATE);
+        socailtoken =  sharedPreferences.getString("Socailtoken", "");
+
+        RefundAdapter refundAdapter = new RefundAdapter(RefundRequests.this,socailtoken);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(RefundRequests.this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         refund_recycler.setLayoutManager(layoutManager);

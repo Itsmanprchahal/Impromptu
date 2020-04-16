@@ -109,6 +109,7 @@
                     app:cardElevation="1dp">
 
                     <Button
+                        android:id="@+id/refund_cancel"
                         android:background="@color/colorTrans"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
