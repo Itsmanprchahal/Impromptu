@@ -203,8 +203,19 @@
                     android:textSize="12sp" />
             </LinearLayout>
 
-
         </LinearLayout>
+
+        <EditText
+            android:id="@+id/reasonrefund"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100sdp"
+            android:hint="Reason"
+            android:gravity="start"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            android:fontFamily="@font/sfuitextlight"
+            android:padding="@dimen/_10sdp"
+            android:background="@drawable/custom_edittext"></EditText>
 
 
         <Button

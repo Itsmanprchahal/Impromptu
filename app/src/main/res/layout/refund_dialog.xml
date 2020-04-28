@@ -32,21 +32,11 @@
                 android:id="@+id/refund_dailog_ticket_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:gravity="end|center_horizontal"
                 android:fontFamily="@font/sfuitextlight"
                 android:text="Standard"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
-
-            <Spinner
-                android:id="@+id/refund_ticketype_spinner"
-                android:layout_width="@dimen/_200sdp"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:layout_alignParentRight="true"
-                android:layout_weight="1"
-                android:gravity="end|center_horizontal"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -99,10 +89,19 @@
                     android:layout_alignParentRight="true"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:textSize="18sp" />
 
-
+                <TextView
+                    android:id="@+id/refund_ticketCount_dailog_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_alignParentRight="true"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:visibility="visible"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -208,6 +207,7 @@
 
 
         <RelativeLayout
+            android:id="@+id/ticketperlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

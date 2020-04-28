@@ -30,16 +30,16 @@
                 android:layout_centerVertical="true"
                 android:scaleType="fitXY"
                 app:riv_border_color="@color/colortextwhite"
-                android:id="@+id/see_all_user_image"
+                android:id="@+id/refund_user_image"
                 tools:ignore="MissingConstraints" />
 
             <LinearLayout
                 android:id="@+id/name_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/see_all_user_image"
+                android:layout_toRightOf="@id/refund_user_image"
                 android:layout_toLeftOf="@id/refund_bt_layout"
-                app:layout_constraintLeft_toRightOf="@id/see_all_user_image"
+                app:layout_constraintLeft_toRightOf="@id/refund_user_image"
                 android:layout_centerVertical="true"
                 android:orientation="vertical">
 
@@ -65,7 +65,7 @@
                     android:layout_marginLeft="10dp"
                     android:textColor="@color/colortextBlack"
                     android:textSize="@dimen/normalText"
-                    android:id="@+id/see_all_user_name"/>
+                    android:id="@+id/refund_user_name"/>
 
 
                 <TextView
@@ -76,7 +76,7 @@
                     android:fontFamily="@font/circularstdblack"
                     android:textColor="@color/colorTheme"
                     android:textSize="@dimen/normalText"
-                    android:id="@+id/bookedticketnumber"
+                    android:id="@+id/refundticketnumber"
                     android:hint="5"/>
             </LinearLayout>
 

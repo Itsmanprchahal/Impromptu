@@ -1124,7 +1124,7 @@ public class EventDetailsActivity extends AppCompatActivity {
             edt_price.setError("Enter ticket price");
         } else if (edt_numbersOfTicket.getText().toString().trim().isEmpty()) {
             edt_numbersOfTicket.setError("Enter number of ticket");
-        } else {
+        }else {
             int numofTicker1 = Integer.parseInt(edt_numbersOfTicket.getText().toString());
             if (Float.valueOf(edt_price.getText().toString())<1)
             {
@@ -1136,10 +1136,44 @@ public class EventDetailsActivity extends AppCompatActivity {
                     String number_of_Type = edt_numbersOfTicket.getText().toString();
                     ticketTypeModel = new TicketTypeModel(ticket_Type, Float.valueOf(ticket_Price), number_of_Type);
 
-                    arryList.add(ticketTypeModel);
+                    if (arryList.size()==1)
+                    {
+                        if (arryList.get(0).getTikcettype().equals(ticket_Type))
+                        {
+                            edt_tiketType.setError("Ticket already exist");
+                            edt_tiketType.setText("");
+                            edt_numbersOfTicket.setText("");
+                            edt_price.setText("");
+                        }else {
+                            arryList.add(ticketTypeModel);
+                        }
+                    }else if (arryList.size()==2)
+                    {
+                        if (arryList.get(1).getTikcettype().equals(ticket_Type))
+                        {
+                            edt_tiketType.setError("Ticket already exist");
+                            edt_tiketType.setFocusable(true);
+                            edt_tiketType.setText("");
+                            edt_numbersOfTicket.setText("");
+                            edt_price.setText("");
+                        }else if (arryList.get(0).getTikcettype().equals(ticket_Type)){
+                            edt_tiketType.setError("Ticket already exist");
+                            edt_tiketType.setFocusable(true);
+                            edt_tiketType.setText("");
+                            edt_numbersOfTicket.setText("");
+                            edt_price.setText("");
+                        }else {
+                            arryList.add(ticketTypeModel);
+                        }
+                    }else {
+                        arryList.add(ticketTypeModel);
+                    }
+
+
 
                     for (int i = 0; i < arryList.size(); i++) {
                         Log.d("type", arryList.get(i) + "  " + arryList.size());
+
                         tickettyp.add(arryList.get(i).getTikcettype());
                         ticketprice.add(String.valueOf(arryList.get(i).getPrice()));
                         ticketnumber.add(String.valueOf(arryList.get(i).getNumberofticket()));
@@ -1220,7 +1254,8 @@ public class EventDetailsActivity extends AppCompatActivity {
                         }
 
                     }
-                    if (edt_numbersOfTicket.getError()==null)
+
+                    if (edt_numbersOfTicket.getError()==null && edt_tiketType.getError()==null)
                     {
                         pendingTicker = totalTicket - numofTicker1;
                         totalTicket = pendingTicker;

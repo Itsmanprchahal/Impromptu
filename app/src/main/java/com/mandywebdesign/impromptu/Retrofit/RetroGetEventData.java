@@ -220,6 +220,18 @@ public class RetroGetEventData {
         @SerializedName("tickets_booked_by_user")
         @Expose
         private String tickets_booked_by_user;
+        @SerializedName("remaining_tickets")
+        @Expose
+        private String remaining_tickets;
+
+        public String getRemaining_tickets() {
+            return remaining_tickets;
+        }
+
+        public void setRemaining_tickets(String remaining_tickets) {
+            this.remaining_tickets = remaining_tickets;
+        }
+
         @SerializedName("event_end_gmt")
         @Expose
         private String eventEndGmt;

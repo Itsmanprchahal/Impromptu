@@ -115,7 +115,15 @@ public class PayActivity extends AppCompatActivity {
         ticketprice = intent.getStringExtra("ticket_Price");
         total_tickets = intent.getStringExtra("total_tickets");
         event_Title = intent.getStringExtra("event_Title");
-        tickettype = intent.getStringExtra("tickettype");
+
+        if (tickettype!=null)
+        {
+            tickettype = intent.getStringExtra("tickettype");
+        }else {
+            tickettype = "Standard";
+        }
+
+        Log.d("testtype",tickettype);
         imagerecieve = intent.getStringExtra("imagesend");
 
 

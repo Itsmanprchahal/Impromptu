@@ -74,6 +74,7 @@ import com.mandywebdesign.impromptu.BusinessRegisterLogin.SeeAll_activity;
 import com.mandywebdesign.impromptu.Home_Screen_Fragments.Home;
 import com.mandywebdesign.impromptu.Retrofit.FollowUnfollow;
 import com.mandywebdesign.impromptu.Retrofit.RefundAPI;
+import com.mandywebdesign.impromptu.Retrofit.RefundRequest;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.NormalGetProfile;
 import com.mandywebdesign.impromptu.Utils.Constants;
 import com.mandywebdesign.impromptu.messages.ChatBoxActivity;
@@ -147,11 +148,10 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     static String loginUserId;
     static String hostUserID;
     String lat, lng;
-    static String remaini_tickets, getTickets_booked_by_user;
-    static String timeFrom;
-    String timeTo, usertype, eventType, event_book, tickettypedialog;
+    static String remaini_tickets, getTickets_booked_by_user,remaining_tickets;
+    String refundTicketType, usertype, eventType, event_book, tickettypedialog;
     String itemPos, event_status;
-    static String value, S_token, BToken, fav_id, hostname, payvalue, spinnerposition, tickettypespinnerposintion, tickettypeS;
+    static String value, S_token, BToken, fav_id, hostname, payvalue, spinnerposition, tickettypespinnerposintion="", tickettypeS;
     public static ArrayList<String> image = new ArrayList<>();
     public static String id, cate, host_image, transaction_id, tickets_booked_by_user, date, decs, follow_status, postcode, ticktType, ticktprice, timefrom, hostimage, timeto, title, location, location2, city, gender, andendeenumber, numberoftickts, freeEvent, username;
     int CurrentPage = 0;
@@ -167,6 +167,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     TextView dailog_ticket_type1, dailog_ticket_price1, eventid;
     Spinner spinner1;
     Button dialogButoon1;
+    EditText reasonrefund;
     String event_user_type;
     int refundticketCount, pendingTickets, count;
     RelativeLayout attendeelayout;
@@ -412,6 +413,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             ticketype_spinner.setVisibility(View.GONE);
             tickettype.setText("Ticket Type");
             dailog_ticket_type.setText(ticktType);
+            refundTicketType = dailog_ticket_type.getText().toString();
 
         } else {
             dailog_ticket_type.setVisibility(View.GONE);
@@ -427,16 +429,16 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(BookEventActivity.this, android.R.layout.simple_spinner_item, refundTickets);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ticketype_spinner.setAdapter(arrayAdapter);
-//        ticketype_spinner.setSelection(0);
         Log.d("ticketCounts", "" + refundBookedTickets);
         refundticketCount = Integer.parseInt(refundBookedTickets.get(0));
 
         ticketype_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //ToDo: Ticket Type Spinner:
                 tickettypespinnerposintion = parent.getItemAtPosition(position).toString();
                 tickettypeposition = String.valueOf(position);
-
+                refundTicketType = tickettypespinnerposintion;
                 refundBookedTicketsCount.clear();
                 for (int i = 0; i < Integer.valueOf(refundBookedTickets.get(Integer.parseInt(tickettypeposition))); i++) {
                     refundBookedTicketsCount.add(String.valueOf(i + 1));
@@ -466,6 +468,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         });
 
 
+
         //============================88888888888888888888888888=====================================
         refundBookedTicketsCount.clear();
 
@@ -485,10 +488,12 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
                 int ticketCountposition = position + 1;
 
+
                 Float ticktprice1 = Float.valueOf(ticketPrice.getText().toString());
                 ticktprice = String.valueOf(ticktprice1);
 
                 Float a = Float.valueOf((ticketCountposition));
+                //ToDo: Numbers of tickets:
                 total_ticket = String.valueOf(ticketCountposition);
 
                 String tickt = String.valueOf(ticktprice);
@@ -508,10 +513,48 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
             }
         });
+
+        dialogButoon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.d("refundtest",refundTicketType+"  "+total_ticket+"  "+reasonrefund.getText().toString()+"   "+totalPrice.getText().toString());
+
+                if (!reasonrefund.getText().toString().equals(""))
+                {
+                    progressDialog.show();
+                    Call<RefundRequest> refundRequestCall = WebAPI.getInstance().getApi().refundRequest("Bearer "+S_token,value,reasonrefund.getText().toString(),refundTicketType,totalPrice.getText().toString(),total_ticket);
+                    refundRequestCall.enqueue(new Callback<RefundRequest>() {
+                        @Override
+                        public void onResponse(Call<RefundRequest> call, Response<RefundRequest> response) {
+                            progressDialog.dismiss();
+                            if (response.isSuccessful())
+                            {
+                                refundBusinessDialog.dismiss();
+                                Toast.makeText(BookEventActivity.this, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            }else {
+                                Intent intent = new Intent(BookEventActivity.this, NoInternetScreen.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<RefundRequest> call, Throwable t) {
+                            progressDialog.dismiss();
+                        }
+                    });
+                }else {
+                    reasonrefund.setError("Enter reason for refund");
+                }
+
+            }
+        });
     }
 
     private void FindId1(Dialog refundBusinessDialog) {
-        ;
+        reasonrefund = refundBusinessDialog.findViewById(R.id.reasonrefund);
+        reasonrefund.setVisibility(View.VISIBLE);
         dailog_ticket_type = refundBusinessDialog.findViewById(R.id.dailog_ticket_type);
         tickettype = refundBusinessDialog.findViewById(R.id.tickettype);
         ticketPrice = refundBusinessDialog.findViewById(R.id.dailog_ticket_price);
@@ -736,13 +779,18 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             tickettype.setText("Ticket Types");
         }
 
-        if (tickettypes.size()==0)
-        {
+        if (tickettypes.size() == 0) {
             if (tickets_booked_by_user.equals("0")) {
 
-                adapter = new ArrayAdapter<String>(BookEventActivity.this,
-                        android.R.layout.simple_spinner_item, ticketNum);
+                if (remaining_tickets.equals("1"))
+                {
+                    adapter = new ArrayAdapter<String>(BookEventActivity.this,
+                            android.R.layout.simple_spinner_item, ticketNum1);
+                }else {
+                    adapter = new ArrayAdapter<String>(BookEventActivity.this,
+                            android.R.layout.simple_spinner_item, ticketNum);
 
+                }
             } else {
                 adapter = new ArrayAdapter<String>(BookEventActivity.this,
                         android.R.layout.simple_spinner_item, ticketNum1);
@@ -781,8 +829,9 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                 }
             });
 
-        }else {
+        } else {
             //Todo: ticket type spinner
+            Log.d("ticketTypes", "" + tickettypes);
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(BookEventActivity.this, android.R.layout.simple_spinner_item, tickettypes);
             arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             ticketype_spinner.setAdapter(arrayAdapter);
@@ -832,7 +881,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
                             adapter = new ArrayAdapter<String>(BookEventActivity.this,
                                     android.R.layout.simple_spinner_item, ticketNum);
-
                         } else {
                             adapter = new ArrayAdapter<String>(BookEventActivity.this,
                                     android.R.layout.simple_spinner_item, ticketNum1);
@@ -879,8 +927,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                 }
             });
         }
-
-
 
 
 //        if (!event_user_type.equals("normal"))
@@ -1396,36 +1442,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         cal4 = dialog.findViewById(R.id.cal4);
     }
 
-    private void dialogUpdate() {
-        final Dialog dialog = new Dialog(BookEventActivity.this);
-        dialog.setContentView(R.layout.updateprofilepopoup);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        Button okay, cancel;
-        okay = dialog.findViewById(R.id.checkokaydialog);
-        cancel = dialog.findViewById(R.id.checkcanceldialog);
-
-        okay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-                Intent intent = new Intent(BookEventActivity.this, NormalPublishProfile.class);
-                intent.putExtra("normal_edit", "0");
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
-    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -1531,6 +1548,11 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             lng = datum.getLongitude();
                             eventid.setText("EID " + datum.getEventId().toString());
                             event_status = datum.getEvent_status();
+                            remaining_tickets = datum.getRemaining_tickets();
+                            if(remaining_tickets.equals("0"))
+                            {
+                                mBookEvent.setVisibility(View.GONE);
+                            }
                             refundTickets.clear();
                             refundBookedTickets.clear();
                             for (int i = 0; i < datum.getTotalTicketsUser().size(); i++) {
@@ -1652,15 +1674,25 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             transaction_id = datum.getTransactionId();
 
                             usertype = datum.getUserType();
+
                             tickettypes.clear();
                             ticketPending.clear();
                             //Todo: get tickets types
+
                             for (int i = 0; i < datum.getTicketsType().size(); i++) {
                                 tickettypes.add(datum.getTicketsType().get(i).getTicketType());
                                 ticketprice.add(datum.getTicketsType().get(i).getValue());
                                 RetroGetEventData.TicketsType ticketsType = datum.getTicketsType().get(i);
 
                                 ticketPending.add(ticketsType);
+                                if (datum.getTicketsType().get(i).getPending_tickets().equals("0") || datum.getTicketsType().get(i).getPending_tickets()==0)
+                                {
+                                   tickettypes.remove(i);
+                                   ticketprice.remove(i);
+                                   ticketPending.remove(i);
+                                }
+                                Log.d("types",""+datum.getTicketsType().get(i).getPending_tickets());
+
                             }
 
 

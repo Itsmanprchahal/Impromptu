@@ -32,6 +32,10 @@ import com.mandywebdesign.impromptu.Retrofit.NormalretroHosting_fav_evnts;
 import com.mandywebdesign.impromptu.Retrofit.PostCode;
 import com.mandywebdesign.impromptu.Retrofit.Rating;
 import com.mandywebdesign.impromptu.Retrofit.RefundAPI;
+import com.mandywebdesign.impromptu.Retrofit.RefundCancel;
+import com.mandywebdesign.impromptu.Retrofit.RefundList;
+import com.mandywebdesign.impromptu.Retrofit.RefundRequest;
+import com.mandywebdesign.impromptu.Retrofit.RefundSend;
 import com.mandywebdesign.impromptu.Retrofit.RemainingTickets;
 import com.mandywebdesign.impromptu.Retrofit.RetroAddEvent;
 import com.mandywebdesign.impromptu.Retrofit.RetroAllChats;
@@ -619,5 +623,36 @@ public interface RegisterApiInterface {
             @Query("card_holder_name") String card_holder_name,
             @Query("card_sdate") String card_sdate,
             @Query("card_edate") String card_edate
+    );
+
+    @POST("refund-request")
+    Call<RefundRequest> refundRequest(
+            @Header("Authorization") String token,
+            @Query("event_id") String event_id,
+            @Query("reason") String reason,
+            @Query("ticket_type") String ticket_type,
+            @Query("total_ticket_amount") String total_ticket_amount,
+            @Query("numberoftickets") String numberoftickets
+    );
+
+    @POST("refund-list")
+    Call<RefundList> refundList(
+            @Header("Authorization") String token,
+            @Query("status") String status
+    );
+
+    @POST("refund-cancel")
+    Call<RefundCancel> refundCancel(
+            @Header("Authorization") String token,
+            @Query("refund_id") String refundId,
+            @Query("reason") String reason
+    );
+
+    @POST("refund-send")
+    Call<RefundSend> refundSend(
+            @Header("Authorization") String token,
+            @Query("refund_id") String refundId,
+            @Query("percentage") String percentage,
+            @Query("reason") String reason
     );
 }

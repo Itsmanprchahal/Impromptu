@@ -43,4 +43,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_50sdp"></androidx.recyclerview.widget.RecyclerView>
 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="@dimen/_35sdp"
+        android:textColor="@color/colortextBlack"
+        android:text="No Request"
+        android:fontFamily="@font/circularstdbold"
+        android:gravity="center"
+        android:id="@+id/no_request"
+        android:visibility="gone"/>
 </RelativeLayout>
