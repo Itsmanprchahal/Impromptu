@@ -49,7 +49,8 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:ignore="HardcodedDebugMode">
-        <activity android:name=".SettingFragmentsOptions.RefundRequests"></activity>
+        <activity android:name=".SettingFragmentsOptions.EventWiseReauest"></activity>
+        <activity android:name=".SettingFragmentsOptions.RefundRequests" />
         <activity android:name=".stripeconnect.ConnectStripe" />
         <activity android:name=".Filter.FilteredActivity" />
         <activity
@@ -146,14 +147,12 @@
             android:name="com.zfdang.multiple_images_selector.ImagesSelectorActivity"
             android:configChanges="orientation|screenSize"
             android:hardwareAccelerated="false" />
-
         <activity
             android:name=".Home_Screen_Fragments.AddEvents.Add_Event_Activity"
             android:parentActivityName=".ui.Home_Screen"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             tools:ignore="LockedOrientationActivity" />
-
         <activity
             android:name=".ui.MainActivity"
             android:launchMode="singleTask"

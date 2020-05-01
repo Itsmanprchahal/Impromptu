@@ -1138,7 +1138,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
                     if (arryList.size()==1)
                     {
-                        if (arryList.get(0).getTikcettype().equals(ticket_Type))
+                        if (arryList.get(0).getTikcettype().equalsIgnoreCase(ticket_Type))
                         {
                             edt_tiketType.setError("Ticket already exist");
                             edt_tiketType.setText("");
@@ -1149,14 +1149,14 @@ public class EventDetailsActivity extends AppCompatActivity {
                         }
                     }else if (arryList.size()==2)
                     {
-                        if (arryList.get(1).getTikcettype().equals(ticket_Type))
+                        if (arryList.get(1).getTikcettype().equalsIgnoreCase(ticket_Type))
                         {
                             edt_tiketType.setError("Ticket already exist");
                             edt_tiketType.setFocusable(true);
                             edt_tiketType.setText("");
                             edt_numbersOfTicket.setText("");
                             edt_price.setText("");
-                        }else if (arryList.get(0).getTikcettype().equals(ticket_Type)){
+                        }else if (arryList.get(0).getTikcettype().equalsIgnoreCase(ticket_Type)){
                             edt_tiketType.setError("Ticket already exist");
                             edt_tiketType.setFocusable(true);
                             edt_tiketType.setText("");
@@ -1194,7 +1194,6 @@ public class EventDetailsActivity extends AppCompatActivity {
                         } else if (arryList.size() == 2) {
                             type1.setVisibility(View.VISIBLE);
                             type1.setText(arryList.get(0).getTikcettype() + " £ " + arryList.get(0).getPrice() + " (" + arryList.get(0).getNumberofticket() + ") ");
-
                             type2.setVisibility(View.VISIBLE);
                             type2.setText(arryList.get(1).getTikcettype() + " £ " + arryList.get(1).getPrice() + " (" + arryList.get(1).getNumberofticket() + ") ");
 

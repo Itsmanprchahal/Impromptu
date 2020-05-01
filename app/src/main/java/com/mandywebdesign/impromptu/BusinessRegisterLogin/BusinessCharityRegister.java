@@ -360,7 +360,8 @@ public class BusinessCharityRegister extends AppCompatActivity {
                     NoInternet.dialog(BusinessCharityRegister.this);
                 } else if (isOnline() == true) {
                     progressDialog.dismiss();
-                    NoInternet.dialog(BusinessCharityRegister.this);
+                    Toast.makeText(BusinessCharityRegister.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+//                    NoInternet.dialog(BusinessCharityRegister.this);
                 } else {
                     progressDialog.dismiss();
                 }

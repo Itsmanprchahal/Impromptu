@@ -384,10 +384,13 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     }
 
     private void askforrefund(final String s_token, final String value) {
+
+
+
+
         askforrefund.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 //                if(event_user_type.equals("normal"))
 //                {
 //               RefundDialog();
@@ -1584,7 +1587,34 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                 book_location.setClickable(false);
 
                                 if (!freeEvent.equals("0")) {
-                                    askforrefund.setVisibility(View.VISIBLE);
+
+                                    Calendar c = Calendar.getInstance();
+
+                                    DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                                    Date date = null;
+                                    try {
+                                        date = formatter.parse(formatter.format(c.getTime()));
+                                        Log.d("TodayDate", String.valueOf(date.getTime()));
+
+                                        long currentdatetime = date.getTime();
+                                        long enddatetime = Long.parseLong(datum.getEventEndDt());
+
+
+                                        long diff = currentdatetime - enddatetime;
+                                        long hours = 172800000;
+                                        if (diff>hours)
+                                        {
+                                            askforrefund.setVisibility(View.GONE);
+                                        }else {
+                                            askforrefund.setVisibility(View.VISIBLE);
+                                        }
+                                        Log.d("eventdatetime", datum.getEventEndDt() + "  " + currentdatetime + "  " + diff);
+
+//                                System.out.println ("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+
                                 }
                             }
 
@@ -1670,6 +1700,9 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                     }
                                 }
                             }
+
+
+
                             ticktType = datum.getTicketType();
                             transaction_id = datum.getTransactionId();
 

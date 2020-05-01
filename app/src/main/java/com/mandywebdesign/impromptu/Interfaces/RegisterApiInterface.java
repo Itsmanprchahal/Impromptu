@@ -33,6 +33,7 @@ import com.mandywebdesign.impromptu.Retrofit.PostCode;
 import com.mandywebdesign.impromptu.Retrofit.Rating;
 import com.mandywebdesign.impromptu.Retrofit.RefundAPI;
 import com.mandywebdesign.impromptu.Retrofit.RefundCancel;
+import com.mandywebdesign.impromptu.Retrofit.RefundEventRequest;
 import com.mandywebdesign.impromptu.Retrofit.RefundList;
 import com.mandywebdesign.impromptu.Retrofit.RefundRequest;
 import com.mandywebdesign.impromptu.Retrofit.RefundSend;
@@ -638,7 +639,8 @@ public interface RegisterApiInterface {
     @POST("refund-list")
     Call<RefundList> refundList(
             @Header("Authorization") String token,
-            @Query("status") String status
+            @Query("status") String status,
+            @Query("eventid") String eventid
     );
 
     @POST("refund-cancel")
@@ -654,5 +656,10 @@ public interface RegisterApiInterface {
             @Query("refund_id") String refundId,
             @Query("percentage") String percentage,
             @Query("reason") String reason
+    );
+
+    @POST("event-refund-list")
+    Call<RefundEventRequest> eventRefundRequests(
+            @Header("Authorization") String token
     );
 }

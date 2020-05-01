@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/border"
+    android:layout_margin="@dimen/_3sdp"
+    android:padding="@dimen/_5sdp">
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/eventimage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="center"
+            app:riv_corner_radius="5dp"
+            android:src="@drawable/screen1"
+            android:layout_margin="@dimen/_5sdp"></com.makeramen.roundedimageview.RoundedImageView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/eventname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Event Name"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/circularstdblack"></TextView>
+
+
+            <TextView
+                android:id="@+id/refundrequests"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Refund Requests"
+                android:textColor="@color/black"
+                android:fontFamily="@font/circularstdblack"
+                android:textSize="16sp"></TextView>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/outsatandingbalnce"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_below="@id/layout"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/circularstdblack"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/button_color_theme"
+        android:text="Pay outstanding balance"
+        android:textColor="@color/white"
+        android:textAllCaps="false"></Button>
+</RelativeLayout>

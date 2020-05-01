@@ -35,6 +35,7 @@ public class ConnectStripe extends AppCompatActivity {
         loginUserId = intent.getStringExtra("loginUserId");
         String urlWithId = "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_GvO1s7dJvTeIkAjkndR3q3cve13FJPuC&scope=read_write&state="+loginUserId;
 
+        //https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_GvO1s7dJvTeIkAjkndR3q3cve13FJPuC&scope=read_write&state=159
         //webview.setListener(Main2Activity.this,this);
         webView.getSettings().setSupportMultipleWindows(true);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -57,7 +58,6 @@ public class ConnectStripe extends AppCompatActivity {
 
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-
                 progressDialog.show();
             }
 

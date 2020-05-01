@@ -44,12 +44,16 @@ public class RefundRequests extends AppCompatActivity {
     ArrayList<RefundList.Datum> refundDatalist = new ArrayList<>();
     Dialog progressDialog;
     TextView no_request;
+    String eventid;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_refund_requests);
         progressDialog = ProgressBarClass.showProgressDialog(this);
+        intent = getIntent();
+        eventid = intent.getStringExtra("eventid");
 
         back = findViewById(R.id.back_refund);
         refund_recycler = findViewById(R.id.refund_recycler);
@@ -59,18 +63,18 @@ public class RefundRequests extends AppCompatActivity {
         BToken = sharedPreferences.getString("Usertoken", "");
 
         if (!socailtoken.equals("")) {
-            getList(socailtoken);
+            getList(socailtoken,eventid);
         } else {
-            getList(BToken);
+            getList(BToken,eventid);
         }
 
         listerners();
 
     }
 
-    private void getList(String socailtoken) {
+    private void getList(String socailtoken,String eventid) {
         progressDialog.show();
-        Call<RefundList> refundListCall = WebAPI.getInstance().getApi().refundList("Bearer " + socailtoken,"pending");
+        Call<RefundList> refundListCall = WebAPI.getInstance().getApi().refundList("Bearer " + socailtoken,"pending",eventid);
         refundListCall.enqueue(new Callback<RefundList>() {
             @Override
             public void onResponse(Call<RefundList> call, Response<RefundList> response) {
@@ -83,7 +87,6 @@ public class RefundRequests extends AppCompatActivity {
 
                         for (RefundList.Datum datum : refundlist) {
                             refundDatalist.add(datum);
-
                         }
                         if (refundDatalist.size() == 0) {
                             no_request.setVisibility(View.VISIBLE);

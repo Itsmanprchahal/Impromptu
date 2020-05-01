@@ -56,6 +56,7 @@ import com.mandywebdesign.impromptu.Interfaces.WebAPI;
 import com.mandywebdesign.impromptu.Models.ChangePassword;
 import com.mandywebdesign.impromptu.Retrofit.RetroLogout;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.Contact_Us;
+import com.mandywebdesign.impromptu.SettingFragmentsOptions.EventWiseReauest;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.FAQs;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.HelpActivity;
 import com.mandywebdesign.impromptu.SettingFragmentsOptions.HelpOptionsActivity;
@@ -82,7 +83,7 @@ import retrofit2.Response;
  */
 public class Setting extends Fragment {
 
-    TextView logout, setting_help_option, terms, setting_paymentdetails_option,setting_refund_request, changepassword, contactus, invite, setting_verification_option;
+    TextView logout, setting_help_option, terms, setting_paymentdetails_option, setting_refund_request, changepassword, contactus, invite, setting_verification_option;
     GoogleApiClient googleApiClient;
     boolean loggedOut;
     GoogleSignInAccount account;
@@ -96,6 +97,7 @@ public class Setting extends Fragment {
     EditText oldepassword, newpassword, confirmpass;
     Button changepasswordbt;
     ImageView imageView_close;
+    Dialog dialog;
     Boolean profilSTATUS;
 
     @Override
@@ -171,7 +173,10 @@ public class Setting extends Fragment {
             setting_refund_request.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getContext(), RefundRequests.class);
+                   /* Intent intent = new Intent(getContext(), RefundRequests.class);
+                    startActivity(intent);*/
+
+                    Intent intent = new Intent(getContext(), EventWiseReauest.class);
                     startActivity(intent);
                 }
             });
@@ -251,26 +256,44 @@ public class Setting extends Fragment {
             logout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (isOnline() == true) {
-                        LoginManager.getInstance().logOut();
-                        Intent intent = new Intent(getActivity(), Join_us.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        getActivity().startActivity(intent);
+                    dialog = new Dialog(getContext());
+                    Window window = dialog.getWindow();
+                    window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                    dialog.setContentView(R.layout.deletedraft);
+                    dialog.setCancelable(true);
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialog.show();
 
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.clear();
-                        editor.commit();
+                    TextView textView = dialog.findViewById(R.id.deletedialogtext);
+                    Button yesdialog = dialog.findViewById(R.id.yesdialog);
+                    textView.setText("Are you sure to logout?");
+                    yesdialog.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
 
-                        SharedPreferences.Editor editor1 = sharedPreferences1.edit();
-                        editor1.clear();
-                        editor1.commit();
+                            if (isOnline() == true) {
+                                LoginManager.getInstance().logOut();
+                                Intent intent = new Intent(getActivity(), Join_us.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                getActivity().startActivity(intent);
 
-                        progressDialog.show();
-                        getActivity().finish();
-                    } else {
-                        NoInternetdialog();
-                        progressDialog.dismiss();
-                    }
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.clear();
+                                editor.commit();
+
+                                SharedPreferences.Editor editor1 = sharedPreferences1.edit();
+                                editor1.clear();
+                                editor1.commit();
+
+                                progressDialog.show();
+                                getActivity().finish();
+                            } else {
+                                NoInternetdialog();
+                                progressDialog.dismiss();
+                            }
+
+                        }
+                    });
                 }
             });
 
@@ -290,35 +313,53 @@ public class Setting extends Fragment {
                         progressDialog.dismiss();
                     } else {
 
-                        Call<RetroLogout> call = WebAPI.getInstance().getApi().logout(token, "application/json");
-                        call.enqueue(new Callback<RetroLogout>() {
+                        dialog = new Dialog(getContext());
+                        Window window = dialog.getWindow();
+                        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                        dialog.setContentView(R.layout.deletedraft);
+                        dialog.setCancelable(true);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.show();
+
+                        TextView textView = dialog.findViewById(R.id.deletedialogtext);
+                        Button yesdialog = dialog.findViewById(R.id.yesdialog);
+                        textView.setText("Are you sure to logout?");
+                        yesdialog.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onResponse(Call<RetroLogout> call, Response<RetroLogout> response) {
-                                if (response.body() != null) {
-                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                                    editor.clear();
-                                    editor.commit();
+                            public void onClick(View view) {
 
-                                    SharedPreferences.Editor editor1 = sharedPreferences1.edit();
-                                    editor1.clear();
-                                    editor1.commit();
+                                Call<RetroLogout> call = WebAPI.getInstance().getApi().logout(token, "application/json");
+                                call.enqueue(new Callback<RetroLogout>() {
+                                    @Override
+                                    public void onResponse(Call<RetroLogout> call, Response<RetroLogout> response) {
+                                        if (response.body() != null) {
+                                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                                            editor.clear();
+                                            editor.commit();
 
-                                    progressDialog.show();
+                                            SharedPreferences.Editor editor1 = sharedPreferences1.edit();
+                                            editor1.clear();
+                                            editor1.commit();
 
-                                    Intent intent = new Intent(getActivity(), Join_us.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    getActivity().startActivity(intent);
+                                            progressDialog.show();
+
+                                            Intent intent = new Intent(getActivity(), Join_us.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            getActivity().startActivity(intent);
 
 
-                                } else {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(getContext(), "" + response.message(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
+                                        } else {
+                                            progressDialog.dismiss();
+                                            Toast.makeText(getContext(), "" + response.message(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
 
-                            @Override
-                            public void onFailure(Call<RetroLogout> call, Throwable t) {
-                                Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    @Override
+                                    public void onFailure(Call<RetroLogout> call, Throwable t) {
+                                        Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
                             }
                         });
                     }
@@ -402,20 +443,39 @@ public class Setting extends Fragment {
                 public void onClick(View v) {
                     if (isOnline() == true) {
 
-                        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+                        dialog = new Dialog(getContext());
+                        Window window = dialog.getWindow();
+                        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                        dialog.setContentView(R.layout.deletedraft);
+                        dialog.setCancelable(true);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.show();
+
+                        TextView textView = dialog.findViewById(R.id.deletedialogtext);
+                        Button yesdialog = dialog.findViewById(R.id.yesdialog);
+                        textView.setText("Are you sure to logout?");
+                        yesdialog.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onResult(@NonNull Status status) {
+                            public void onClick(View view) {
 
-                                progressDialog.setCanceledOnTouchOutside(false);
-                                progressDialog.show();
 
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.clear();
-                                editor.commit();
+                                Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+                                    @Override
+                                    public void onResult(@NonNull Status status) {
 
-                                Intent intent = new Intent(getActivity(), Join_us.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                getActivity().startActivity(intent);
+                                        progressDialog.setCanceledOnTouchOutside(false);
+                                        progressDialog.show();
+
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        editor.clear();
+                                        editor.commit();
+
+                                        Intent intent = new Intent(getActivity(), Join_us.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        getActivity().startActivity(intent);
+
+                                    }
+                                });
 
                             }
                         });
@@ -559,6 +619,10 @@ public class Setting extends Fragment {
         int linkSpeed = wifiManager.getConnectionInfo().getRssi();
         int level = WifiManager.calculateSignalLevel(linkSpeed, 5);
         return level;
+    }
+
+    private void showDialog(Integer eventId) {
+
     }
 
 }
