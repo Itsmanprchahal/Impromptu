@@ -148,10 +148,10 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     static String loginUserId;
     static String hostUserID;
     String lat, lng;
-    static String remaini_tickets, getTickets_booked_by_user,remaining_tickets;
+    static String remaini_tickets, getTickets_booked_by_user, remaining_tickets;
     String refundTicketType, usertype, eventType, event_book, tickettypedialog;
     String itemPos, event_status;
-    static String value, S_token, BToken, fav_id, hostname, payvalue, spinnerposition, tickettypespinnerposintion="", tickettypeS;
+    static String value, S_token, BToken, fav_id, hostname, payvalue, spinnerposition, tickettypespinnerposintion = "", tickettypeS;
     public static ArrayList<String> image = new ArrayList<>();
     public static String id, cate, host_image, transaction_id, tickets_booked_by_user, date, decs, follow_status, postcode, ticktType, ticktprice, timefrom, hostimage, timeto, title, location, location2, city, gender, andendeenumber, numberoftickts, freeEvent, username;
     int CurrentPage = 0;
@@ -386,8 +386,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     private void askforrefund(final String s_token, final String value) {
 
 
-
-
         askforrefund.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -471,7 +469,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         });
 
 
-
         //============================88888888888888888888888888=====================================
         refundBookedTicketsCount.clear();
 
@@ -521,21 +518,19 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
             @Override
             public void onClick(View view) {
 
-                Log.d("refundtest",refundTicketType+"  "+total_ticket+"  "+reasonrefund.getText().toString()+"   "+totalPrice.getText().toString());
+                Log.d("refundtest", refundTicketType + "  " + total_ticket + "  " + reasonrefund.getText().toString() + "   " + totalPrice.getText().toString());
 
-                if (!reasonrefund.getText().toString().equals(""))
-                {
+                if (!reasonrefund.getText().toString().equals("")) {
                     progressDialog.show();
-                    Call<RefundRequest> refundRequestCall = WebAPI.getInstance().getApi().refundRequest("Bearer "+S_token,value,reasonrefund.getText().toString(),refundTicketType,totalPrice.getText().toString(),total_ticket);
+                    Call<RefundRequest> refundRequestCall = WebAPI.getInstance().getApi().refundRequest("Bearer " + S_token, value, reasonrefund.getText().toString(), refundTicketType, totalPrice.getText().toString(), total_ticket);
                     refundRequestCall.enqueue(new Callback<RefundRequest>() {
                         @Override
                         public void onResponse(Call<RefundRequest> call, Response<RefundRequest> response) {
                             progressDialog.dismiss();
-                            if (response.isSuccessful())
-                            {
+                            if (response.isSuccessful()) {
                                 refundBusinessDialog.dismiss();
-                                Toast.makeText(BookEventActivity.this, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                            }else {
+                                Toast.makeText(BookEventActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            } else {
                                 Intent intent = new Intent(BookEventActivity.this, NoInternetScreen.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
@@ -547,7 +542,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             progressDialog.dismiss();
                         }
                     });
-                }else {
+                } else {
                     reasonrefund.setError("Enter reason for refund");
                 }
 
@@ -785,11 +780,10 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
         if (tickettypes.size() == 0) {
             if (tickets_booked_by_user.equals("0")) {
 
-                if (remaining_tickets.equals("1"))
-                {
+                if (remaining_tickets.equals("1")) {
                     adapter = new ArrayAdapter<String>(BookEventActivity.this,
                             android.R.layout.simple_spinner_item, ticketNum1);
-                }else {
+                } else {
                     adapter = new ArrayAdapter<String>(BookEventActivity.this,
                             android.R.layout.simple_spinner_item, ticketNum);
 
@@ -1446,7 +1440,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
     }
 
 
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -1552,8 +1545,7 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             eventid.setText("EID " + datum.getEventId().toString());
                             event_status = datum.getEvent_status();
                             remaining_tickets = datum.getRemaining_tickets();
-                            if(remaining_tickets.equals("0"))
-                            {
+                            if (remaining_tickets.equals("0")) {
                                 mBookEvent.setVisibility(View.GONE);
                             }
                             refundTickets.clear();
@@ -1602,10 +1594,9 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
 
                                         long diff = currentdatetime - enddatetime;
                                         long hours = 172800000;
-                                        if (diff>hours)
-                                        {
+                                        if (diff > hours) {
                                             askforrefund.setVisibility(View.GONE);
-                                        }else {
+                                        } else {
                                             askforrefund.setVisibility(View.VISIBLE);
                                         }
                                         Log.d("eventdatetime", datum.getEventEndDt() + "  " + currentdatetime + "  " + diff);
@@ -1702,7 +1693,6 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                             }
 
 
-
                             ticktType = datum.getTicketType();
                             transaction_id = datum.getTransactionId();
 
@@ -1718,13 +1708,12 @@ public class BookEventActivity extends AppCompatActivity implements AdapterView.
                                 RetroGetEventData.TicketsType ticketsType = datum.getTicketsType().get(i);
 
                                 ticketPending.add(ticketsType);
-                                if (datum.getTicketsType().get(i).getPending_tickets().equals("0") || datum.getTicketsType().get(i).getPending_tickets()==0)
-                                {
-                                   tickettypes.remove(i);
-                                   ticketprice.remove(i);
-                                   ticketPending.remove(i);
+                                if (datum.getTicketsType().get(i).getPending_tickets().equals("0") || datum.getTicketsType().get(i).getPending_tickets() == 0) {
+                                    tickettypes.remove(i);
+                                    ticketprice.remove(i);
+                                    ticketPending.remove(i);
                                 }
-                                Log.d("types",""+datum.getTicketsType().get(i).getPending_tickets());
+                                Log.d("types", "" + datum.getTicketsType().get(i).getPending_tickets());
 
                             }
 
